@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="0dp"
+    tools:context=".FriendsActivity" >
+
+    <GridView
+        android:id="@+id/grid_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+	    android:verticalSpacing="20dp"    
+        android:columnWidth="100dp"
+        android:numColumns="auto_fit" >
+
+    </GridView>
+
+</RelativeLayout>

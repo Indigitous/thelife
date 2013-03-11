@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="app_menu_commands">
+	    <item name="community">Community</item>  
+	    <item name="friends">Friends</item>    
+	    <item name="groups_menu">Groups</item>    
+	    <!-- <item name="prayer_menu">Prayer</item> -->    
+	    <item name="help_menu">Help</item>    
+	    <item name="settings_menu">Settings</item>      
+	    <item name="testA">testA</item>              	            
+    </string-array>
+    
+</resources>

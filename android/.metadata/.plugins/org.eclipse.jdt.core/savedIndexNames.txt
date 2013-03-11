@@ -1,0 +1,9 @@
+INDEX VERSION 1.126+/Users/clarence/Documents/thelife/android/.metadata/.plugins/org.eclipse.jdt.core
+3291296263.index
+2694605388.index
+2816673890.index
+2965440935.index
+2992006263.index
+598620801.index
+3146580166.index
+1889362045.index

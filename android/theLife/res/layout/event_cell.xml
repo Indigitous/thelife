@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!--  this works for 800x480:, 60dp/12sp/10sp -->
+    <!--  this works for Nexus 4 1280x760?: 80dp/16sp/12sp -->
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:paddingTop="8dp"
+	    android:orientation="horizontal" >        
+        
+<!-- 	    android:background="@color/green"                
+     	android:background="@color/red"       -->  
+        
+	    <ImageView
+	        android:id="@+id/imageView1"
+	        android:layout_width="60dp"
+	        android:layout_height="60dp"
+	        android:paddingLeft="0dp"        
+	        android:paddingRight="0dp"
+	        android:src="@drawable/ic_launcher" />
+	    
+	   <ImageView
+	        android:id="@+id/imageView2"
+	        android:layout_width="60dp"
+	        android:layout_height="60dp"
+	        android:paddingLeft="0dp"        
+	        android:paddingRight="0dp"        
+	        android:src="@drawable/ic_launcher" />    
+	            
+	   <!-- event description and time -->
+	    <LinearLayout
+	    	android:layout_width="match_parent"
+	    	android:layout_height="60dp"        
+	        android:orientation="vertical" >
+		    <TextView
+		        android:id="@+id/textViewDescription"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:textSize="12sp" 		        
+		        android:text="Placeholder Text In Here" />        
+	    				        
+		    <TextView
+		        android:id="@+id/textViewTime"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0"
+		        android:textSize="10sp" 
+		        android:layout_gravity="right"
+		        android:text="Just Now" />
+			  
+	    </LinearLayout>
+	    
+    </LinearLayout>
+	  
+    <CheckBox
+        android:id="@+id/pledgeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:textSize="10sp"         
+        android:text="Pray for Clarence and Friend" />
+
+</LinearLayout>

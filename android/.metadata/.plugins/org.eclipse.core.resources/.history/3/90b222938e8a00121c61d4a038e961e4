@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyList1</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
+    <string name="action_pledge">Prayers</string>
+    <string name="action_search">Search</string>
+    <string name="action_new">New</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_community_help">CommunityHelp</string>
+    <string name="title_activity_friends">Friends</string>
+    <string name="title_activity_groups">Groups</string>
+    <string name="title_activity_global_help">GlobalHelp</string>
+    <string name="threshold_new_contact_short">New Contact</string>
+    <string name="threshold_trusting_short">Trusting</string>
+    <string name="threshold_curious_short">Curious</string>
+    <string name="threshold_open_short">Open</string>
+    <string name="threshold_seeking_short">Seeking</string>
+    <string name="threshold_entering_short">Entering</string>
+    <string name="threshold_christian_short">Christian</string>
+    <string name="threshold_unknown_short">Unknown</string>
+    <string name="threshold_new_contact_medium">New Contact</string>
+    <string name="threshold_trusting_medium">Trusting a Christian</string>
+    <string name="threshold_curious_medium">Curious about Jesus</string>
+    <string name="threshold_open_medium">Open to Change</string>
+    <string name="threshold_seeking_medium">Seeking God</string>
+    <string name="threshold_entering_medium">Entering the Kingdom</string>
+    <string name="threshold_christian_medium">Follower of Jesus</string>
+    <string name="threshold_unknown_medium">Unknown</string>
+    <string name="title_activity_friend">FriendActivity</string>
+    <string name="title_activity_activities_for_friend">ActivitiesForFriend</string>
+    <string name="title_activity_activity_for_friend">ActivityForFriendActivity</string>
+    <string name="go">Go For It!</string>
+    <string name="confirm_prayer_support">Ask your group for prayer support?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="title_activity_group">GroupActivity</string>
+    <string name="my_groups">My Groups</string>
+
+</resources>

@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >     
+    
+    <item
+        android:id="@+id/action_pledge"
+        android:orderInCategory="70"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/collections_view_as_list"
+        android:title="@string/action_pledge"/>        
+    
+    <item
+        android:id="@+id/action_help"
+        android:orderInCategory="80"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/action_help"
+        android:title="@string/action_help"/>    
+<!--     <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/action_settings"        
+        android:title="@string/action_settings"/> -->
+
+</menu>
