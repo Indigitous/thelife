@@ -2,12 +2,9 @@ package com.p2c.thelife;
 
 import java.util.Collection;
 
-import com.p2c.thelife.model.EventModel;
-import com.p2c.thelife.model.FriendModel;
-import com.p2c.thelife.model.UserModel;
-
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,13 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.EventModel;
+import com.p2c.thelife.model.FriendModel;
+import com.p2c.thelife.model.UserModel;
+
 public class MainEventsAdapter extends ArrayAdapter<EventModel> {
+	
+	private static final String TAG = "MainEventsAdapter"; 	
 	
 	private TheLifeApplication m_app = null;
 	
@@ -38,10 +41,10 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> {
 		
 		// convertView is null only once, at position 0
 		if (convertView != null) {
-			System.out.println("AT POSITION " + Integer.toString(position) + ":  convertView is " + convertView.getClass().toString());
+			Log.d(TAG, "AT POSITION " + Integer.toString(position) + ":  convertView is NOT NULL");
 		}
 		else {
-			System.out.println("AT POSITION " + Integer.toString(position) + ":  convertView is NULL");
+			Log.d(TAG, "AT POSITION " + Integer.toString(position) + ":  convertView is NULL");
 		}
 
 		// get the view

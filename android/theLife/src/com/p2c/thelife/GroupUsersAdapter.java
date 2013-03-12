@@ -1,8 +1,5 @@
 package com.p2c.thelife;
 
-import com.p2c.thelife.model.GroupModel;
-import com.p2c.thelife.model.UserModel;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.p2c.thelife.model.GroupModel;
+import com.p2c.thelife.model.UserModel;
 
 public class GroupUsersAdapter extends ArrayAdapter<UserModel> {
 	

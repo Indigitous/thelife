@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 
 // POJO - plain old java object
@@ -17,6 +18,8 @@ import android.graphics.drawable.Drawable;
  *
  */
 public class DeedModel {
+	
+	private static final String TAG = "DeedModel"; 
 	
 	public int    					deed_id;
 	public String 					title;
@@ -43,7 +46,7 @@ public class DeedModel {
 	
 	public static DeedModel fromJSON(JSONObject json, Drawable genericImage) {
 		
-		System.out.println("IN DEED MODEL from JSON");
+		Log.d(TAG, "IN DEED MODEL from JSON");
 		try {
 			// set up the thresholds
 			JSONArray jsThresholds = json.optJSONArray("thresholds");

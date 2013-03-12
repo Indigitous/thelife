@@ -2,12 +2,9 @@ package com.p2c.thelife;
 
 import java.util.Collection;
 
-import com.p2c.thelife.model.EventModel;
-import com.p2c.thelife.model.FriendModel;
-import com.p2c.thelife.model.UserModel;
-
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,13 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.EventModel;
+import com.p2c.thelife.model.FriendModel;
+import com.p2c.thelife.model.UserModel;
+
 public class EventsForFriendAdapter extends ArrayAdapter<EventModel> {
+	
+	private static final String TAG = "DeedsDS"; 
 	
 	private FriendModel m_friend = null;
 	private TheLifeApplication m_app = null;
@@ -32,7 +35,7 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> {
 		for (EventModel m:events) {
 			add(m);
 		}
-		System.out.println("FOUND EVENTS FOR FRIEND " + m_friend + ": " + getCount());
+		Log.d(TAG, "FOUND EVENTS FOR FRIEND " + m_friend + ": " + getCount());
 	}
 	
 	// see ApiDemos List14.java for other (maybe better?) ways for this

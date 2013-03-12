@@ -2,14 +2,14 @@ package com.p2c.thelife;
 
 import java.util.Collection;
 
-import com.p2c.thelife.model.GroupModel;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.p2c.thelife.model.GroupModel;
 
 public class GroupsAdapter extends ArrayAdapter<GroupModel> {
 	

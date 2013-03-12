@@ -1,14 +1,17 @@
 package com.p2c.thelife;
 
-import com.p2c.thelife.model.FriendModel;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.GridView;
 
+import com.p2c.thelife.model.FriendModel;
+
 public class FriendsActivity extends SlidingMenuActivity {
+	
+	private static final String TAG = "FriendsActivity"; 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class FriendsActivity extends SlidingMenuActivity {
 	 * @return
 	 */
 	public boolean selectFriend(View view) {
-		System.out.println("FRIEND VIEW SELECTED TAG " + view.getTag());
+		Log.d(TAG, "FRIEND VIEW SELECTED TAG " + view.getTag());
 		
 		// get the friend associated with this view
 		FriendModel friend = (FriendModel)view.getTag();

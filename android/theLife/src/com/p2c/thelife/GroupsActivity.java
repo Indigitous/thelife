@@ -1,14 +1,17 @@
 package com.p2c.thelife;
 
-import com.p2c.thelife.model.GroupModel;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
 
+import com.p2c.thelife.model.GroupModel;
+
 public class GroupsActivity extends SlidingMenuActivity {
+	
+	private static final String TAG = "DeedsDS"; 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class GroupsActivity extends SlidingMenuActivity {
 	 * @return
 	 */
 	public boolean selectGroup(View view) {
-		System.out.println("GROUP VIEW SELECTED TAG " + view.getTag());
+		Log.d(TAG, "GROUP VIEW SELECTED TAG " + view.getTag());
 		
 		// get the group associated with this view
 		GroupModel group = (GroupModel)view.getTag();

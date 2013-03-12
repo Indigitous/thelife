@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
 public class DeedForFriendActivity extends SlidingMenuActivity {
+	
+	private static final String TAG = "DeedForFriendActivity"; 
 	
 	private FriendModel m_friend = null;
 	private DeedModel m_deed = null;
@@ -72,7 +75,7 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 		alertBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
 				// create event with m_friend, m_deed and without prayer_support
-				System.out.println("CREATE DEED EVENT without prayer support");
+				Log.d(TAG, "CREATE DEED EVENT without prayer support");
 				
 				// go back to the friend screen
 				Intent intent = new Intent("com.p2c.thelife.FriendActivity");
@@ -84,7 +87,7 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 		alertBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
 				// create event with m_friend, m_deed and with prayer_support
-				System.out.println("CREATE DEED EVENT with prayer support");
+				Log.d(TAG, "CREATE DEED EVENT with prayer support");
 				
 				// go back to the friend screen
 				Intent intent = new Intent("com.p2c.thelife.FriendActivity");

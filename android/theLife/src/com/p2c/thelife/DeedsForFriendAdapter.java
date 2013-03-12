@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.DataStoreListener;
+import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
 public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements DataStoreListener {

@@ -29,6 +29,8 @@ import com.p2c.thelife.TheLifeApplication;
 
 public class DeedsDS extends AbstractDS {
 	
+	private static final String TAG = "DeedsDS"; 
+	
 	private ArrayList<DeedModel> m_data = new ArrayList<DeedModel>();
 	
 	private Drawable m_genericIcon = null;
@@ -36,25 +38,25 @@ public class DeedsDS extends AbstractDS {
 	private SharedPreferences m_system_settings = null;
 	private String m_cache_file_name = null;
 
-	
 	public DeedsDS(Context context) {
+		
+		// initialize instance vars
 		m_genericIcon = context.getResources().getDrawable(R.drawable.pray);
+		m_system_settings = context.getSharedPreferences(TheLifeApplication.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
+		m_cache_file_name = context.getCacheDir().getAbsolutePath() + "/deeds.json"; // data/data/com.p2c.thelife/cache/deeds.json
 		
 		// load deed list from cache
 		try {
-			// data/data/com.p2c.thelife/cache/deeds.json
-			m_cache_file_name = context.getCacheDir().getAbsolutePath() + "/deeds.json";
-System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 			File deedsFile = new File(m_cache_file_name);
 			if (deedsFile.exists())
 			{
-				System.out.println("THE CACHE FILE EXISTS ");
+				Log.d(TAG, "THE DEEDS CACHE FILE EXISTS");
 				
 				String jsonString = readJSONStream(new FileReader(deedsFile));
 				JSONArray jsonArray = new JSONArray(jsonString);					
 				addDeeds(jsonArray, m_data);
 			} else {
-				System.out.println("THE CACHE FILE DOES NOT EXISTS ");
+				Log.d(TAG, "THE DEEDS CACHE FILE DOES NOT EXIST");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -64,12 +66,11 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 	}
 	
 	// UI thread only
-	public void refresh(Context context) {
+	public void refresh() {
 		
 		// find when the deeds were most recently loaded
-		m_system_settings = context.getSharedPreferences(TheLifeApplication.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
 		long last_deed_load = m_system_settings.getLong("last_deed_load", 0);
-		System.out.println("the last deed load was " + last_deed_load);
+		Log.d(TAG, "the last deed load was " + last_deed_load);
 		
 		// TODO: for debugging
 		last_deed_load = 0;
@@ -81,7 +82,7 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 			if (!m_is_refreshing) {  // okay to test, since this is only in the UI (main) thread
 				try {
 					m_is_refreshing = true;
-					System.out.println("WILL NOW RUN LOAD DEEDS");
+					Log.d(TAG, "WILL NOW RUN BACKGROUND DEEDS");
 					new readJSON().execute(new URL("http://thelife.ballistiq.com/deeds.json"));
 				} catch (MalformedURLException e) {
 					e.printStackTrace();		
@@ -104,13 +105,13 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 			try {
 				Thread.sleep(5000); // TODO: testing
 				
-				System.out.println("AM NOW RUNNING READJSON with" + urls[0]);				
+				Log.d(TAG, "AM NOW RUNNING READJSON with" + urls[0]);	
 				URL deedsEP = urls[0];
 				deedsConnection = (HttpURLConnection)deedsEP.openConnection();
 				deedsConnection.setConnectTimeout(TheLifeApplication.HTTP_CONNECTION_TIMEOUT);
 				deedsConnection.setConnectTimeout(TheLifeApplication.HTTP_READ_TIMEOUT);
 				
-				Log.e("JSON", "GOT THE RESPONSE CODE" + deedsConnection.getResponseCode());
+				Log.d(TAG, "GOT THE RESPONSE CODE" + deedsConnection.getResponseCode());
 
 				if (deedsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
 					jsonString = readJSONStream(new InputStreamReader(deedsConnection.getInputStream()));
@@ -135,7 +136,7 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 		@Override
 		protected void onPostExecute(String jsonString) {
 			
-			System.out.println("HERE IN ON POST EXECUTE");
+			Log.d(TAG, "HERE IN ON POST EXECUTE");
 			
 			try {
 				if (jsonString != null) {
@@ -194,7 +195,7 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 		try {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject json = jsonArray.getJSONObject(i);
-				Log.e("JSON", "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
+				Log.d("JSON", "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
 				
 				// create the deed
 				DeedModel deed = DeedModel.fromJSON(json, m_genericIcon);

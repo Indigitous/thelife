@@ -40,7 +40,7 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 			
 			// load the database from the server in the background
 			app.getDeedsDS().addDataStoreListener(adapter);
-			app.getDeedsDS().refresh(getApplicationContext());
+			app.getDeedsDS().refresh();
 		}		
 	}
 

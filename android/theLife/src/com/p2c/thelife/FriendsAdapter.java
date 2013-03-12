@@ -2,8 +2,6 @@ package com.p2c.thelife;
 
 import java.util.Collection;
 
-import com.p2c.thelife.model.FriendModel;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.p2c.thelife.model.FriendModel;
 
 public class FriendsAdapter extends ArrayAdapter<FriendModel> {
 	

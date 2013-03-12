@@ -1,7 +1,5 @@
 package com.p2c.thelife;
 
-import com.p2c.thelife.model.FriendModel;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.p2c.thelife.model.FriendModel;
 
 public class EventsForFriendActivity extends SlidingMenuActivity {
 	

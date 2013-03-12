@@ -1,11 +1,11 @@
 package com.p2c.thelife;
+import android.app.Application;
+
 import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
 import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
 import com.p2c.thelife.model.UsersDS;
-
-import android.app.Application;
 
 
 
