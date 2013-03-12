@@ -62,7 +62,7 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 		DeedModel deed = (DeedModel)view.getTag();
 		
 		Intent intent = new Intent("com.p2c.thelife.DeedForFriend");
-		intent.putExtra("deed_id", deed.deed_id);
+		intent.putExtra("deed_id", deed.id);
 		intent.putExtra("group_id", m_friend.group_id);				
 		intent.putExtra("friend_id", m_friend.friend_id);
 		startActivity(intent);

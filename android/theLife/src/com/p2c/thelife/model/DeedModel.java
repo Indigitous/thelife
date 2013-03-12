@@ -17,21 +17,21 @@ import android.util.Log;
  * Deed/activity model
  *
  */
-public class DeedModel {
+public class DeedModel extends AbstractModel {
 	
 	private static final String TAG = "DeedModel"; 
 	
-	public int    					deed_id;
-	public String 					title;
-	public String					summary;
-	public String 					description;
-	public String					category;
-	public Drawable                 image;  // TODO is this an image id, image or what?
+	public String 		title;
+	public String		summary;
+	public String 		description;
+	public String		category;
+	public Drawable     image;  // TODO is this an image id, image or what?
 										    // TODO do we need a bigger image and a thumbnail?	
 	public Set<FriendModel.Threshold> thresholds;
 	
 	public DeedModel(int deed_id, String title, String summary, String description, String category, Drawable image, Set<FriendModel.Threshold> thresholds) {
-		this.deed_id = deed_id;
+		
+		super(deed_id);
 		this.title = title;
 		this.summary = summary;
 		this.description = description;
@@ -70,7 +70,7 @@ public class DeedModel {
 	
 	@Override
 	public String toString() {
-		return deed_id + ", " + title + ", " + summary + ", " + description + ", " + category + ", " + thresholds;
+		return id + ", " + title + ", " + summary + ", " + description + ", " + category + ", " + thresholds;
 	}
 
 }
