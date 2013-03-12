@@ -76,19 +76,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.p2c.thelife.ActivitiesForFriendActivity"
+            android:name="com.p2c.thelife.DeedsForFriendActivity"
             android:label="theLife" >
             <intent-filter>
-                <action android:name="com.p2c.thelife.ActivitiesForFriend" />
+                <action android:name="com.p2c.thelife.DeedsForFriend" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.p2c.thelife.ActivityForFriendActivity"
+            android:name="com.p2c.thelife.DeedForFriendActivity"
             android:label="theLife" >
             <intent-filter>
-                <action android:name="com.p2c.thelife.ActivityForFriend" />
+                <action android:name="com.p2c.thelife.DeedForFriend" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

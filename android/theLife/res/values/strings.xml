@@ -29,8 +29,8 @@
     <string name="threshold_christian_medium">Follower of Jesus</string>
     <string name="threshold_unknown_medium">Unknown</string>
     <string name="title_activity_friend">FriendActivity</string>
-    <string name="title_activity_activities_for_friend">ActivitiesForFriend</string>
-    <string name="title_activity_activity_for_friend">ActivityForFriendActivity</string>
+    <string name="title_activity_activities_for_friend">DeedsForFriend</string>
+    <string name="title_activity_activity_for_friend">DeedForFriendActivity</string>
     <string name="go">Go For It!</string>
     <string name="confirm_prayer_support">Ask your group for prayer support?</string>
     <string name="no">No</string>

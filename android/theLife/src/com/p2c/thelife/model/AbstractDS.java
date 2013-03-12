@@ -1,8 +1,7 @@
-package com.p2c.thelife;
+package com.p2c.thelife.model;
 
 import java.util.ArrayList;
 
-import com.p2c.thelife.model.DataStoreListener;
 
 public abstract class AbstractDS {
 	

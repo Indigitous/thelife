@@ -23,14 +23,13 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.p2c.thelife.AbstractDS;
 import com.p2c.thelife.R;
 import com.p2c.thelife.TheLifeApplication;
 
 
-public class ActivitiesDS extends AbstractDS {
+public class DeedsDS extends AbstractDS {
 	
-	private ArrayList<ActivityModel> m_data = new ArrayList<ActivityModel>();
+	private ArrayList<DeedModel> m_data = new ArrayList<DeedModel>();
 	
 	private Drawable m_genericIcon = null;
 	private volatile boolean m_is_refreshing = false;
@@ -38,22 +37,22 @@ public class ActivitiesDS extends AbstractDS {
 	private String m_cache_file_name = null;
 
 	
-	public ActivitiesDS(Context context) {
+	public DeedsDS(Context context) {
 		m_genericIcon = context.getResources().getDrawable(R.drawable.pray);
 		
-		// load activity list from cache
+		// load deed list from cache
 		try {
-			// data/data/com.p2c.thelife/cache/activities.json
-			m_cache_file_name = context.getCacheDir().getAbsolutePath() + "/activities.json";
+			// data/data/com.p2c.thelife/cache/deeds.json
+			m_cache_file_name = context.getCacheDir().getAbsolutePath() + "/deeds.json";
 System.out.println("THE CACHE FILE IS " + m_cache_file_name);
-			File activitiesFile = new File(m_cache_file_name);
-			if (activitiesFile.exists())
+			File deedsFile = new File(m_cache_file_name);
+			if (deedsFile.exists())
 			{
 				System.out.println("THE CACHE FILE EXISTS ");
 				
-				String jsonString = readJSONStream(new FileReader(activitiesFile));
+				String jsonString = readJSONStream(new FileReader(deedsFile));
 				JSONArray jsonArray = new JSONArray(jsonString);					
-				addActivities(jsonArray, m_data);
+				addDeeds(jsonArray, m_data);
 			} else {
 				System.out.println("THE CACHE FILE DOES NOT EXISTS ");
 			}
@@ -67,23 +66,23 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 	// UI thread only
 	public void refresh(Context context) {
 		
-		// find when the activities were most recently loaded
+		// find when the deeds were most recently loaded
 		m_system_settings = context.getSharedPreferences(TheLifeApplication.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
-		long last_activity_load = m_system_settings.getLong("last_activity_load", 0);
-		System.out.println("the last activity load was " + last_activity_load);
+		long last_deed_load = m_system_settings.getLong("last_deed_load", 0);
+		System.out.println("the last deed load was " + last_deed_load);
 		
 		// TODO: for debugging
-		last_activity_load = 0;
+		last_deed_load = 0;
 		
-		// if the activities were not refreshed recently
-		if (System.currentTimeMillis() - last_activity_load > TheLifeApplication.RELOAD_ACTIVITIES_DELTA) {
+		// if the deeds were not refreshed recently
+		if (System.currentTimeMillis() - last_deed_load > TheLifeApplication.RELOAD_DEEDS_DELTA) {
 				
-			// if the activities are not currently being refreshed
+			// if the deeds are not currently being refreshed
 			if (!m_is_refreshing) {  // okay to test, since this is only in the UI (main) thread
 				try {
 					m_is_refreshing = true;
-					System.out.println("WILL NOW RUN LOAD ACTIVITIES");
-					new readJSON().execute(new URL("http://thelife.ballistiq.com/activities.json"));
+					System.out.println("WILL NOW RUN LOAD DEEDS");
+					new readJSON().execute(new URL("http://thelife.ballistiq.com/deeds.json"));
 				} catch (MalformedURLException e) {
 					e.printStackTrace();		
 				} finally {
@@ -101,20 +100,20 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 		protected String doInBackground(URL... urls) {
 			String jsonString = null;
 				
-			HttpURLConnection activitiesConnection = null;
+			HttpURLConnection deedsConnection = null;
 			try {
 				Thread.sleep(5000); // TODO: testing
 				
 				System.out.println("AM NOW RUNNING READJSON with" + urls[0]);				
-				URL activitiesEP = urls[0];
-				activitiesConnection = (HttpURLConnection)activitiesEP.openConnection();
-				activitiesConnection.setConnectTimeout(TheLifeApplication.HTTP_CONNECTION_TIMEOUT);
-				activitiesConnection.setConnectTimeout(TheLifeApplication.HTTP_READ_TIMEOUT);
+				URL deedsEP = urls[0];
+				deedsConnection = (HttpURLConnection)deedsEP.openConnection();
+				deedsConnection.setConnectTimeout(TheLifeApplication.HTTP_CONNECTION_TIMEOUT);
+				deedsConnection.setConnectTimeout(TheLifeApplication.HTTP_READ_TIMEOUT);
 				
-				Log.e("JSON", "GOT THE RESPONSE CODE" + activitiesConnection.getResponseCode());
+				Log.e("JSON", "GOT THE RESPONSE CODE" + deedsConnection.getResponseCode());
 
-				if (activitiesConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
-					jsonString = readJSONStream(new InputStreamReader(activitiesConnection.getInputStream()));
+				if (deedsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
+					jsonString = readJSONStream(new InputStreamReader(deedsConnection.getInputStream()));
 				}
 			} catch (InterruptedException e) {
 				;			
@@ -123,8 +122,8 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 			} catch (IOException e) {
 				e.printStackTrace();				
 			} finally {
-				if (activitiesConnection != null) {
-					activitiesConnection.disconnect();
+				if (deedsConnection != null) {
+					deedsConnection.disconnect();
 				}
 				
 			}	
@@ -139,17 +138,19 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 			System.out.println("HERE IN ON POST EXECUTE");
 			
 			try {
-				JSONArray jsonArray = new JSONArray(jsonString);					
-			
-				// use a separate list in case of an error
-				ArrayList<ActivityModel> data2 = new ArrayList<ActivityModel>();
-				addActivities(jsonArray, data2);
+				if (jsonString != null) {
+					JSONArray jsonArray = new JSONArray(jsonString);					
 				
-				// no error, so use the new data
-				m_data = data2;
-				notifyDataStoreListeners(); // tell listeners that the data has changed
-				
-				writeJSONCache(jsonString);
+					// use a separate list in case of an error
+					ArrayList<DeedModel> data2 = new ArrayList<DeedModel>();
+					addDeeds(jsonArray, data2);
+					
+					// no error, so use the new data
+					m_data = data2;
+					notifyDataStoreListeners(); // tell listeners that the data has changed
+					
+					writeJSONCache(jsonString);
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -159,7 +160,7 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 			
 			// remember the timestamp of this successful load
 			SharedPreferences.Editor system_settings_editor = m_system_settings.edit();
-			system_settings_editor.putLong("last_activity_load", System.currentTimeMillis());
+			system_settings_editor.putLong("last_deed_load", System.currentTimeMillis());
 			system_settings_editor.commit();
 		}
 		
@@ -189,15 +190,15 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 		return jsonString;
 	}
 	
-	private void addActivities(JSONArray jsonArray, ArrayList<ActivityModel> list) {
+	private void addDeeds(JSONArray jsonArray, ArrayList<DeedModel> list) {
 		try {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject json = jsonArray.getJSONObject(i);
 				Log.e("JSON", "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
 				
-				// create the activity
-				ActivityModel activity = ActivityModel.fromJSON(json, m_genericIcon);
-				list.add(activity);
+				// create the deed
+				DeedModel deed = DeedModel.fromJSON(json, m_genericIcon);
+				list.add(deed);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -208,8 +209,8 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 		
 		FileWriter fileWriter = null;
 		try {
-			File activitiesFile = new File(m_cache_file_name);
-			fileWriter = new FileWriter(activitiesFile); // buffered
+			File deedsFile = new File(m_cache_file_name);
+			fileWriter = new FileWriter(deedsFile); // buffered
 			fileWriter.write(jsonString);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -222,20 +223,20 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 	
 	
 	/**
-	 * @return all activity model objects in the database.
+	 * @return all deed model objects in the database.
 	 */
-	public Collection<ActivityModel> findAll() {
+	public Collection<DeedModel> findAll() {
 		return m_data;
 	}
 
 	/**
-	 * @param activity_id
-	 * @return the activity model object with the given id
+	 * @param deed_id
+	 * @return the deed model object with the given id
 	 */
-	public ActivityModel findById(int activity_id) {
+	public DeedModel findById(int deed_id) {
 		
-		for (ActivityModel m:m_data) {
-			if (m.activity_id == activity_id) {
+		for (DeedModel m:m_data) {
+			if (m.deed_id == deed_id) {
 				return m;
 			}		
 		}
@@ -245,18 +246,18 @@ System.out.println("THE CACHE FILE IS " + m_cache_file_name);
 	
 	/**
 	 * @param threshold
-	 * @return all activity model objects applicable to the given threshold
+	 * @return all deed model objects applicable to the given threshold
 	 */
-	public Collection<ActivityModel> findByThreshold(FriendModel.Threshold threshold) {
-		ArrayList<ActivityModel> activities = new ArrayList<ActivityModel>();
+	public Collection<DeedModel> findByThreshold(FriendModel.Threshold threshold) {
+		ArrayList<DeedModel> deeds = new ArrayList<DeedModel>();
 		
-		for (ActivityModel m:m_data) {
+		for (DeedModel m:m_data) {
 			if (m.is_applicable(threshold)) {
-				activities.add(m);
+				deeds.add(m);
 			}		
 		}
 		
-		return activities;
+		return deeds;
 	}
 
 }

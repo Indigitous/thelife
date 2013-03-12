@@ -7,10 +7,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".ActivitiesForFriendActivity" >
+    tools:context=".DeedsForFriendActivity" >
     
  	<TextView 
-      	android:id="@+id/activities_for_friend_name"  
+      	android:id="@+id/deeds_for_friend_name"  
         android:text="Place Holder"
         android:textSize="16sp"
 		android:layout_width="wrap_content"
@@ -18,17 +18,17 @@
         />    
 
     <TextView
-        android:id="@+id/activities_for_friend_threshold"
+        android:id="@+id/deeds_for_friend_threshold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Threshold"
         android:textSize="12sp"
         android:textStyle="italic"
-        android:onClick="selectActivity"
+        android:onClick="selectDeed"
         />
     
 	<ListView
-        android:id="@+id/activities_for_friend_list"
+        android:id="@+id/deeds_for_friend_list"
         android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

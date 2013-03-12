@@ -7,47 +7,47 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.ActivityModel;
+import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
-public class ActivitiesForFriendActivity extends SlidingMenuActivity {
+public class DeedsForFriendActivity extends SlidingMenuActivity {
 	
 	private FriendModel m_friend = null;	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_activities_for_friend);
+		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_deeds_for_friend);
 		
 		// Get the main application
 		TheLifeApplication app = (TheLifeApplication)getApplication();		
 		
-		// Get the friend for this activity
+		// Get the friend for this deed
 		int groupId = getIntent().getIntExtra("group_id", 0);
 		int friendId = getIntent().getIntExtra("friend_id", 0);
 		m_friend = app.getFriendsDS().findById(groupId, friendId);
 		
 		// Show the friend
 		if (m_friend != null) {		
-			TextView name = (TextView)findViewById(R.id.activities_for_friend_name);
+			TextView name = (TextView)findViewById(R.id.deeds_for_friend_name);
 			name.setText(m_friend.get_full_name());
 			
-			TextView thresholdView = (TextView)findViewById(R.id.activities_for_friend_threshold);
+			TextView thresholdView = (TextView)findViewById(R.id.deeds_for_friend_threshold);
 			thresholdView.setText(m_friend.get_threshold_medium_string(getResources()));
 			
-			ListView activitiesView = (ListView)findViewById(R.id.activities_for_friend_list);
-			ActivitiesForFriendAdapter adapter = new ActivitiesForFriendAdapter(this, android.R.layout.simple_list_item_1, app, m_friend);
+			ListView activitiesView = (ListView)findViewById(R.id.deeds_for_friend_list);
+			DeedsForFriendAdapter adapter = new DeedsForFriendAdapter(this, android.R.layout.simple_list_item_1, app, m_friend);
 			activitiesView.setAdapter(adapter);
 			
 			// load the database from the server in the background
-			app.getActivitiesDS().addDataStoreListener(adapter);
-			app.getActivitiesDS().refresh(getApplicationContext());
+			app.getDeedsDS().addDataStoreListener(adapter);
+			app.getDeedsDS().refresh(getApplicationContext());
 		}		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activities_for_friend, menu);
+		getMenuInflater().inflate(R.menu.deeds_for_friend, menu);
 		return true;
 	}
 	
@@ -56,13 +56,13 @@ public class ActivitiesForFriendActivity extends SlidingMenuActivity {
 	 * @param view
 	 * @return
 	 */
-	public boolean selectActivity(View view) {
+	public boolean selectDeed(View view) {
 	
-		// get the activity associated with this view
-		ActivityModel activity = (ActivityModel)view.getTag();
+		// get the deed associated with this view
+		DeedModel deed = (DeedModel)view.getTag();
 		
-		Intent intent = new Intent("com.p2c.thelife.ActivityForFriend");
-		intent.putExtra("activity_id", activity.activity_id);
+		Intent intent = new Intent("com.p2c.thelife.DeedForFriend");
+		intent.putExtra("deed_id", deed.deed_id);
 		intent.putExtra("group_id", m_friend.group_id);				
 		intent.putExtra("friend_id", m_friend.friend_id);
 		startActivity(intent);

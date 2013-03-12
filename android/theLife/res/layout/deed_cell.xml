@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" 
-    android:onClick="selectActivity" >
+    android:onClick="selectDeed" >
     
     <ImageView
-        android:id="@+id/activity_image"
+        android:id="@+id/deed_image"
         android:layout_height="60dp"
         android:layout_width="60dp"        
         android:paddingLeft="0dp"        
@@ -15,7 +15,7 @@
         android:src="@drawable/pray" />    
         
     <TextView
-        android:id="@+id/activity_title"
+        android:id="@+id/deed_title"
         android:layout_width="0dp"
 	    android:layout_height="60dp"    
 	    android:layout_weight="1"

@@ -10,16 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.ActivityModel;
+import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.FriendModel;
 
-public class ActivitiesForFriendAdapter extends ArrayAdapter<ActivityModel> implements DataStoreListener {
+public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements DataStoreListener {
 	
 	private TheLifeApplication m_app;
 	private FriendModel m_friend;
 	
-	public ActivitiesForFriendAdapter(Context context, int mode, TheLifeApplication app, FriendModel friend) {
+	public DeedsForFriendAdapter(Context context, int mode, TheLifeApplication app, FriendModel friend) {
 		super(context, mode);
 		
 		m_app = app;
@@ -32,23 +32,24 @@ public class ActivitiesForFriendAdapter extends ArrayAdapter<ActivityModel> impl
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
-		View activityView = convertView;
-		if (activityView == null) {
+		View deedView = convertView;
+		if (deedView == null) {
 			LayoutInflater inflator = LayoutInflater.from(getContext());
-			activityView = inflator.inflate(R.layout.activity_cell, null);
+			deedView = inflator.inflate(R.layout.deed_cell, null);
 		}
 		
-		ActivityModel activity = getItem(position);
+		DeedModel deed = getItem(position);
+
 		
-		ImageView imageView = (ImageView)activityView.findViewById(R.id.activity_image);
-		imageView.setImageDrawable(activity.image);
+		ImageView imageView = (ImageView)deedView.findViewById(R.id.deed_image);
+		imageView.setImageDrawable(deed.image);
 		
-		TextView textView = (TextView)activityView.findViewById(R.id.activity_title);
-		textView.setText(Utilities.fill_template_string(m_friend, activity.title));
+		TextView textView = (TextView)deedView.findViewById(R.id.deed_title);
+		textView.setText(Utilities.fill_template_string(m_friend, deed.title));
 		
-		activityView.setTag(activity);		
+		deedView.setTag(deed);		
 					
-		return activityView;
+		return deedView;
 	}
 
 	@Override
@@ -63,9 +64,9 @@ public class ActivitiesForFriendAdapter extends ArrayAdapter<ActivityModel> impl
 	}
 	
 	private void query() {
-		// get all the Activities for the current user		
-		Collection<ActivityModel> Activities = m_app.getActivitiesDS().findByThreshold(m_friend.threshold);
-		for (ActivityModel m:Activities) {
+		// get all the Deeds for the current user		
+		Collection<DeedModel> Activities = m_app.getDeedsDS().findByThreshold(m_friend.threshold);
+		for (DeedModel m:Activities) {
 			add(m);
 		}		
 	}

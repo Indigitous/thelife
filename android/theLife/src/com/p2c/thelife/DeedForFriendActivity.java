@@ -8,17 +8,17 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.ActivityModel;
+import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
-public class ActivityForFriendActivity extends SlidingMenuActivity {
+public class DeedForFriendActivity extends SlidingMenuActivity {
 	
 	private FriendModel m_friend = null;
-	private ActivityModel m_activity = null;
+	private DeedModel m_deed = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_activity_for_friend);
+		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_deed_for_friend);
 		
 		// Get the main application
 		TheLifeApplication app = (TheLifeApplication)getApplication();			
@@ -30,40 +30,40 @@ public class ActivityForFriendActivity extends SlidingMenuActivity {
 		
 		// Show the friend model
 		if (m_friend != null) {		
-			TextView name = (TextView)findViewById(R.id.activity_for_friend_name);
+			TextView name = (TextView)findViewById(R.id.deed_for_friend_name);
 			name.setText(m_friend.get_full_name());
 			
-			TextView thresholdView = (TextView)findViewById(R.id.activity_for_friend_threshold);
+			TextView thresholdView = (TextView)findViewById(R.id.deed_for_friend_threshold);
 			thresholdView.setText(m_friend.get_threshold_medium_string(getResources()));
 		}
 		
-		// Get the activity model
-		int activityId = getIntent().getIntExtra("activity_id", 0);
-		m_activity = app.getActivitiesDS().findById(activityId);
+		// Get the Deed model
+		int deedId = getIntent().getIntExtra("deed_id", 0);
+		m_deed = app.getDeedsDS().findById(deedId);
 		
-		// Show the activity model
-		if (m_activity != null) {
+		// Show the Deed model
+		if (m_deed != null) {
 			
 			// title with icon			
-			TextView title = (TextView)findViewById(R.id.activity_for_friend_title);
-			m_activity.image.setBounds(0,  0,  40,  40); // TODO should not be hardcoded
-			title.setCompoundDrawables(m_activity.image, null, null, null);
-			title.setText(Utilities.fill_template_string(m_friend, m_activity.title));	
+			TextView title = (TextView)findViewById(R.id.deed_for_friend_title);
+			m_deed.image.setBounds(0,  0,  40,  40); // TODO should not be hardcoded
+			title.setCompoundDrawables(m_deed.image, null, null, null);
+			title.setText(Utilities.fill_template_string(m_friend, m_deed.title));	
 			
 			// description
-			TextView description = (TextView)findViewById(R.id.activity_for_friend_description);
-			description.setText(Utilities.fill_template_string(m_friend, m_activity.description));				
+			TextView description = (TextView)findViewById(R.id.deed_for_friend_description);
+			description.setText(Utilities.fill_template_string(m_friend, m_deed.description));				
 		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_for_friend, menu);
+		getMenuInflater().inflate(R.menu.deed_for_friend, menu);
 		return true;
 	}
 	
-	public boolean doActivity(View view) {
+	public boolean doDeed(View view) {
 		
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 		
@@ -71,8 +71,8 @@ public class ActivityForFriendActivity extends SlidingMenuActivity {
 		alertBuilder.setMessage(R.string.confirm_prayer_support);
 		alertBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
-				// create event with m_friend, m_activity and without prayer_support
-				System.out.println("CREATE ACTIVITY EVENT without prayer support");
+				// create event with m_friend, m_deed and without prayer_support
+				System.out.println("CREATE DEED EVENT without prayer support");
 				
 				// go back to the friend screen
 				Intent intent = new Intent("com.p2c.thelife.FriendActivity");
@@ -83,8 +83,8 @@ public class ActivityForFriendActivity extends SlidingMenuActivity {
 		});		
 		alertBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
-				// create event with m_friend, m_activity and with prayer_support
-				System.out.println("CREATE ACTIVITY EVENT with prayer support");
+				// create event with m_friend, m_deed and with prayer_support
+				System.out.println("CREATE DEED EVENT with prayer support");
 				
 				// go back to the friend screen
 				Intent intent = new Intent("com.p2c.thelife.FriendActivity");

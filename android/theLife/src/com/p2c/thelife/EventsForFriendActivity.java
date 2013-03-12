@@ -21,7 +21,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 		// Get the main application
 		TheLifeApplication app = (TheLifeApplication)getApplication();				
 		
-		// Get the friend for this activity
+		// Get the friend for this deed
 		int groupId = getIntent().getIntExtra("group_id", 0);
 		int friendId = getIntent().getIntExtra("friend_id", 0);
 		m_friend = app.getFriendsDS().findById(groupId, friendId);
@@ -54,7 +54,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 	
 	public boolean presentActivities(View view) {
 				
-		Intent intent = new Intent("com.p2c.thelife.ActivitiesForFriend");
+		Intent intent = new Intent("com.p2c.thelife.DeedsForFriend");
 		intent.putExtra("group_id", m_friend.group_id);
 		intent.putExtra("friend_id", m_friend.friend_id);
 		startActivity(intent);

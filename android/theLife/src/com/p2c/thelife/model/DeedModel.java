@@ -11,10 +11,14 @@ import android.graphics.drawable.Drawable;
 
 
 // POJO - plain old java object
-// TODO - activities to move a friend to a different (lower or higher) threshold
-public class ActivityModel {
+// TODO - deeds to move a friend to a different (lower or higher) threshold
+/**
+ * Deed/activity model
+ *
+ */
+public class DeedModel {
 	
-	public int    					activity_id;
+	public int    					deed_id;
 	public String 					title;
 	public String					summary;
 	public String 					description;
@@ -23,8 +27,8 @@ public class ActivityModel {
 										    // TODO do we need a bigger image and a thumbnail?	
 	public Set<FriendModel.Threshold> thresholds;
 	
-	public ActivityModel(int activity_id, String title, String summary, String description, String category, Drawable image, Set<FriendModel.Threshold> thresholds) {
-		this.activity_id = activity_id;
+	public DeedModel(int deed_id, String title, String summary, String description, String category, Drawable image, Set<FriendModel.Threshold> thresholds) {
+		this.deed_id = deed_id;
 		this.title = title;
 		this.summary = summary;
 		this.description = description;
@@ -37,9 +41,9 @@ public class ActivityModel {
 		return thresholds.contains(threshold);
 	}
 	
-	public static ActivityModel fromJSON(JSONObject json, Drawable genericImage) {
+	public static DeedModel fromJSON(JSONObject json, Drawable genericImage) {
 		
-		System.out.println("IN ACTIVITYMODEL from JSON");
+		System.out.println("IN DEED MODEL from JSON");
 		try {
 			// set up the thresholds
 			JSONArray jsThresholds = json.optJSONArray("thresholds");
@@ -49,8 +53,8 @@ public class ActivityModel {
 				thresholds.add(FriendModel.thresholdValues[intThreshold]);
 			}
 			
-			// create the activity
-			return new ActivityModel(
+			// create the deed
+			return new DeedModel(
 				json.getInt("activity_id"),
 				json.getString("title"),
 				json.getString("summary"),
@@ -68,7 +72,7 @@ public class ActivityModel {
 	
 	@Override
 	public String toString() {
-		return activity_id + ", " + title + ", " + summary + ", " + description + ", " + category + ", " + thresholds;
+		return deed_id + ", " + title + ", " + summary + ", " + description + ", " + category + ", " + thresholds;
 	}
 
 }
