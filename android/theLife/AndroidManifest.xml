@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.p2c.thelife.CommunityHelp"
+            android:name="com.p2c.thelife.CommunityHelpActivity"
             android:label="theLife" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.CommunityHelp" />

@@ -16,7 +16,7 @@ public class GroupModel {
 		this.group_id = group_id;
 		this.name = name;
 		this.leader_id = leader_id;
-		this.member_ids = member_ids;
+		this.member_ids = (ArrayList<Integer>)member_ids.clone();
 	}
 	
 	@Override

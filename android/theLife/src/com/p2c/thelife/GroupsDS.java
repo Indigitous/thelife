@@ -16,7 +16,7 @@ public class GroupsDS {
 		member_ids.add(1);
 		member_ids.add(2);
 		member_ids.add(3);		
-		m_data.add(new GroupModel(1, "John Martin's Group", 1, (ArrayList<Integer>)member_ids.clone()));
+		m_data.add(new GroupModel(1, "John Martin's Group", 1, member_ids));
 
 		member_ids.clear();
 		member_ids.add(1);
