@@ -27,14 +27,19 @@ import com.p2c.thelife.R;
 import com.p2c.thelife.TheLifeApplication;
 
 
+/**
+ * Deed Model datastore
+ * @author clarence
+ *
+ */
 public class DeedsDS extends AbstractDS {
 	
 	private static final String TAG = "DeedsDS"; 
 	
-	private ArrayList<DeedModel> m_data = new ArrayList<DeedModel>();
+	private ArrayList<DeedModel> m_data = new ArrayList<DeedModel>(); // in memory list of deeds
 	
 	private Drawable m_genericIcon = null;
-	private volatile boolean m_is_refreshing = false;
+	private boolean m_is_refreshing = false; // lock to prevent more than one thread refresh at any time
 	private SharedPreferences m_system_settings = null;
 	private String m_cache_file_name = null;
 
@@ -45,7 +50,8 @@ public class DeedsDS extends AbstractDS {
 		m_system_settings = context.getSharedPreferences(TheLifeApplication.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
 		m_cache_file_name = context.getCacheDir().getAbsolutePath() + "/deeds.json"; // data/data/com.p2c.thelife/cache/deeds.json
 		
-		// load deed list from cache
+		// load deeds from cache file on device
+		// TODO: is this too slow for the main thread?
 		try {
 			File deedsFile = new File(m_cache_file_name);
 			if (deedsFile.exists())
@@ -53,8 +59,10 @@ public class DeedsDS extends AbstractDS {
 				Log.d(TAG, "THE DEEDS CACHE FILE EXISTS");
 				
 				String jsonString = readJSONStream(new FileReader(deedsFile));
-				JSONArray jsonArray = new JSONArray(jsonString);					
-				addDeeds(jsonArray, m_data);
+				if (jsonString != null) {
+					JSONArray jsonArray = new JSONArray(jsonString);					
+					addDeeds(jsonArray, m_data);
+				}
 			} else {
 				Log.d(TAG, "THE DEEDS CACHE FILE DOES NOT EXIST");
 			}
@@ -65,7 +73,10 @@ public class DeedsDS extends AbstractDS {
 		}
 	}
 	
-	// UI thread only
+	/**
+	 * Refresh the list of deeds.
+	 * UI thread only
+	 */
 	public void refresh() {
 		
 		// find when the deeds were most recently loaded
@@ -79,11 +90,11 @@ public class DeedsDS extends AbstractDS {
 		if (System.currentTimeMillis() - last_deed_load > TheLifeApplication.RELOAD_DEEDS_DELTA) {
 				
 			// if the deeds are not currently being refreshed
-			if (!m_is_refreshing) {  // okay to test, since this is only in the UI (main) thread
+			if (!m_is_refreshing) {  // this variable is only accessed in the UI (main) thread
 				try {
 					m_is_refreshing = true;
 					Log.d(TAG, "WILL NOW RUN BACKGROUND DEEDS");
-					new readJSON().execute(new URL("http://thelife.ballistiq.com/deeds.json"));
+					new readFromServer().execute(new URL("http://thelife.ballistiq.com/deeds.json"));
 				} catch (MalformedURLException e) {
 					e.printStackTrace();		
 				} finally {
@@ -94,7 +105,7 @@ public class DeedsDS extends AbstractDS {
 		}
 	}
 	
-	private class readJSON extends AsyncTask<URL, Void, String> {
+	private class readFromServer extends AsyncTask<URL, Void, String> {
 		
 		// background thread		
 		@Override
@@ -105,13 +116,13 @@ public class DeedsDS extends AbstractDS {
 			try {
 				Thread.sleep(5000); // TODO: testing
 				
-				Log.d(TAG, "AM NOW RUNNING READJSON with" + urls[0]);	
+				Log.d(TAG, "AM NOW RUNNING READFROMSERVER with" + urls[0]);	
 				URL deedsEP = urls[0];
 				deedsConnection = (HttpURLConnection)deedsEP.openConnection();
 				deedsConnection.setConnectTimeout(TheLifeApplication.HTTP_CONNECTION_TIMEOUT);
 				deedsConnection.setConnectTimeout(TheLifeApplication.HTTP_READ_TIMEOUT);
 				
-				Log.d(TAG, "GOT THE RESPONSE CODE" + deedsConnection.getResponseCode());
+				Log.d(TAG, "GOT THE DEEDS CONNECTION RESPONSE CODE" + deedsConnection.getResponseCode());
 
 				if (deedsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
 					jsonString = readJSONStream(new InputStreamReader(deedsConnection.getInputStream()));
@@ -126,7 +137,6 @@ public class DeedsDS extends AbstractDS {
 				if (deedsConnection != null) {
 					deedsConnection.disconnect();
 				}
-				
 			}	
 			
 			return jsonString;
@@ -150,25 +160,31 @@ public class DeedsDS extends AbstractDS {
 					m_data = data2;
 					notifyDataStoreListeners(); // tell listeners that the data has changed
 					
-					writeJSONCache(jsonString);
+					if (writeJSONCache(jsonString)) {
+						
+						// remember the timestamp of this successful refresh
+						
+						SharedPreferences.Editor system_settings_editor = m_system_settings.edit();
+						system_settings_editor.putLong("last_deed_load", System.currentTimeMillis());
+						system_settings_editor.commit();
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			
 			// release lock
-			m_is_refreshing = false;
-			
-			// remember the timestamp of this successful load
-			SharedPreferences.Editor system_settings_editor = m_system_settings.edit();
-			system_settings_editor.putLong("last_deed_load", System.currentTimeMillis());
-			system_settings_editor.commit();
+			m_is_refreshing = false;	
 		}
 		
 	}	
 	
-	
-	// InputStreamReader is buffered
+	/**
+	 * Read the JSON objects from the given stream.
+	 * Note that InputStreamReader is buffered.
+	 * @param is
+	 * @return the string containing JSON, or null if an error
+	 */
 	private String readJSONStream(InputStreamReader is) {
 
 		String jsonString = null;
@@ -191,22 +207,26 @@ public class DeedsDS extends AbstractDS {
 		return jsonString;
 	}
 	
-	private void addDeeds(JSONArray jsonArray, ArrayList<DeedModel> list) {
-		try {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject json = jsonArray.getJSONObject(i);
-				Log.d("JSON", "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
-				
-				// create the deed
-				DeedModel deed = DeedModel.fromJSON(json, m_genericIcon);
-				list.add(deed);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+	private void addDeeds(JSONArray jsonArray, ArrayList<DeedModel> list) throws JSONException {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject json = jsonArray.getJSONObject(i);
+			Log.d("JSON", "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
+			
+			// create the deed
+			DeedModel deed = DeedModel.fromJSON(json, m_genericIcon);
+			list.add(deed);
 		}
 	}
 	
-	public void writeJSONCache(String jsonString) {
+	/**
+	 *  Write the string of JSON objects to the cache file.
+	 * @param jsonString
+	 * @return true if the write succeeded, false if it failed
+	 */
+	public boolean writeJSONCache(String jsonString) {
+		
+		boolean success = true;
 		
 		FileWriter fileWriter = null;
 		try {
@@ -215,16 +235,19 @@ public class DeedsDS extends AbstractDS {
 			fileWriter.write(jsonString);
 		} catch (IOException e) {
 			e.printStackTrace();
+			success = false;
 		} finally {
 			if (fileWriter != null) {
 				try { fileWriter.close(); } catch (IOException e) { }
 			}
 		}
+		
+		return success;
 	}
 	
 	
 	/**
-	 * @return all deed model objects in the database.
+	 * @return all deed model objects in the datastore.
 	 */
 	public Collection<DeedModel> findAll() {
 		return m_data;
