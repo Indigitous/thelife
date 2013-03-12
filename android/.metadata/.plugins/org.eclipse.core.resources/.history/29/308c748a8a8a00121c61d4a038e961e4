@@ -1,8 +1,0 @@
-package com.example.mylist1;
-
-
-public interface DataStoreListener {
-	
-	public void notifyDataChanged();
-
-}
