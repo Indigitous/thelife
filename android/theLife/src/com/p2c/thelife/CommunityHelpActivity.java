@@ -9,6 +9,7 @@ public class CommunityHelpActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Clarence;
 		setContentView(R.layout.activity_community_help);
 	}
 
