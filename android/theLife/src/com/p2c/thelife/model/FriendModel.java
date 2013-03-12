@@ -1,7 +1,9 @@
-package com.p2c.thelife;
+package com.p2c.thelife.model;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+
+import com.p2c.thelife.R;
 
 
 

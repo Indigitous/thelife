@@ -1,5 +1,8 @@
 package com.p2c.thelife;
 
+import com.p2c.thelife.model.GroupModel;
+import com.p2c.thelife.model.UserModel;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

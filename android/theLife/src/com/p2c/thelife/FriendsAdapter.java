@@ -2,6 +2,8 @@ package com.p2c.thelife;
 
 import java.util.Collection;
 
+import com.p2c.thelife.model.FriendModel;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

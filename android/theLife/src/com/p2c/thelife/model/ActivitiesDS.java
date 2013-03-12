@@ -1,4 +1,4 @@
-package com.p2c.thelife;
+package com.p2c.thelife.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,6 +22,10 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.p2c.thelife.AbstractDS;
+import com.p2c.thelife.R;
+import com.p2c.thelife.TheLifeApplication;
 
 
 public class ActivitiesDS extends AbstractDS {

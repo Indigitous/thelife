@@ -2,6 +2,8 @@ package com.p2c.thelife;
 
 import java.util.ArrayList;
 
+import com.p2c.thelife.model.DataStoreListener;
+
 public abstract class AbstractDS {
 	
 	protected ArrayList<DataStoreListener> m_listeners = new ArrayList<DataStoreListener>();

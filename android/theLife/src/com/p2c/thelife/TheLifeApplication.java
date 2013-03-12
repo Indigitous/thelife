@@ -1,4 +1,10 @@
 package com.p2c.thelife;
+import com.p2c.thelife.model.ActivitiesDS;
+import com.p2c.thelife.model.EventsDS;
+import com.p2c.thelife.model.FriendsDS;
+import com.p2c.thelife.model.GroupsDS;
+import com.p2c.thelife.model.UsersDS;
+
 import android.app.Application;
 
 

@@ -1,5 +1,8 @@
 package com.p2c.thelife;
 
+import com.p2c.thelife.model.FriendModel;
+import com.p2c.thelife.model.UserModel;
+
 public class Utilities {
 	
 	public static String fill_template_string(FriendModel friend, String template_string) {

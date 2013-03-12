@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 
+import com.p2c.thelife.model.GroupModel;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;

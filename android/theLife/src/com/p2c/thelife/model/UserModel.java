@@ -1,4 +1,4 @@
-package com.p2c.thelife;
+package com.p2c.thelife.model;
 
 import android.graphics.drawable.Drawable;
 

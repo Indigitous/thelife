@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.ActivityModel;
+import com.p2c.thelife.model.FriendModel;
+
 public class ActivitiesForFriendActivity extends SlidingMenuActivity {
 	
 	private FriendModel m_friend = null;	

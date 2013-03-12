@@ -1,9 +1,11 @@
-package com.p2c.thelife;
+package com.p2c.thelife.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import android.content.Context;
+
+import com.p2c.thelife.R;
 
 
 public class FriendsDS {

@@ -2,6 +2,10 @@ package com.p2c.thelife;
 
 import java.util.Collection;
 
+import com.p2c.thelife.model.EventModel;
+import com.p2c.thelife.model.FriendModel;
+import com.p2c.thelife.model.UserModel;
+
 import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;

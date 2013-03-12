@@ -10,6 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.ActivityModel;
+import com.p2c.thelife.model.DataStoreListener;
+import com.p2c.thelife.model.FriendModel;
+
 public class ActivitiesForFriendAdapter extends ArrayAdapter<ActivityModel> implements DataStoreListener {
 	
 	private TheLifeApplication m_app;
