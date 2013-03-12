@@ -67,9 +67,9 @@ public class DeedsDS extends AbstractDS {
 				Log.d(TAG, "THE DEEDS CACHE FILE DOES NOT EXIST");
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Log.e(TAG, "constructor", e);
 		} catch (JSONException e) {
-			e.printStackTrace();			
+			Log.wtf(TAG, "constructor", e);			
 		}
 	}
 	
@@ -96,7 +96,7 @@ public class DeedsDS extends AbstractDS {
 					Log.d(TAG, "WILL NOW RUN BACKGROUND DEEDS");
 					new readFromServer().execute(new URL("http://thelife.ballistiq.com/deeds.json"));
 				} catch (MalformedURLException e) {
-					e.printStackTrace();		
+					Log.e(TAG, "refresh()", e);
 				} finally {
 					m_is_refreshing = false;
 				}
@@ -113,9 +113,7 @@ public class DeedsDS extends AbstractDS {
 			String jsonString = null;
 				
 			HttpURLConnection deedsConnection = null;
-			try {
-				Thread.sleep(5000); // TODO: testing
-				
+			try {			
 				Log.d(TAG, "AM NOW RUNNING READFROMSERVER with" + urls[0]);	
 				URL deedsEP = urls[0];
 				deedsConnection = (HttpURLConnection)deedsEP.openConnection();
@@ -126,13 +124,11 @@ public class DeedsDS extends AbstractDS {
 
 				if (deedsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
 					jsonString = readJSONStream(new InputStreamReader(deedsConnection.getInputStream()));
-				}
-			} catch (InterruptedException e) {
-				;			
+				}	
 			} catch (MalformedURLException e) {
-				e.printStackTrace();
+				Log.e(TAG, "readFromServer()", e);
 			} catch (IOException e) {
-				e.printStackTrace();				
+				Log.e(TAG, "readFromServer()", e);				
 			} finally {
 				if (deedsConnection != null) {
 					deedsConnection.disconnect();
@@ -170,7 +166,7 @@ public class DeedsDS extends AbstractDS {
 					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
+				Log.wtf(TAG, "onPostExecute()", e);
 			}
 			
 			// release lock
@@ -201,7 +197,7 @@ public class DeedsDS extends AbstractDS {
 			
 			jsonString = new String(jsonBuffer.buffer());
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e(TAG, "readJSONStream()", e);
 		}
 		
 		return jsonString;
@@ -234,7 +230,7 @@ public class DeedsDS extends AbstractDS {
 			fileWriter = new FileWriter(deedsFile); // buffered
 			fileWriter.write(jsonString);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e(TAG, "writeJSONCache()", e);
 			success = false;
 		} finally {
 			if (fileWriter != null) {

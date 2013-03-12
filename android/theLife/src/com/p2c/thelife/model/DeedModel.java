@@ -44,33 +44,28 @@ public class DeedModel {
 		return thresholds.contains(threshold);
 	}
 	
-	public static DeedModel fromJSON(JSONObject json, Drawable genericImage) {
+	public static DeedModel fromJSON(JSONObject json, Drawable genericImage) throws JSONException {
 		
 		Log.d(TAG, "IN DEED MODEL from JSON");
-		try {
-			// set up the thresholds
-			JSONArray jsThresholds = json.optJSONArray("thresholds");
-			Set<FriendModel.Threshold> thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
-			for (int j = 0; j < jsThresholds.length(); j++) {
-				int intThreshold = jsThresholds.getInt(j);
-				thresholds.add(FriendModel.thresholdValues[intThreshold]);
-			}
-			
-			// create the deed
-			return new DeedModel(
-				json.getInt("activity_id"),
-				json.getString("title"),
-				json.getString("summary"),
-				json.getString("description"),
-				json.getString("category"),
-				genericImage,		
-				thresholds
-			);
-		} catch (JSONException e) {
-			e.printStackTrace();
+		
+		// set up the thresholds
+		JSONArray jsThresholds = json.optJSONArray("thresholds");
+		Set<FriendModel.Threshold> thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
+		for (int j = 0; j < jsThresholds.length(); j++) {
+			int intThreshold = jsThresholds.getInt(j);
+			thresholds.add(FriendModel.thresholdValues[intThreshold]);
 		}
 		
-		return null;
+		// create the deed
+		return new DeedModel(
+			json.getInt("activity_id"),
+			json.getString("title"),
+			json.getString("summary"),
+			json.getString("description"),
+			json.getString("category"),
+			genericImage,		
+			thresholds
+		);
 	}
 	
 	@Override
