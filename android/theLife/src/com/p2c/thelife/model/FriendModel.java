@@ -8,7 +8,7 @@ import com.p2c.thelife.R;
 
 
 // POJO - plain old java object
-public class FriendModel {
+public class FriendModel extends AbstractModel {
 	
 	public enum Threshold {
 		New_Contact,
@@ -25,7 +25,6 @@ public class FriendModel {
 //	Set<FriendModel.Threshold> earlyThresholds = EnumSet.range(FriendModel.Threshold.New_Contact, FriendModel.Threshold.Curious);	
 	public static final Threshold thresholdValues[] = Threshold.values();
 	
-	public int    group_id;
 	public int    friend_id;
 	public String first_name;
 	public String last_name;
@@ -33,9 +32,10 @@ public class FriendModel {
 							// TODO do we need a bigger image and a thumbnail?
 	public Threshold threshold;
 	
-	public FriendModel(int group_id, int friend_id, String first_name, String last_name, Drawable image, Threshold threshold) {
-		this.group_id = group_id;
-		this.friend_id = friend_id;
+	public FriendModel(int friend_id, String first_name, String last_name, Drawable image, Threshold threshold) {
+		
+		super(friend_id);
+		
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.image = image;
@@ -96,7 +96,7 @@ public class FriendModel {
 	
 	@Override
 	public String toString() {
-		return group_id + ", " + friend_id + ", " + first_name + ", " + last_name + ", " + threshold;
+		return id + ", " + first_name + ", " + last_name + ", " + threshold;
 	}
 
 }

@@ -20,7 +20,14 @@ public class TheLifeApplication extends Application {
 	public static final int HTTP_CONNECTION_TIMEOUT = 5000; // in millis
 	public static final int HTTP_READ_TIMEOUT = 15000;  // in millis
 	public static final String SYSTEM_PREFERENCES_FILE = "system_prefs";
-	public static final long RELOAD_DEEDS_DELTA = 24 * 60 * 60 * 1000; // 24 hours in millis
+	
+	// refresh deltas: time before a refresh
+	public static final long REFRESH_DEEDS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
+	public static final long REFRESH_EVENTS_DELTA = 24 * 60 * 60 * 1000; // 24 hours in millis
+	public static final long REFRESH_FRIENDS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
+	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
+	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
+	
 	
 	public void onCreate() {
 		super.onCreate();

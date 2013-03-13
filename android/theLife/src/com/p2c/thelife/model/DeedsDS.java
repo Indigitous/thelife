@@ -36,7 +36,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 			"refresh_deeds_timestamp_key",
 			"http://thelife.ballistiq.com/deeds.json",
 			"refresh_deeds_delta_key",
-			TheLifeApplication.RELOAD_DEEDS_DELTA
+			TheLifeApplication.REFRESH_DEEDS_DELTA
 		);
 		
 		// initialize instance vars
@@ -64,7 +64,11 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected DeedModel createFromJSON(JSONObject json) throws JSONException {
+	protected DeedModel createFromJSON(Context context, JSONObject json) throws JSONException {
+		
+		if (m_genericIcon == null) {
+			m_genericIcon = context.getResources().getDrawable(R.drawable.pray);
+		}
 		return DeedModel.fromJSON(json, m_genericIcon);
 	}
 	

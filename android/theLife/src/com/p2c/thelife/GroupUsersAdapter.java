@@ -22,7 +22,7 @@ public class GroupUsersAdapter extends ArrayAdapter<UserModel> {
 		
 		// get all the users for the current group
 		for (Integer memberId:m_group.member_ids) {
-			add(app.getUsersDS().findById(m_group.group_id, memberId));
+			add(app.getUsersDS().findById(memberId));
 		}
 	}
 	

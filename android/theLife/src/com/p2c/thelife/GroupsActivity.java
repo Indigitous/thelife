@@ -44,7 +44,7 @@ public class GroupsActivity extends SlidingMenuActivity {
 		GroupModel group = (GroupModel)view.getTag();
 		
 		Intent intent = new Intent("com.p2c.thelife.GroupActivity");
-		intent.putExtra("group_id", group.group_id);
+		intent.putExtra("group_id", group.id);
 		startActivity(intent);
 		
 		return true;

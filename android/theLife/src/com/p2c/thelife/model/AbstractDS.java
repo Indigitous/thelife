@@ -28,8 +28,9 @@ import com.p2c.thelife.TheLifeApplication;
 
 public abstract class AbstractDS<T extends AbstractModel> {
 	
-	
 	protected ArrayList<T> m_data = new ArrayList<T>(); 	// in memory list of model objects
+	
+	protected Context m_context = null;
 	protected String TAG = null;							// for logging
 	protected SharedPreferences m_systemSettings = null;	
 	protected String m_cacheFileName = null; 				// must be set in subclass
@@ -38,8 +39,6 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected String m_refreshURL = null; 
 	protected long m_refreshDelta = 0;						// in seconds
 
-
-	
 	
 	/**
 	 * Create a generic data store.
@@ -54,6 +53,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					  String refreshSettingTimestampKey, String refreshURL, String refreshSettingDeltaKey, long refreshDeltaDefault) {
 		
 		// initialize instance vars
+		m_context = context;
 		TAG = tag;
 		m_cacheFileName = cacheFileName;
 		m_systemSettings = context.getSharedPreferences(TheLifeApplication.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
@@ -72,7 +72,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				String jsonString = readJSONStream(new FileReader(cacheFile));
 				if (jsonString != null) {
 					JSONArray jsonArray = new JSONArray(jsonString);					
-					addModels(jsonArray, m_data);
+					addModels(m_context, jsonArray, m_data);
 				}
 			} else {
 				Log.d(TAG, "THE MODELS CACHE FILE DOES NOT EXIST");
@@ -121,7 +121,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		lastRefresh = 0;
 		
 		// if the model objects were not refreshed recently
-		if (System.currentTimeMillis() - lastRefresh > TheLifeApplication.RELOAD_DEEDS_DELTA) {
+		if (System.currentTimeMillis() - lastRefresh > m_refreshDelta) {
 				
 			// if the model objects are not currently being refreshed
 			if (!m_isRefreshing) {  // this variable is only accessed in the UI (main) thread
@@ -169,7 +169,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/********************************** helper routines ********************************/
 	
-	protected abstract T createFromJSON(JSONObject json) throws JSONException;
+	protected abstract T createFromJSON(Context context, JSONObject json) throws JSONException;
 	
 	/**
 	 * Read the JSON objects from the given stream.
@@ -199,14 +199,14 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		return jsonString;
 	}	
 	
-	protected void addModels(JSONArray jsonArray, ArrayList<T> list) throws JSONException {
+	protected void addModels(Context context, JSONArray jsonArray, ArrayList<T> list) throws JSONException {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = jsonArray.getJSONObject(i);
 			Log.d(TAG, "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
 			
 			// create the model object
-			T model = createFromJSON(json);
+			T model = createFromJSON(context, json);
 			list.add(model);
 		}
 	}	
@@ -259,7 +259,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				
 					// use a separate list in case of an error
 					ArrayList<T> data2 = new ArrayList<T>();
-					addModels(jsonArray, data2);
+					addModels(m_context, jsonArray, data2);
 					
 					// no error, so use the new data
 					m_data = data2;

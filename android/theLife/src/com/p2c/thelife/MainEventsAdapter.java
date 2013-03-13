@@ -56,8 +56,8 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> {
 		
 		// get the event for this view
 		EventModel event = getItem(position);
-		UserModel user = m_app.getUsersDS().findById(event.group_id, event.user_id);
-		FriendModel friend = m_app.getFriendsDS().findById(event.group_id, event.friend_id);
+		UserModel user = m_app.getUsersDS().findById(event.user_id);
+		FriendModel friend = m_app.getFriendsDS().findById(event.friend_id);
 		
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
 		String eventDescription = Utilities.fill_template_string(user, friend, event.description);

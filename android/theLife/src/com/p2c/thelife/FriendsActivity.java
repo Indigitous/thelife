@@ -44,8 +44,7 @@ public class FriendsActivity extends SlidingMenuActivity {
 		FriendModel friend = (FriendModel)view.getTag();
 		
 		Intent intent = new Intent("com.p2c.thelife.FriendActivity");
-		intent.putExtra("group_id", friend.group_id);
-		intent.putExtra("friend_id", friend.friend_id);
+		intent.putExtra("friend_id", friend.id);
 		startActivity(intent);
 		
 		return true;

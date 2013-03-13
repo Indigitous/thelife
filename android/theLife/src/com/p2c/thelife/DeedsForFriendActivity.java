@@ -22,9 +22,8 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 		TheLifeApplication app = (TheLifeApplication)getApplication();		
 		
 		// Get the friend for this deed
-		int groupId = getIntent().getIntExtra("group_id", 0);
 		int friendId = getIntent().getIntExtra("friend_id", 0);
-		m_friend = app.getFriendsDS().findById(groupId, friendId);
+		m_friend = app.getFriendsDS().findById(friendId);
 		
 		// Show the friend
 		if (m_friend != null) {		
@@ -63,8 +62,7 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 		
 		Intent intent = new Intent("com.p2c.thelife.DeedForFriend");
 		intent.putExtra("deed_id", deed.id);
-		intent.putExtra("group_id", m_friend.group_id);				
-		intent.putExtra("friend_id", m_friend.friend_id);
+		intent.putExtra("friend_id", m_friend.id);
 		startActivity(intent);
 		
 		return true;
