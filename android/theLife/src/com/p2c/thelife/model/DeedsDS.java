@@ -34,7 +34,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 			"DeedsDS", 
 			context.getCacheDir().getAbsolutePath() + "/deeds.json",
 			"refresh_deeds_timestamp_key",
-			"http://thelife.ballistiq.com/deeds.json",
+			TheLifeApplication.SERVER_URL + "/deeds.json",
 			"refresh_deeds_delta_key",
 			TheLifeApplication.REFRESH_DEEDS_DELTA
 		);

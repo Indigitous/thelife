@@ -19,7 +19,7 @@ public class GroupsDS extends AbstractDS<GroupModel> {
 				"GroupsDS", 
 				context.getCacheDir().getAbsolutePath() + "/groups.json",
 				"refresh_groups_timestamp_key",
-				"http://thelife.ballistiq.com/groups.json",
+				TheLifeApplication.SERVER_URL + "/groups.json",
 				"refresh_groups_delta_key",
 				TheLifeApplication.REFRESH_GROUPS_DELTA
 			);		

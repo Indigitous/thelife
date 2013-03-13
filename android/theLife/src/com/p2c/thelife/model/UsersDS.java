@@ -19,7 +19,7 @@ public class UsersDS extends AbstractDS<UserModel> {
 				"UsersDS", 
 				context.getCacheDir().getAbsolutePath() + "/users.json",
 				"refresh_users_timestamp_key",
-				"http://thelife.ballistiq.com/users.json",
+				TheLifeApplication.SERVER_URL + "/users.json",
 				"refresh_users_delta_key",
 				TheLifeApplication.REFRESH_USERS_DELTA
 			);		

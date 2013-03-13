@@ -20,7 +20,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 				"EventsDS", 
 				context.getCacheDir().getAbsolutePath() + "/events.json",
 				"refresh_events_timestamp_key",
-				"http://thelife.ballistiq.com/events.json",
+				TheLifeApplication.SERVER_URL + "/events.json",
 				"refresh_events_delta_key",
 				TheLifeApplication.REFRESH_EVENTS_DELTA
 			);		

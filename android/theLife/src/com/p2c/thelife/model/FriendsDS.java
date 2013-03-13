@@ -1,7 +1,5 @@
 package com.p2c.thelife.model;
 
-import java.util.ArrayList;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +18,7 @@ public class FriendsDS extends AbstractDS<FriendModel> {
 				"FriendsDS", 
 				context.getCacheDir().getAbsolutePath() + "/friends.json",
 				"refresh_friends_timestamp_key",
-				"http://thelife.ballistiq.com/friends.json",
+				TheLifeApplication.SERVER_URL + "/friends.json",
 				"refresh_friends_delta_key",
 				TheLifeApplication.REFRESH_FRIENDS_DELTA
 			);		
