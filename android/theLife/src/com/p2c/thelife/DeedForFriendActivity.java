@@ -50,11 +50,11 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 			TextView title = (TextView)findViewById(R.id.deed_for_friend_title);
 			m_deed.image.setBounds(0,  0,  40,  40); // TODO should not be hardcoded
 			title.setCompoundDrawables(m_deed.image, null, null, null);
-			title.setText(Utilities.fill_template_string(m_friend, m_deed.title));	
+			title.setText(Utilities.fillTemplateString(m_friend, m_deed.title));	
 			
 			// description
 			TextView description = (TextView)findViewById(R.id.deed_for_friend_description);
-			description.setText(Utilities.fill_template_string(m_friend, m_deed.description));				
+			description.setText(Utilities.fillTemplateString(m_friend, m_deed.description));				
 		}
 	}
 

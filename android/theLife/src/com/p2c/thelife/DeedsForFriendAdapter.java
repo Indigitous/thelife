@@ -45,7 +45,7 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Da
 		imageView.setImageDrawable(deed.image);
 		
 		TextView textView = (TextView)deedView.findViewById(R.id.deed_title);
-		textView.setText(Utilities.fill_template_string(m_friend, deed.title));
+		textView.setText(Utilities.fillTemplateString(m_friend, deed.title));
 		
 		deedView.setTag(deed);		
 					
