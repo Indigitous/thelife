@@ -64,9 +64,9 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> {
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
-		imageView1.setImageDrawable(user.image);
+		imageView1.setImageBitmap(user.thumbnail);
 		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.imageView2);
-		imageView2.setImageDrawable(friend.image);		
+		imageView2.setImageBitmap(friend.thumbnail);		
 		
 		// only show the pledge view if the event requests it
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				

@@ -25,15 +25,31 @@
         android:textSize="12sp"
         android:textStyle="italic"
         />
-    
-    <TextView
-        android:id="@+id/deed_for_friend_title"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="Title"
-        android:textSize="16sp"
-        />    
+        android:orientation="horizontal" >
+        
+	    <ImageView
+	        android:id="@+id/deed_for_friend_image"
+	        android:layout_height="60dp"
+	        android:layout_width="60dp"        
+	        android:paddingLeft="0dp"        
+	        android:paddingRight="0dp"   
+	        android:layout_gravity="left"        
+	        android:src="@drawable/pray" />    
+	            
+	    <TextView
+	        android:id="@+id/deed_for_friend_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="10dp"
+	        android:text="Title"
+	        android:textSize="16sp"
+	        />    
+	        
+	</LinearLayout>        
         
     <TextView
         android:id="@+id/deed_for_friend_description"

@@ -1,5 +1,6 @@
 package com.p2c.thelife;
 import android.app.Application;
+import android.graphics.Bitmap;
 
 import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
@@ -30,11 +31,20 @@ public class TheLifeApplication extends Application {
 	
 	public static final String SERVER_URL = "http://thelife.ballistiq.com";
 	
+	public static Bitmap genericPersonImage;
+	public static Bitmap genericPersonThumbnail;
+	public static Bitmap genericDeedImage;
+	
 	
 	public void onCreate() {
 		super.onCreate();
-
-		// initialize the databases
+		
+		// initialize stock images before initializing datastores
+		genericPersonImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
+		genericPersonThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
+		genericDeedImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
+		
+		// initialize the datastores
 		m_deedsDS = new DeedsDS(getApplicationContext());
 		m_friendsDS = new FriendsDS(getApplicationContext());
 		m_usersDS = new UsersDS(getApplicationContext());

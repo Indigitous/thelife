@@ -20,9 +20,6 @@ import com.p2c.thelife.TheLifeApplication;
  */
 public class DeedsDS extends AbstractDS<DeedModel> {
 	
-	private Drawable m_genericIcon = null;
-
-	
 	/** 
 	 * Deeds (Activity Objects) Data Store.
 	 * @param context
@@ -39,8 +36,6 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 			TheLifeApplication.REFRESH_DEEDS_DELTA
 		);
 		
-		// initialize instance vars
-		m_genericIcon = context.getResources().getDrawable(R.drawable.pray);
 	}
 	
 	
@@ -65,11 +60,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	 * Needed by the abstract superclass.
 	 */
 	protected DeedModel createFromJSON(Context context, JSONObject json) throws JSONException {
-		
-		if (m_genericIcon == null) {
-			m_genericIcon = context.getResources().getDrawable(R.drawable.pray);
-		}
-		return DeedModel.fromJSON(json, m_genericIcon);
+		return DeedModel.fromJSON(json);
 	}
 	
 }

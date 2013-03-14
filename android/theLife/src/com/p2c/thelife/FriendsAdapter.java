@@ -37,7 +37,7 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> {
 		FriendModel friend = getItem(position);
 		
 		ImageView imageView = (ImageView)friendView.findViewById(R.id.friend_image);
-		imageView.setImageDrawable(friend.image);
+		imageView.setImageBitmap(friend.image);
 		
 		TextView nameView = (TextView)friendView.findViewById(R.id.friend_name);
 		nameView.setText(friend.first_name);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.p2c.thelife.model.DeedModel;
@@ -46,11 +47,13 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 		// Show the Deed model
 		if (m_deed != null) {
 			
-			// title with icon			
+			// icon
+			ImageView image = (ImageView)findViewById(R.id.deed_for_friend_image);
+			image.setImageBitmap(m_deed.image);
+			
+			// title			
 			TextView title = (TextView)findViewById(R.id.deed_for_friend_title);
-			m_deed.image.setBounds(0,  0,  40,  40); // TODO should not be hardcoded
-			title.setCompoundDrawables(m_deed.image, null, null, null);
-			title.setText(Utilities.fillTemplateString(m_friend, m_deed.title));	
+			title.setText(Utilities.fillTemplateString(m_friend, m_deed.title));				
 			
 			// description
 			TextView description = (TextView)findViewById(R.id.deed_for_friend_description);

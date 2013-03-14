@@ -1,14 +1,21 @@
 package com.p2c.thelife.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.p2c.thelife.R;
+import com.p2c.thelife.TheLifeApplication;
 
 
 
 // POJO - plain old java object
 public class FriendModel extends AbstractModel {
+	
+	private static final String TAG = "FriendModel"; 	
 	
 	public enum Threshold {
 		New_Contact,
@@ -28,19 +35,37 @@ public class FriendModel extends AbstractModel {
 	public int    friend_id;
 	public String first_name;
 	public String last_name;
-	public Drawable image;  // TODO is this an image id, image or what?
-							// TODO do we need a bigger image and a thumbnail?
+	public Bitmap image;  			// TODO is this an image id, image or what?
+	public Bitmap thumbnail;
 	public Threshold threshold;
 	
-	public FriendModel(int friend_id, String first_name, String last_name, Drawable image, Threshold threshold) {
+	
+	public FriendModel(int friend_id, String first_name, String last_name, Bitmap image, Bitmap thumbnail, Threshold threshold) {
 		
 		super(friend_id);
 		
 		this.first_name = first_name;
 		this.last_name = last_name;
-		this.image = image;
+		
+		if (image == null) {
+			this.image = TheLifeApplication.genericPersonImage;
+		} else {
+			this.image = image;
+		}
+		if (thumbnail == null) {
+			this.thumbnail = TheLifeApplication.genericPersonThumbnail;
+		} else {
+			this.thumbnail = thumbnail;
+		}
+		
 		this.threshold = threshold;
 	}
+	
+	
+	public FriendModel(int friend_id, String first_name, String last_name, Bitmap image, Threshold threshold) {
+		this(friend_id, first_name, last_name, image, image, threshold);
+	}
+	
 	
 	public String get_full_name() {
 		return first_name + " " + last_name;
@@ -98,5 +123,23 @@ public class FriendModel extends AbstractModel {
 	public String toString() {
 		return id + ", " + first_name + ", " + last_name + ", " + threshold;
 	}
+	
+	public static FriendModel fromJSON(JSONObject json) throws JSONException {
+		
+		Log.d(TAG, "fromJSON()");
+		
+		int thresholdInt = json.getInt("threshold");
+		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdInt];
+			
+		// create the deed
+		return new FriendModel(
+			json.getInt("friend_id"),
+			json.getString("first_name"),
+			json.getString("last_name"),
+			TheLifeApplication.genericPersonImage,
+			threshold
+		);
+	}
+		
 
 }

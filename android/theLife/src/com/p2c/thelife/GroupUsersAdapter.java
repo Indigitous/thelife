@@ -39,7 +39,7 @@ public class GroupUsersAdapter extends ArrayAdapter<UserModel> {
 		UserModel user = getItem(position);
 		
 		ImageView imageView = (ImageView)userView.findViewById(R.id.user_image);
-		imageView.setImageDrawable(user.image);
+		imageView.setImageBitmap(user.image);
 		
 		TextView textView = (TextView)userView.findViewById(R.id.user_name);
 		textView.setText(user.get_full_name());		

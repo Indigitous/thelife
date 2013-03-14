@@ -7,8 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.util.Log;
+
+import com.p2c.thelife.TheLifeApplication;
 
 
 // POJO - plain old java object
@@ -21,30 +23,36 @@ public class DeedModel extends AbstractModel {
 	
 	private static final String TAG = "DeedModel"; 
 	
-	public String 		title;
-	public String		summary;
-	public String 		description;
-	public String		category;
-	public Drawable     image;  // TODO is this an image id, image or what?
-										    // TODO do we need a bigger image and a thumbnail?	
+	public String 	title;
+	public String	summary;
+	public String 	description;
+	public String	category;
+	public Bitmap	image;  		// TODO is this an image id, image or what?
 	public Set<FriendModel.Threshold> thresholds;
 	
-	public DeedModel(int deed_id, String title, String summary, String description, String category, Drawable image, Set<FriendModel.Threshold> thresholds) {
-		
+	
+	public DeedModel(int deed_id, String title, String summary, String description, String category, Bitmap image, Set<FriendModel.Threshold> thresholds) {
 		super(deed_id);
 		this.title = title;
 		this.summary = summary;
 		this.description = description;
 		this.category = category;
-		this.image = image;
+		
+		if (image == null) {
+			this.image = TheLifeApplication.genericDeedImage;
+		} else {
+			this.image = image;
+		}
+		
 		this.thresholds = thresholds;
-	}
+	}	
 	
+
 	public boolean is_applicable(FriendModel.Threshold threshold) {
 		return thresholds.contains(threshold);
 	}
 	
-	public static DeedModel fromJSON(JSONObject json, Drawable genericImage) throws JSONException {
+	public static DeedModel fromJSON(JSONObject json) throws JSONException {
 		
 		Log.d(TAG, "IN DEED MODEL from JSON");
 		
@@ -63,7 +71,7 @@ public class DeedModel extends AbstractModel {
 			json.getString("summary"),
 			json.getString("description"),
 			json.getString("category"),
-			genericImage,		
+			TheLifeApplication.genericDeedImage,
 			thresholds
 		);
 	}

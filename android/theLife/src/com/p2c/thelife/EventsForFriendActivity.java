@@ -28,7 +28,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 		// Show the friend
 		if (m_friend != null) {
 			ImageView imageView = (ImageView)findViewById(R.id.activity_friend_image);
-			imageView.setImageDrawable(m_friend.image);
+			imageView.setImageBitmap(m_friend.image);
 			
 			TextView nameView = (TextView)findViewById(R.id.activity_friend_name);
 			nameView.setText(m_friend.get_full_name());

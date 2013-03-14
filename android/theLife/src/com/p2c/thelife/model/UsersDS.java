@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.p2c.thelife.R;
 import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.Utilities;
 
 
 // TODO need to know current user?
@@ -24,11 +25,11 @@ public class UsersDS extends AbstractDS<UserModel> {
 				TheLifeApplication.REFRESH_USERS_DELTA
 			);		
 				
-		m_data.add(new UserModel(1, "Geoff", "Moore", context.getResources().getDrawable(R.drawable.moore), "john@martin@p2c.com", "555-123-4567"));
-		m_data.add(new UserModel(2, "Mark", "Twain", context.getResources().getDrawable(R.drawable.twain),"john@martin@p2c.com", "555-123-4567"));
-		m_data.add(new UserModel(3, "Robert", "Rashdall", context.getResources().getDrawable(R.drawable.rashdall), "john@martin@p2c.com", "555-123-4567"));
-		m_data.add(new UserModel(4, "Tak", "Inouye", context.getResources().getDrawable(R.drawable.inouye), "john@martin@p2c.com", "555-123-4567"));
-		m_data.add(new UserModel(5, "Nelson", "Schock", context.getResources().getDrawable(R.drawable.schock), "john@martin@p2c.com", "555-123-4567"));	
+		m_data.add(new UserModel(1, "Geoff", "Moore", Utilities.getBitmapFromDrawable(context.getResources().getDrawable(R.drawable.moore)), "john@martin@p2c.com", "555-123-4567"));
+		m_data.add(new UserModel(2, "Mark", "Twain", Utilities.getBitmapFromDrawable(context.getResources().getDrawable(R.drawable.twain)),"john@martin@p2c.com", "555-123-4567"));
+		m_data.add(new UserModel(3, "Robert", "Rashdall", Utilities.getBitmapFromDrawable(context.getResources().getDrawable(R.drawable.rashdall)), "john@martin@p2c.com", "555-123-4567"));
+		m_data.add(new UserModel(4, "Tak", "Inouye", Utilities.getBitmapFromDrawable(context.getResources().getDrawable(R.drawable.inouye)), "john@martin@p2c.com", "555-123-4567"));
+		m_data.add(new UserModel(5, "Nelson", "Schock", Utilities.getBitmapFromDrawable(context.getResources().getDrawable(R.drawable.schock)), "john@martin@p2c.com", "555-123-4567"));	
 	}
 	
 	/**
