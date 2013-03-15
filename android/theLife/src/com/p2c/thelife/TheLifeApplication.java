@@ -29,7 +29,7 @@ public class TheLifeApplication extends Application {
 	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
 	
-	public static final String SERVER_URL = "http://thelife.ballistiq.com";
+	public static final String SERVER_URL = "http://thelife.ballistiq.com/";
 	
 	public static Bitmap genericPersonImage;
 	public static Bitmap genericPersonThumbnail;

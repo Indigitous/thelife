@@ -72,7 +72,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				String jsonString = readJSONStream(new FileReader(cacheFile));
 				if (jsonString != null) {
 					JSONArray jsonArray = new JSONArray(jsonString);					
-					addModels(m_context, jsonArray, m_data);
+					addModels(jsonArray, false, m_data);
 				}
 			} else {
 				Log.d(TAG, "THE MODELS CACHE FILE DOES NOT EXIST");
@@ -169,7 +169,14 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/********************************** helper routines ********************************/
 	
-	protected abstract T createFromJSON(Context context, JSONObject json) throws JSONException;
+	/**
+	 * Create a model object from JSON.
+	 * @param context
+	 * @param json
+	 * @return
+	 * @throws JSONException
+	 */
+	protected abstract T createFromJSON(JSONObject json, boolean useServer) throws JSONException;
 	
 	/**
 	 * Read the JSON objects from the given stream.
@@ -199,14 +206,14 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		return jsonString;
 	}	
 	
-	protected void addModels(Context context, JSONArray jsonArray, ArrayList<T> list) throws JSONException {
+	protected void addModels(JSONArray jsonArray, boolean useServer, ArrayList<T> list) throws JSONException {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = jsonArray.getJSONObject(i);
 			Log.d(TAG, "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
 			
 			// create the model object
-			T model = createFromJSON(context, json);
+			T model = createFromJSON(json, useServer);
 			list.add(model);
 		}
 	}	
@@ -214,12 +221,12 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/********************************* Background thread refresh task *************************************/
 	
-	private class readFromServer extends AsyncTask<URL, Void, String> {
+	private class readFromServer extends AsyncTask<URL, Void, ArrayList<T>> {
 		
 		// background thread		
 		@Override
-		protected String doInBackground(URL... urls) {
-			String jsonString = null;
+		protected ArrayList<T> doInBackground(URL... urls) {
+			ArrayList<T> data2 = null;
 				
 			HttpURLConnection modelsConnection = null;
 			try {			
@@ -231,11 +238,32 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				
 				Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE CODE" + modelsConnection.getResponseCode());
 
+				String jsonString = null;
 				if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
 					jsonString = readJSONStream(new InputStreamReader(modelsConnection.getInputStream()));
-				}	
+				}
+				
+				if (jsonString != null) {
+					JSONArray jsonArray = new JSONArray(jsonString);					
+				
+					// add the new data models to a separate list in case of an error
+					data2 = new ArrayList<T>();
+					addModels(jsonArray, true, data2);
+					
+					// write the new data models to disk
+					if (writeJSONCache(jsonString)) {
+						
+						// remember the timestamp of this successful refresh
+						
+						SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
+						system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
+						system_settings_editor.commit();
+					}					
+				}
+			} catch (JSONException e) {
+				Log.wtf(TAG, "readFromServer()", e);				
 			} catch (MalformedURLException e) {
-				Log.e(TAG, "readFromServer()", e);
+				Log.wtf(TAG, "readFromServer()", e);
 			} catch (IOException e) {
 				Log.e(TAG, "readFromServer()", e);				
 			} finally {
@@ -244,40 +272,21 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				}
 			}	
 			
-			return jsonString;
+			return data2;
 		}
 		
 		// UI thread		
 		@Override
-		protected void onPostExecute(String jsonString) {
+		protected void onPostExecute(ArrayList<T> data2) {
 			
 			Log.d(TAG, "HERE IN ON POST EXECUTE");
 			
-			try {
-				if (jsonString != null) {
-					JSONArray jsonArray = new JSONArray(jsonString);					
-				
-					// use a separate list in case of an error
-					ArrayList<T> data2 = new ArrayList<T>();
-					addModels(m_context, jsonArray, data2);
-					
-					// no error, so use the new data
-					m_data = data2;
-					notifyDataStoreListeners(); // tell listeners that the data has changed
-					
-					if (writeJSONCache(jsonString)) {
-						
-						// remember the timestamp of this successful refresh
-						
-						SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
-						system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
-						system_settings_editor.commit();
-					}
-				}
-			} catch (JSONException e) {
-				Log.wtf(TAG, "onPostExecute()", e);
+			if (data2 != null) {
+				// no error, so use the new data
+				m_data = data2;
+				notifyDataStoreListeners(); // tell listeners that the data has changed, on the UI thread
 			}
-			
+		
 			// release lock
 			m_isRefreshing = false;	
 		}

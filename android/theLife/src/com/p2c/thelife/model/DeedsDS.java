@@ -31,7 +31,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 			"DeedsDS", 
 			context.getCacheDir().getAbsolutePath() + "/deeds.json",
 			"refresh_deeds_timestamp_key",
-			TheLifeApplication.SERVER_URL + "/deeds.json",
+			TheLifeApplication.SERVER_URL + "deeds.json",
 			"refresh_deeds_delta_key",
 			TheLifeApplication.REFRESH_DEEDS_DELTA
 		);
@@ -59,8 +59,8 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected DeedModel createFromJSON(Context context, JSONObject json) throws JSONException {
-		return DeedModel.fromJSON(json);
+	protected DeedModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
+		return DeedModel.fromJSON(json, useServer);
 	}
 	
 }

@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.Utilities;
 
 
 // POJO - plain old java object
@@ -52,7 +53,7 @@ public class DeedModel extends AbstractModel {
 		return thresholds.contains(threshold);
 	}
 	
-	public static DeedModel fromJSON(JSONObject json) throws JSONException {
+	public static DeedModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 		
 		Log.d(TAG, "IN DEED MODEL from JSON");
 		
@@ -65,13 +66,14 @@ public class DeedModel extends AbstractModel {
 		}
 		
 		// create the deed
+		String imageUrl = json.optString("image_url", null);
 		return new DeedModel(
 			json.getInt("activity_id"),
 			json.getString("title"),
 			json.getString("summary"),
 			json.getString("description"),
 			json.getString("category"),
-			TheLifeApplication.genericDeedImage,
+			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericDeedImage),
 			thresholds
 		);
 	}

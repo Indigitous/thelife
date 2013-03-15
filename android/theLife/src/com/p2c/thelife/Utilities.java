@@ -1,6 +1,7 @@
 package com.p2c.thelife;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
@@ -40,7 +42,7 @@ public class Utilities {
 		HttpURLConnection connection = null;
 		
 		try {
-			URL url = new URL(urlString);
+			URL url = new URL(TheLifeApplication.SERVER_URL + urlString);
 			connection = (HttpURLConnection)url.openConnection();
 			is =  new BufferedInputStream(connection.getInputStream());
 			return BitmapFactory.decodeStream(is);
@@ -61,6 +63,55 @@ public class Utilities {
 		
 		return null; // this line is only to satisfy the compiler; will not be executed
 	}
+	
+	public static Bitmap getBitmapAtURLSafe(String urlString) {
+		
+		InputStream is = null;
+		HttpURLConnection connection = null;
+		
+		try {
+			URL url = new URL(TheLifeApplication.SERVER_URL + urlString);
+			connection = (HttpURLConnection)url.openConnection();
+			is =  new BufferedInputStream(connection.getInputStream());
+			return BitmapFactory.decodeStream(is);
+		} catch (Exception e) {
+			Log.e(TAG, "getBitmapAtURLSafe()", e);
+		} finally {
+			if (is != null) {
+				try { is.close(); } catch (IOException e) { e.printStackTrace(); }
+			}
+			if (connection != null) {
+				connection.disconnect();
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	/**
+	 * Get the bitmap from the server if permitted and if available.
+	 * @param urlString
+	 * @param useServer		can only be true if not on UI thread
+	 * @param fallbackBitmap
+	 * @return
+	 */
+	public static Bitmap getBitmapFromSystem(String urlString, boolean useServer, Bitmap fallbackBitmap) {
+		Bitmap bitmap = null;
+		
+		// if permitted, get the bitmap from the server
+		if (useServer && urlString != null) {
+			bitmap = Utilities.getBitmapAtURLSafe(urlString);
+		}
+		
+		// use generic image if no image was available
+		if (bitmap == null) {
+			bitmap = TheLifeApplication.genericDeedImage;
+		}
+		
+		return bitmap;
+	}
+	
 	
 	public static Bitmap getBitmapFromDrawable(Drawable drawable) {
 		if (drawable instanceof BitmapDrawable) {

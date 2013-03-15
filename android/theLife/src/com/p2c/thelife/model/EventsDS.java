@@ -20,7 +20,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 				"EventsDS", 
 				context.getCacheDir().getAbsolutePath() + "/events.json",
 				"refresh_events_timestamp_key",
-				TheLifeApplication.SERVER_URL + "/events.json",
+				TheLifeApplication.SERVER_URL + "events.json",
 				"refresh_events_delta_key",
 				TheLifeApplication.REFRESH_EVENTS_DELTA
 			);		
@@ -63,7 +63,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected EventModel createFromJSON(Context context, JSONObject json) throws JSONException {
+	protected EventModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
 		return null; // EventModel.fromJSON(json);
 	}	
 

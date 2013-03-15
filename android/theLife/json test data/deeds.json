@@ -14,7 +14,8 @@
     summary: 'This is summary for Activity Two',
     description: 'This is the summary for the second activity. It is a very useful activity in here.',
     category: 'General',
-    thresholds: [0,1,2]    
+    thresholds: [0,1,2],
+    image_url: 'clarence.png'   
 },
 {
 	activity_id: 3,

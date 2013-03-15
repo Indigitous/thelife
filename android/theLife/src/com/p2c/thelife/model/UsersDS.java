@@ -20,7 +20,7 @@ public class UsersDS extends AbstractDS<UserModel> {
 				"UsersDS", 
 				context.getCacheDir().getAbsolutePath() + "/users.json",
 				"refresh_users_timestamp_key",
-				TheLifeApplication.SERVER_URL + "/users.json",
+				TheLifeApplication.SERVER_URL + "users.json",
 				"refresh_users_delta_key",
 				TheLifeApplication.REFRESH_USERS_DELTA
 			);		
@@ -35,7 +35,7 @@ public class UsersDS extends AbstractDS<UserModel> {
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected UserModel createFromJSON(Context context, JSONObject json) throws JSONException {
+	protected UserModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
 		return null; // EventModel.fromJSON(json);
 	}		
 

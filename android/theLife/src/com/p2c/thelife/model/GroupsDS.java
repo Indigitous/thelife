@@ -19,7 +19,7 @@ public class GroupsDS extends AbstractDS<GroupModel> {
 				"GroupsDS", 
 				context.getCacheDir().getAbsolutePath() + "/groups.json",
 				"refresh_groups_timestamp_key",
-				TheLifeApplication.SERVER_URL + "/groups.json",
+				TheLifeApplication.SERVER_URL + "groups.json",
 				"refresh_groups_delta_key",
 				TheLifeApplication.REFRESH_GROUPS_DELTA
 			);		
@@ -40,7 +40,7 @@ public class GroupsDS extends AbstractDS<GroupModel> {
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected GroupModel createFromJSON(Context context, JSONObject json) throws JSONException {
+	protected GroupModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
 		return null; // EventModel.fromJSON(json);
 	}	
 }

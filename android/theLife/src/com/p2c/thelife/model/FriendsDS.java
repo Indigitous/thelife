@@ -19,7 +19,7 @@ public class FriendsDS extends AbstractDS<FriendModel> {
 				"FriendsDS", 
 				context.getCacheDir().getAbsolutePath() + "/friends.json",
 				"refresh_friends_timestamp_key",
-				TheLifeApplication.SERVER_URL + "/friends.json",
+				TheLifeApplication.SERVER_URL + "friends.json",
 				"refresh_friends_delta_key",
 				TheLifeApplication.REFRESH_FRIENDS_DELTA
 			);		
@@ -49,7 +49,7 @@ public class FriendsDS extends AbstractDS<FriendModel> {
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected FriendModel createFromJSON(Context context, JSONObject json) throws JSONException {
+	protected FriendModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
 		return null; // EventModel.fromJSON(json);
 	}	
 
