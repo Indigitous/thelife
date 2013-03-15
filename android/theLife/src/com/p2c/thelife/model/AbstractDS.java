@@ -89,7 +89,6 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * @return the model object with the given id
 	 */
 	public T findById(int id) {
-		
 		for (T m:m_data) {
 			if (m.id == id) {
 				return m;
@@ -210,7 +209,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = jsonArray.getJSONObject(i);
-			Log.d(TAG, "ADD ANOTHER JSON OBJECT WITH TITLE " + json.optString("title", ""));
+			Log.d(TAG, "ADD ANOTHER JSON OBJECT " + json);
 			
 			// create the model object
 			T model = createFromJSON(json, useServer);
@@ -310,7 +309,9 @@ public abstract class AbstractDS<T extends AbstractModel> {
 //		for (DataStoreListener listener:m_listeners) {
 //			listener.notifyDataChanged();
 //		}
-		m_listener.notifyDataChanged();
+		if (m_listener != null) {
+			m_listener.notifyDataChanged();
+		}
 	}
 	
 	public void removeDataStoreListener(DataStoreListener theListener) {

@@ -32,6 +32,7 @@ public class GroupActivity extends SlidingMenuActivity {
 		GridView usersView = (GridView)findViewById(R.id.activity_group_users);
 		GroupUsersAdapter adapter = new GroupUsersAdapter(this, android.R.layout.simple_list_item_1, app, m_group);
 		usersView.setAdapter(adapter);
+		app.getUsersDS().refresh();		
 	}
 
 	@Override

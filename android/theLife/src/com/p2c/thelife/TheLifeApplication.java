@@ -46,9 +46,9 @@ public class TheLifeApplication extends Application {
 		
 		// initialize the datastores
 		m_deedsDS = new DeedsDS(getApplicationContext());
-		m_friendsDS = new FriendsDS(getApplicationContext());
 		m_usersDS = new UsersDS(getApplicationContext());
 		m_groupsDS = new GroupsDS(getApplicationContext());
+		m_friendsDS = new FriendsDS(getApplicationContext());		
 		m_eventsDS = new EventsDS(getApplicationContext());
 	}
 	

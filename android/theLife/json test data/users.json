@@ -1,0 +1,49 @@
+[
+
+{
+	user_id: 1,
+    first_name: 'Geoff',
+    last_name: 'Moore',
+    email: 'jon.martin@ballistiq.com',
+    phone: '555-123-4567',
+    image_url: 'moore.png',
+    thumbnail_url: 'moore.png'
+},
+{
+	user_id: 2,
+    first_name: 'Mark',
+    last_name: 'Twain',
+    email: 'jon.martin@ballistiq.com',
+    phone: '555-123-4567',
+    image_url: 'twain.png',
+    thumbnail_url: 'twain.png'
+},
+{
+	user_id: 3,
+    first_name: 'Robert',
+    last_name: 'Rashdall',
+    email: 'jon.martin@ballistiq.com',
+    phone: '555-123-4567',
+    image_url: 'rashdall.png',
+    thumbnail_url: 'rashdall.png'
+},
+{
+	user_id: 4,
+    first_name: 'Tak',
+    last_name: 'Inouye',
+    email: 'jon.martin@ballistiq.com',
+    phone: '555-123-4567',
+    image_url: 'inouye.png',
+    thumbnail_url: 'inouye.png'    
+},
+{
+	user_id: 5,
+    first_name: 'Nelson',
+    last_name: 'Schock',
+    email: 'jon.martin@ballistiq.com',
+    phone: '555-123-4567',
+    image_url: 'schock.png',
+    thumbnail_url: 'schock.png' 
+}
+
+]

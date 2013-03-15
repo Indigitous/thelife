@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.Utilities;
 
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -57,16 +58,18 @@ public class UserModel extends AbstractModel {
 		return id + ", " + first_name + ", " + last_name + ", " + email + ", " + phone;
 	}
 	
-	public static UserModel fromJSON(JSONObject json) throws JSONException {
+	public static UserModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 		
 		Log.d(TAG, "fromJSON()");
 					
 		// create the deed
+		String imageUrl = json.optString("image_url", null);		
 		return new UserModel(
 			json.getInt("user_id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
-			TheLifeApplication.genericPersonImage,
+			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonImage),
+			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonThumbnail),			
 			json.getString("email"),
 			json.getString("phone")
 		);
