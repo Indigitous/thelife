@@ -1,0 +1,16 @@
+[
+
+{
+	group_id: 1,
+    name: "John Martin's Group",
+    leader_id: 1,
+    member_ids: [1,2,3]
+},
+{
+	group_id: 2,
+    name: 'St-Marc Life Group',
+    leader_id: 4,
+    member_ids: [4,5]
+}
+
+]
