@@ -9,6 +9,11 @@ import android.widget.GridView;
 
 import com.p2c.thelife.model.FriendModel;
 
+/**
+ * Show the friends of the current user.
+ * @author clarence
+ *
+ */
 public class FriendsActivity extends SlidingMenuActivity {
 	
 	private static final String TAG = "FriendsActivity"; 	
@@ -21,8 +26,12 @@ public class FriendsActivity extends SlidingMenuActivity {
 		TheLifeApplication app = (TheLifeApplication)getApplication();				
 		
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
-		FriendsAdapter friendAdapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1, app);
-		friendsGrid.setAdapter(friendAdapter);
+		FriendsAdapter adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1, app);
+		friendsGrid.setAdapter(adapter);
+		
+		// load the database from the server in the background
+		app.getFriendsDS().addDataStoreListener(adapter);  
+		app.getFriendsDS().refresh();		
 	}
 
 	@Override

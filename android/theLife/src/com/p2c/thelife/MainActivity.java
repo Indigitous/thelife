@@ -19,6 +19,10 @@ public class MainActivity extends SlidingMenuActivity {
 		ListView listView = (ListView)findViewById(R.id.list);
 		MainEventsAdapter adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1, app);
 		listView.setAdapter(adapter);
+		
+		// load the database from the server in the background
+		app.getEventsDS().addDataStoreListener(adapter);
+		app.getEventsDS().refresh();			
 	}
 
 	@Override

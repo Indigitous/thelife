@@ -40,7 +40,11 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.activity_friend_events);
 		EventsForFriendAdapter adapter = new EventsForFriendAdapter(this, android.R.layout.simple_list_item_1, app, m_friend);
-		listView.setAdapter(adapter);		
+		listView.setAdapter(adapter);
+		
+		// load the database from the server in the background
+		app.getEventsDS().addDataStoreListener(adapter);
+		app.getEventsDS().refresh();		
 	}
 
 	@Override

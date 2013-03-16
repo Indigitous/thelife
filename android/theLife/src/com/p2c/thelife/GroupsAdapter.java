@@ -9,18 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.GroupModel;
 
-public class GroupsAdapter extends ArrayAdapter<GroupModel> {
+public class GroupsAdapter extends ArrayAdapter<GroupModel> implements DataStoreListener {
+	
+	private TheLifeApplication m_app = null;
 	
 	public GroupsAdapter(Context context, int mode, TheLifeApplication app) {
 		super(context, mode);
 		
-		// get all the Groups for the current user
-		Collection<GroupModel> Groups = app.getGroupsDS().findAll();
-		for (GroupModel f:Groups) {
-			add(f);
-		}
+		m_app = app;
+		query();
 	}
 	
 	// see ApiDemos List14.java for other (maybe better?) ways for this
@@ -44,5 +44,26 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> {
 							
 		return groupView;
 	}
+	
+	@Override
+	public void notifyDataChanged() {
+		
+		// clear data and redo query
+		clear();		
+		query();
+		
+		// redisplay
+		notifyDataSetChanged();
+	}
+	
+	private void query() {
+		
+		// get all the Groups for the current user
+		Collection<GroupModel> Groups = m_app.getGroupsDS().findAll();
+		for (GroupModel f:Groups) {
+			add(f);
+		}		
+
+	}				
 
 }

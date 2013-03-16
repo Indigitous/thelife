@@ -5,9 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.R;
 import com.p2c.thelife.TheLifeApplication;
-import com.p2c.thelife.Utilities;
 
 
 // TODO need to know current user?

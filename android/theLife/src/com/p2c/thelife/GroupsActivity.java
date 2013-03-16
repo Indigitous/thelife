@@ -21,8 +21,12 @@ public class GroupsActivity extends SlidingMenuActivity {
 		TheLifeApplication app = (TheLifeApplication)getApplication();				
 		
 		ListView groupsList = (ListView)findViewById(R.id.groups_list);
-		GroupsAdapter groupAdapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1, app);
-		groupsList.setAdapter(groupAdapter);		
+		GroupsAdapter adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1, app);
+		groupsList.setAdapter(adapter);
+		
+		// load the database from the server in the background
+		app.getGroupsDS().addDataStoreListener(adapter);
+		app.getGroupsDS().refresh();		
 	}
 
 	@Override

@@ -29,11 +29,13 @@ public class TheLifeApplication extends Application {
 	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
 	
-	public static final String SERVER_URL = "http://thelife.ballistiq.com/";
+	public static final String SERVER_URL = "http://thelife.ballistiq.com/api/v1/";
 	
 	public static Bitmap genericPersonImage;
 	public static Bitmap genericPersonThumbnail;
 	public static Bitmap genericDeedImage;
+	public static Bitmap missingDataImage;
+	public static Bitmap missingDataThumbnail;
 	
 	
 	public void onCreate() {
@@ -43,6 +45,8 @@ public class TheLifeApplication extends Application {
 		genericPersonImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
 		genericPersonThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
 		genericDeedImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
+		missingDataImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search));
+		missingDataThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search));		
 		
 		// initialize the datastores
 		m_deedsDS = new DeedsDS(getApplicationContext());

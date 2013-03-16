@@ -13,11 +13,12 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 
-public class MainEventsAdapter extends ArrayAdapter<EventModel> {
+public class MainEventsAdapter extends ArrayAdapter<EventModel> implements DataStoreListener {
 	
 	private static final String TAG = "MainEventsAdapter"; 	
 	
@@ -28,11 +29,7 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> {
 		
 		m_app = app;
 		
-		// get all the events
-		Collection<EventModel> events = m_app.getEventsDS().findAll();
-		for (EventModel m:events) {
-			add(m);
-		}		
+		query();
 	}
 	
 	// see ApiDemos List14.java for other (maybe better?) ways for this
@@ -58,15 +55,15 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> {
 		EventModel event = getItem(position);
 		UserModel user = m_app.getUsersDS().findById(event.user_id);
 		FriendModel friend = m_app.getFriendsDS().findById(event.friend_id);
-		
+
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
 		String eventDescription = Utilities.fillTemplateString(user, friend, event.description);
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap(user.thumbnail);
+		imageView1.setImageBitmap((user == null) ? TheLifeApplication.missingDataThumbnail : user.thumbnail);
 		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.imageView2);
-		imageView2.setImageBitmap(friend.thumbnail);		
+		imageView2.setImageBitmap((friend == null) ? TheLifeApplication.missingDataThumbnail : friend.thumbnail);		
 		
 		// only show the pledge view if the event requests it
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
@@ -80,5 +77,26 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> {
 		
 		return eventView;
 	}
+	
+	@Override
+	public void notifyDataChanged() {
+		
+		// clear data and redo query
+		clear();		
+		query();
+		
+		// redisplay
+		notifyDataSetChanged();
+	}
+	
+	private void query() {
+		
+		// get all the events
+		Collection<EventModel> events = m_app.getEventsDS().findAll();
+		for (EventModel m:events) {
+			add(m);
+		}				
+
+	}			
 
 }

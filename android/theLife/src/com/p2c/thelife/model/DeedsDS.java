@@ -7,9 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 
-import com.p2c.thelife.R;
 import com.p2c.thelife.TheLifeApplication;
 
 

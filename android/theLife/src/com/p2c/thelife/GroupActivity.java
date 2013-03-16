@@ -13,7 +13,7 @@ public class GroupActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.FRIENDS_POSITION, R.layout.activity_group);
+		super.onCreate(savedInstanceState, SlidingMenuActivity.GROUPS_POSITION, R.layout.activity_group);
 		
 		// Get the main application
 		TheLifeApplication app = (TheLifeApplication)getApplication();				

@@ -24,8 +24,8 @@ public class Utilities {
 	}
 	
 	public static String fillTemplateString(UserModel user, FriendModel friend, String template_string) {
-		String s = template_string.replace("$u", user.first_name);
-		return s.replace("$f", friend.first_name);
+		String s = template_string.replace("$u", (user == null) ? "user" : user.first_name); // TODO translation		
+		return s.replace("$f", (friend == null) ? "friend" : friend.first_name); // TODO translation
 	}
 	
 	/**

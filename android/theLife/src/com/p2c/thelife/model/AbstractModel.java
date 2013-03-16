@@ -14,4 +14,5 @@ public abstract class AbstractModel {
 	public AbstractModel(int id) {
 		this.id = id;
 	}
+	
 }

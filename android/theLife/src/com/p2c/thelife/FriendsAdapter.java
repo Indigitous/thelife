@@ -10,18 +10,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.FriendModel;
 
-public class FriendsAdapter extends ArrayAdapter<FriendModel> {
+public class FriendsAdapter extends ArrayAdapter<FriendModel> implements DataStoreListener {
+	
+	private TheLifeApplication m_app = null;
 	
 	public FriendsAdapter(Context context, int mode, TheLifeApplication app) {
 		super(context, mode);
 		
-		// get all the friends for the current user
-		Collection<FriendModel> friends = app.getFriendsDS().findAll();
-		for (FriendModel f:friends) {
-			add(f);
-		}
+		m_app = app;
+		
+		query();
 	}
 	
 	// see ApiDemos List14.java for other (maybe better?) ways for this
@@ -49,5 +50,24 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> {
 			
 		return friendView;
 	}
+	
+	@Override
+	public void notifyDataChanged() {
+		
+		// clear data and redo query
+		clear();		
+		query();
+		
+		// redisplay
+		notifyDataSetChanged();
+	}
+	
+	private void query() {
+		// get all the friends for the current user
+		Collection<FriendModel> friends = m_app.getFriendsDS().findAll();
+		for (FriendModel f:friends) {
+			add(f);
+		}
+	}		
 
 }

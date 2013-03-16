@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.p2c.thelife.R;
 import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.Utilities;
 
 
 
@@ -124,19 +125,21 @@ public class FriendModel extends AbstractModel {
 		return id + ", " + first_name + ", " + last_name + ", " + threshold;
 	}
 	
-	public static FriendModel fromJSON(JSONObject json) throws JSONException {
+	public static FriendModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 		
 		Log.d(TAG, "fromJSON()");
 		
 		int thresholdInt = json.getInt("threshold");
 		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdInt];
 			
-		// create the deed
+		// create the friend
+		String imageUrl = json.optString("image_url", null);			
 		return new FriendModel(
 			json.getInt("friend_id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
-			TheLifeApplication.genericPersonImage,
+			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonImage),
+			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonThumbnail),				
 			threshold
 		);
 	}

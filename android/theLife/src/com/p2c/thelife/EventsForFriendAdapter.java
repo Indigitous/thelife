@@ -13,11 +13,12 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 
-public class EventsForFriendAdapter extends ArrayAdapter<EventModel> {
+public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements DataStoreListener {
 	
 	private static final String TAG = "DeedsDS"; 
 	
@@ -30,12 +31,7 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> {
 		m_app = app;
 		m_friend = friend;
 		
-		// get all the Events for the current user
-		Collection<EventModel> events = m_app.getEventsDS().findByFriend(m_friend.friend_id);
-		for (EventModel m:events) {
-			add(m);
-		}
-		Log.d(TAG, "FOUND EVENTS FOR FRIEND " + m_friend + ": " + getCount());
+		query();
 	}
 	
 	// see ApiDemos List14.java for other (maybe better?) ways for this
@@ -76,5 +72,25 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> {
 		
 		return eventView;
 	}
+	
+	@Override
+	public void notifyDataChanged() {
+		
+		// clear data and redo query
+		clear();		
+		query();
+		
+		// redisplay
+		notifyDataSetChanged();
+	}
+	
+	private void query() {
+		// get all the Events for the current user
+		Collection<EventModel> events = m_app.getEventsDS().findByFriend(m_friend.friend_id);
+		for (EventModel m:events) {
+			add(m);
+		}
+		Log.d(TAG, "FOUND EVENTS FOR FRIEND " + m_friend + ": " + getCount());
+	}	
 
 }

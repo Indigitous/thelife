@@ -2,10 +2,18 @@ package com.p2c.thelife.model;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
 
 
 // POJO - plain old java object
 public class GroupModel extends AbstractModel {
+	
+	private static final String TAG = "GroupModel";
 	
 	public String   name;
 	public int      leader_id; // user_id in that group
@@ -24,5 +32,25 @@ public class GroupModel extends AbstractModel {
 	public String toString() {
 		return id + ", " + name + ", " + leader_id + ", " + member_ids;
 	}
+	
+	public static GroupModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
+		
+		Log.d(TAG, "IN GROUP MODEL from JSON");
+		
+		// get the member ids
+		JSONArray jsonMemberIds = json.getJSONArray("member_ids");
+		ArrayList<Integer> memberIds = new ArrayList<Integer>(jsonMemberIds.length());
+		for (int i = 0; i < jsonMemberIds.length(); i++) {
+			memberIds.add(jsonMemberIds.getInt(i));
+		}
+		
+		// create the group
+		return new GroupModel(
+			json.getInt("group_id"),
+			json.getString("name"),
+			json.getInt("leader_id"),
+			memberIds
+		);
+	}	
 
 }

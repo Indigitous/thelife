@@ -1,10 +1,17 @@
 package com.p2c.thelife.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
 
 
 // POJO - plain old java object
 // TODO: not need activity_id?
 public class EventModel extends AbstractModel {
+	
+	private static final String TAG = "EventModel";
 	
 	public int     user_id;
 	public int     friend_id;
@@ -30,5 +37,22 @@ public class EventModel extends AbstractModel {
 	public String toString() {
 		return id + ", " + user_id + ", " + friend_id + ", " + description + ", " + timestamp + ", " + isPledge + ", " + pledgeCount;
 	}
+	
+	public static EventModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
+		
+		Log.d(TAG, "IN EVENT MODEL from JSON");
+		
+		// create the event
+		return new EventModel(
+			json.getInt("event_id"),
+			json.getInt("user_id"),
+			json.getInt("friend_id"),
+			json.getInt("deed_id"),			
+			json.getString("description"),
+			json.getLong("timestamp"),
+			json.getBoolean("is_pledge"),
+			json.getInt("pledge_count")
+		);
+	}	
 
 }
