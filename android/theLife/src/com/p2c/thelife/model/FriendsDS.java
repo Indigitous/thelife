@@ -15,7 +15,7 @@ public class FriendsDS extends AbstractDS<FriendModel> {
 		super(
 				context, 
 				"FriendsDS", 
-				context.getCacheDir().getAbsolutePath() + "/friends.json",
+				"friends.json",
 				"refresh_friends_timestamp_key",
 				TheLifeApplication.SERVER_URL + "friends.json",
 				"refresh_friends_delta_key",

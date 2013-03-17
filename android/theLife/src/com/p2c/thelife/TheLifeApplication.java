@@ -1,6 +1,7 @@
 package com.p2c.thelife;
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
@@ -11,6 +12,8 @@ import com.p2c.thelife.model.UsersDS;
 
 
 public class TheLifeApplication extends Application {
+	
+	private static final String TAG = "TheLifeApplication";
 	
 	private DeedsDS m_deedsDS = null;
 	private FriendsDS m_friendsDS = null;
@@ -29,24 +32,32 @@ public class TheLifeApplication extends Application {
 	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
 	
+	// URL of the server
 	public static final String SERVER_URL = "http://thelife.ballistiq.com/api/v1/";
 	
+	// stock images
 	public static Bitmap genericPersonImage;
 	public static Bitmap genericPersonThumbnail;
 	public static Bitmap genericDeedImage;
 	public static Bitmap missingDataImage;
 	public static Bitmap missingDataThumbnail;
 	
+	// directory of local cache files
+	public static String cacheDirectory = null; 
 	
 	public void onCreate() {
 		super.onCreate();
+		
+		Log.e(TAG, "onCreate()");  // TODO for debugging only
 		
 		// initialize stock images before initializing datastores
 		genericPersonImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
 		genericPersonThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
 		genericDeedImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
 		missingDataImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search));
-		missingDataThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search));		
+		missingDataThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search));
+		
+		cacheDirectory = getApplicationContext().getCacheDir().getAbsolutePath() + "/";
 		
 		// initialize the datastores
 		m_deedsDS = new DeedsDS(getApplicationContext());

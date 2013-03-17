@@ -11,7 +11,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.p2c.thelife.TheLifeApplication;
-import com.p2c.thelife.Utilities;
+import com.p2c.thelife.BitmapCache;
 
 
 // POJO - plain old java object
@@ -73,7 +73,7 @@ public class DeedModel extends AbstractModel {
 			json.getString("summary"),
 			json.getString("description"),
 			json.getString("category"),
-			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericDeedImage),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericDeedImage),
 			thresholds
 		);
 	}

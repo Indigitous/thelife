@@ -7,9 +7,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.p2c.thelife.BitmapCache;
 import com.p2c.thelife.R;
 import com.p2c.thelife.TheLifeApplication;
-import com.p2c.thelife.Utilities;
 
 
 
@@ -138,8 +138,8 @@ public class FriendModel extends AbstractModel {
 			json.getInt("friend_id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
-			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonImage),
-			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonThumbnail),				
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonImage),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonThumbnail),				
 			threshold
 		);
 	}

@@ -27,7 +27,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 		super(
 			context, 
 			"DeedsDS", 
-			context.getCacheDir().getAbsolutePath() + "/deeds.json",
+			"deeds.json",
 			"refresh_deeds_timestamp_key",
 			TheLifeApplication.SERVER_URL + "deeds.json",
 			"refresh_deeds_delta_key",

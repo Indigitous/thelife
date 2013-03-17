@@ -15,7 +15,7 @@ public class GroupsDS extends AbstractDS<GroupModel> {
 		super(
 				context, 
 				"GroupsDS", 
-				context.getCacheDir().getAbsolutePath() + "/groups.json",
+				"groups.json",
 				"refresh_groups_timestamp_key",
 				TheLifeApplication.SERVER_URL + "groups.json",
 				"refresh_groups_delta_key",

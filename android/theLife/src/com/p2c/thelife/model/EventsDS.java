@@ -18,7 +18,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 		super(
 				context, 
 				"EventsDS", 
-				context.getCacheDir().getAbsolutePath() + "/events.json",
+				"events.json",
 				"refresh_events_timestamp_key",
 				TheLifeApplication.SERVER_URL + "events.json",
 				"refresh_events_delta_key",

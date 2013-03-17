@@ -37,12 +37,6 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> implements DataS
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
 		// convertView is null only once, at position 0
-		if (convertView != null) {
-			Log.d(TAG, "AT POSITION " + Integer.toString(position) + ":  convertView is NOT NULL");
-		}
-		else {
-			Log.d(TAG, "AT POSITION " + Integer.toString(position) + ":  convertView is NULL");
-		}
 
 		// get the view
 		View eventView = convertView;

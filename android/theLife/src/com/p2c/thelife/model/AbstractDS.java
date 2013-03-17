@@ -55,7 +55,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		// initialize instance vars
 		m_context = context;
 		TAG = tag;
-		m_cacheFileName = cacheFileName;
+		m_cacheFileName = TheLifeApplication.cacheDirectory + cacheFileName;
 		m_systemSettings = context.getSharedPreferences(TheLifeApplication.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
 		m_refreshSettingTimestampKey = refreshSettingTimestampKey;
 		m_refreshURL = refreshURL;

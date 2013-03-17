@@ -40,7 +40,6 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Da
 		
 		DeedModel deed = getItem(position);
 
-		
 		ImageView imageView = (ImageView)deedView.findViewById(R.id.deed_image);
 		imageView.setImageBitmap(deed.image);
 		

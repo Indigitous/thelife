@@ -3,11 +3,11 @@ package com.p2c.thelife.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.p2c.thelife.TheLifeApplication;
-import com.p2c.thelife.Utilities;
-
 import android.graphics.Bitmap;
 import android.util.Log;
+
+import com.p2c.thelife.BitmapCache;
+import com.p2c.thelife.TheLifeApplication;
 
 
 
@@ -68,8 +68,8 @@ public class UserModel extends AbstractModel {
 			json.getInt("user_id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
-			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonImage),
-			Utilities.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonThumbnail),			
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonImage),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonThumbnail),			
 			json.getString("email"),
 			json.getString("phone")
 		);
