@@ -124,7 +124,7 @@ public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implement
 		TextView nameView = (TextView)groupView.findViewById(R.id.group_name);
 		nameView.setText(group.name);
 		
-		// groupView.setTag(group);		
+		groupView.setTag(group);		
 							
 		return groupView;		
 	}
