@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 import com.p2c.thelife.model.GroupModel;
 
@@ -20,8 +20,10 @@ public class GroupsActivity extends SlidingMenuActivity {
 		// Get the main application
 		TheLifeApplication app = (TheLifeApplication)getApplication();				
 		
-		ExpandableListView groupsList = (ExpandableListView)findViewById(R.id.groups_list);
-		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1, app);
+//		ExpandableListView groupsList = (ExpandableListView)findViewById(R.id.groups_list);
+//		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1, app);
+		ListView groupsList = (ListView)findViewById(R.id.groups_list);
+		GroupsAdapter adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1, app);
 		groupsList.setAdapter(adapter);
 		
 		// load the database from the server in the background

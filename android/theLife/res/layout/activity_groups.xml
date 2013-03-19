@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".GroupsActivity" >
         
-	<ExpandableListView
+	<ListView
         android:id="@+id/groups_list"
         android:dividerHeight="0dp"
         android:layout_width="match_parent"
