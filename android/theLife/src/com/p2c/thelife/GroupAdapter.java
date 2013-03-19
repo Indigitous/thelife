@@ -45,6 +45,8 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 		
 		TextView textView = (TextView)userView.findViewById(R.id.user_name);
 		textView.setText(user.get_full_name());
+		
+		// show the group leader in bold and italics
 		Typeface typeface = textView.getTypeface();
 		textView.setTypeface(typeface, (m_group.leader_id == user.id) ? 3 : 0);
 	
