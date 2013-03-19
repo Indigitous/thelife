@@ -1,6 +1,7 @@
 package com.p2c.thelife;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 		}
 	}
 	
-	// see ApiDemos List14.java for other (maybe better?) ways for this
+	// TODO: see ApiDemos List14.java for other (maybe better?) ways for this
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
@@ -43,8 +44,10 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 		imageView.setImageBitmap(user.image);
 		
 		TextView textView = (TextView)userView.findViewById(R.id.user_name);
-		textView.setText(user.get_full_name());		
-				
+		textView.setText(user.get_full_name());
+		Typeface typeface = textView.getTypeface();
+		textView.setTypeface(typeface, (m_group.leader_id == user.id) ? 3 : 0);
+	
 		return userView;
 	}
 
