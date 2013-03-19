@@ -8,20 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".GroupsActivity" >
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:textSize="20sp" 
-        android:text="@string/my_groups"
-        />
-    
-	<ListView
+        
+	<ExpandableListView
         android:id="@+id/groups_list"
-        android:paddingTop="10dp"
-        android:dividerHeight="8dp"
+        android:dividerHeight="0dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />    
+        android:layout_height="match_parent" />    
 
 </LinearLayout>

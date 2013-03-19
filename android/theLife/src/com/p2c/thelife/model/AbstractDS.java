@@ -102,7 +102,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	/**
 	 * @return all model objects in the datastore.
 	 */
-	public Collection<T> findAll() {
+	public ArrayList<T> findAll() {
 		return m_data;
 	}
 	

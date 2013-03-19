@@ -40,9 +40,9 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements DataStore
 		nameView.setTextSize(20.0f);
 		nameView.setText(group.name);
 		
-		groupView.setTag(group);		
+		groupView.setTag(group);  		
 							
-		return groupView;
+		return groupView;     
 	}
 	
 	@Override
@@ -64,6 +64,7 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements DataStore
 			add(f);
 		}		
 
-	}				
+	}
+	
 
 }
