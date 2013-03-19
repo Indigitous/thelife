@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
 
@@ -52,6 +54,19 @@ public class GroupsActivity extends SlidingMenuActivity {
 		Intent intent = new Intent("com.p2c.thelife.GroupActivity");
 		intent.putExtra("group_id", group.id);
 		startActivity(intent);
+		
+		return true;
+	}	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == R.id.action_help) {
+			Toast.makeText(this, "Groups Help", Toast.LENGTH_SHORT).show();
+		} else if (item.getItemId() == R.id.action_search) {
+			Toast.makeText(this, "Groups Search", Toast.LENGTH_SHORT).show();
+		} else if (item.getItemId() == R.id.action_new) {
+			Toast.makeText(this, "New Group", Toast.LENGTH_SHORT).show();
+		}
 		
 		return true;
 	}	

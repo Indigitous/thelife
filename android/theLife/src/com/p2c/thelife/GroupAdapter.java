@@ -11,11 +11,11 @@ import android.widget.TextView;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.UserModel;
 
-public class GroupUsersAdapter extends ArrayAdapter<UserModel> {
+public class GroupAdapter extends ArrayAdapter<UserModel> {
 	
 	private GroupModel m_group;
 	
-	public GroupUsersAdapter(Context context, int mode, TheLifeApplication app, GroupModel group) {
+	public GroupAdapter(Context context, int mode, TheLifeApplication app, GroupModel group) {
 		super(context, mode);
 		
 		m_group = group;
@@ -37,6 +37,7 @@ public class GroupUsersAdapter extends ArrayAdapter<UserModel> {
 		}
 		
 		UserModel user = getItem(position);
+		userView.setTag(user);
 		
 		ImageView imageView = (ImageView)userView.findViewById(R.id.user_image);
 		imageView.setImageBitmap(user.image);

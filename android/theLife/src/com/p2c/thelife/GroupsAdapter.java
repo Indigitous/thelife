@@ -23,7 +23,7 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements DataStore
 		query();
 	}
 	
-	// see ApiDemos List14.java for other (maybe better?) ways for this
+	// TODO see ApiDemos List14.java for other (maybe better?) ways for this
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
