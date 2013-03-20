@@ -37,5 +37,7 @@
     <string name="yes">Yes</string>
     <string name="title_activity_group">GroupActivity</string>
     <string name="my_groups">My Groups</string>
+    <string name="title_activity_groups_search">Search Groups</string>
+    <string name="search_hint">Search Group Names</string>
 
 </resources>
