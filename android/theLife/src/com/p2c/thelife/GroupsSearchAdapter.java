@@ -15,7 +15,7 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> {
 	
 	private TheLifeApplication m_app = null;
 	
-	public GroupsSearchAdapter(Context context, int mode, TheLifeApplication app, String queryString) {
+	public GroupsSearchAdapter(Context context, int mode, TheLifeApplication app) {
 		super(context, mode);
 		
 		m_app = app;

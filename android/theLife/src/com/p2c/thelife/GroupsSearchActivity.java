@@ -29,7 +29,7 @@ public class GroupsSearchActivity extends Activity implements OnEditorActionList
 		
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.search_groups_list);
-		GroupsSearchAdapter adapter = new GroupsSearchAdapter(this, android.R.layout.simple_list_item_1, app, queryString);
+		GroupsSearchAdapter adapter = new GroupsSearchAdapter(this, android.R.layout.simple_list_item_1, app);
 		listView.setAdapter(adapter);		
 	}
 
