@@ -55,7 +55,7 @@ public class GroupsActivity extends SlidingMenuActivity {
 		intent.putExtra("group_id", group.id);
 		startActivity(intent);
 		
-		return true;
+		return true;  
 	}	
 	
 	@Override
@@ -63,12 +63,18 @@ public class GroupsActivity extends SlidingMenuActivity {
 		if (item.getItemId() == R.id.action_help) {
 			Toast.makeText(this, "Groups Help", Toast.LENGTH_SHORT).show();
 		} else if (item.getItemId() == R.id.action_search) {
-			Toast.makeText(this, "Groups Search", Toast.LENGTH_SHORT).show();
+			
+System.out.println("SEARCH REQUESTED");
+//			boolean proceeded = onSearchRequested(); // does nothing, don't know why
+			Intent intent = new Intent("com.p2c.thelife.GroupsSearch");
+			startActivity(intent);
+			
 		} else if (item.getItemId() == R.id.action_new) {
 			Toast.makeText(this, "New Group", Toast.LENGTH_SHORT).show();
 		}
 		
 		return true;
 	}	
+	
 
 }
