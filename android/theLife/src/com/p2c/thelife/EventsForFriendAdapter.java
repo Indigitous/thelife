@@ -40,8 +40,8 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		// get the view
 		View eventView = convertView;
 		if (eventView == null) {
-			LayoutInflater inflator = LayoutInflater.from(getContext());
-			eventView = inflator.inflate(R.layout.event_cell, null);
+			LayoutInflater inflater = LayoutInflater.from(getContext());
+			eventView = inflater.inflate(R.layout.event_cell, null);
 		}
 		
 		// get the event for this view

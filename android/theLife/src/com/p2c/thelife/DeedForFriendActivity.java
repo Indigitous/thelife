@@ -67,6 +67,7 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 	
 	public boolean doDeed(View view) {
 		
+		// TODO: use a DialogFragment as per Android doc
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 		
 		// set the message and buttons of the alert

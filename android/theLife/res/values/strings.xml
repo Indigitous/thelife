@@ -35,9 +35,20 @@
     <string name="confirm_prayer_support">Ask your group for prayer support?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>    
     <string name="title_activity_group">GroupActivity</string>
     <string name="my_groups">My Groups</string>
     <string name="title_activity_groups_search">Search Groups</string>
     <string name="search_hint">Search Group Names</string>
+    <string name="title_activity_import_friends">ImportFriendsActivity</string>
+    <string name="title_activity_import_friends">Import Friends</string>
+    <string name="import_friends_from">Import friends from:</string>
+    <string name="import_by_phone">Phone</string>
+    <string name="import_by_facebook">Facebook</string>
+    <string name="import_manually">Manual Entry</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 
 </resources>

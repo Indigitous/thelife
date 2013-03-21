@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.p2c.thelife.model.FriendModel;
 
@@ -37,6 +39,18 @@ public class FriendsActivity extends SlidingMenuActivity {
 		getMenuInflater().inflate(R.menu.friends, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == R.id.action_help) {
+			Toast.makeText(this, "Friends Help", Toast.LENGTH_SHORT).show();	
+		} else if (item.getItemId() == R.id.action_new) {
+			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
+			startActivity(intent);
+		}
+		
+		return true;
+	}		
 	
 	/**
 	 * Friend has been selected.
