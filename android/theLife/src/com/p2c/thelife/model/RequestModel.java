@@ -3,13 +3,7 @@ package com.p2c.thelife.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.util.Log;
-
-import com.p2c.thelife.BitmapCache;
-import com.p2c.thelife.R;
-import com.p2c.thelife.TheLifeConfiguration;
 
 
 

@@ -19,14 +19,12 @@ import com.p2c.thelife.model.UserModel;
  */
 public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implements DataStoreListener {
 	
-	private TheLifeConfiguration m_app = null;
 	private Context m_context = null;
 	private ArrayList<GroupModel> m_groups = null;
 	
 	public ExpandableGroupsAdapter(Context context, int mode, TheLifeConfiguration app) {
 		super();
 		
-		m_app = app;
 		m_context = context;
 		
 		query();
