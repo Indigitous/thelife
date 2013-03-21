@@ -16,14 +16,14 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 	
 	private GroupModel m_group;
 	
-	public GroupAdapter(Context context, int mode, TheLifeApplication app, GroupModel group) {
+	public GroupAdapter(Context context, int mode, GroupModel group) {
 		super(context, mode);
 		
 		m_group = group;
 		
 		// get all the users for the current group
 		for (Integer memberId:m_group.member_ids) {
-			add(app.getUsersDS().findById(memberId));
+			add(TheLifeConfiguration.getUsersDS().findById(memberId));
 		}
 	}
 	

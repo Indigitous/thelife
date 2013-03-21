@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 import com.p2c.thelife.BitmapCache;
 
 
@@ -40,7 +40,7 @@ public class DeedModel extends AbstractModel {
 		this.description = description;
 
 		if (image == null) {
-			this.image = TheLifeApplication.genericDeedImage;
+			this.image = TheLifeConfiguration.genericDeedImage;
 		} else {
 			this.image = image;
 		}
@@ -74,7 +74,7 @@ public class DeedModel extends AbstractModel {
 			json.getString("title"),
 			json.getString("summary"),
 			json.getString("description"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericDeedImage),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericDeedImage),
 			thresholds,
 			json.getInt("priority"),
 			json.getInt("category_id")

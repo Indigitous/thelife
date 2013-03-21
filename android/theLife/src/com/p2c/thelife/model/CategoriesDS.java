@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 public class CategoriesDS extends AbstractDS<GroupModel> {
@@ -17,9 +17,9 @@ public class CategoriesDS extends AbstractDS<GroupModel> {
 				"CategoriesDS", 
 				"categories.json",
 				"refresh_categories_timestamp_key",
-				TheLifeApplication.SERVER_URL + "categories.json",
+				TheLifeConfiguration.SERVER_URL + "categories.json",
 				"refresh_categories_delta_key",
-				TheLifeApplication.REFRESH_CATEGORIES_DELTA
+				TheLifeConfiguration.REFRESH_CATEGORIES_DELTA
 			);		
 		
 	}

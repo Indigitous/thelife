@@ -19,11 +19,11 @@ import com.p2c.thelife.model.UserModel;
  */
 public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implements DataStoreListener {
 	
-	private TheLifeApplication m_app = null;
+	private TheLifeConfiguration m_app = null;
 	private Context m_context = null;
 	private ArrayList<GroupModel> m_groups = null;
 	
-	public ExpandableGroupsAdapter(Context context, int mode, TheLifeApplication app) {
+	public ExpandableGroupsAdapter(Context context, int mode, TheLifeConfiguration app) {
 		super();
 		
 		m_app = app;
@@ -47,7 +47,7 @@ public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implement
 		if (m_groups != null) {
 			m_groups.clear();
 		}
-		m_groups = m_app.getGroupsDS().findAll();	
+		m_groups = TheLifeConfiguration.getGroupsDS().findAll();	
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implement
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		int userId = m_groups.get(groupPosition).member_ids.get(childPosition);
-		return m_app.getUsersDS().findById(userId);
+		return TheLifeConfiguration.getUsersDS().findById(userId);
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 public class FriendsDS extends AbstractDS<FriendModel> {
@@ -17,9 +17,9 @@ public class FriendsDS extends AbstractDS<FriendModel> {
 				"FriendsDS", 
 				"friends.json",
 				"refresh_friends_timestamp_key",
-				TheLifeApplication.SERVER_URL + "friends.json",
+				TheLifeConfiguration.SERVER_URL + "friends.json",
 				"refresh_friends_delta_key",
-				TheLifeApplication.REFRESH_FRIENDS_DELTA
+				TheLifeConfiguration.REFRESH_FRIENDS_DELTA
 			);		
 		
 	}

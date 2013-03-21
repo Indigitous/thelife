@@ -19,12 +19,9 @@ public class GroupActivity extends SlidingMenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, SlidingMenuActivity.GROUPS_POSITION, R.layout.activity_group);
 		
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();				
-		
 		// Get the group for this activity
 		int groupId = getIntent().getIntExtra("group_id", 0);
-		m_group = app.getGroupsDS().findById(groupId);		
+		m_group = TheLifeConfiguration.getGroupsDS().findById(groupId);		
 		
 		// Show the group
 		if (m_group != null) {		
@@ -34,9 +31,9 @@ public class GroupActivity extends SlidingMenuActivity {
 		
 		// attach the users-in-group list view
 		GridView usersView = (GridView)findViewById(R.id.activity_group_users);
-		GroupAdapter adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, app, m_group);
+		GroupAdapter adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group);
 		usersView.setAdapter(adapter);
-		app.getUsersDS().refresh();		
+		TheLifeConfiguration.getUsersDS().refresh();		
 	}
 
 	@Override

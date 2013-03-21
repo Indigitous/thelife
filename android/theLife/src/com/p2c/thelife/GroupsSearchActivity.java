@@ -16,9 +16,6 @@ public class GroupsSearchActivity extends Activity implements OnEditorActionList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_groups_search);
-				
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();		
 		
 		// listen for a search
 		EditText editText = (EditText)findViewById(R.id.search_groups_text);
@@ -26,7 +23,7 @@ public class GroupsSearchActivity extends Activity implements OnEditorActionList
 		
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.search_groups_list);
-		GroupsSearchAdapter adapter = new GroupsSearchAdapter(this, android.R.layout.simple_list_item_1, app);
+		GroupsSearchAdapter adapter = new GroupsSearchAdapter(this, android.R.layout.simple_list_item_1);
 		listView.setAdapter(adapter);		
 	}
 

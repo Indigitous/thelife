@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.p2c.thelife.BitmapCache;
 import com.p2c.thelife.R;
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 
@@ -49,12 +49,12 @@ public class FriendModel extends AbstractModel {
 		this.last_name = last_name;
 		
 		if (image == null) {
-			this.image = TheLifeApplication.genericPersonImage;
+			this.image = TheLifeConfiguration.genericPersonImage;
 		} else {
 			this.image = image;
 		}
 		if (thumbnail == null) {
-			this.thumbnail = TheLifeApplication.genericPersonThumbnail;
+			this.thumbnail = TheLifeConfiguration.genericPersonThumbnail;
 		} else {
 			this.thumbnail = thumbnail;
 		}
@@ -138,8 +138,8 @@ public class FriendModel extends AbstractModel {
 			json.getInt("friend_id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonImage),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericPersonThumbnail),				
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonImage),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonThumbnail),				
 			threshold
 		);
 	}

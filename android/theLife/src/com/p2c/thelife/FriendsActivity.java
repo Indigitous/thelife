@@ -22,16 +22,13 @@ public class FriendsActivity extends SlidingMenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, SlidingMenuActivity.FRIENDS_POSITION, R.layout.activity_friends);
 		
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();				
-		
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
-		FriendsAdapter adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1, app);
+		FriendsAdapter adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
 		friendsGrid.setAdapter(adapter);
 		
 		// load the database from the server in the background
-		app.getFriendsDS().addDataStoreListener(adapter);  
-		app.getFriendsDS().refresh();		
+		TheLifeConfiguration.getFriendsDS().addDataStoreListener(adapter);  
+		TheLifeConfiguration.getFriendsDS().refresh();		
 	}
 
 	@Override

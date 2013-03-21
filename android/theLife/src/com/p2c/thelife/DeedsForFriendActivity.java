@@ -17,13 +17,10 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_deeds_for_friend);
-		
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();		
-		
+			
 		// Get the friend for this deed
 		int friendId = getIntent().getIntExtra("friend_id", 0);
-		m_friend = app.getFriendsDS().findById(friendId);
+		m_friend = TheLifeConfiguration.getFriendsDS().findById(friendId);
 		
 		// Show the friend
 		if (m_friend != null) {		
@@ -34,12 +31,12 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 			thresholdView.setText(m_friend.get_threshold_medium_string(getResources()));
 			
 			ListView activitiesView = (ListView)findViewById(R.id.deeds_for_friend_list);
-			DeedsForFriendAdapter adapter = new DeedsForFriendAdapter(this, android.R.layout.simple_list_item_1, app, m_friend);
+			DeedsForFriendAdapter adapter = new DeedsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
 			activitiesView.setAdapter(adapter);
 			
 			// load the database from the server in the background
-			app.getDeedsDS().addDataStoreListener(adapter);
-			app.getDeedsDS().refresh();
+			TheLifeConfiguration.getDeedsDS().addDataStoreListener(adapter);
+			TheLifeConfiguration.getDeedsDS().refresh();
 		}		
 	}
 

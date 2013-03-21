@@ -16,13 +16,11 @@ import com.p2c.thelife.model.FriendModel;
 
 public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements DataStoreListener {
 	
-	private TheLifeApplication m_app;
 	private FriendModel m_friend;
 	
-	public DeedsForFriendAdapter(Context context, int mode, TheLifeApplication app, FriendModel friend) {
+	public DeedsForFriendAdapter(Context context, int mode, FriendModel friend) {
 		super(context, mode);
 		
-		m_app = app;
 		m_friend = friend;
 		
 		query();
@@ -64,7 +62,7 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Da
 	
 	private void query() {
 		// get all the Deeds for the current user		
-		Collection<DeedModel> Activities = m_app.getDeedsDS().findByThreshold(m_friend.threshold);
+		Collection<DeedModel> Activities = TheLifeConfiguration.getDeedsDS().findByThreshold(m_friend.threshold);
 		for (DeedModel m:Activities) {
 			add(m);
 		}		

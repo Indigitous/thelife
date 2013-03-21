@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 public class GroupsDS extends AbstractDS<GroupModel> {
@@ -17,9 +17,9 @@ public class GroupsDS extends AbstractDS<GroupModel> {
 				"GroupsDS", 
 				"groups.json",
 				"refresh_groups_timestamp_key",
-				TheLifeApplication.SERVER_URL + "groups.json",
+				TheLifeConfiguration.SERVER_URL + "groups.json",
 				"refresh_groups_delta_key",
-				TheLifeApplication.REFRESH_GROUPS_DELTA
+				TheLifeConfiguration.REFRESH_GROUPS_DELTA
 			);		
 		
 	}

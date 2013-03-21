@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.p2c.thelife.BitmapCache;
 import com.p2c.thelife.R;
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 

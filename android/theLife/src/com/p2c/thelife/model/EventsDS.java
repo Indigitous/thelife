@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 public class EventsDS extends AbstractDS<EventModel> {
@@ -20,9 +20,9 @@ public class EventsDS extends AbstractDS<EventModel> {
 				"EventsDS", 
 				"events.json",
 				"refresh_events_timestamp_key",
-				TheLifeApplication.SERVER_URL + "events.json",
+				TheLifeConfiguration.SERVER_URL + "events.json",
 				"refresh_events_delta_key",
-				TheLifeApplication.REFRESH_EVENTS_DELTA
+				TheLifeConfiguration.REFRESH_EVENTS_DELTA
 			);		
 		
 	}

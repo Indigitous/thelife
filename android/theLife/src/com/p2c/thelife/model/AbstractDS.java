@@ -22,7 +22,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 
@@ -55,8 +55,8 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		// initialize instance vars
 		m_context = context;
 		TAG = tag;
-		m_cacheFileName = TheLifeApplication.cacheDirectory + cacheFileName;
-		m_systemSettings = context.getSharedPreferences(TheLifeApplication.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
+		m_cacheFileName = TheLifeConfiguration.cacheDirectory + cacheFileName;
+		m_systemSettings = context.getSharedPreferences(TheLifeConfiguration.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
 		m_refreshSettingTimestampKey = refreshSettingTimestampKey;
 		m_refreshURL = refreshURL;
 		m_refreshDelta = m_systemSettings.getLong(refreshSettingDeltaKey, refreshDeltaDefault);
@@ -232,8 +232,8 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				Log.d(TAG, "AM NOW RUNNING READFROMSERVER with" + urls[0]);	
 				URL modelsEP = urls[0];
 				modelsConnection = (HttpURLConnection)modelsEP.openConnection();
-				modelsConnection.setConnectTimeout(TheLifeApplication.HTTP_CONNECTION_TIMEOUT);
-				modelsConnection.setConnectTimeout(TheLifeApplication.HTTP_READ_TIMEOUT);
+				modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
+				modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 				
 				Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE CODE" + modelsConnection.getResponseCode());
 

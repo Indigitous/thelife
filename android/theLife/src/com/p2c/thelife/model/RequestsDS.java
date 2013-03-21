@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 public class RequestsDS extends AbstractDS<GroupModel> {
@@ -17,9 +17,9 @@ public class RequestsDS extends AbstractDS<GroupModel> {
 				"RequestsDS", 
 				"requests.json",
 				"refresh_requests_timestamp_key",
-				TheLifeApplication.SERVER_URL + "requests.json",
+				TheLifeConfiguration.SERVER_URL + "requests.json",
 				"refresh_requests_delta_key",
-				TheLifeApplication.REFRESH_REQUESTS_DELTA
+				TheLifeConfiguration.REFRESH_REQUESTS_DELTA
 			);		
 		
 	}

@@ -38,7 +38,7 @@ public class BitmapCache {
 //		HttpURLConnection connection = null;
 //		
 //		try {
-//			URL url = new URL(TheLifeApplication.SERVER_URL + urlString);
+//			URL url = new URL(TheLifeConfiguration.SERVER_URL + urlString);
 //			connection = (HttpURLConnection)url.openConnection();
 //			is =  new BufferedInputStream(connection.getInputStream());
 //			return BitmapFactory.decodeStream(is);
@@ -76,14 +76,14 @@ public class BitmapCache {
 		try {
 			
 			// attempt to get the bitmap from the server
-			URL url = new URL(TheLifeApplication.SERVER_URL + urlString);
+			URL url = new URL(TheLifeConfiguration.SERVER_URL + urlString);
 			connection = (HttpURLConnection)url.openConnection();
 			is =  new BufferedInputStream(connection.getInputStream());
 			bitmap = BitmapFactory.decodeStream(is);
 			
 			// save the bitmap to cache
 			if (bitmap != null) {
-				os = new BufferedOutputStream(   new FileOutputStream(TheLifeApplication.cacheDirectory + urlString));
+				os = new BufferedOutputStream(   new FileOutputStream(TheLifeConfiguration.cacheDirectory + urlString));
 				bitmap.compress(CompressFormat.PNG, 90, os);
 				os.close();
 			}
@@ -117,8 +117,8 @@ public class BitmapCache {
 		
 		if (url != null) {
 			// first try to find the bitmap in the disk cache
-			if (new File(TheLifeApplication.cacheDirectory + url).exists()) {
-				bitmap = BitmapFactory.decodeFile(TheLifeApplication.cacheDirectory + url);
+			if (new File(TheLifeConfiguration.cacheDirectory + url).exists()) {
+				bitmap = BitmapFactory.decodeFile(TheLifeConfiguration.cacheDirectory + url);
 			}
 		
 			// if not in the disk cache and if permitted, get the bitmap from the server
@@ -129,7 +129,7 @@ public class BitmapCache {
 		
 		// use generic image if no image is available
 		if (bitmap == null) {
-			bitmap = TheLifeApplication.genericDeedImage;
+			bitmap = TheLifeConfiguration.genericDeedImage;
 		}
 		
 		return bitmap;

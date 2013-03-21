@@ -17,20 +17,17 @@ public class GroupsActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.GROUPS_POSITION, R.layout.activity_groups);
-		
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();				
+		super.onCreate(savedInstanceState, SlidingMenuActivity.GROUPS_POSITION, R.layout.activity_groups);	
 		
 //		ExpandableListView groupsList = (ExpandableListView)findViewById(R.id.groups_list);
-//		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1, app);
+//		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1);
 		ListView groupsList = (ListView)findViewById(R.id.groups_list);
-		GroupsAdapter adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1, app);
+		GroupsAdapter adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1);
 		groupsList.setAdapter(adapter);
 		
 		// load the database from the server in the background
-		app.getGroupsDS().addDataStoreListener(adapter);
-		app.getGroupsDS().refresh();	
+		TheLifeConfiguration.getGroupsDS().addDataStoreListener(adapter);
+		TheLifeConfiguration.getGroupsDS().refresh();	
 	}
 
 	@Override

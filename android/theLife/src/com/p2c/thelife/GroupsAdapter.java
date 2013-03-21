@@ -13,13 +13,10 @@ import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.GroupModel;
 
 public class GroupsAdapter extends ArrayAdapter<GroupModel> implements DataStoreListener {
-	
-	private TheLifeApplication m_app = null;
-	
-	public GroupsAdapter(Context context, int mode, TheLifeApplication app) {
+		
+	public GroupsAdapter(Context context, int mode) {
 		super(context, mode);
 		
-		m_app = app;
 		query();
 	}
 	
@@ -59,7 +56,7 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements DataStore
 	private void query() {
 		
 		// get all the Groups for the current user
-		Collection<GroupModel> Groups = m_app.getGroupsDS().findAll();
+		Collection<GroupModel> Groups = TheLifeConfiguration.getGroupsDS().findAll();
 		for (GroupModel f:Groups) {
 			add(f);
 		}		

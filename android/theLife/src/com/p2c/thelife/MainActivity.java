@@ -10,19 +10,16 @@ public class MainActivity extends SlidingMenuActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.COMMUNITY_POSITION, R.layout.activity_main);
-		
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();				
+		super.onCreate(savedInstanceState, SlidingMenuActivity.COMMUNITY_POSITION, R.layout.activity_main);		
 			
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.list);
-		MainEventsAdapter adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1, app);
+		MainEventsAdapter adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
 		listView.setAdapter(adapter);
 		
 		// load the database from the server in the background
-		app.getEventsDS().addDataStoreListener(adapter);
-		app.getEventsDS().refresh();			
+		TheLifeConfiguration.getEventsDS().addDataStoreListener(adapter);
+		TheLifeConfiguration.getEventsDS().refresh();			
 	}
 
 	@Override

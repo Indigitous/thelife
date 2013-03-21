@@ -15,13 +15,9 @@ import com.p2c.thelife.model.FriendModel;
 
 public class FriendsAdapter extends ArrayAdapter<FriendModel> implements DataStoreListener {
 	
-	private TheLifeApplication m_app = null;
-	
-	public FriendsAdapter(Context context, int mode, TheLifeApplication app) {
+	public FriendsAdapter(Context context, int mode) {
 		super(context, mode);
-		
-		m_app = app;
-		
+				
 		query();
 	}
 	
@@ -64,7 +60,7 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> implements DataSto
 	
 	private void query() {
 		// get all the friends for the current user
-		Collection<FriendModel> friends = m_app.getFriendsDS().findAll();
+		Collection<FriendModel> friends = TheLifeConfiguration.getFriendsDS().findAll();
 		for (FriendModel f:friends) {
 			add(f);
 		}

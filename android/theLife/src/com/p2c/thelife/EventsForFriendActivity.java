@@ -17,13 +17,10 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_friend);
-		
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();				
-		
+			
 		// Get the friend for this deed
 		int friendId = getIntent().getIntExtra("friend_id", 0);
-		m_friend = app.getFriendsDS().findById(friendId);
+		m_friend = TheLifeConfiguration.getFriendsDS().findById(friendId);
 		
 		// Show the friend
 		if (m_friend != null) {
@@ -39,12 +36,12 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 		
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.activity_friend_events);
-		EventsForFriendAdapter adapter = new EventsForFriendAdapter(this, android.R.layout.simple_list_item_1, app, m_friend);
+		EventsForFriendAdapter adapter = new EventsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
 		listView.setAdapter(adapter);
 		
 		// load the database from the server in the background
-		app.getEventsDS().addDataStoreListener(adapter);
-		app.getEventsDS().refresh();		
+		TheLifeConfiguration.getEventsDS().addDataStoreListener(adapter);
+		TheLifeConfiguration.getEventsDS().refresh();		
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 // TODO need to know current user?
@@ -18,9 +18,9 @@ public class UsersDS extends AbstractDS<UserModel> {
 				"UsersDS", 
 				"users.json",
 				"refresh_users_timestamp_key",
-				TheLifeApplication.SERVER_URL + "users.json",
+				TheLifeConfiguration.SERVER_URL + "users.json",
 				"refresh_users_delta_key",
-				TheLifeApplication.REFRESH_USERS_DELTA
+				TheLifeConfiguration.REFRESH_USERS_DELTA
 			);		
 				
 	}

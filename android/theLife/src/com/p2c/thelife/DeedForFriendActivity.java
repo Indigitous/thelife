@@ -24,12 +24,9 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_deed_for_friend);
 		
-		// Get the main application
-		TheLifeApplication app = (TheLifeApplication)getApplication();			
-		
 		// Get the friend model
 		int friendId = getIntent().getIntExtra("friend_id", 0);
-		m_friend = app.getFriendsDS().findById(friendId);
+		m_friend = TheLifeConfiguration.getFriendsDS().findById(friendId);
 		
 		// Show the friend model
 		if (m_friend != null) {		
@@ -42,7 +39,7 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 		
 		// Get the Deed model
 		int deedId = getIntent().getIntExtra("deed_id", 0);
-		m_deed = app.getDeedsDS().findById(deedId);
+		m_deed = TheLifeConfiguration.getDeedsDS().findById(deedId);
 		
 		// Show the Deed model
 		if (m_deed != null) {

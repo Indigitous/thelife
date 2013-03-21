@@ -23,12 +23,10 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 	private static final String TAG = "DeedsDS"; 
 	
 	private FriendModel m_friend = null;
-	private TheLifeApplication m_app = null;
 	
-	public EventsForFriendAdapter(Context context, int mode, TheLifeApplication app, FriendModel friend) {
+	public EventsForFriendAdapter(Context context, int mode, FriendModel friend) {
 		super(context, mode);
 		
-		m_app = app;
 		m_friend = friend;
 		
 		query();
@@ -48,8 +46,8 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		
 		// get the event for this view
 		EventModel event = getItem(position);
-		UserModel user = m_app.getUsersDS().findById(event.user_id);
-		FriendModel friend = m_app.getFriendsDS().findById(event.friend_id);
+		UserModel user = TheLifeConfiguration.getUsersDS().findById(event.user_id);
+		FriendModel friend = TheLifeConfiguration.getFriendsDS().findById(event.friend_id);
 		
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
 		String eventDescription = Utilities.fillTemplateString(user, friend, event.description);
@@ -86,7 +84,7 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 	
 	private void query() {
 		// get all the Events for the current user
-		Collection<EventModel> events = m_app.getEventsDS().findByFriend(m_friend.friend_id);
+		Collection<EventModel> events = TheLifeConfiguration.getEventsDS().findByFriend(m_friend.friend_id);
 		for (EventModel m:events) {
 			add(m);
 		}

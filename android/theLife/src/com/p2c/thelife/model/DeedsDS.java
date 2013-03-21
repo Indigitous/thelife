@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.p2c.thelife.TheLifeApplication;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 /**
@@ -29,9 +29,9 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 			"DeedsDS", 
 			"deeds.json",
 			"refresh_deeds_timestamp_key",
-			TheLifeApplication.SERVER_URL + "deeds.json",
+			TheLifeConfiguration.SERVER_URL + "deeds.json",
 			"refresh_deeds_delta_key",
-			TheLifeApplication.REFRESH_DEEDS_DELTA
+			TheLifeConfiguration.REFRESH_DEEDS_DELTA
 		);
 		
 	}

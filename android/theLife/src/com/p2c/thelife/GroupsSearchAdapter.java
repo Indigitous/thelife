@@ -12,14 +12,10 @@ import com.p2c.thelife.model.GroupModel;
 public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> {
 	
 	private static final String TAG = "GroupsSearchAdapter"; 
-	
-	private TheLifeApplication m_app = null;
-	
-	public GroupsSearchAdapter(Context context, int mode, TheLifeApplication app) {
+		
+	public GroupsSearchAdapter(Context context, int mode) {
 		super(context, mode);
-		
-		m_app = app;
-		
+				
 		query();
 	}
 	
@@ -50,8 +46,8 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> {
 
 		clear();
 		// dummy data for now
-		add(m_app.getGroupsDS().findById(1));
-		add(m_app.getGroupsDS().findById(2));
+		add(TheLifeConfiguration.getGroupsDS().findById(1));
+		add(TheLifeConfiguration.getGroupsDS().findById(2));
 
 	}	
 
