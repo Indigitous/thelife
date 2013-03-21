@@ -27,18 +27,18 @@ public class DeedModel extends AbstractModel {
 	public String 	title;
 	public String	summary;
 	public String 	description;
-	public String	category;
 	public Bitmap	image;  		// TODO is this an image id, image or what?
 	public Set<FriendModel.Threshold> thresholds;
+	public int 		priority;
+	public int		category_id;	
 	
 	
-	public DeedModel(int deed_id, String title, String summary, String description, String category, Bitmap image, Set<FriendModel.Threshold> thresholds) {
+	public DeedModel(int deed_id, String title, String summary, String description, Bitmap image, Set<FriendModel.Threshold> thresholds, int priority, int category_id) {
 		super(deed_id);
 		this.title = title;
 		this.summary = summary;
 		this.description = description;
-		this.category = category;
-		
+
 		if (image == null) {
 			this.image = TheLifeApplication.genericDeedImage;
 		} else {
@@ -46,6 +46,8 @@ public class DeedModel extends AbstractModel {
 		}
 		
 		this.thresholds = thresholds;
+		this.priority = priority;
+		this.category_id = category_id;		
 	}	
 	
 
@@ -72,15 +74,16 @@ public class DeedModel extends AbstractModel {
 			json.getString("title"),
 			json.getString("summary"),
 			json.getString("description"),
-			json.getString("category"),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeApplication.genericDeedImage),
-			thresholds
+			thresholds,
+			json.getInt("priority"),
+			json.getInt("category_id")
 		);
 	}
 	
 	@Override
 	public String toString() {
-		return id + ", " + title + ", " + summary + ", " + description + ", " + category + ", " + thresholds;
+		return id + ", " + title + ", " + summary + ", " + description + ", " + thresholds + ", " + priority + ", " + category_id;
 	}
 
 }

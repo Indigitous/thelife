@@ -32,11 +32,13 @@ public class TheLifeApplication extends Application {
 	public static final String SYSTEM_PREFERENCES_FILE = "system_prefs";	
 	
 	// refresh deltas: time before a refresh
-	public static final long REFRESH_DEEDS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
-	public static final long REFRESH_EVENTS_DELTA = 24 * 60 * 60 * 1000; // 24 hours in millis
+	public static final long REFRESH_DEEDS_DELTA = 24 * 60 * 60 * 1000; // 1 day in millis
+	public static final long REFRESH_CATEGORIES_DELTA = REFRESH_DEEDS_DELTA;
+	public static final long REFRESH_EVENTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
 	public static final long REFRESH_FRIENDS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
+	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
 	public static final String SERVER_URL = "http://thelife.ballistiq.com/api/v1/";

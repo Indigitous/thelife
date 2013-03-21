@@ -1,0 +1,14 @@
+[
+
+{
+	category_id: 1,
+    name: "Category One",
+    description: "This is the category that is category one."
+},
+{
+	category_id: 2,
+    name: 'Category Two',
+    description: "This is the category that is category two."
+}
+
+]
