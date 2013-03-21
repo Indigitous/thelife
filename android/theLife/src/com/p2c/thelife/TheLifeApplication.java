@@ -24,8 +24,9 @@ public class TheLifeApplication extends Application {
 	private GroupsDS m_groupsDS = null;
 	private EventsDS m_eventsDS = null;
 	
-	// user id
+	// user id and authentication token
 	private int m_userId = 0;
+	private String m_token = null;
 	
 	public static final int HTTP_CONNECTION_TIMEOUT = 5000; // in millis
 	public static final int HTTP_READ_TIMEOUT = 15000;  // in millis
@@ -41,7 +42,7 @@ public class TheLifeApplication extends Application {
 	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
-	public static final String SERVER_URL = "http://thelife.ballistiq.com/api/v1/";
+	public static final String SERVER_URL = "http://thelife.ballistiq.com/v1/";
 	
 	// stock images
 	public static Bitmap genericPersonImage;
@@ -111,5 +112,26 @@ public class TheLifeApplication extends Application {
 	public int getUserId() {
 		return m_userId;
 	}
+	
+	public void setUserId(int user_id) {
+		m_userId = user_id;
+	}	
+	
+	/**
+	 * 
+	 * @return authentication token
+	 */
+	public String getToken() {
+		return m_token;
+	}	
+	
+	/**
+	 * 
+	 * @return authentication token
+	 */
+	public void setToken(String token) {
+		m_token = token;
+	}	
+	
 
 }
