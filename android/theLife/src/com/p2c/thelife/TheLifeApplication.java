@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -10,20 +12,24 @@ import com.p2c.thelife.model.GroupsDS;
 import com.p2c.thelife.model.UsersDS;
 
 
-
+// TODO: divide the final and initialize-once values from this class, to avoid dependencies on application
 public class TheLifeApplication extends Application {
 	
 	private static final String TAG = "TheLifeApplication";
 	
+	// data stores
 	private DeedsDS m_deedsDS = null;
 	private FriendsDS m_friendsDS = null;
 	private UsersDS m_usersDS = null;
 	private GroupsDS m_groupsDS = null;
 	private EventsDS m_eventsDS = null;
 	
+	// user id
+	private int m_userId = 0;
+	
 	public static final int HTTP_CONNECTION_TIMEOUT = 5000; // in millis
 	public static final int HTTP_READ_TIMEOUT = 15000;  // in millis
-	public static final String SYSTEM_PREFERENCES_FILE = "system_prefs";
+	public static final String SYSTEM_PREFERENCES_FILE = "system_prefs";	
 	
 	// refresh deltas: time before a refresh
 	public static final long REFRESH_DEEDS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
@@ -50,7 +56,19 @@ public class TheLifeApplication extends Application {
 		
 		Log.e(TAG, "onCreate()");  // TODO for debugging only
 		
-		// initialize stock images before initializing datastores
+		// initialize user id from system settings
+		SharedPreferences systemSettings = 
+			getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);
+		m_userId = systemSettings.getInt("user_id", 0);
+		
+		// TODO: for debugging -- set the user id, but this could happen for a new user just loading the app
+		if (m_userId == 0) {
+			SharedPreferences.Editor system_settings_editor = systemSettings.edit();
+			system_settings_editor.putInt("user_id", 1);
+			system_settings_editor.commit();
+		}
+		
+		// initialize stock images before initializing data stores
 		genericPersonImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
 		genericPersonThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
 		genericDeedImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
@@ -59,7 +77,8 @@ public class TheLifeApplication extends Application {
 		
 		cacheDirectory = getApplicationContext().getCacheDir().getAbsolutePath() + "/";
 		
-		// initialize the datastores
+		// initialize the data stores
+		// TODO: these need to be initialized sequentially in order
 		m_deedsDS = new DeedsDS(getApplicationContext());
 		m_usersDS = new UsersDS(getApplicationContext());
 		m_groupsDS = new GroupsDS(getApplicationContext());
@@ -86,5 +105,9 @@ public class TheLifeApplication extends Application {
 	public EventsDS getEventsDS() {
 		return m_eventsDS;
 	}	
+	
+	public int getUserId() {
+		return m_userId;
+	}
 
 }
