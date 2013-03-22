@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
 
-public class GroupsActivity extends SlidingMenuActivity {
+public class GroupsActivity extends SlidingMenuFragmentActivity {
 	
 	private static final String TAG = "DeedsDS"; 	
 
@@ -67,7 +67,9 @@ System.out.println("SEARCH REQUESTED");
 			startActivity(intent);
 			
 		} else if (item.getItemId() == R.id.action_new) {
-			Toast.makeText(this, "New Group", Toast.LENGTH_SHORT).show();
+			
+			GroupCreateDialog dialog = new GroupCreateDialog();
+			dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 		}
 		
 		return true;

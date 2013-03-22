@@ -50,5 +50,8 @@
     <string name="add_friend">Add Friend</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-
+    <string name="create_group">Create Group</string>
+    <string name="group_name">Group Name</string>
+    <string name="group_description">Description</string>
+    
 </resources>

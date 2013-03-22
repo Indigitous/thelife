@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 /**
  * Superclass of all FragmentActivities that use the sliding menu. 
  * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license TODO license notice
+ * 
+ * Uses support library for Androids < 3.0.
  * @author clarence
  *
  */

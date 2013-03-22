@@ -6,7 +6,7 @@ import android.view.View;
 
 
 /**
- * Import friends. Uses support library for Androids < 3.0.
+ * Import friends.
  * @author clarence
  *
  */
@@ -36,8 +36,8 @@ public class FriendsImportActivity extends SlidingMenuFragmentActivity {
 	
 	public boolean importFriendManually(View view) {
 		
-		FriendImportManuallyDialog fragment = new FriendImportManuallyDialog();
-		fragment.show(getSupportFragmentManager(), "FriendImportManuallyFragment");
+		FriendImportManuallyDialog dialog = new FriendImportManuallyDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 		
 		return true;
 	}
