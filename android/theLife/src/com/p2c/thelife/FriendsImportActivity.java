@@ -1,10 +1,8 @@
 package com.p2c.thelife;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 
 /**
@@ -12,14 +10,13 @@ import android.widget.Toast;
  * @author clarence
  *
  */
-public class FriendsImportActivity extends FragmentActivity {
+public class FriendsImportActivity extends SlidingMenuFragmentActivity {
 	
 	private static String TAG = "FriendsImportActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_friends_import);
+		super.onCreate(savedInstanceState, R.layout.activity_friends_import, SlidingMenuSupport.FRIENDS_POSITION);
 	}
 
 	@Override

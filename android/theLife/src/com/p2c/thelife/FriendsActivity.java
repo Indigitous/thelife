@@ -22,7 +22,7 @@ public class FriendsActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.FRIENDS_POSITION, R.layout.activity_friends);
+		super.onCreate(savedInstanceState, R.layout.activity_friends, SlidingMenuSupport.FRIENDS_POSITION);
 		
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
 		FriendsAdapter adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);

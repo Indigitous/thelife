@@ -1,15 +1,15 @@
 package com.p2c.thelife;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 /**
- * Superclass of all Activities that use the sliding menu. 
+ * Superclass of all FragmentActivities that use the sliding menu. 
  * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license TODO license notice
  * @author clarence
  *
  */
-public class SlidingMenuActivity extends Activity {
+public class SlidingMenuFragmentActivity extends FragmentActivity {
 	
 	protected SlidingMenuSupport m_support = null;
 		

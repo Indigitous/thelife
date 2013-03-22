@@ -16,7 +16,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.NO_POSITION, R.layout.activity_friend);
+		super.onCreate(savedInstanceState, R.layout.activity_friend, SlidingMenuSupport.NO_POSITION);
 			
 		// Get the friend for this deed
 		int friendId = getIntent().getIntExtra("friend_id", 0);

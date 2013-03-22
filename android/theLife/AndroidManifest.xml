@@ -16,7 +16,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="theLife"
         android:theme="@style/AppTheme" >
-       
         <activity
             android:name="com.p2c.thelife.MainActivity"
             android:label="theLife" >
@@ -49,14 +48,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.p2c.thelife.GroupsSearchActivity" >
+        <activity android:name="com.p2c.thelife.GroupsSearchActivity" >
             <intent-filter>
- 				<action android:name="com.p2c.thelife.GroupsSearch" />
-                <category android:name="android.intent.category.DEFAULT" />				
+                <action android:name="com.p2c.thelife.GroupsSearch" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
-        </activity>  
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity
             android:name="com.p2c.thelife.GroupsActivity"
             android:label="theLife" >
@@ -65,8 +67,11 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data android:name="android.app.default_searchable" android:value="com.p2c.thelife.GroupsSearchActivity" />
-        </activity>        
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.p2c.thelife.GroupsSearchActivity" />
+        </activity>
         <activity
             android:name="com.p2c.thelife.GlobalHelpActivity"
             android:label="theLife" >
@@ -111,6 +116,15 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.FriendsImportActivity"
+            android:label="theLife" >
+           <intent-filter>
+                <action android:name="com.p2c.thelife.FriendsImport" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>            
         </activity>
     </application>
 

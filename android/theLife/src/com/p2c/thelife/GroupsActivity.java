@@ -17,7 +17,7 @@ public class GroupsActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.GROUPS_POSITION, R.layout.activity_groups);	
+		super.onCreate(savedInstanceState, R.layout.activity_groups, SlidingMenuSupport.GROUPS_POSITION);	
 		
 //		ExpandableListView groupsList = (ExpandableListView)findViewById(R.id.groups_list);
 //		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1);

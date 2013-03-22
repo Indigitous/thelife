@@ -8,7 +8,7 @@ public class GlobalHelpActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.HELP_POSITION, R.layout.activity_global_help);
+		super.onCreate(savedInstanceState, R.layout.activity_global_help, SlidingMenuSupport.HELP_POSITION);
 		
 		WebView webView = (WebView)findViewById(R.id.global_help_webview);
 		

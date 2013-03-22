@@ -10,7 +10,7 @@ public class MainActivity extends SlidingMenuActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.COMMUNITY_POSITION, R.layout.activity_main);		
+		super.onCreate(savedInstanceState, R.layout.activity_main, SlidingMenuSupport.COMMUNITY_POSITION);		
 			
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.list);

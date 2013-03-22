@@ -17,11 +17,11 @@ public class GroupActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, SlidingMenuActivity.GROUPS_POSITION, R.layout.activity_group);
+		super.onCreate(savedInstanceState, R.layout.activity_group, SlidingMenuSupport.GROUPS_POSITION);
 		
 		// Get the group for this activity
 		int groupId = getIntent().getIntExtra("group_id", 0);
-		m_group = TheLifeConfiguration.getGroupsDS().findById(groupId);		
+		m_group = TheLifeConfiguration.getGroupsDS().findById(groupId);
 		
 		// Show the group
 		if (m_group != null) {		
