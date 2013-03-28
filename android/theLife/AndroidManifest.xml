@@ -120,8 +120,17 @@
         <activity
             android:name="com.p2c.thelife.FriendsImportActivity"
             android:label="theLife" >
-           <intent-filter>
+            <intent-filter>
                 <action android:name="com.p2c.thelife.FriendsImport" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.SetupActivity"
+            android:label="@string/title_activity_setup" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.Setup" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>            

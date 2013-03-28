@@ -12,14 +12,25 @@ public class MainActivity extends SlidingMenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_main, SlidingMenuSupport.COMMUNITY_POSITION);		
 			
-		// attach the event list view
-		ListView listView = (ListView)findViewById(R.id.list);
-		MainEventsAdapter adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
-		listView.setAdapter(adapter);
-		
-		// load the database from the server in the background
-		TheLifeConfiguration.getEventsDS().addDataStoreListener(adapter);
-		TheLifeConfiguration.getEventsDS().refresh();			
+		if (TheLifeConfiguration.getUserId() == 0) {
+			
+			// no authenticated user, so login or register
+			Intent intent = new Intent("com.p2c.thelife.Setup");
+			startActivity(intent);			
+			
+		} else {
+			
+			// have an authenticated user, so go ahead with the rest of the app
+			
+			// attach the event list view
+			ListView listView = (ListView)findViewById(R.id.list);
+			MainEventsAdapter adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
+			listView.setAdapter(adapter);
+			
+			// load the database from the server in the background
+			TheLifeConfiguration.getEventsDS().addDataStoreListener(adapter);
+			TheLifeConfiguration.getEventsDS().refresh();
+		}
 	}
 
 	@Override

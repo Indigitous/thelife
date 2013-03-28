@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.p2c.thelife.TheLifeConfiguration;
+import com.p2c.thelife.Utilities;
 
 
 
@@ -68,7 +69,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			{
 				Log.d(TAG, "THE MODELS CACHE FILE EXISTS");
 				
-				String jsonString = readJSONStream(new FileReader(cacheFile));
+				String jsonString = Utilities.readBufferedStream(new FileReader(cacheFile));
 				if (jsonString != null) {
 					JSONArray jsonArray = new JSONArray(jsonString);					
 					addModels(jsonArray, false, m_data);
@@ -176,33 +177,6 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 */
 	protected abstract T createFromJSON(JSONObject json, boolean useServer) throws JSONException;
 	
-	/**
-	 * Read the JSON objects from the given stream.
-	 * Note that InputStreamReader is buffered.
-	 * @param is
-	 * @return the string containing JSON, or null if an error
-	 */
-	protected String readJSONStream(InputStreamReader is) {
-
-		String jsonString = null;
-		
-		try {
-			char buffer[] = new char[1024];
-			CharArrayBuffer jsonBuffer = new CharArrayBuffer(1024);			
-
-			int numBytesRead = is.read(buffer);
-			while (numBytesRead != -1) {
-				jsonBuffer.append(buffer, 0, numBytesRead);
-				numBytesRead = is.read(buffer);
-			}
-			
-			jsonString = new String(jsonBuffer.buffer());
-		} catch (IOException e) {
-			Log.e(TAG, "readJSONStream()", e);
-		}
-		
-		return jsonString;
-	}	
 	
 	protected void addModels(JSONArray jsonArray, boolean useServer, ArrayList<T> list) throws JSONException {
 
@@ -232,13 +206,13 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				URL modelsEP = urls[0];
 				modelsConnection = (HttpURLConnection)modelsEP.openConnection();
 				modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
-				modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
+				modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 				
 				Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE CODE" + modelsConnection.getResponseCode());
 
 				String jsonString = null;
 				if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
-					jsonString = readJSONStream(new InputStreamReader(modelsConnection.getInputStream()));
+					jsonString = Utilities.readBufferedStream(new InputStreamReader(modelsConnection.getInputStream()));
 				}
 				
 				if (jsonString != null) {

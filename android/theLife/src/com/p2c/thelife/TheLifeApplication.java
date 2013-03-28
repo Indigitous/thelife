@@ -30,17 +30,19 @@ public class TheLifeApplication extends Application {
 			
 		Log.e(TAG, "onCreate()");  // TODO for debugging only
 		
+		// TODO: for debugging -- clear the user id
+		SharedPreferences systemSettings2 = 
+				getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);		
+		SharedPreferences.Editor system_settings_editor2 = systemSettings2.edit();
+		system_settings_editor2.putInt("user_id", 0);
+		system_settings_editor2.commit();
+		
 		// initialize user id from system settings
 		SharedPreferences systemSettings = 
 			getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);
-		TheLifeConfiguration.setUserId(systemSettings.getInt("user_id", 0));
+		TheLifeConfiguration.setUserId(systemSettings.getInt("user_id2", 0));
 		
-		// TODO: for debugging -- set the user id, but this could happen for a new user just loading the app
-		if (TheLifeConfiguration.getUserId() == 0) {
-			SharedPreferences.Editor system_settings_editor = systemSettings.edit();
-			system_settings_editor.putInt("user_id", 1);
-			system_settings_editor.commit();
-		}
+
 		
 		// initialize stock images before initializing data stores
 		TheLifeConfiguration.genericPersonImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));

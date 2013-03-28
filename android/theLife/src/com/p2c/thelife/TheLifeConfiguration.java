@@ -44,7 +44,7 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
-	public static final String SERVER_URL = "http://thelife.ballistiq.com/v1/";
+	public static final String SERVER_URL = "http://75.157.251.192:3000";
 	
 	// stock images
 	public static Bitmap genericPersonImage;
