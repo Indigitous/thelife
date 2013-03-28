@@ -106,6 +106,8 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 					}					
 					
 				}
+				
+				//TODO show errors correctly
 			}
 		}
 		

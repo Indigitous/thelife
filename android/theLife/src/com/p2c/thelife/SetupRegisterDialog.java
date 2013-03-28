@@ -9,7 +9,6 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 /**
  * Register the user for a new account. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.

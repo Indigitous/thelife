@@ -75,11 +75,35 @@ public class Server {
 			pairs.add(new BasicNameValuePair("last_name", lastName));			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall("login", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall("register", formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "login()", e);
 		}
 	}
+	
+	
+	/**
+	 * Create a new friend for the current user.
+	 */
+	public void createFriend(String firstName, String lastName, int thresholdIndex, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 422 on an incorrect form (such as a bad threshold), HTTP 201 on a success
+		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/friends";
+		
+		try {
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
+			pairs.add(new BasicNameValuePair("first_name", firstName));
+			pairs.add(new BasicNameValuePair("last_name", lastName));
+			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(thresholdIndex + 1))); // TODO: need a better server API here			
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+						
+			new ServerCall("createFriend", formEntity, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "login()", e);
+		}
+	}	
 		
 	
 	
@@ -114,7 +138,7 @@ public class Server {
 				
 			AndroidHttpClient httpClient = null;
 			try {			
-				Log.d(TAG, "STARTING READFROMSERVER with " + urls[0]);	
+				Log.d(TAG, "STARTING ServerCall with " + urls[0]);	
 								
 				httpClient = AndroidHttpClient.newInstance(m_httpName);
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);

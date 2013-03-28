@@ -1,5 +1,6 @@
 package com.p2c.thelife;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
@@ -16,6 +18,12 @@ import android.widget.Toast;
  *
  */
 public class FriendImportManuallyDialog extends DialogFragment {
+	
+	public interface Listener {
+		public void notifyAttemptingImport();
+	}		
+	
+	private Object m_listener = null;
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,9 +42,15 @@ public class FriendImportManuallyDialog extends DialogFragment {
 				EditText firstNameField = (EditText)view.findViewById(R.id.import_friend_first_name);
 				String firstName = firstNameField.getText().toString();
 				EditText lastNameField = (EditText)view.findViewById(R.id.import_friend_last_name);
-				String lastName = lastNameField.getText().toString();		
+				String lastName = lastNameField.getText().toString();
+				Spinner thresholdField = (Spinner)view.findViewById(R.id.import_friend_threshold);
+				int thresholdIndex = thresholdField.getSelectedItemPosition();
 				
-				// TODO: add friend here				
+				// enable a progress bar
+				((Listener)m_listener).notifyAttemptingImport();
+
+				Server server = new Server();
+				server.createFriend(firstName, lastName, thresholdIndex, (Server.ServerListener)m_listener, "createFriend");				
 				
 				Toast.makeText(getActivity(), "ADD FRIEND " + firstName + " " + lastName, Toast.LENGTH_SHORT).show();					
 			}
@@ -44,5 +58,10 @@ public class FriendImportManuallyDialog extends DialogFragment {
 		
 		return alertBuilder.create();				
 	}
+	
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		m_listener = (Server.ServerListener)activity;
+	}	
 
 }

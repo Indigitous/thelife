@@ -12,21 +12,7 @@
     <string name="title_activity_friends">Friends</string>
     <string name="title_activity_groups">Groups</string>
     <string name="title_activity_global_help">GlobalHelp</string>
-    <string name="threshold_new_contact_short">New Contact</string>
-    <string name="threshold_trusting_short">Trusting</string>
-    <string name="threshold_curious_short">Curious</string>
-    <string name="threshold_open_short">Open</string>
-    <string name="threshold_seeking_short">Seeking</string>
-    <string name="threshold_entering_short">Entering</string>
-    <string name="threshold_christian_short">Christian</string>
     <string name="threshold_unknown_short">Unknown</string>
-    <string name="threshold_new_contact_medium">New Contact</string>
-    <string name="threshold_trusting_medium">Trusting a Christian</string>
-    <string name="threshold_curious_medium">Curious about Jesus</string>
-    <string name="threshold_open_medium">Open to Change</string>
-    <string name="threshold_seeking_medium">Seeking God</string>
-    <string name="threshold_entering_medium">Entering the Kingdom</string>
-    <string name="threshold_christian_medium">Follower of Jesus</string>
     <string name="threshold_unknown_medium">Unknown</string>
     <string name="title_activity_friend">FriendActivity</string>
     <string name="title_activity_activities_for_friend">DeedsForFriend</string>
@@ -61,6 +47,24 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="register_prompt">Please register for a new account.</string>
+    <string-array name="thresholds_short">
+        <item>New Contact</item>
+        <item>Trusting</item>
+        <item>Curious</item>
+        <item>Open</item>
+        <item>Seeking</item>
+        <item>Entering</item>
+        <item>Christian</item>
+    </string-array>
+    <string-array name="thresholds_medium">
+        <item>New Contact</item>
+        <item>Trusting a Christian</item>
+        <item>Curious about Jesus</item>
+        <item>Open to Change</item>
+        <item>Seeking God</item>
+        <item>Entering the Kingdom</item>
+        <item>Follower of Jesus</item>
+    </string-array>    
     
 
 </resources>

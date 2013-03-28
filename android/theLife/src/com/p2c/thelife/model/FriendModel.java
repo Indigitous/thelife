@@ -76,21 +76,24 @@ public class FriendModel extends AbstractModel {
 	 * @return String   short string version of the threshold
 	 */
 	public String get_threshold_short_string(Resources resources) {
+
+		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
+		
 		switch (threshold) {
 			case New_Contact:
-				return resources.getString(R.string.threshold_new_contact_short);
+				return thresholdStrings[0];
 			case Trusting:
-				return resources.getString(R.string.threshold_trusting_short);
+				return thresholdStrings[1];
 			case Curious:
-				return resources.getString(R.string.threshold_curious_short);
+				return thresholdStrings[2];
 			case Open:
-				return resources.getString(R.string.threshold_open_short);	
+				return thresholdStrings[3];	
 			case Seeking:
-				return resources.getString(R.string.threshold_seeking_short);	
+				return thresholdStrings[4];	
 			case Entering:
-				return resources.getString(R.string.threshold_entering_short);
+				return thresholdStrings[5];
 			case Christian:
-				return resources.getString(R.string.threshold_christian_short);	
+				return thresholdStrings[6];			
 			default:
 				return resources.getString(R.string.threshold_unknown_short);
 		}
@@ -100,21 +103,24 @@ public class FriendModel extends AbstractModel {
 	 * @return String   medium string version of the threshold
 	 */
 	public String get_threshold_medium_string(Resources resources) {
+		
+		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
+		
 		switch (threshold) {
 			case New_Contact:
-				return resources.getString(R.string.threshold_new_contact_medium);
+				return thresholdStrings[0];
 			case Trusting:
-				return resources.getString(R.string.threshold_trusting_medium);
+				return thresholdStrings[1];
 			case Curious:
-				return resources.getString(R.string.threshold_curious_medium);
+				return thresholdStrings[2];
 			case Open:
-				return resources.getString(R.string.threshold_open_medium);	
+				return thresholdStrings[3];	
 			case Seeking:
-				return resources.getString(R.string.threshold_seeking_medium);	
+				return thresholdStrings[4];	
 			case Entering:
-				return resources.getString(R.string.threshold_entering_medium);
+				return thresholdStrings[5];
 			case Christian:
-				return resources.getString(R.string.threshold_christian_medium);	
+				return thresholdStrings[6];	
 			default:
 				return resources.getString(R.string.threshold_unknown_medium);
 		}
