@@ -1,4 +1,5 @@
 package com.p2c.thelife;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
 import com.p2c.thelife.model.CategoriesDS;
@@ -17,6 +18,9 @@ import com.p2c.thelife.model.UsersDS;
 public class TheLifeConfiguration {
 	
 	private static final String TAG = "TheLifeConfiguration";
+	
+	// shared preferences
+	private static SharedPreferences m_systemSettings;
 	
 	// data stores
 	private static DeedsDS m_deedsDS = null;
@@ -55,6 +59,15 @@ public class TheLifeConfiguration {
 	
 	// directory of local cache files
 	public static String cacheDirectory = null; 
+	
+	
+	/*************************** System Preferences **********************/
+	public static void setSystemSettings(SharedPreferences systemSettings) {
+		m_systemSettings = systemSettings;
+		
+		m_userId = m_systemSettings.getInt("user_id", 0);
+		m_token = m_systemSettings.getString("token", "");
+	}
 	
 	/*************************** Data Stores *****************************/
 	
@@ -114,6 +127,10 @@ public class TheLifeConfiguration {
 	
 	public static void setUserId(int user_id) {
 		m_userId = user_id;
+		
+		SharedPreferences.Editor systemSettingsEditor = m_systemSettings.edit();
+		systemSettingsEditor.putInt("user_id", m_userId);
+		systemSettingsEditor.commit();		
 	}	
 	
 	/**
@@ -130,6 +147,10 @@ public class TheLifeConfiguration {
 	 */
 	public static void setToken(String token) {
 		m_token = token;
+		
+		SharedPreferences.Editor systemSettingsEditor = m_systemSettings.edit();
+		systemSettingsEditor.putString("token", m_token);
+		systemSettingsEditor.commit();				
 	}	
 	
 

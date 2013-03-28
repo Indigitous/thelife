@@ -29,20 +29,11 @@ public class TheLifeApplication extends Application {
 		super.onCreate();
 			
 		Log.e(TAG, "onCreate()");  // TODO for debugging only
-		
-		// TODO: for debugging -- clear the user id
-		SharedPreferences systemSettings2 = 
-				getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);		
-		SharedPreferences.Editor system_settings_editor2 = systemSettings2.edit();
-		system_settings_editor2.putInt("user_id", 0);
-		system_settings_editor2.commit();
-		
-		// initialize user id from system settings
+			
+		// initialize configuration from system settings
 		SharedPreferences systemSettings = 
 			getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);
-		TheLifeConfiguration.setUserId(systemSettings.getInt("user_id2", 0));
-		
-
+		TheLifeConfiguration.setSystemSettings(systemSettings);
 		
 		// initialize stock images before initializing data stores
 		TheLifeConfiguration.genericPersonImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
