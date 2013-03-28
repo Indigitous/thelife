@@ -57,8 +57,10 @@
     <string name="setup_prompt">Welcome to theLife!\n\nPlease login\nor create a new account.</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="login_prompt">Please login</string>
+    <string name="login_prompt">Please login to your account.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="register_prompt">Please register for a new account.</string>
+    
 
 </resources>

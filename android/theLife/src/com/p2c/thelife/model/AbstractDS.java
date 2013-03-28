@@ -106,6 +106,13 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		return m_data;
 	}
 	
+	/**
+	 * Add a model which is already in the server.
+	 */
+	public void add(T model) {
+		m_data.add(model);
+	}
+	
 	
 	/**
 	 * Refresh the model objects cache.

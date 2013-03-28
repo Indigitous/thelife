@@ -34,13 +34,16 @@ public class Server {
 	 *
 	 */
 	public interface ServerListener {
-		public void notifyResponseAvailable(int indicator, JSONObject jsonObject);
+		public void notifyResponseAvailable(String indicator, JSONObject jsonObject);
 	}
 	
 	/**
-	 * Log into theLife.
+	 * Log into theLife. This means the user already has an account.
 	 */
-	public void login(String username, String password, ServerListener listener, int indicator) {
+	public void login(String username, String password, ServerListener listener, String indicator) {
+		
+		// API end point
+		// returns HTTP 201 on a success, HTTP 401 on a fail
 		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/authenticate";
 		
 		try {
@@ -55,6 +58,30 @@ public class Server {
 		}
 	}
 	
+	/**
+	 * Register for an account in theLife. The email must not already be taken.
+	 */
+	public void register(String username, String password, String firstName, String lastName, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 422 on a already taken (or missing) email, HTTP 201 on a success
+		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/register";
+		
+		try {
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("email", username));
+			pairs.add(new BasicNameValuePair("password", password));
+			pairs.add(new BasicNameValuePair("first_name", firstName));
+			pairs.add(new BasicNameValuePair("last_name", lastName));			
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+						
+			new ServerCall("login", formEntity, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "login()", e);
+		}
+	}
+		
+	
 	
 	
 	/********************************* Background thread Server access task *************************************/
@@ -64,9 +91,9 @@ public class Server {
 		private String m_httpName = null;
 		private HttpEntity m_entity = null;
 		private ServerListener m_listener = null;
-		private int m_indicator = -1;
+		private String m_indicator = null;
 		
-		public ServerCall(String httpName, HttpEntity entity, ServerListener listener, int indicator) {
+		public ServerCall(String httpName, HttpEntity entity, ServerListener listener, String indicator) {
 			m_httpName = httpName;
 			m_entity = entity;
 			m_listener = listener;
