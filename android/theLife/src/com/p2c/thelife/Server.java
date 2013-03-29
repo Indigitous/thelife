@@ -9,7 +9,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.json.JSONException;
@@ -52,7 +54,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("password", password));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall(formEntity, listener, indicator).execute(urlString);			
+			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "login()", e);
 		}
@@ -75,7 +77,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("last_name", lastName));			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall(formEntity, listener, indicator).execute(urlString);			
+			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "register()", e);
 		}
@@ -99,11 +101,28 @@ public class Server {
 			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(thresholdIndex + 1))); // TODO: need a better server API here			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall(formEntity, listener, indicator).execute(urlString);			
+			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "createFriend()", e);
 		}
 	}
+	
+	
+	/**
+	 * Create a new friend for the current user.
+	 */
+	public void deleteFriend(int friendId, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 404 on an unknown friend, HTTP 201 on a success TODO check this
+		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/friends?token=" + TheLifeConfiguration.getToken() + "&friend_id=" + String.valueOf(friendId);
+		
+		try {					
+			new ServerCall("DELETE", null, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "deleteFriend()", e);
+		}
+	}	
 	
 	
 	/**
@@ -122,7 +141,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("full_description", description));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall(formEntity, listener, indicator).execute(urlString);			
+			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "createGroup()", e);
 		}
@@ -135,11 +154,13 @@ public class Server {
 	
 	private class ServerCall extends AsyncTask<String, Void, JSONObject> {
 		
+		private String m_httpMethod = null;
 		private HttpEntity m_entity = null;
 		private ServerListener m_listener = null;
 		private String m_indicator = null;
 		
-		public ServerCall(HttpEntity entity, ServerListener listener, String indicator) {
+		public ServerCall(String httpMethod, HttpEntity entity, ServerListener listener, String indicator) {
+			m_httpMethod = httpMethod;
 			m_entity = entity;
 			m_listener = listener;
 			m_indicator = indicator;
@@ -163,11 +184,11 @@ public class Server {
 								
 				httpClient = AndroidHttpClient.newInstance(m_indicator);
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
-				httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TheLifeConfiguration.HTTP_READ_TIMEOUT);				
-				HttpPost httpPost = new HttpPost(urls[0]);
-				httpPost.setEntity(m_entity);
+				httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TheLifeConfiguration.HTTP_READ_TIMEOUT);
 				
-				HttpResponse httpResponse = httpClient.execute(httpPost);
+				HttpUriRequest httpRequest = createHttpRequest(urls[0]);
+
+				HttpResponse httpResponse = httpClient.execute(httpRequest);
 				int responseCode = httpResponse.getStatusLine().getStatusCode();
 				
 				System.out.println("HERE IS THE STATUS CODE " + responseCode);
@@ -186,11 +207,11 @@ public class Server {
 					jsonObject = new JSONObject(jsonString);
 				}
 			} catch (JSONException e) {
-				Log.wtf(TAG, "readFromServer()", e);				
+				Log.wtf(TAG, "ServerCall.doInBackground()", e);				
 			} catch (MalformedURLException e) {
-				Log.wtf(TAG, "readFromServer()", e);
+				Log.wtf(TAG, "ServerCall().doInBackground", e);
 			} catch (IOException e) {
-				Log.e(TAG, "readFromServer()", e);				
+				Log.e(TAG, "ServerCall().doInBackground", e);				
 			} finally {
 				if (httpClient != null) {
 					httpClient.close();
@@ -198,6 +219,20 @@ public class Server {
 			}	
 			
 			return jsonObject;
+		}
+		
+		private HttpUriRequest createHttpRequest(String urlString) {
+			if (m_httpMethod.equals("POST")) {
+				HttpPost httpRequest = new HttpPost(urlString);
+				httpRequest.setEntity(m_entity);	
+				return httpRequest;
+			} else if (m_httpMethod.equals("DELETE")) {
+				HttpDelete httpRequest = new HttpDelete(urlString);
+				return httpRequest;
+			} else {
+				Log.e(TAG, "Bad HTTP method in createHttpRequest " + m_httpMethod);
+				return null;
+			}
 		}
 		
 		// UI thread		

@@ -1,11 +1,16 @@
 package com.p2c.thelife;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -16,9 +21,15 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendsActivity extends SlidingMenuActivity {
+public class FriendsActivity 
+	extends SlidingMenuFragmentActivity 
+	implements OnItemLongClickListener, OnItemClickListener, Server.ServerListener, FriendDeleteDialog.Listener {
 	
 	private static final String TAG = "FriendsActivity"; 	
+	
+	private FriendModel m_friend = null; // selected friend
+	private ProgressDialog m_progressDialog = null;	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,9 @@ public class FriendsActivity extends SlidingMenuActivity {
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
 		FriendsAdapter adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
 		friendsGrid.setAdapter(adapter);
+		
+		friendsGrid.setOnItemClickListener(this);
+		friendsGrid.setOnItemLongClickListener(this);
 		
 		// load the database from the server in the background
 		TheLifeConfiguration.getFriendsDS().addDataStoreListener(adapter);  
@@ -52,21 +66,66 @@ public class FriendsActivity extends SlidingMenuActivity {
 		return true;
 	}		
 	
+
 	/**
-	 * Friend has been selected.
-	 * @param view
-	 * @return
+	 * View a friend.
 	 */
-	public boolean selectFriend(View view) {
-		Log.d(TAG, "FRIEND VIEW SELECTED TAG " + view.getTag());
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		
 		// get the friend associated with this view
-		FriendModel friend = (FriendModel)view.getTag();
+		m_friend = (FriendModel)arg1.getTag();
 		
 		Intent intent = new Intent("com.p2c.thelife.FriendActivity");
-		intent.putExtra("friend_id", friend.id);
+		intent.putExtra("friend_id", m_friend.id);
 		startActivity(intent);
-		
-		return true;
 	}
+	
+	
+	/**
+	 * Delete a friend.
+	 */
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		
+		// get the friend associated with this view
+		m_friend = (FriendModel)arg1.getTag();
+		
+		FriendDeleteDialog dialog = new FriendDeleteDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());		
+				
+		return true; // consumed
+	}	
+	
+	
+	public FriendModel getSelectedFriend() {
+		return m_friend;
+	}
+	
+	
+	@Override
+	public void notifyAttemptingServerAccess(String indicator) {
+		m_progressDialog = ProgressDialog.show(this, "Waiting", "Deleting Friend", true, true);	// TODO translation				
+	}
+
+	
+	@Override
+	public void notifyResponseAvailable(String indicator, JSONObject jsonObject) {
+		
+		if (jsonObject != null) {
+			int friendId = jsonObject.optInt("id", 0);
+			if (friendId != 0) {
+				
+				// successful
+											
+				// delete the friend from the list
+				TheLifeConfiguration.getFriendsDS().delete(friendId);			
+			}
+		}
+		
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}				
+	}		
+
 }

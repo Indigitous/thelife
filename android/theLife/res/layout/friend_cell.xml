@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:onClick="selectFriend" >
+    android:orientation="vertical" >
     
    <ImageView
         android:id="@+id/friend_image"
@@ -28,7 +27,7 @@
         android:layout_height="wrap_content"
     	android:layout_gravity="center"                
         android:textSize="12sp"
-        android:textStyle="italic"		        
+        android:textStyle="italic"
         android:text="Build Trust" /> 
 
 </LinearLayout>

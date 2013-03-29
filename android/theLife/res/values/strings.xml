@@ -64,7 +64,8 @@
         <item>Seeking God</item>
         <item>Entering the Kingdom</item>
         <item>Follower of Jesus</item>
-    </string-array>    
+    </string-array>
+    <string name="delete_friend_prompt">Delete friend %s?</string>  
     
 
 </resources>

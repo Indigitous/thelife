@@ -15,4 +15,15 @@ public abstract class AbstractModel {
 		this.id = id;
 	}
 	
+	@Override
+	public boolean equals(Object model) {
+		
+		// TODO check that model is the same type?
+		if (model instanceof AbstractModel) {
+			return this.id == ((AbstractModel)model).id;
+		} else {
+			return false;
+		}
+	}
+	
 }

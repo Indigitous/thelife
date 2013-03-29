@@ -113,6 +113,21 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		m_data.add(model);
 	}
 	
+	/**
+	 * Delete a model which has already been deleted in the server.
+	 */
+	public void delete(int id) {
+		
+		int index = 0;
+		for (T m:m_data) {
+			if (m.id == id) {
+				m_data.remove(index);
+				return;
+			}
+			index++;
+		}
+	}	
+	
 	
 	/**
 	 * Refresh the model objects cache.
