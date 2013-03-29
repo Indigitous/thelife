@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-public class SetupActivity extends FragmentActivity implements Server.ServerListener, SetupLoginDialog.Listener, SetupRegisterDialog.Listener {
+public class SetupActivity extends FragmentActivity implements Server.ServerListener, AbstractServerAccessDialog.Listener {
 	
 	private ProgressDialog m_progressDialog = null;
 
@@ -40,14 +40,13 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 	}
 	
 	@Override
-	public void notifyAttemptingLogin() {
-		m_progressDialog = ProgressDialog.show(this, "Waiting", "Retrieving account.", true, true);	// TODO translation
+	public void notifyAttemptingServerAccess(String indicator) {
+		if (indicator.equals("login")) {
+			m_progressDialog = ProgressDialog.show(this, "Waiting", "Retrieving account", true, true);	// TODO translation
+		} else {
+			m_progressDialog = ProgressDialog.show(this, "Waiting", "Creating account", true, true);	// TODO translation
+		}
 	}
-	
-	@Override
-	public void notifyAttemptingRegister() {
-		m_progressDialog = ProgressDialog.show(this, "Waiting", "Accessing account.", true, true);	// TODO translation		
-	}	
 	
 	
 	@Override

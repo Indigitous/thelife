@@ -52,7 +52,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("password", password));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall("login", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "login()", e);
 		}
@@ -75,7 +75,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("last_name", lastName));			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall("register", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "register()", e);
 		}
@@ -99,7 +99,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(thresholdIndex + 1))); // TODO: need a better server API here			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall("createFriend", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "createFriend()", e);
 		}
@@ -122,7 +122,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("full_description", description));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
-			new ServerCall("createGroup", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "createGroup()", e);
 		}
@@ -135,13 +135,11 @@ public class Server {
 	
 	private class ServerCall extends AsyncTask<String, Void, JSONObject> {
 		
-		private String m_httpName = null;
 		private HttpEntity m_entity = null;
 		private ServerListener m_listener = null;
 		private String m_indicator = null;
 		
-		public ServerCall(String httpName, HttpEntity entity, ServerListener listener, String indicator) {
-			m_httpName = httpName;
+		public ServerCall(HttpEntity entity, ServerListener listener, String indicator) {
 			m_entity = entity;
 			m_listener = listener;
 			m_indicator = indicator;
@@ -163,7 +161,7 @@ public class Server {
 			try {			
 				Log.d(TAG, "STARTING ServerCall with " + urls[0]);	
 								
-				httpClient = AndroidHttpClient.newInstance(m_httpName);
+				httpClient = AndroidHttpClient.newInstance(m_indicator);
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TheLifeConfiguration.HTTP_READ_TIMEOUT);				
 				HttpPost httpPost = new HttpPost(urls[0]);

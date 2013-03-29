@@ -15,15 +15,9 @@ import android.widget.EditText;
  * @author clarence
  *
  */
-public class SetupRegisterDialog extends DialogFragment {
+public class SetupRegisterDialog extends AbstractServerAccessDialog {
 	
 	private static final String TAG = "SetupRegisterDialog";
-	
-	public interface Listener {
-		public void notifyAttemptingRegister();
-	}	
-	
-	private Object m_listener = null;
 		
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -52,7 +46,7 @@ public class SetupRegisterDialog extends DialogFragment {
 				String lastName = lastNameField.getText().toString();				
 							
 				// enable a progress bar
-				((Listener)m_listener).notifyAttemptingRegister();
+				((Listener)m_listener).notifyAttemptingServerAccess("register");
 
 				Server server = new Server();
 				server.register(username, password, firstName, lastName, (Server.ServerListener)m_listener, "register");
@@ -61,11 +55,5 @@ public class SetupRegisterDialog extends DialogFragment {
 		
 		return alertBuilder.create();				
 	}
-	
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		m_listener = (Server.ServerListener)activity;
-	}
-	
 
 }

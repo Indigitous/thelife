@@ -17,13 +17,7 @@ import android.widget.Toast;
  * @author clarence
  *
  */
-public class FriendImportManuallyDialog extends DialogFragment {
-	
-	public interface Listener {
-		public void notifyAttemptingImport();
-	}		
-	
-	private Object m_listener = null;
+public class FriendImportManuallyDialog extends AbstractServerAccessDialog {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -47,7 +41,7 @@ public class FriendImportManuallyDialog extends DialogFragment {
 				int thresholdIndex = thresholdField.getSelectedItemPosition();
 				
 				// enable a progress bar
-				((Listener)m_listener).notifyAttemptingImport();
+				((Listener)m_listener).notifyAttemptingServerAccess("createFriend");
 
 				Server server = new Server();
 				server.createFriend(firstName, lastName, thresholdIndex, (Server.ServerListener)m_listener, "createFriend");				
@@ -58,10 +52,5 @@ public class FriendImportManuallyDialog extends DialogFragment {
 		
 		return alertBuilder.create();				
 	}
-	
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		m_listener = (Server.ServerListener)activity;
-	}	
 
 }

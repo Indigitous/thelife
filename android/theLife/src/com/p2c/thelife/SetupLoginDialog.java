@@ -16,15 +16,9 @@ import android.widget.ProgressBar;
  * @author clarence
  *
  */
-public class SetupLoginDialog extends DialogFragment {
+public class SetupLoginDialog extends AbstractServerAccessDialog {
 	
 	private static final String TAG = "SetupLoginDialog";
-	
-	public interface Listener {
-		public void notifyAttemptingLogin();
-	}	
-	
-	private Object m_listener = null;
 		
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -49,7 +43,7 @@ public class SetupLoginDialog extends DialogFragment {
 				String password = passwordField.getText().toString();
 							
 				// enable a progress bar
-				((Listener)m_listener).notifyAttemptingLogin();
+				((Listener)m_listener).notifyAttemptingServerAccess("login");
 
 				Server server = new Server();
 				server.login(username, password, (Server.ServerListener)m_listener, "login");
@@ -57,11 +51,6 @@ public class SetupLoginDialog extends DialogFragment {
 		}); 
 		
 		return alertBuilder.create();				
-	}
-	
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		m_listener = (Server.ServerListener)activity;
 	}
 	
 

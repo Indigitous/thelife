@@ -79,7 +79,7 @@ public class FriendsImportActivity extends SlidingMenuFragmentActivity implement
 	}
 
 	@Override
-	public void notifyAttemptingImport() {
+	public void notifyAttemptingServerAccess(String indicator) {
 		m_progressDialog = ProgressDialog.show(this, "Waiting", "Add Friend", true, true);	// TODO translation		
 	}
 

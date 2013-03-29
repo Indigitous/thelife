@@ -83,7 +83,7 @@ System.out.println("SEARCH REQUESTED");
 	}
 
 	@Override
-	public void notifyAttemptingGroupCreate() {
+	public void notifyAttemptingServerAccess(String indicator) {
 		m_progressDialog = ProgressDialog.show(this, "Waiting", "Create New Group", true, true);	// TODO translation				
 	}
 
