@@ -1,6 +1,5 @@
 package com.p2c.thelife;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -10,12 +9,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class GroupsSearchActivity extends Activity implements OnEditorActionListener {
+public class GroupsSearchActivity extends SlidingMenuActivity implements OnEditorActionListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_groups_search);
+		super.onCreate(savedInstanceState, R.layout.activity_groups_search, SlidingMenuSupport.GROUPS_POSITION);
 		
 		// listen for a search
 		EditText editText = (EditText)findViewById(R.id.search_groups_text);
