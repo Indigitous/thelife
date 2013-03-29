@@ -53,22 +53,25 @@ public class FriendsImportActivity extends SlidingMenuFragmentActivity implement
 
 	@Override
 	public void notifyResponseAvailable(String indicator, JSONObject jsonObject) {
-		int friendId = jsonObject.optInt("id", 0);
-		if (friendId != 0) {
-			
-			// successful
-			
-			Toast.makeText(this, "THE FRIEND ID IS " + friendId, Toast.LENGTH_SHORT).show(); // TODO
-			
-			String firstName = jsonObject.optString("first_name", "");
-			String lastName = jsonObject.optString("last_name", "");
-			int thresholdId = jsonObject.optInt("threshold_id");
-			
-			// add the friend to the list of known friends
-			FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdId - 1]; // TODO need better Server API here 
-			FriendModel friend = new FriendModel(friendId, firstName, lastName, null, threshold);
-			TheLifeConfiguration.getFriendsDS().add(friend);			
-		}		
+		
+		if (jsonObject != null) {
+			int friendId = jsonObject.optInt("id", 0);
+			if (friendId != 0) {
+				
+				// successful
+				
+				Toast.makeText(this, "THE FRIEND ID IS " + friendId, Toast.LENGTH_SHORT).show(); // TODO
+				
+				String firstName = jsonObject.optString("first_name", "");
+				String lastName = jsonObject.optString("last_name", "");
+				int thresholdId = jsonObject.optInt("threshold_id");
+				
+				// add the friend to the list of known friends
+				FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdId - 1]; // TODO need better Server API here 
+				FriendModel friend = new FriendModel(friendId, firstName, lastName, null, threshold);
+				TheLifeConfiguration.getFriendsDS().add(friend);			
+			}
+		}
 		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
@@ -78,8 +81,6 @@ public class FriendsImportActivity extends SlidingMenuFragmentActivity implement
 	@Override
 	public void notifyAttemptingImport() {
 		m_progressDialog = ProgressDialog.show(this, "Waiting", "Add Friend", true, true);	// TODO translation		
-
-		
 	}
 
 }

@@ -77,7 +77,7 @@ public class Server {
 						
 			new ServerCall("register", formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
-			Log.e(TAG, "login()", e);
+			Log.e(TAG, "register()", e);
 		}
 	}
 	
@@ -101,9 +101,32 @@ public class Server {
 						
 			new ServerCall("createFriend", formEntity, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
-			Log.e(TAG, "login()", e);
+			Log.e(TAG, "createFriend()", e);
 		}
-	}	
+	}
+	
+	
+	/**
+	 * Create a new group for the current user.
+	 */
+	public void createGroup(String name, String description, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
+		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/groups";
+		
+		try {
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
+			pairs.add(new BasicNameValuePair("name", name));
+			pairs.add(new BasicNameValuePair("full_description", description));
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+						
+			new ServerCall("createGroup", formEntity, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "createGroup()", e);
+		}
+	}		
 		
 	
 	

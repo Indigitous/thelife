@@ -1,5 +1,10 @@
 package com.p2c.thelife;
 
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +16,11 @@ import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
 
-public class GroupsActivity extends SlidingMenuFragmentActivity {
+public class GroupsActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, GroupCreateDialog.Listener {
 	
 	private static final String TAG = "DeedsDS"; 	
+	
+	private ProgressDialog m_progressDialog = null;	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,38 @@ System.out.println("SEARCH REQUESTED");
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void notifyAttemptingGroupCreate() {
+		m_progressDialog = ProgressDialog.show(this, "Waiting", "Create New Group", true, true);	// TODO translation				
+	}
+
+	@Override
+	public void notifyResponseAvailable(String indicator, JSONObject jsonObject) {
+		
+		if (jsonObject != null) {
+			int groupId = jsonObject.optInt("id", 0);
+			if (groupId != 0) {
+				
+				// successful
+				
+				Toast.makeText(this, "THE GROUP ID IS " + groupId, Toast.LENGTH_SHORT).show();
+				
+				String name = jsonObject.optString("name", "");
+				String description = jsonObject.optString("full_description", "");
+				
+				// add the group to the list of known groups
+				ArrayList<Integer> memberIds = new ArrayList<Integer>();
+				memberIds.add(TheLifeConfiguration.getUserId());
+				GroupModel group = new GroupModel(groupId, name, description, TheLifeConfiguration.getUserId(), memberIds);
+				TheLifeConfiguration.getGroupsDS().add(group);			
+			}
+		}
+		
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}				
 	}	
 	
 

@@ -1,5 +1,6 @@
 package com.p2c.thelife;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,6 +17,12 @@ import android.widget.Toast;
  *
  */
 public class GroupCreateDialog extends DialogFragment {
+	
+	public interface Listener {
+		public void notifyAttemptingGroupCreate();
+	}	
+	
+	private Object m_listener = null;	
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,9 +41,13 @@ public class GroupCreateDialog extends DialogFragment {
 				EditText nameField = (EditText)view.findViewById(R.id.group_create_name);
 				String name = nameField.getText().toString();
 				EditText descriptionField = (EditText)view.findViewById(R.id.group_create_description);
-				String lastName = descriptionField.getText().toString();		
+				String description = descriptionField.getText().toString();		
 				
-				// TODO: create group here				
+				// enable a progress bar
+				((Listener)m_listener).notifyAttemptingGroupCreate();
+
+				Server server = new Server();
+				server.createGroup(name, description, (Server.ServerListener)m_listener, "createGroup");		
 				
 				Toast.makeText(getActivity(), "CREATE GROUP " + name + " ", Toast.LENGTH_SHORT).show();					
 			}
@@ -44,5 +55,10 @@ public class GroupCreateDialog extends DialogFragment {
 		
 		return alertBuilder.create();				
 	}
+	
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		m_listener = (Server.ServerListener)activity;
+	}		
 
 }
