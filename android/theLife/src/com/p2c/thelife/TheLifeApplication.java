@@ -44,10 +44,9 @@ public class TheLifeApplication extends Application {
 		
 		TheLifeConfiguration.cacheDirectory = getApplicationContext().getCacheDir().getAbsolutePath() + "/";
 		
-		// initialize the data stores
-		// TODO: these need to be initialized sequentially in order
+		// initialize the data stores, reading from cache if available
+		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext()));				
 		TheLifeConfiguration.setDeedsDS(new DeedsDS(getApplicationContext()));
-		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext()));		
 		TheLifeConfiguration.setUsersDS(new UsersDS(getApplicationContext()));
 		TheLifeConfiguration.setGroupsDS(new GroupsDS(getApplicationContext()));
 		TheLifeConfiguration.setFriendsDS(new FriendsDS(getApplicationContext()));		
