@@ -145,7 +145,31 @@ public class Server {
 		} catch (Exception e) {
 			Log.e(TAG, "createGroup()", e);
 		}
-	}		
+	}
+	
+	
+	/**
+	 * Create a new event for the current user.
+	 */
+	public void createEvent(int deedId, int friendId, boolean withPrayerSupport, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
+		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/events";
+		
+		try {
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
+			pairs.add(new BasicNameValuePair("deed_id", String.valueOf(deedId)));
+			pairs.add(new BasicNameValuePair("friend_id", String.valueOf(friendId)));
+			pairs.add(new BasicNameValuePair("prayer_support", withPrayerSupport ? "true" : "false"));			
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+						
+			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "createEvent()", e);
+		}
+	}			
 		
 	
 	

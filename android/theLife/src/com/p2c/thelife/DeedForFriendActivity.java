@@ -1,24 +1,27 @@
 package com.p2c.thelife;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.p2c.thelife.model.DeedModel;
+import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 
-public class DeedForFriendActivity extends SlidingMenuActivity {
+public class DeedForFriendActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, EventCreateDialog.Listener {
 	
 	private static final String TAG = "DeedForFriendActivity"; 
 	
 	private FriendModel m_friend = null;
 	private DeedModel m_deed = null;
+	private ProgressDialog m_progressDialog = null;	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,39 +68,52 @@ public class DeedForFriendActivity extends SlidingMenuActivity {
 		return true;
 	}
 	
-	public boolean doDeed(View view) {
-		
-		// TODO: use a DialogFragment as per Android doc
-		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-		
-		// set the message and buttons of the alert
-		alertBuilder.setMessage(R.string.confirm_prayer_support);
-		alertBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface di, int which) {
-				// create event with m_friend, m_deed and without prayer_support
-				Log.d(TAG, "CREATE DEED EVENT without prayer support");
-				
-				// go back to the friend screen
-				Intent intent = new Intent("com.p2c.thelife.FriendActivity");
-				intent.putExtra("friend_id", m_friend.id);
-				startActivity(intent);				
-			}
-		});		
-		alertBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface di, int which) {
-				// create event with m_friend, m_deed and with prayer_support
-				Log.d(TAG, "CREATE DEED EVENT with prayer support");
-				
-				// go back to the friend screen
-				Intent intent = new Intent("com.p2c.thelife.FriendActivity");
-				intent.putExtra("friend_id", m_friend.id);
-				startActivity(intent);						
-			}
-		});		
-		
-		alertBuilder.show();
-		
-		return true;
+	public void doDeed(View view) {
+		EventCreateDialog dialog = new EventCreateDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 	}
+	
+	public FriendModel getSelectedFriend() {
+		return m_friend;
+	}
+	
+	public DeedModel getSelectedDeed() {
+		return m_deed;
+	}
+
+	@Override
+	public void notifyAttemptingServerAccess(String indicator) {
+		m_progressDialog = ProgressDialog.show(this, "Waiting", "Create New Group", true, true);	// TODO translation						
+	}
+
+	@Override
+	public void notifyResponseAvailable(String indicator, JSONObject jsonObject) {
+		
+		if (jsonObject != null) {
+			int eventId = jsonObject.optInt("id", 0);
+			if (eventId != 0) {
+				
+				// successful
+				
+				Toast.makeText(this, "THE event ID IS " + eventId, Toast.LENGTH_SHORT).show();
+				
+				int userId = jsonObject.optInt("user_id", 0);
+				int friendId = jsonObject.optInt("friend_id", 0);
+				int deedId = jsonObject.optInt("deed_id", 0);				
+				String description = jsonObject.optString("description", "");
+				long timestamp = jsonObject.optLong("timestamp", 0);
+				boolean isPledge = jsonObject.optBoolean("is_pledge", false);
+				int pledgeCount = jsonObject.optInt("pledge_count", 0);
+				
+				// add the event to the list of known events
+				EventModel event = new EventModel(eventId, userId, friendId, deedId, description, timestamp, isPledge, pledgeCount);
+				TheLifeConfiguration.getEventsDS().add(event);			
+			}
+		}
+		
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}		
+	}		
 
 }
