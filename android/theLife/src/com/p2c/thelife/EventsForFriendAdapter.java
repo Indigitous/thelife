@@ -50,7 +50,7 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		FriendModel friend = TheLifeConfiguration.getFriendsDS().findById(event.friend_id);
 		
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
-		String eventDescription = Utilities.fillTemplateString(user, friend, event.description);
+		String eventDescription = Utilities.fillTemplateString(getContext().getResources(), user, friend, event.description);
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
@@ -62,7 +62,7 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
 		if (event.isPledge) {
 			pledgeView.setVisibility(View.VISIBLE);
-			String pledgeDescription = Utilities.fillTemplateString(user, friend, "Pray for $u and $f."); // TODO translated
+			String pledgeDescription = Utilities.fillTemplateString(getContext().getResources(), user, friend, "Pray for $u and $f."); // TODO translated
 			pledgeView.setText(pledgeDescription);			
 		} else {
 			pledgeView.setVisibility(View.GONE);

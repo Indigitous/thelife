@@ -34,10 +34,10 @@ public class DeedForFriendActivity extends SlidingMenuFragmentActivity implement
 		// Show the friend model
 		if (m_friend != null) {		
 			TextView name = (TextView)findViewById(R.id.deed_for_friend_name);
-			name.setText(m_friend.get_full_name());
+			name.setText(m_friend.getFullName());
 			
 			TextView thresholdView = (TextView)findViewById(R.id.deed_for_friend_threshold);
-			thresholdView.setText(m_friend.get_threshold_medium_string(getResources()));
+			thresholdView.setText(m_friend.getThresholdMediumString(getResources()));
 		}
 		
 		// Get the Deed model
@@ -53,11 +53,11 @@ public class DeedForFriendActivity extends SlidingMenuFragmentActivity implement
 			
 			// title			
 			TextView title = (TextView)findViewById(R.id.deed_for_friend_title);
-			title.setText(Utilities.fillTemplateString(m_friend, m_deed.title));				
+			title.setText(Utilities.fillTemplateString(getResources(), m_friend, m_deed.title));				
 			
 			// description
 			TextView description = (TextView)findViewById(R.id.deed_for_friend_description);
-			description.setText(Utilities.fillTemplateString(m_friend, m_deed.description));				
+			description.setText(Utilities.fillTemplateString(getResources(), m_friend, m_deed.description));				
 		}
 	}
 

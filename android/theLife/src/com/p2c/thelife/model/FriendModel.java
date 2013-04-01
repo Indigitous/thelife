@@ -19,7 +19,7 @@ public class FriendModel extends AbstractModel {
 	private static final String TAG = "FriendModel"; 	
 	
 	public enum Threshold {
-		New_Contact,
+		NewContact,
 		Trusting,
 		Curious,
 		Open,
@@ -30,23 +30,23 @@ public class FriendModel extends AbstractModel {
 	
 // example EnumSet	
 //	Set<FriendModel.Threshold> allThresholds = EnumSet.allOf(FriendModel.Threshold.class);
-//	Set<FriendModel.Threshold> earlyThresholds = EnumSet.range(FriendModel.Threshold.New_Contact, FriendModel.Threshold.Curious);	
+//	Set<FriendModel.Threshold> earlyThresholds = EnumSet.range(FriendModel.Threshold.NewContact, FriendModel.Threshold.Curious);	
 	public static final Threshold thresholdValues[] = Threshold.values();
 	
 	public int    friend_id;
-	public String first_name;
-	public String last_name;
+	public String firstName;
+	public String lastName;
 	public Bitmap image;  			// TODO is this an image id, image or what?
 	public Bitmap thumbnail;
 	public Threshold threshold;
 	
 	
-	public FriendModel(int friend_id, String first_name, String last_name, Bitmap image, Bitmap thumbnail, Threshold threshold) {
+	public FriendModel(int friend_id, String firstName, String lastName, Bitmap image, Bitmap thumbnail, Threshold threshold) {
 		
 		super(friend_id);
 		
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		
 		if (image == null) {
 			this.image = TheLifeConfiguration.genericPersonImage;
@@ -63,24 +63,24 @@ public class FriendModel extends AbstractModel {
 	}
 	
 	
-	public FriendModel(int friend_id, String first_name, String last_name, Bitmap image, Threshold threshold) {
-		this(friend_id, first_name, last_name, image, image, threshold);
+	public FriendModel(int friend_id, String firstName, String lastName, Bitmap image, Threshold threshold) {
+		this(friend_id, firstName, lastName, image, image, threshold);
 	}
 	
 	
-	public String get_full_name() {
-		return first_name + " " + last_name;
+	public String getFullName() {
+		return firstName + " " + lastName;
 	}
 	
 	/**
 	 * @return String   short string version of the threshold
 	 */
-	public String get_threshold_short_string(Resources resources) {
+	public String getThresholdShortString(Resources resources) {
 
 		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
 		
 		switch (threshold) {
-			case New_Contact:
+			case NewContact:
 				return thresholdStrings[0];
 			case Trusting:
 				return thresholdStrings[1];
@@ -102,12 +102,12 @@ public class FriendModel extends AbstractModel {
 	/**
 	 * @return String   medium string version of the threshold
 	 */
-	public String get_threshold_medium_string(Resources resources) {
+	public String getThresholdMediumString(Resources resources) {
 		
 		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
 		
 		switch (threshold) {
-			case New_Contact:
+			case NewContact:
 				return thresholdStrings[0];
 			case Trusting:
 				return thresholdStrings[1];
@@ -128,7 +128,7 @@ public class FriendModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return id + ", " + first_name + ", " + last_name + ", " + threshold;
+		return id + ", " + firstName + ", " + lastName + ", " + threshold;
 	}
 	
 	public static FriendModel fromJSON(JSONObject json, boolean useServer) throws JSONException {

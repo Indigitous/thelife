@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 
 import org.apache.http.util.CharArrayBuffer;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,13 +18,13 @@ public class Utilities {
 	
 	private static final String TAG = "Utilities";
 	
-	public static String fillTemplateString(FriendModel friend, String template_string) {
-		return template_string.replace("$f", friend.first_name);
+	public static String fillTemplateString(Resources resources, FriendModel friend, String templateString) {
+		return templateString.replace("$f", (friend == null || friend.firstName == null) ? resources.getString(R.string.friend) : friend.firstName);
 	}
 	
-	public static String fillTemplateString(UserModel user, FriendModel friend, String template_string) {
-		String s = template_string.replace("$u", (user == null) ? "user" : user.first_name); // TODO translation		
-		return s.replace("$f", (friend == null) ? "friend" : friend.first_name); // TODO translation
+	public static String fillTemplateString(Resources resources, UserModel user, FriendModel friend, String templateString) {
+		String s = templateString.replace("$u", (user == null || user.firstName == null) ? resources.getString(R.string.user) : user.firstName);	
+		return s.replace("$f", (friend == null || friend.firstName == null) ? resources.getString(R.string.friend) : friend.firstName);
 	}
 	
 	public static Bitmap getBitmapFromDrawable(Drawable drawable) {

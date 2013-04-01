@@ -25,10 +25,10 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 		// Show the friend
 		if (m_friend != null) {		
 			TextView name = (TextView)findViewById(R.id.deeds_for_friend_name);
-			name.setText(m_friend.get_full_name());
+			name.setText(m_friend.getFullName());
 			
 			TextView thresholdView = (TextView)findViewById(R.id.deeds_for_friend_threshold);
-			thresholdView.setText(m_friend.get_threshold_medium_string(getResources()));
+			thresholdView.setText(m_friend.getThresholdMediumString(getResources()));
 			
 			ListView activitiesView = (ListView)findViewById(R.id.deeds_for_friend_list);
 			DeedsForFriendAdapter adapter = new DeedsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);

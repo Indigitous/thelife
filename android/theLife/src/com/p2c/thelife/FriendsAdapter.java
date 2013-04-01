@@ -37,10 +37,10 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> implements DataSto
 		imageView.setImageBitmap(friend.image);
 		
 		TextView nameView = (TextView)friendView.findViewById(R.id.friend_name);
-		nameView.setText(friend.first_name);
+		nameView.setText(friend.firstName);
 		
 		TextView thresholdView = (TextView)friendView.findViewById(R.id.friend_threshold);
-		thresholdView.setText(friend.get_threshold_short_string(getContext().getResources()));
+		thresholdView.setText(friend.getThresholdShortString(getContext().getResources()));
 		
 		friendView.setTag(friend);
 			

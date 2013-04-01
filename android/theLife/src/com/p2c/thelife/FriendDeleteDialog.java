@@ -22,7 +22,7 @@ public class FriendDeleteDialog extends AbstractServerAccessDialog {
 		final FriendModel friend = ((FriendsActivity)m_listener).getSelectedFriend();
 			
 		// set the message, content and buttons of the alert
-		String message = getResources().getString(R.string.delete_friend_prompt, friend.get_full_name());		
+		String message = getResources().getString(R.string.delete_friend_prompt, friend.getFullName());		
 		alertBuilder.setMessage(message);
 		alertBuilder.setNegativeButton(R.string.cancel, null); 
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

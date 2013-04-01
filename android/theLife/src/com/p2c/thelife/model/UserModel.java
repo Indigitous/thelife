@@ -16,19 +16,19 @@ public class UserModel extends AbstractModel {
 	
 	private static final String TAG = "UserModel";
 	
-	public String   first_name;
-	public String   last_name;
+	public String   firstName;
+	public String   lastName;
 	public Bitmap   image;  	// TODO is this an image id, image or what?
 	public Bitmap   thumbnail;
 	public String   email;
 	public String   phone;
 	
-	public UserModel(int user_id, String first_name, String last_name, Bitmap image, Bitmap thumbnail, String email, String phone) {
+	public UserModel(int user_id, String firstName, String lastName, Bitmap image, Bitmap thumbnail, String email, String phone) {
 		
 		super(user_id);
 
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		
 		if (image == null) {
 			this.image = TheLifeConfiguration.genericPersonImage;
@@ -45,17 +45,17 @@ public class UserModel extends AbstractModel {
 		this.phone = phone;
 	}
 	
-	public UserModel(int user_id, String first_name, String last_name, Bitmap image, String email, String phone) {
-		this(user_id, first_name, last_name, image, image, email, phone);
+	public UserModel(int user_id, String firstName, String lastName, Bitmap image, String email, String phone) {
+		this(user_id, firstName, lastName, image, image, email, phone);
 	}
 	
-	public String get_full_name() {
-		return first_name + " " + last_name;
+	public String getFullName() {
+		return firstName + " " + lastName;
 	}
 	
 	@Override
 	public String toString() {
-		return id + ", " + first_name + ", " + last_name + ", " + email + ", " + phone;
+		return id + ", " + firstName + ", " + lastName + ", " + email + ", " + phone;
 	}
 	
 	public static UserModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
@@ -66,8 +66,8 @@ public class UserModel extends AbstractModel {
 		String imageUrl = json.optString("image_url", null);		
 		return new UserModel(
 			json.getInt("user_id"),
-			json.getString("first_name"),
-			json.getString("last_name"),
+			json.getString("firstName"),
+			json.getString("lastName"),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonImage),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonThumbnail),			
 			json.getString("email"),

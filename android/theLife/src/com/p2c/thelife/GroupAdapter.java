@@ -44,7 +44,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 		imageView.setImageBitmap(user.image);
 		
 		TextView textView = (TextView)userView.findViewById(R.id.user_name);
-		textView.setText(user.get_full_name());
+		textView.setText(user.getFullName());
 		
 		// show the group leader in bold and italics
 		Typeface typeface = textView.getTypeface();

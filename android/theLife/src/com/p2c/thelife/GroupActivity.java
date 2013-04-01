@@ -57,7 +57,7 @@ public class GroupActivity extends SlidingMenuActivity {
 	
 	public void selectUser(View view) {
 		UserModel user = (UserModel)view.getTag();
-		Toast.makeText(this, "Delete User " + user.get_full_name(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Delete User " + user.getFullName(), Toast.LENGTH_SHORT).show();
 	}
 
 }

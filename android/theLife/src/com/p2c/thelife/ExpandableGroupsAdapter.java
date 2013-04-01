@@ -82,7 +82,7 @@ public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implement
 		imageView.setImageBitmap(user.image);		
 		
 		TextView nameView = (TextView)childView.findViewById(R.id.group_member_name);
-		nameView.setText(user.get_full_name());
+		nameView.setText(user.getFullName());
 		
 		return childView;
 	}

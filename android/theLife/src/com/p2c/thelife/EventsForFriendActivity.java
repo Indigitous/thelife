@@ -28,10 +28,10 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 			imageView.setImageBitmap(m_friend.image);
 			
 			TextView nameView = (TextView)findViewById(R.id.activity_friend_name);
-			nameView.setText(m_friend.get_full_name());
+			nameView.setText(m_friend.getFullName());
 			
 			TextView thresholdView = (TextView)findViewById(R.id.activity_friend_threshold);
-			thresholdView.setText(m_friend.get_threshold_medium_string(getResources()));
+			thresholdView.setText(m_friend.getThresholdMediumString(getResources()));
 		}
 		
 		// attach the event list view
