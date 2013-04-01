@@ -138,7 +138,7 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
 			pairs.add(new BasicNameValuePair("name", name));
-			pairs.add(new BasicNameValuePair("full_description", description));
+			pairs.add(new BasicNameValuePair("description", description));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
 			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
@@ -160,9 +160,9 @@ public class Server {
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
-			pairs.add(new BasicNameValuePair("deed_id", String.valueOf(deedId)));
+			pairs.add(new BasicNameValuePair("activity_id", String.valueOf(deedId)));
 			pairs.add(new BasicNameValuePair("friend_id", String.valueOf(friendId)));
-			pairs.add(new BasicNameValuePair("prayer_support", withPrayerSupport ? "true" : "false"));			
+			pairs.add(new BasicNameValuePair("prayer_requested", withPrayerSupport ? "true" : "false"));			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 						
 			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
