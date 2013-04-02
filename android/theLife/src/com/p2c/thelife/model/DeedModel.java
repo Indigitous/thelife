@@ -40,7 +40,7 @@ public class DeedModel extends AbstractModel {
 		this.description = description;
 
 		if (image == null) {
-			this.image = TheLifeConfiguration.genericDeedImage;
+			this.image = TheLifeConfiguration.getGenericDeedImage();
 		} else {
 			this.image = image;
 		}
@@ -74,7 +74,7 @@ public class DeedModel extends AbstractModel {
 			json.getString("title"),
 			json.getString("summary"),
 			json.getString("description"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericDeedImage),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericDeedImage()),
 			thresholds,
 			json.getInt("priority"),
 			json.getInt("category_id")

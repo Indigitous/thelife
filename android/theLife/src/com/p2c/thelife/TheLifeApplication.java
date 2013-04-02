@@ -35,14 +35,14 @@ public class TheLifeApplication extends Application {
 			getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);
 		TheLifeConfiguration.setSystemSettings(systemSettings);
 		
-		// initialize stock images before initializing data stores
-		TheLifeConfiguration.genericPersonImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
-		TheLifeConfiguration.genericPersonThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
-		TheLifeConfiguration.genericDeedImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help));
-		TheLifeConfiguration.missingDataImage = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search));
-		TheLifeConfiguration.missingDataThumbnail = Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search));
+		// initialize placeholder images before initializing data stores
+		TheLifeConfiguration.setGenericPersonImage(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help)));
+		TheLifeConfiguration.setGenericPersonThumbnail(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help)));
+		TheLifeConfiguration.setGenericDeedImage(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help)));
+		TheLifeConfiguration.setMissingDataImage(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search)));
+		TheLifeConfiguration.setMissingDataThumbnail(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search)));
 		
-		TheLifeConfiguration.cacheDirectory = getApplicationContext().getCacheDir().getAbsolutePath() + "/";
+		TheLifeConfiguration.setCacheDirectory(getApplicationContext().getCacheDir().getAbsolutePath() + "/");
 		
 		// initialize the data stores, reading from cache if available
 		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext()));				

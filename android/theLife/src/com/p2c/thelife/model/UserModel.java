@@ -31,12 +31,12 @@ public class UserModel extends AbstractModel {
 		this.lastName = lastName;
 		
 		if (image == null) {
-			this.image = TheLifeConfiguration.genericPersonImage;
+			this.image = TheLifeConfiguration.getGenericPersonImage();
 		} else {
 			this.image = image;
 		}
 		if (thumbnail == null) {
-			this.thumbnail = TheLifeConfiguration.genericPersonThumbnail;
+			this.thumbnail = TheLifeConfiguration.getGenericPersonThumbnail();
 		} else {
 			this.thumbnail = thumbnail;
 		}
@@ -68,8 +68,8 @@ public class UserModel extends AbstractModel {
 			json.getInt("user_id"),
 			json.getString("firstName"),
 			json.getString("lastName"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonImage),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonThumbnail),			
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonThumbnail()),			
 			json.getString("email"),
 			json.getString("phone")
 		);

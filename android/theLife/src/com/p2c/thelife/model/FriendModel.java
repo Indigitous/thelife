@@ -49,12 +49,12 @@ public class FriendModel extends AbstractModel {
 		this.lastName = lastName;
 		
 		if (image == null) {
-			this.image = TheLifeConfiguration.genericPersonImage;
+			this.image = TheLifeConfiguration.getGenericPersonImage();
 		} else {
 			this.image = image;
 		}
 		if (thumbnail == null) {
-			this.thumbnail = TheLifeConfiguration.genericPersonThumbnail;
+			this.thumbnail = TheLifeConfiguration.getGenericPersonThumbnail();
 		} else {
 			this.thumbnail = thumbnail;
 		}
@@ -144,8 +144,8 @@ public class FriendModel extends AbstractModel {
 			json.getInt("friend_id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonImage),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.genericPersonThumbnail),				
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),
+			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonThumbnail()),				
 			threshold
 		);
 	}

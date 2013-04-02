@@ -83,7 +83,7 @@ public class BitmapCache {
 			
 			// save the bitmap to cache
 			if (bitmap != null) {
-				os = new BufferedOutputStream(   new FileOutputStream(TheLifeConfiguration.cacheDirectory + urlString));
+				os = new BufferedOutputStream(   new FileOutputStream(TheLifeConfiguration.getCacheDirectory() + urlString));
 				bitmap.compress(CompressFormat.PNG, 90, os);
 				os.close();
 			}
@@ -117,8 +117,8 @@ public class BitmapCache {
 		
 		if (url != null) {
 			// first try to find the bitmap in the disk cache
-			if (new File(TheLifeConfiguration.cacheDirectory + url).exists()) {
-				bitmap = BitmapFactory.decodeFile(TheLifeConfiguration.cacheDirectory + url);
+			if (new File(TheLifeConfiguration.getCacheDirectory() + url).exists()) {
+				bitmap = BitmapFactory.decodeFile(TheLifeConfiguration.getCacheDirectory() + url);
 			}
 		
 			// if not in the disk cache and if permitted, get the bitmap from the server
@@ -129,7 +129,7 @@ public class BitmapCache {
 		
 		// use generic image if no image is available
 		if (bitmap == null) {
-			bitmap = TheLifeConfiguration.genericDeedImage;
+			bitmap = TheLifeConfiguration.getGenericDeedImage();
 		}
 		
 		return bitmap;

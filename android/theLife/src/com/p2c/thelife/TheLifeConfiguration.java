@@ -51,14 +51,14 @@ public class TheLifeConfiguration {
 	public static final String SERVER_URL = "http://75.157.251.192:3000";
 	
 	// stock images
-	public static Bitmap genericPersonImage;
-	public static Bitmap genericPersonThumbnail;
-	public static Bitmap genericDeedImage;
-	public static Bitmap missingDataImage;
-	public static Bitmap missingDataThumbnail;
+	private static Bitmap m_genericPersonImage;
+	private static Bitmap m_genericPersonThumbnail;
+	private static Bitmap m_genericDeedImage;
+	private static Bitmap m_missingDataImage;
+	private static Bitmap m_missingDataThumbnail;
 	
 	// directory of local cache files
-	public static String cacheDirectory = null; 
+	private static String m_cacheDirectory = null; 
 	
 	
 	/*************************** System Preferences **********************/
@@ -118,6 +118,57 @@ public class TheLifeConfiguration {
 	public static void setEventsDS(EventsDS eventsDS) {
 		m_eventsDS = eventsDS;
 	}	
+	
+	
+	/****************** Cache and image related information ******************/
+	
+	public static String getCacheDirectory() {
+		return m_cacheDirectory;
+	}	
+	
+	public static void setCacheDirectory(String cacheDirectory) {
+		m_cacheDirectory = cacheDirectory;
+	}
+	
+	public static Bitmap getGenericPersonImage() {
+		return m_genericPersonImage;
+	}
+	
+	public static void setGenericPersonImage(Bitmap genericPersonImage) {
+		m_genericPersonImage = genericPersonImage;
+	}	
+	
+	public static Bitmap getGenericPersonThumbnail() {
+		return m_genericPersonThumbnail;
+	}
+	
+	public static void setGenericPersonThumbnail(Bitmap genericPersonThumbnail) {
+		m_genericPersonThumbnail = genericPersonThumbnail;
+	}		
+	
+	public static Bitmap getGenericDeedImage() {
+		return m_genericDeedImage;
+	}
+	
+	public static void setGenericDeedImage(Bitmap genericDeedImage) {
+		m_genericDeedImage = genericDeedImage;
+	}		
+	
+	public static Bitmap getMissingDataImage() {
+		return m_missingDataImage;
+	}
+	
+	public static void setMissingDataImage(Bitmap missingDataImage) {
+		m_missingDataImage = missingDataImage;
+	}	
+	
+	public static Bitmap getMissingDataThumbnail() {
+		return m_missingDataThumbnail;
+	}
+	
+	public static void setMissingDataThumbnail(Bitmap missingDataThumbnail) {
+		m_missingDataThumbnail = missingDataThumbnail;
+	}		
 	
 	/************************** User information ***************************/
 	

@@ -52,7 +52,7 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Ab
 	@Override
 	public void notifyDataChanged() {
 		
-		// clear data and redo query
+		// clear data and redo local query
 		clear();		
 		query();
 		
@@ -60,6 +60,9 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Ab
 		notifyDataSetChanged();
 	}
 	
+	/**
+	 * local query
+	 */
 	private void query() {
 		// get all the Deeds for the current user		
 		Collection<DeedModel> Activities = TheLifeConfiguration.getDeedsDS().findByThreshold(m_friend.threshold);

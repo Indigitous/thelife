@@ -41,14 +41,14 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 		userView.setTag(user);
 		
 		ImageView imageView = (ImageView)userView.findViewById(R.id.user_image);
-		imageView.setImageBitmap(user.image);
+		imageView.setImageBitmap((user != null) ? user.image : TheLifeConfiguration.getGenericPersonImage());
 		
 		TextView textView = (TextView)userView.findViewById(R.id.user_name);
-		textView.setText(user.getFullName());
+		textView.setText((user != null) ? user.getFullName() : "?");
 		
 		// show the group leader in bold and italics
 		Typeface typeface = textView.getTypeface();
-		textView.setTypeface(typeface, (m_group.leader_id == user.id) ? 3 : 0);
+		textView.setTypeface(typeface, (user != null && m_group.leader_id == user.id) ? 3 : 0);
 	
 		return userView;
 	}

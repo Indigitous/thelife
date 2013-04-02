@@ -50,9 +50,9 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> implements Abstr
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap((user == null) ? TheLifeConfiguration.missingDataThumbnail : user.thumbnail);
+		imageView1.setImageBitmap((user == null) ? TheLifeConfiguration.getMissingDataThumbnail() : user.thumbnail);
 		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.imageView2);
-		imageView2.setImageBitmap((friend == null) ? TheLifeConfiguration.missingDataThumbnail : friend.thumbnail);		
+		imageView2.setImageBitmap((friend == null) ? TheLifeConfiguration.getMissingDataThumbnail() : friend.thumbnail);		
 		
 		// only show the pledge view if the event requests it
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
