@@ -52,9 +52,12 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("email", username));
 			pairs.add(new BasicNameValuePair("password", password));
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);
 						
-			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "login()", e);
 		}
@@ -75,9 +78,12 @@ public class Server {
 			pairs.add(new BasicNameValuePair("password", password));
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));			
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);			
 						
-			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "register()", e);
 		}
@@ -99,9 +105,12 @@ public class Server {
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
 			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(thresholdIndex + 1))); // TODO: need a better server API here			
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);			
 						
-			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "createFriend()", e);
 		}
@@ -117,8 +126,9 @@ public class Server {
 		// returns HTTP 404 on an unknown friend, HTTP 201 on a success TODO check this
 		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/friends?token=" + TheLifeConfiguration.getToken() + "&friend_id=" + String.valueOf(friendId);
 		
-		try {					
-			new ServerCall("DELETE", null, listener, indicator).execute(urlString);			
+		try {
+			HttpDelete httpRequest = new HttpDelete(urlString);
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "deleteFriend()", e);
 		}
@@ -139,9 +149,12 @@ public class Server {
 			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
 			pairs.add(new BasicNameValuePair("name", name));
 			pairs.add(new BasicNameValuePair("description", description));
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);				
 						
-			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "createGroup()", e);
 		}
@@ -164,8 +177,11 @@ public class Server {
 			pairs.add(new BasicNameValuePair("friend_id", String.valueOf(friendId)));
 			pairs.add(new BasicNameValuePair("prayer_requested", withPrayerSupport ? "true" : "false"));			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);				
 						
-			new ServerCall("POST", formEntity, listener, indicator).execute(urlString);			
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
 			Log.e(TAG, "createEvent()", e);
 		}
@@ -178,14 +194,12 @@ public class Server {
 	
 	private class ServerCall extends AsyncTask<String, Void, JSONObject> {
 		
-		private String m_httpMethod = null;
-		private HttpEntity m_entity = null;
+		private HttpUriRequest m_httpRequest = null;
 		private ServerListener m_listener = null;
 		private String m_indicator = null;
 		
-		public ServerCall(String httpMethod, HttpEntity entity, ServerListener listener, String indicator) {
-			m_httpMethod = httpMethod;
-			m_entity = entity;
+		public ServerCall(HttpUriRequest httpRequest, ServerListener listener, String indicator) {
+			m_httpRequest = httpRequest;
 			m_listener = listener;
 			m_indicator = indicator;
 		}
@@ -210,9 +224,7 @@ public class Server {
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TheLifeConfiguration.HTTP_READ_TIMEOUT);
 				
-				HttpUriRequest httpRequest = createHttpRequest(urls[0]);
-
-				HttpResponse httpResponse = httpClient.execute(httpRequest);
+				HttpResponse httpResponse = httpClient.execute(m_httpRequest);
 				int responseCode = httpResponse.getStatusLine().getStatusCode();
 				
 				System.out.println("HERE IS THE STATUS CODE " + responseCode);
@@ -243,20 +255,6 @@ public class Server {
 			}	
 			
 			return jsonObject;
-		}
-		
-		private HttpUriRequest createHttpRequest(String urlString) {
-			if (m_httpMethod.equals("POST")) {
-				HttpPost httpRequest = new HttpPost(urlString);
-				httpRequest.setEntity(m_entity);	
-				return httpRequest;
-			} else if (m_httpMethod.equals("DELETE")) {
-				HttpDelete httpRequest = new HttpDelete(urlString);
-				return httpRequest;
-			} else {
-				Log.e(TAG, "Bad HTTP method in createHttpRequest " + m_httpMethod);
-				return null;
-			}
 		}
 		
 		// UI thread		
