@@ -47,7 +47,7 @@ public class EventModel extends AbstractModel {
 			json.getInt("event_id"),
 			json.getInt("user_id"),
 			json.getInt("friend_id"),
-			json.getInt("deed_id"),			
+			json.getInt("activity_id"),			
 			json.getString("description"),
 			json.getLong("timestamp"),
 			json.getBoolean("is_pledge"),

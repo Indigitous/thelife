@@ -24,42 +24,6 @@ public class BitmapCache {
 	
 	private static final String TAG = "BitmapCache";
 
-//	/**
-//	 * Get the bitmap at the given URL.
-//	 * Note: must not be called on the main/UI thread.
-//	 * @param urlString
-//	 * @return BitmapDrawable
-//	 * @throws Exception
-//	 */
-//	public static Bitmap getBitmapAtURL(String urlString) throws Exception {
-//		
-//		Exception exception = null;
-//		InputStream is = null;
-//		HttpURLConnection connection = null;
-//		
-//		try {
-//			URL url = new URL(TheLifeConfiguration.SERVER_URL + urlString);
-//			connection = (HttpURLConnection)url.openConnection();
-//			is =  new BufferedInputStream(connection.getInputStream());
-//			return BitmapFactory.decodeStream(is);
-//		} catch (Exception e) {
-//			exception = e;
-//		} finally {
-//			if (is != null) {
-//				is.close();
-//			}
-//			if (connection != null) {
-//				connection.disconnect();
-//			}
-//		}
-//		
-//		if (exception != null) {
-//			throw exception;
-//		}
-//		
-//		return null; // this line is only to satisfy the compiler; will not be executed
-//	}
-
 	/**
 	 * Get the bitmap at the given URL.
 	 * Note: must not be called on the main/UI thread. 
