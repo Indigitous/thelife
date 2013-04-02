@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.AbstractDS;
 
-public class FriendsAdapter extends ArrayAdapter<FriendModel> implements AbstractDS.DSListener {
+public class FriendsAdapter extends ArrayAdapter<FriendModel> implements AbstractDS.DSChangedListener {
 	
 	public FriendsAdapter(Context context, int mode) {
 		super(context, mode);

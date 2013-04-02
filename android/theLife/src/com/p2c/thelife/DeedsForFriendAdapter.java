@@ -14,7 +14,7 @@ import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.AbstractDS;
 
-public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements AbstractDS.DSListener {
+public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements AbstractDS.DSChangedListener {
 	
 	private FriendModel m_friend;
 	

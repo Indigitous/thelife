@@ -7,10 +7,11 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
-public class DeedsForFriendActivity extends SlidingMenuActivity {
+public class DeedsForFriendActivity extends SlidingMenuActivity implements DSRefreshedListener {
 	
 	private FriendModel m_friend = null;	
 
@@ -35,13 +36,21 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 			activitiesView.setAdapter(adapter);
 			
 			// load the database from the server in the background
-			// note that categories and deeds are closely related
-			TheLifeConfiguration.getCategoriesDS().addDSListener(adapter);			
-			TheLifeConfiguration.getDeedsDS().addDSListener(adapter);
-			TheLifeConfiguration.getCategoriesDS().refresh();	
-			TheLifeConfiguration.getDeedsDS().refresh();
+			// note that categories and deeds are closely related, so first refresh the categories and then the deeds
+			TheLifeConfiguration.getCategoriesDS().addDSChangedListener(adapter);
+			TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
+			TheLifeConfiguration.getDeedsDS().addDSChangedListener(adapter);
+			TheLifeConfiguration.getCategoriesDS().refresh(); // first refresh categories, then refresh deeds in the notifyDSRefreshed callback
 		}		
 	}
+	
+	
+	@Override
+	public void notifyDSRefreshed() {
+		TheLifeConfiguration.getDeedsDS().refresh();
+	}		
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,6 +75,6 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 		startActivity(intent);
 		
 		return true;
-	}	
+	}
 
 }

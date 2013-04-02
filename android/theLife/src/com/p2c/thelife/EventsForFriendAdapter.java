@@ -18,7 +18,7 @@ import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 import com.p2c.thelife.model.AbstractDS;
 
-public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements AbstractDS.DSListener {
+public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements AbstractDS.DSChangedListener {
 	
 	private static final String TAG = "DeedsDS"; 
 	
@@ -48,21 +48,21 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		EventModel event = getItem(position);
 		UserModel user = TheLifeConfiguration.getUsersDS().findById(event.user_id);
 		FriendModel friend = TheLifeConfiguration.getFriendsDS().findById(event.friend_id);
-		
+
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
-		String eventDescription = Utilities.fillTemplateString(getContext().getResources(), user, friend, event.description);
+		String eventDescription = event.description; // Utilities.fillTemplateString(getContext().getResources(), user, friend, event.description);
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap(user.thumbnail);
+		imageView1.setImageBitmap((user == null) ? TheLifeConfiguration.getMissingDataThumbnail() : (user != null) ? user.thumbnail : TheLifeConfiguration.getGenericPersonThumbnail());
 		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.imageView2);
-		imageView2.setImageBitmap(friend.thumbnail);		
+		imageView2.setImageBitmap((friend == null) ? TheLifeConfiguration.getMissingDataThumbnail() : (friend != null) ? friend.thumbnail : TheLifeConfiguration.getGenericPersonThumbnail());			
 		
 		// only show the pledge view if the event requests it
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
 		if (event.isPledge) {
 			pledgeView.setVisibility(View.VISIBLE);
-			String pledgeDescription = Utilities.fillTemplateString(getContext().getResources(), user, friend, "Pray for $u and $f."); // TODO translated
+			String pledgeDescription = "Pray"; // TODO translated
 			pledgeView.setText(pledgeDescription);			
 		} else {
 			pledgeView.setVisibility(View.GONE);

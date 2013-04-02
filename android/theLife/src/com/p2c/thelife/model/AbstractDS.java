@@ -28,13 +28,21 @@ import com.p2c.thelife.Utilities;
 public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/**
-	 * Listener interface for DS watching objects.
-	 * @author clarence
+	 * Listener interface for DS data changed event.
 	 *
 	 */
-	public interface DSListener {
+	public interface DSChangedListener {
 		public void notifyDSChanged();
-	}	
+	}
+	
+	
+	/**
+	 * Listener interface for DS data refresh completed event. 
+	 *
+	 */
+	public interface DSRefreshedListener {
+		public void notifyDSRefreshed();
+	}
 	
 	protected ArrayList<T> m_data = new ArrayList<T>(); 	// in memory list of model objects
 	
@@ -289,7 +297,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			if (data2 != null) {
 				// no error, so use the new data
 				m_data = data2;
-				notifyDSListeners(); // tell listeners that the data has changed, on the UI thread
+				notifyDSChangedListeners(); // tell listeners that the data has changed, on the UI thread
 			}
 		
 			// release lock
@@ -301,33 +309,60 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	
 	
-	/************************************* DSListener *****************************************/
+	/************************************* DSListeners *****************************************/
 	
+	/**
+	 * DSChanged listener
+	 */
 	// protected ArrayList<DSListener> m_listeners = new ArrayList<DSListener>();
-	protected DSListener m_listener = null;
+	protected DSChangedListener m_changedListener = null;
 	
-	public void addDSListener(DSListener theListener) {
+	public void addDSChangedListener(DSChangedListener theListener) {
 		//m_listeners.add(theListener);
-		m_listener = theListener;
+		m_changedListener = theListener;
 	}
 	
-	public void notifyDSListeners() {
+	public void notifyDSChangedListeners() {
 //		for (DSListener listener:m_listeners) {
 //			listener.notifyDataChanged();
 //		}
-		if (m_listener != null) {
-			m_listener.notifyDSChanged();
+		if (m_changedListener != null) {
+			m_changedListener.notifyDSChanged();
 		}
 	}
 	
-	public void removeDSListener(DSListener theListener) {
+	public void removeDSChangedListener(DSChangedListener theListener) {
 		//m_listeners.remove(theListener);
-		m_listener = null;
+		m_changedListener = null;
 	}
 	
-	public void clearAllDSListeners() {
+	public void clearAllDSChangedListeners() {
 		//m_listeners.clear();
-		m_listener = null;
+		m_changedListener = null;
 	}
+	
+	
+	/**
+	 * DSRefreshed listener
+	 */
+	protected DSRefreshedListener m_refreshedListener = null;
+	
+	public void addDSRefreshedListener(DSRefreshedListener theListener) {
+		m_refreshedListener = theListener;
+	}
+	
+	public void notifyDSRefreshedListeners() {
+		if (m_refreshedListener != null) {
+			m_refreshedListener.notifyDSRefreshed();
+		}
+	}
+	
+	public void removeDSRefreshedListener(DSRefreshedListener theListener) {
+		m_refreshedListener = null;
+	}
+	
+	public void clearAllDSRefreshedListeners() {
+		m_refreshedListener = null;
+	}	
 
 }

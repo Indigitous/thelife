@@ -28,7 +28,7 @@ public class MainActivity extends SlidingMenuActivity {
 			listView.setAdapter(adapter);
 			
 			// load the database from the server in the background
-			TheLifeConfiguration.getEventsDS().addDSListener(adapter);
+			TheLifeConfiguration.getEventsDS().addDSChangedListener(adapter);
 			TheLifeConfiguration.getEventsDS().refresh();
 		}
 	}

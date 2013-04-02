@@ -18,7 +18,7 @@ import com.p2c.thelife.model.AbstractDS;
 /**
  * Show the user's groups and their members in an expandable list.
  */
-public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implements AbstractDS.DSListener {
+public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implements AbstractDS.DSChangedListener {
 	
 	private Context m_context = null;
 	private ArrayList<GroupModel> m_groups = null;

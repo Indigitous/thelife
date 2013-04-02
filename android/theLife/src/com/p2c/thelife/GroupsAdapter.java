@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.AbstractDS;
 
-public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractDS.DSListener {
+public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractDS.DSChangedListener {
 		
 	public GroupsAdapter(Context context, int mode) {
 		super(context, mode);
