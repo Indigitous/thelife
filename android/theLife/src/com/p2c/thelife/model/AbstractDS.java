@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.util.CharArrayBuffer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +26,15 @@ import com.p2c.thelife.Utilities;
 
 
 public abstract class AbstractDS<T extends AbstractModel> {
+	
+	/**
+	 * Listener interface for DS watching objects.
+	 * @author clarence
+	 *
+	 */
+	public interface DSListener {
+		public void notifyDataChanged();
+	}	
 	
 	protected ArrayList<T> m_data = new ArrayList<T>(); 	// in memory list of model objects
 	
@@ -278,7 +286,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			if (data2 != null) {
 				// no error, so use the new data
 				m_data = data2;
-				notifyDataStoreListeners(); // tell listeners that the data has changed, on the UI thread
+				notifyDSListeners(); // tell listeners that the data has changed, on the UI thread
 			}
 		
 			// release lock
@@ -290,18 +298,18 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	
 	
-	/************************************* DataStoreListener *****************************************/
+	/************************************* DSListener *****************************************/
 	
-	// protected ArrayList<DataStoreListener> m_listeners = new ArrayList<DataStoreListener>();
-	protected DataStoreListener m_listener = null;
+	// protected ArrayList<DSListener> m_listeners = new ArrayList<DSListener>();
+	protected DSListener m_listener = null;
 	
-	public void addDataStoreListener(DataStoreListener theListener) {
+	public void addDSListener(DSListener theListener) {
 		//m_listeners.add(theListener);
 		m_listener = theListener;
 	}
 	
-	public void notifyDataStoreListeners() {
-//		for (DataStoreListener listener:m_listeners) {
+	public void notifyDSListeners() {
+//		for (DSListener listener:m_listeners) {
 //			listener.notifyDataChanged();
 //		}
 		if (m_listener != null) {
@@ -309,12 +317,12 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		}
 	}
 	
-	public void removeDataStoreListener(DataStoreListener theListener) {
+	public void removeDSListener(DSListener theListener) {
 		//m_listeners.remove(theListener);
 		m_listener = null;
 	}
 	
-	public void clearAllListeners() {
+	public void clearAllDSListeners() {
 		//m_listeners.clear();
 		m_listener = null;
 	}

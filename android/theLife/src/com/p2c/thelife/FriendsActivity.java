@@ -43,7 +43,7 @@ public class FriendsActivity
 		friendsGrid.setOnItemLongClickListener(this);
 		
 		// load the database from the server in the background
-		TheLifeConfiguration.getFriendsDS().addDataStoreListener(adapter);  
+		TheLifeConfiguration.getFriendsDS().addDSListener(adapter);  
 		TheLifeConfiguration.getFriendsDS().refresh();		
 	}
 

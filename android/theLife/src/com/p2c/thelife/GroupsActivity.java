@@ -33,7 +33,7 @@ public class GroupsActivity extends SlidingMenuFragmentActivity implements Serve
 		groupsList.setAdapter(adapter);
 		
 		// load the database from the server in the background
-		TheLifeConfiguration.getGroupsDS().addDataStoreListener(adapter);
+		TheLifeConfiguration.getGroupsDS().addDSListener(adapter);
 		TheLifeConfiguration.getGroupsDS().refresh();	
 	}
 

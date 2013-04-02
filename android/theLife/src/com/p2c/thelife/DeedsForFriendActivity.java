@@ -35,7 +35,7 @@ public class DeedsForFriendActivity extends SlidingMenuActivity {
 			activitiesView.setAdapter(adapter);
 			
 			// load the database from the server in the background
-			TheLifeConfiguration.getDeedsDS().addDataStoreListener(adapter);
+			TheLifeConfiguration.getDeedsDS().addDSListener(adapter);
 			TheLifeConfiguration.getDeedsDS().refresh();
 		}		
 	}

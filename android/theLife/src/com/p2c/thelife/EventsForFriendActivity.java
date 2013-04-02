@@ -40,7 +40,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 		listView.setAdapter(adapter);
 		
 		// load the database from the server in the background
-		TheLifeConfiguration.getEventsDS().addDataStoreListener(adapter);
+		TheLifeConfiguration.getEventsDS().addDSListener(adapter);
 		TheLifeConfiguration.getEventsDS().refresh();		
 	}
 

@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.GroupModel;
+import com.p2c.thelife.model.AbstractDS;
 
-public class GroupsAdapter extends ArrayAdapter<GroupModel> implements DataStoreListener {
+public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractDS.DSListener {
 		
 	public GroupsAdapter(Context context, int mode) {
 		super(context, mode);

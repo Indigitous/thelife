@@ -10,14 +10,15 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.UserModel;
+import com.p2c.thelife.model.AbstractDS;
+
 
 /**
  * Show the user's groups and their members in an expandable list.
  */
-public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implements DataStoreListener {
+public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implements AbstractDS.DSListener {
 	
 	private Context m_context = null;
 	private ArrayList<GroupModel> m_groups = null;

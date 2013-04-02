@@ -13,12 +13,12 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.DataStoreListener;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
+import com.p2c.thelife.model.AbstractDS;
 
-public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements DataStoreListener {
+public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements AbstractDS.DSListener {
 	
 	private static final String TAG = "DeedsDS"; 
 	
