@@ -43,7 +43,7 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractD
 	}
 	
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDSChanged() {
 		
 		// clear data and redo query
 		clear();		

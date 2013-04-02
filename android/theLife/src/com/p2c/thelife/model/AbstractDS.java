@@ -33,7 +33,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 *
 	 */
 	public interface DSListener {
-		public void notifyDataChanged();
+		public void notifyDSChanged();
 	}	
 	
 	protected ArrayList<T> m_data = new ArrayList<T>(); 	// in memory list of model objects
@@ -277,7 +277,10 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			return data2;
 		}
 		
-		// UI thread		
+		/**
+		 * on UI thread
+		 * Note that the server data only becomes "usable" to the clients on the UI thread
+		 */
 		@Override
 		protected void onPostExecute(ArrayList<T> data2) {
 			
@@ -313,7 +316,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 //			listener.notifyDataChanged();
 //		}
 		if (m_listener != null) {
-			m_listener.notifyDataChanged();
+			m_listener.notifyDSChanged();
 		}
 	}
 	

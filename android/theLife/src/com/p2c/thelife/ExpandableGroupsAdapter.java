@@ -33,7 +33,7 @@ public class ExpandableGroupsAdapter extends BaseExpandableListAdapter implement
 	
 	
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDSChanged() {
 		
 		// redo query
 		query();

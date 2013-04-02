@@ -48,7 +48,7 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> implements Abstrac
 	}
 	
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDSChanged() {
 		
 		// clear data and redo query
 		clear();		

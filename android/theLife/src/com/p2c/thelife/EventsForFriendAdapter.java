@@ -72,7 +72,7 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 	}
 	
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDSChanged() {
 		
 		// clear data and redo query
 		clear();		
