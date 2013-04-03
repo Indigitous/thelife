@@ -1,10 +1,7 @@
 package com.p2c.thelife;
-import java.io.File;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.p2c.thelife.model.CategoriesDS;
 import com.p2c.thelife.model.DeedsDS;

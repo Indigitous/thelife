@@ -109,7 +109,7 @@ System.out.println("SEARCH REQUESTED");
 	}
 
 	@Override
-	public void notifyResponseAvailable(String indicator, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject) {
 		
 		if (jsonObject != null) {
 			int groupId = jsonObject.optInt("id", 0);

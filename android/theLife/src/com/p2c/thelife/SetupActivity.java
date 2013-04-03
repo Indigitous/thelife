@@ -50,7 +50,7 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 	
 	
 	@Override
-	public void notifyResponseAvailable(String indicator, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject) {
 					
 		// make sure the user hasn't already cancelled
 		if (m_progressDialog.isShowing()) {

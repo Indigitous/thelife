@@ -36,7 +36,7 @@ public class Server {
 	 *
 	 */
 	public interface ServerListener {
-		public void notifyResponseAvailable(String indicator, JSONObject jsonObject);
+		public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject);
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class Server {
 			
 			Log.d(TAG, "HERE IN ON POST EXECUTE");
 			
-			m_listener.notifyResponseAvailable(m_indicator, jsonObject);
+			m_listener.notifyServerResponseAvailable(m_indicator, jsonObject);
 		}
 	}
 

@@ -133,7 +133,7 @@ public class FriendsActivity
 
 	
 	@Override
-	public void notifyResponseAvailable(String indicator, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject) {
 		
 		if (jsonObject != null) {
 			int friendId = jsonObject.optInt("id", 0);
