@@ -20,6 +20,7 @@ public class GroupsActivity extends SlidingMenuFragmentActivity implements Serve
 	
 	private static final String TAG = "DeedsDS"; 	
 	
+	private GroupsAdapter m_adapter = null;
 	private ProgressDialog m_progressDialog = null;	
 
 	@Override
@@ -29,13 +30,33 @@ public class GroupsActivity extends SlidingMenuFragmentActivity implements Serve
 //		ExpandableListView groupsList = (ExpandableListView)findViewById(R.id.groups_list);
 //		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1);
 		ListView groupsList = (ListView)findViewById(R.id.groups_list);
-		GroupsAdapter adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1);
-		groupsList.setAdapter(adapter);
+		GroupsAdapter m_adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1);
+		groupsList.setAdapter(m_adapter);
+	}
+	
+	/**
+	 * Activity in view, so start the data store refresh mechanism.
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.e(TAG, "In onResume()");
 		
 		// load the database from the server in the background
-		TheLifeConfiguration.getGroupsDS().addDSChangedListener(adapter);
-		TheLifeConfiguration.getGroupsDS().refresh();	
-	}
+		TheLifeConfiguration.getGroupsDS().addDSChangedListener(m_adapter);
+		TheLifeConfiguration.getGroupsDS().refresh();				
+	}		
+	
+	/**
+	 * Activity out of view, so stop the data store refresh mechanism.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.e(TAG, "In onPause()");
+		
+		TheLifeConfiguration.getGroupsDS().removeDSChangedListener(m_adapter);
+	}	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

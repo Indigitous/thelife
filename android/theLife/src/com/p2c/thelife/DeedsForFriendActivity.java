@@ -2,6 +2,7 @@ package com.p2c.thelife;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
@@ -13,7 +14,10 @@ import com.p2c.thelife.model.FriendModel;
 
 public class DeedsForFriendActivity extends SlidingMenuActivity implements DSRefreshedListener {
 	
-	private FriendModel m_friend = null;	
+	private static final String TAG = "DeedsForFriendActivity";
+	
+	private FriendModel m_friend = null;
+	private DeedsForFriendAdapter m_adapter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +36,48 @@ public class DeedsForFriendActivity extends SlidingMenuActivity implements DSRef
 			thresholdView.setText(m_friend.getThresholdMediumString(getResources()));
 			
 			ListView activitiesView = (ListView)findViewById(R.id.deeds_for_friend_list);
-			DeedsForFriendAdapter adapter = new DeedsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
-			activitiesView.setAdapter(adapter);
-			
-			// load the database from the server in the background
-			// note that categories and deeds are closely related, so first refresh the categories and then the deeds
-			TheLifeConfiguration.getCategoriesDS().addDSChangedListener(adapter);
-			TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getDeedsDS().addDSChangedListener(adapter);
-			TheLifeConfiguration.getCategoriesDS().refresh(); // first refresh categories, then refresh deeds in the notifyDSRefreshed callback
+			m_adapter = new DeedsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
+			activitiesView.setAdapter(m_adapter);
 		}		
 	}
 	
+	/**
+	 * Activity in view, so start the data store refresh mechanism.
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.e(TAG, "In onResume()");
+		
+		// load the data store from the server in the background
+		// note that categories and deeds are closely related, so first refresh the categories and then the deeds
+		TheLifeConfiguration.getCategoriesDS().addDSChangedListener(m_adapter);
+		TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
+		TheLifeConfiguration.getDeedsDS().addDSChangedListener(m_adapter);
+		TheLifeConfiguration.getCategoriesDS().refresh(); // first refresh categories, then refresh deeds in the notifyDSRefreshed callback		
+	}	
 	
+	
+	/**
+	 * Called when the data store refresh has completed.
+	 */
 	@Override
 	public void notifyDSRefreshed() {
 		TheLifeConfiguration.getDeedsDS().refresh();
+	}			
+	
+	
+	/**
+	 * Activity out of view, so stop the data store refresh mechanism.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.e(TAG, "In onPause()");
+		
+		TheLifeConfiguration.getDeedsDS().removeDSChangedListener(m_adapter);				
+		TheLifeConfiguration.getCategoriesDS().removeDSRefreshedListener(this);
+		TheLifeConfiguration.getCategoriesDS().removeDSChangedListener(m_adapter);
 	}		
 	
 	

@@ -37,6 +37,7 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 			m_adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
 			m_listView.setAdapter(m_adapter);
 			
+			// data store refresh runnable			
 			m_refreshRunnable = new Runnable() {
 				@Override
 				public void run() {

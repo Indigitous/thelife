@@ -1,6 +1,7 @@
 package com.p2c.thelife;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +14,10 @@ import com.p2c.thelife.model.UserModel;
 
 public class GroupActivity extends SlidingMenuActivity {
 	
+	private static final String TAG = "GroupActivity";
+	
 	private GroupModel m_group = null;	
+	private GroupAdapter m_adapter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +35,32 @@ public class GroupActivity extends SlidingMenuActivity {
 		
 		// attach the users-in-group view
 		GridView usersView = (GridView)findViewById(R.id.activity_group_users);
-		GroupAdapter adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group);
-		usersView.setAdapter(adapter);
+		GroupAdapter m_adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group);
+		usersView.setAdapter(m_adapter);
+	}
+	
+	/**
+	 * Activity in view, so start the data store refresh mechanism.
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.e(TAG, "In onResume()");
 		
 		// load the database from the server in the background
-		TheLifeConfiguration.getUsersDS().addDSChangedListener(adapter);
-		TheLifeConfiguration.getUsersDS().refresh();			
+		TheLifeConfiguration.getUsersDS().addDSChangedListener(m_adapter);
+		TheLifeConfiguration.getUsersDS().refresh();				
+	}		
+	
+	/**
+	 * Activity out of view, so stop the data store refresh mechanism.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.e(TAG, "In onPause()");
+		
+		TheLifeConfiguration.getUsersDS().removeDSChangedListener(m_adapter);
 	}
 
 	@Override

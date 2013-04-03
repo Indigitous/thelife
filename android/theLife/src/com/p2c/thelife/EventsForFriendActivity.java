@@ -46,6 +46,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements DSRe
 		m_adapter = new EventsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
 		m_listView.setAdapter(m_adapter);
 		
+		// data store refresh runnable
 		m_refreshRunnable = new Runnable() {
 			@Override
 			public void run() {

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ public class FriendsActivity
 	
 	private static final String TAG = "FriendsActivity"; 	
 	
+	private FriendsAdapter m_adapter = null;	
 	private FriendModel m_friend = null; // selected friend
 	private ProgressDialog m_progressDialog = null;	
 
@@ -36,16 +38,37 @@ public class FriendsActivity
 		super.onCreate(savedInstanceState, R.layout.activity_friends, SlidingMenuSupport.FRIENDS_POSITION);
 		
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
-		FriendsAdapter adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
-		friendsGrid.setAdapter(adapter);
+		FriendsAdapter m_adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
+		friendsGrid.setAdapter(m_adapter);
 		
 		friendsGrid.setOnItemClickListener(this);
 		friendsGrid.setOnItemLongClickListener(this);
+	}
+	
+	/**
+	 * Activity in view, so start the data store refresh mechanism.
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.e(TAG, "In onResume()");
 		
 		// load the database from the server in the background
-		TheLifeConfiguration.getFriendsDS().addDSChangedListener(adapter);  
-		TheLifeConfiguration.getFriendsDS().refresh();		
+		TheLifeConfiguration.getFriendsDS().addDSChangedListener(m_adapter);  
+		TheLifeConfiguration.getFriendsDS().refresh();			
+	}		
+	
+	/**
+	 * Activity out of view, so stop the data store refresh mechanism.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.e(TAG, "In onPause()");
+		
+		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 	}
+		
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
