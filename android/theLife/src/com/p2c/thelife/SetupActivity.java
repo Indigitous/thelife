@@ -93,7 +93,8 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 						
 						// successful register
 						
-						// add the user to the list of known users (would be the only user)
+						// Add the user to the list of known users (would be the only user).
+						// The new user record will be superceded by the upcoming fullRefresh().
 						UserModel user = new UserModel(userId, firstName, lastName, null, email, "");
 						TheLifeConfiguration.getUsersDS().add(user);
 						

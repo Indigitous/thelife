@@ -107,7 +107,9 @@ public class DeedForFriendActivity extends SlidingMenuFragmentActivity implement
 				
 				// add the event to the list of known events
 				EventModel event = new EventModel(eventId, userId, friendId, deedId, description, timestamp, isPledge, pledgeCount);
-				TheLifeConfiguration.getEventsDS().add(event);			
+				TheLifeConfiguration.getEventsDS().add(event);
+				TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+				TheLifeConfiguration.getEventsDS().forceRefresh(null); // TODO make this persistent in cache or do a forceRefresh() which hits the server?
 			}
 		}
 		

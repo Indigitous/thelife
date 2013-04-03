@@ -69,7 +69,9 @@ public class FriendsImportActivity extends SlidingMenuFragmentActivity implement
 				// add the friend to the list of known friends
 				FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdId - 1]; // TODO need better Server API here 
 				FriendModel friend = new FriendModel(friendId, firstName, lastName, null, threshold);
-				TheLifeConfiguration.getFriendsDS().add(friend);			
+				TheLifeConfiguration.getFriendsDS().add(friend);
+				TheLifeConfiguration.getFriendsDS().notifyDSChangedListeners();
+				TheLifeConfiguration.getFriendsDS().forceRefresh(null);				
 			}
 		}
 		

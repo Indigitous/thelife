@@ -128,6 +128,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/**
 	 * Add a model which is already in the server.
+	 * This does not update the cache or notify listeners.
 	 */
 	public void add(T model) {
 		m_data.add(model);
@@ -135,6 +136,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/**
 	 * Delete a model which has already been deleted in the server.
+	 * This does not update the cache or notify listeners.
 	 */
 	public void delete(int id) {
 		
@@ -147,6 +149,24 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			index++;
 		}
 	}	
+	
+	
+	/**
+	 * Force a refresh.
+	 * @param refreshIndicator
+	 */
+	public void forceRefresh(String refreshIndicator) {
+		
+		if (!m_isRefreshing) {
+			
+			// force a refresh by erasing the timestamp indicating when the last time a refresh was done
+			SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
+			system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
+			system_settings_editor.commit();			
+			
+			refresh(refreshIndicator);
+		}
+	}
 	
 	
 	/**

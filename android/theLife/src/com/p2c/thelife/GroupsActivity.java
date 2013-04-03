@@ -126,7 +126,9 @@ System.out.println("SEARCH REQUESTED");
 				ArrayList<Integer> memberIds = new ArrayList<Integer>();
 				memberIds.add(TheLifeConfiguration.getUserId());
 				GroupModel group = new GroupModel(groupId, name, description, TheLifeConfiguration.getUserId(), memberIds);
-				TheLifeConfiguration.getGroupsDS().add(group);			
+				TheLifeConfiguration.getGroupsDS().add(group);
+				TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
+				TheLifeConfiguration.getGroupsDS().forceRefresh(null);
 			}
 		}
 		

@@ -142,7 +142,9 @@ public class FriendsActivity
 				// successful
 											
 				// delete the friend from the list
-				TheLifeConfiguration.getFriendsDS().delete(friendId);			
+				TheLifeConfiguration.getFriendsDS().delete(friendId);
+				TheLifeConfiguration.getFriendsDS().notifyDSChangedListeners();
+				TheLifeConfiguration.getFriendsDS().forceRefresh(null);
 			}
 		}
 		
