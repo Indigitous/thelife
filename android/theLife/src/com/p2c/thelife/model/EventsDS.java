@@ -20,7 +20,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 				"EventsDS", 
 				"events.json",
 				"refresh_events_timestamp_key",
-				TheLifeConfiguration.SERVER_URL + "events.json",
+				"events.json",
 				"refresh_events_delta_key",
 				TheLifeConfiguration.REFRESH_EVENTS_DELTA
 			);		

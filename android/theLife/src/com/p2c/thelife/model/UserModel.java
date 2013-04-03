@@ -66,8 +66,8 @@ public class UserModel extends AbstractModel {
 		String imageUrl = json.optString("image_url", null);		
 		return new UserModel(
 			json.getInt("user_id"),
-			json.getString("firstName"),
-			json.getString("lastName"),
+			json.getString("first_name"),
+			json.getString("last_name"),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonThumbnail()),			
 			json.getString("email"),

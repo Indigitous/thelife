@@ -17,7 +17,7 @@ public class CategoriesDS extends AbstractDS<GroupModel> {
 				"CategoriesDS", 
 				"categories.json",
 				"refresh_categories_timestamp_key",
-				TheLifeConfiguration.SERVER_URL + "categories.json",
+				"categories.json",
 				"refresh_categories_delta_key",
 				TheLifeConfiguration.REFRESH_CATEGORIES_DELTA
 			);		

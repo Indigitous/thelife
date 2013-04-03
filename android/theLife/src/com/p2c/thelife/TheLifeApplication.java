@@ -1,4 +1,6 @@
 package com.p2c.thelife;
+import java.io.File;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,16 +22,14 @@ import com.p2c.thelife.model.UsersDS;
  */
 public class TheLifeApplication extends Application {
 	
-	private static final String TAG = "TheLifeConfiguration";
+	private static final String TAG = "TheLifeApplication";
 		
 	/**
 	 * Set up the configuration values for the application.
 	 */
 	public void onCreate() {
 		super.onCreate();
-			
-		Log.e(TAG, "onCreate()");  // TODO for debugging only
-			
+					
 		// initialize configuration from system settings
 		SharedPreferences systemSettings = 
 			getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);
@@ -43,6 +43,8 @@ public class TheLifeApplication extends Application {
 		TheLifeConfiguration.setMissingDataThumbnail(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_search)));
 		
 		TheLifeConfiguration.setCacheDirectory(getApplicationContext().getCacheDir().getAbsolutePath() + "/");
+//		File debugCacheDir = getApplicationContext().getDir("debugcache", MODE_WORLD_READABLE); // TODO for debugging
+//		TheLifeConfiguration.setCacheDirectory(debugCacheDir.getAbsolutePath());; // TODO for debugging 
 		
 		// initialize the data stores, reading from cache if available
 		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext()));				

@@ -46,7 +46,7 @@ public class Server {
 		
 		// API end point
 		// returns HTTP 201 on a success, HTTP 401 on a fail
-		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/authenticate";
+		String urlString = Utilities.makeServerUrlString("authenticate");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -70,7 +70,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on a already taken (or missing) email, HTTP 201 on a success
-		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/register";
+		String urlString = Utilities.makeServerUrlString("register");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -97,7 +97,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a bad threshold), HTTP 201 on a success
-		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/friends";
+		String urlString = Utilities.makeServerUrlString("friends");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -124,7 +124,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 404 on an unknown friend, HTTP 201 on a success TODO check this
-		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/friends?token=" + TheLifeConfiguration.getToken() + "&friend_id=" + String.valueOf(friendId);
+		String urlString = Utilities.makeServerUrlString("friends") + "&friend_id=" + String.valueOf(friendId);
 		
 		try {
 			HttpDelete httpRequest = new HttpDelete(urlString);
@@ -142,7 +142,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/groups";
+		String urlString = Utilities.makeServerUrlString("groups");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -168,7 +168,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = TheLifeConfiguration.SERVER_URL + "/v1/events";
+		String urlString = Utilities.makeServerUrlString("events");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();

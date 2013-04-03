@@ -21,30 +21,28 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_main, SlidingMenuSupport.COMMUNITY_POSITION);
+		
+		// attach the event list view
+		m_listView = (ListView)findViewById(R.id.activity_main_events);
+		m_adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
+		m_listView.setAdapter(m_adapter);
+		
+		// data store refresh runnable			
+		m_refreshRunnable = new Runnable() {
+			@Override
+			public void run() {
+				TheLifeConfiguration.getEventsDS().refresh();
+			}
+		};		
 					
+		// If the current user is an authenticated, go ahead with the rest of the activity.
+		// But if the current user has not been authenticated, login or register.
 		if (TheLifeConfiguration.getUserId() == 0) {
-			
-			// no authenticated user, so login or register
+			// not authenticated user, so login or register
 			Intent intent = new Intent("com.p2c.thelife.Setup");
-			startActivity(intent);			
-			
-		} else {
-			
-			// have an authenticated user, so go ahead with the rest of the app
-			
-			// attach the event list view
-			m_listView = (ListView)findViewById(R.id.activity_main_events);
-			m_adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
-			m_listView.setAdapter(m_adapter);
-			
-			// data store refresh runnable			
-			m_refreshRunnable = new Runnable() {
-				@Override
-				public void run() {
-					TheLifeConfiguration.getEventsDS().refresh();
-				}
-			};
+			startActivity(intent);
 		}
+			
 	}
 	
 	

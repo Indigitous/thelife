@@ -48,7 +48,8 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
-	public static final String SERVER_URL = "http://75.157.251.192:3000";
+	// note: ends with a version and a forward slash
+	public static final String SERVER_URL = "http://75.157.251.192:3000/v1/";
 	
 	// stock images
 	private static Bitmap m_genericPersonImage;

@@ -67,4 +67,12 @@ public class Utilities {
 		return jsonString;
 	}		
 
+	
+	public static String makeServerUrlStringDebug(String server, String urlPath) {
+		return server + urlPath + "?token=" + TheLifeConfiguration.getToken();
+	}
+	
+	public static String makeServerUrlString(String urlPath) {
+		return TheLifeConfiguration.SERVER_URL + urlPath + "?token=" + TheLifeConfiguration.getToken();
+	}
 }

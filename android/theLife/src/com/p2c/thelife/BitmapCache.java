@@ -30,7 +30,7 @@ public class BitmapCache {
 	 * @param urlString
 	 * @return the bitmap or null if any exception
 	 */
-	public static Bitmap getBitmapAtURLSafe(String urlString) {
+	public static Bitmap getBitmapAtURLSafe(String urlPath) {
 		
 		InputStream is = null;
 		HttpURLConnection connection = null;
@@ -40,14 +40,15 @@ public class BitmapCache {
 		try {
 			
 			// attempt to get the bitmap from the server
-			URL url = new URL(TheLifeConfiguration.SERVER_URL + urlString);
+			//URL url = newURL(Utilities.makeServerUrlString(urlPath)); // TODO correct
+			URL url = new URL(Utilities.makeServerUrlStringDebug("http://thelife.ballistiq.com/api/v1/", urlPath)); // TODO debug
 			connection = (HttpURLConnection)url.openConnection();
 			is =  new BufferedInputStream(connection.getInputStream());
 			bitmap = BitmapFactory.decodeStream(is);
 			
 			// save the bitmap to cache
 			if (bitmap != null) {
-				os = new BufferedOutputStream(   new FileOutputStream(TheLifeConfiguration.getCacheDirectory() + urlString));
+				os = new BufferedOutputStream(new FileOutputStream(TheLifeConfiguration.getCacheDirectory() + urlPath)); // TODO
 				bitmap.compress(CompressFormat.PNG, 90, os);
 				os.close();
 			}
@@ -56,8 +57,8 @@ public class BitmapCache {
 			Log.e(TAG, "getBitmapAtURLSafe()", e);
 		} finally {
 			if (is != null) {
-				try { is.close(); } catch (IOException e) { e.printStackTrace(); }
-				try { os.close(); } catch (IOException e) { e.printStackTrace(); }
+				try { is.close(); } catch (IOException e) { }
+				try { os.close(); } catch (IOException e) { }
 				
 			}
 			if (connection != null) {
