@@ -33,7 +33,7 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 			// have an authenticated user, so go ahead with the rest of the app
 			
 			// attach the event list view
-			m_listView = (ListView)findViewById(R.id.list);
+			m_listView = (ListView)findViewById(R.id.activity_main_events);
 			m_adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
 			m_listView.setAdapter(m_adapter);
 			
@@ -87,10 +87,6 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 		m_listView.removeCallbacks(m_refreshRunnable);
 	}
 	
-
-		
-	
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
