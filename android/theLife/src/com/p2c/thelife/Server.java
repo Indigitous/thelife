@@ -36,6 +36,10 @@ public class Server {
 	 *
 	 */
 	public interface ServerListener {
+		/**
+		 * @param indicator		returned to the listener
+		 * @param jsonObject	the result of the server call, null if there was a failure
+		 */
 		public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject);
 	}
 	

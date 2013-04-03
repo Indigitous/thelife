@@ -54,7 +54,7 @@ public class DeedsForFriendActivity extends SlidingMenuActivity implements DSRef
 		TheLifeConfiguration.getCategoriesDS().addDSChangedListener(m_adapter);
 		TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
 		TheLifeConfiguration.getDeedsDS().addDSChangedListener(m_adapter);
-		TheLifeConfiguration.getCategoriesDS().refresh(); // first refresh categories, then refresh deeds in the notifyDSRefreshed callback		
+		TheLifeConfiguration.getCategoriesDS().refresh(null); // first refresh categories, then refresh deeds in the notifyDSRefreshed callback		
 	}	
 	
 	
@@ -62,8 +62,8 @@ public class DeedsForFriendActivity extends SlidingMenuActivity implements DSRef
 	 * Called when the data store refresh has completed.
 	 */
 	@Override
-	public void notifyDSRefreshed() {
-		TheLifeConfiguration.getDeedsDS().refresh();
+	public void notifyDSRefreshed(String indicator) {
+		TheLifeConfiguration.getDeedsDS().refresh(null);
 	}			
 	
 	

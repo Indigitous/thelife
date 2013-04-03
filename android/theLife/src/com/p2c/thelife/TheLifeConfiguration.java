@@ -177,6 +177,10 @@ public class TheLifeConfiguration {
 		return m_userId;
 	}
 	
+	public static boolean isValidUser() {
+		return m_userId != 0;
+	}
+	
 	public static void setUserId(int user_id) {
 		m_userId = user_id;
 		

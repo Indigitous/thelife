@@ -49,7 +49,7 @@ public class GroupActivity extends SlidingMenuActivity {
 		
 		// load the database from the server in the background
 		TheLifeConfiguration.getUsersDS().addDSChangedListener(m_adapter);
-		TheLifeConfiguration.getUsersDS().refresh();				
+		TheLifeConfiguration.getUsersDS().refresh(null);				
 	}		
 	
 	/**

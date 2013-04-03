@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 
+/**
+ * This activity uses polling to get new events.
+ * @author clarence
+ *
+ */
 public class EventsForFriendActivity extends SlidingMenuActivity implements DSRefreshedListener {
 	
 	private static final String TAG = "EventsForFriendActivity";
@@ -50,7 +55,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements DSRe
 		m_refreshRunnable = new Runnable() {
 			@Override
 			public void run() {
-				TheLifeConfiguration.getEventsDS().refresh();
+				TheLifeConfiguration.getEventsDS().refresh(null);
 			}
 		};				
 	}
@@ -62,12 +67,12 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements DSRe
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e(TAG, "In onResume()");
+		Log.e(TAG, "In onResume()"); // TODO
 		
 		// load the data store from the server in the background
 		TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 		TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
-		TheLifeConfiguration.getEventsDS().refresh();
+		TheLifeConfiguration.getEventsDS().refresh(null);
 	}	
 	
 	
@@ -76,7 +81,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements DSRe
 	 * Will put another data store refresh onto the UI thread queue.
 	 */
 	@Override
-	public void notifyDSRefreshed() {
+	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
 		m_listView.postDelayed(m_refreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			

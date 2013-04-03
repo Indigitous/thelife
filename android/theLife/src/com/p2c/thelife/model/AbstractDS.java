@@ -41,7 +41,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 *
 	 */
 	public interface DSRefreshedListener {
-		public void notifyDSRefreshed();
+		public void notifyDSRefreshed(String indicator);
 	}
 	
 	protected ArrayList<T> m_data = new ArrayList<T>(); 	// in memory list of model objects
@@ -51,6 +51,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected SharedPreferences m_systemSettings = null;	
 	protected String m_cacheFileName = null; 				// must be set in subclass
 	protected boolean m_isRefreshing = false; 				// lock to prevent more than one thread refresh at any time
+	protected String m_refreshIndicator = null;
 	protected String m_refreshSettingTimestampKey = null;
 	protected String m_refreshURL = null; 
 	protected long m_refreshDelta = 0;						// in seconds
@@ -80,25 +81,27 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		
 		// load model objects from the JSON cache file on this device.
 		// TODO: is this too slow for the main thread?
-		try {
-			File cacheFile = new File(m_cacheFileName);
-			if (cacheFile.exists())
-			{
-				Log.d(TAG, "THE MODELS CACHE FILE EXISTS");
-				
-				String jsonString = Utilities.readBufferedStream(new FileReader(cacheFile));
-				if (jsonString != null) {
-					JSONArray jsonArray = new JSONArray(jsonString);					
-					addModels(jsonArray, false, m_data);
+		if (TheLifeConfiguration.isValidUser()) {
+			try {
+				File cacheFile = new File(m_cacheFileName);
+				if (cacheFile.exists())
+				{
+					Log.d(TAG, "THE MODELS CACHE FILE EXISTS");
+					
+					String jsonString = Utilities.readBufferedStream(new FileReader(cacheFile));
+					if (jsonString != null) {
+						JSONArray jsonArray = new JSONArray(jsonString);					
+						addModels(jsonArray, false, m_data);
+					}
+				} else {
+					Log.d(TAG, "THE MODELS CACHE FILE DOES NOT EXIST");
 				}
-			} else {
-				Log.d(TAG, "THE MODELS CACHE FILE DOES NOT EXIST");
+			} catch (FileNotFoundException e) {
+				Log.e(TAG, "constructor", e);
+			} catch (JSONException e) {
+				Log.wtf(TAG, "constructor", e);			
 			}
-		} catch (FileNotFoundException e) {
-			Log.e(TAG, "constructor", e);
-		} catch (JSONException e) {
-			Log.wtf(TAG, "constructor", e);			
-		}		
+		}
 	}
 	
 	/**
@@ -149,7 +152,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	/**
 	 * Refresh the model objects cache.
 	 */
-	public void refresh() {
+	public void refresh(String refreshIndicator) {
 		
 		// find when the model objects were most recently refreshed
 		long lastRefresh = m_systemSettings.getLong(m_refreshSettingTimestampKey, 0);
@@ -165,6 +168,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			if (!m_isRefreshing) {  // this variable is only accessed in the UI (main) thread
 				try {
 					m_isRefreshing = true;
+					m_refreshIndicator = refreshIndicator;
 					Log.d(TAG, "WILL NOW RUN BACKGROUND MODELS REFRESH");
 					new readFromServer().execute(new URL(m_refreshURL));
 				} catch (MalformedURLException e) {
@@ -298,8 +302,13 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			if (data2 != null) {
 				// no error, so use the new data
 				m_data = data2;
-				notifyDSChangedListeners(); // tell listeners that the data has changed, on the UI thread
+				
+				// tell listeners that the data has changed, on the UI thread
+				notifyDSChangedListeners(); 
 			}
+			
+			// tell listeners that the refresh has completed
+			notifyDSRefreshedListeners(m_refreshIndicator);			
 		
 			// release lock
 			m_isRefreshing = false;	
@@ -352,9 +361,9 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		m_refreshedListener = theListener;
 	}
 	
-	public void notifyDSRefreshedListeners() {
+	public void notifyDSRefreshedListeners(String refreshIndicator) {
 		if (m_refreshedListener != null) {
-			m_refreshedListener.notifyDSRefreshed();
+			m_refreshedListener.notifyDSRefreshed(refreshIndicator);
 		}
 	}
 	

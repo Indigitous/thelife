@@ -55,7 +55,7 @@ public class FriendsActivity
 		
 		// load the database from the server in the background
 		TheLifeConfiguration.getFriendsDS().addDSChangedListener(m_adapter);  
-		TheLifeConfiguration.getFriendsDS().refresh();			
+		TheLifeConfiguration.getFriendsDS().refresh(null);			
 	}		
 	
 	/**

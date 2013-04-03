@@ -2,17 +2,21 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
+import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.UserModel;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-public class SetupActivity extends FragmentActivity implements Server.ServerListener, AbstractServerAccessDialog.Listener {
+public class SetupActivity extends FragmentActivity implements Server.ServerListener, AbstractServerAccessDialog.Listener, DSRefreshedListener {
+	
+	private static final String TAG = "SetupActivity";
 	
 	private ProgressDialog m_progressDialog = null;
 
@@ -70,9 +74,8 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 						TheLifeConfiguration.setUserId(userId);
 						TheLifeConfiguration.setToken(token);
 						
-						// go to the main screen
-						Intent intent = new Intent("com.p2c.thelife.Main");
-						startActivity(intent);
+						// refresh data stores							
+						fullRefresh();
 						return;
 					}
 					
@@ -98,9 +101,8 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 						TheLifeConfiguration.setUserId(userId);
 						TheLifeConfiguration.setToken(token);
 						
-						// go to the main screen
-						Intent intent = new Intent("com.p2c.thelife.Main");
-						startActivity(intent);
+						// refresh data stores
+						fullRefresh();
 						return;
 					}					
 					
@@ -111,12 +113,65 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 		}
 		
 		// failed login or register
-
 		Toast.makeText(this, "INCORRECT " + indicator, Toast.LENGTH_SHORT).show(); 
 
-		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
+		}
+	}
+	
+	
+	/**
+	 * Full refresh of the data stores.
+	 */
+	private void fullRefresh() {	
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}
+		m_progressDialog = ProgressDialog.show(this, "Waiting", "Retrieving configuration.", true, true);	// TODO translation		
+		
+		TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
+		TheLifeConfiguration.getCategoriesDS().refresh("categories");
+	}
+
+	/**
+	 * Chain together the data stores' refresh callbacks so that all data stores are refreshed sequentially.
+	 * Not pretty but it works.
+	 */
+	@Override
+	public void notifyDSRefreshed(String indicator) {
+		if (indicator.equals("categories")) {
+			TheLifeConfiguration.getCategoriesDS().removeDSRefreshedListener(this);
+			TheLifeConfiguration.getDeedsDS().addDSRefreshedListener(this);			
+			TheLifeConfiguration.getDeedsDS().refresh("deeds");
+		} else if (indicator.equals("deeds")) {
+			TheLifeConfiguration.getDeedsDS().removeDSRefreshedListener(this);			
+			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);			
+			TheLifeConfiguration.getUsersDS().refresh("users");
+		} else if (indicator.equals("users")) {
+			TheLifeConfiguration.getUsersDS().removeDSRefreshedListener(this);			
+			TheLifeConfiguration.getGroupsDS().addDSRefreshedListener(this);
+			TheLifeConfiguration.getGroupsDS().refresh("groups");	
+		} else if (indicator.equals("groups")) {
+			TheLifeConfiguration.getGroupsDS().removeDSRefreshedListener(this);			
+			TheLifeConfiguration.getFriendsDS().addDSRefreshedListener(this);
+			TheLifeConfiguration.getFriendsDS().refresh("friends");	
+		} else if (indicator.equals("friends")) {
+			TheLifeConfiguration.getFriendsDS().removeDSRefreshedListener(this);			
+			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);			
+			TheLifeConfiguration.getEventsDS().refresh("events");
+		} else if (indicator.equals("events")) {
+			TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);			
+			if (m_progressDialog != null) {
+				m_progressDialog.dismiss();
+				
+				// go to the main screen
+				Intent intent = new Intent("com.p2c.thelife.Main");
+				startActivity(intent);
+				return;				
+			}					
+		} else {
+			Log.wtf(TAG, "unknown refresh indicator " + indicator);
 		}
 	}
 

@@ -8,7 +8,7 @@ import android.content.Context;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
-public class CategoriesDS extends AbstractDS<GroupModel> {
+public class CategoriesDS extends AbstractDS<CategoryModel> {
 	
 	public CategoriesDS(Context context) {
 		
@@ -27,7 +27,7 @@ public class CategoriesDS extends AbstractDS<GroupModel> {
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected GroupModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
-		return GroupModel.fromJSON(json, useServer);
+	protected CategoryModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
+		return CategoryModel.fromJSON(json, useServer);
 	}	
 }

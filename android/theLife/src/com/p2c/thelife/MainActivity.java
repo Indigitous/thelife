@@ -9,6 +9,11 @@ import android.widget.ListView;
 
 import com.p2c.thelife.model.EventsDS;
 
+/**
+ * This activity uses polling to get fresh events.
+ * @author clarence
+ *
+ */
 public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener {
 	
 	private static final String TAG = "MainActivity";
@@ -21,6 +26,7 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_main, SlidingMenuSupport.COMMUNITY_POSITION);
+		Log.e(TAG, "In onCreate()"); // TODO
 		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.activity_main_events);
@@ -31,13 +37,13 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 		m_refreshRunnable = new Runnable() {
 			@Override
 			public void run() {
-				TheLifeConfiguration.getEventsDS().refresh();
+				TheLifeConfiguration.getEventsDS().refresh(null);
 			}
 		};		
 					
 		// If the current user is an authenticated, go ahead with the rest of the activity.
 		// But if the current user has not been authenticated, login or register.
-		if (TheLifeConfiguration.getUserId() == 0) {
+		if (!TheLifeConfiguration.isValidUser()) {
 			// not authenticated user, so login or register
 			Intent intent = new Intent("com.p2c.thelife.Setup");
 			startActivity(intent);
@@ -52,12 +58,14 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e(TAG, "In onResume()");
+		Log.e(TAG, "In onResume()"); // TODO
 		
 		// load the data store from the server in the background
-		TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
-		TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
-		TheLifeConfiguration.getEventsDS().refresh();
+		if (TheLifeConfiguration.isValidUser()) {
+			TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
+			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
+			TheLifeConfiguration.getEventsDS().refresh(null);
+		}
 	}	
 	
 	
@@ -66,7 +74,7 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 	 * Will put another data store refresh onto the UI thread queue.
 	 */
 	@Override
-	public void notifyDSRefreshed() {
+	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
 		m_listView.postDelayed(m_refreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
@@ -78,7 +86,7 @@ public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefr
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.e(TAG, "In onPause()");
+		Log.e(TAG, "In onPause()"); // TODO
 		
 		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
