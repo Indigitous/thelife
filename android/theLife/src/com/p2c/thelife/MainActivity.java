@@ -1,19 +1,27 @@
 package com.p2c.thelife;
 
-import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-public class MainActivity extends SlidingMenuActivity implements DSRefreshedListener {
+import com.p2c.thelife.model.EventsDS;
+
+public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener {
+	
+	private static final String TAG = "MainActivity";
+	
+	private ListView m_listView = null;
+	private MainEventsAdapter m_adapter = null;
+	private Runnable m_refreshRunnable = null;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_main, SlidingMenuSupport.COMMUNITY_POSITION);		
-			
+		super.onCreate(savedInstanceState, R.layout.activity_main, SlidingMenuSupport.COMMUNITY_POSITION);
+					
 		if (TheLifeConfiguration.getUserId() == 0) {
 			
 			// no authenticated user, so login or register
@@ -25,23 +33,64 @@ public class MainActivity extends SlidingMenuActivity implements DSRefreshedList
 			// have an authenticated user, so go ahead with the rest of the app
 			
 			// attach the event list view
-			ListView listView = (ListView)findViewById(R.id.list);
-			MainEventsAdapter adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
-			listView.setAdapter(adapter);
+			m_listView = (ListView)findViewById(R.id.list);
+			m_adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
+			m_listView.setAdapter(m_adapter);
 			
-			// load the database from the server in the background
-			// note that events and users are closely related, so first refresh the users and then the events
-			TheLifeConfiguration.getUsersDS().addDSChangedListener(adapter);
-			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getEventsDS().addDSChangedListener(adapter);
-			TheLifeConfiguration.getUsersDS().refresh(); // first refresh users, then refresh events in the notifyDSRefreshed callback			
+			m_refreshRunnable = new Runnable() {
+				@Override
+				public void run() {
+					TheLifeConfiguration.getEventsDS().refresh();
+				}
+			};
 		}
 	}
 	
+	
+	/**
+	 * Activity in view, so start the data store refresh mechanism.
+	 */
 	@Override
-	public void notifyDSRefreshed() {
+	protected void onResume() {
+		super.onResume();
+		Log.e(TAG, "In onResume()");
+		
+		// load the data store from the server in the background
+		TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
+		TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().refresh();
 	}	
+	
+	
+	/**
+	 * Called when the data store refresh has completed.
+	 * Will put another data store refresh onto the UI thread queue.
+	 */
+	@Override
+	public void notifyDSRefreshed() {
+		// keep polling the events in the background
+		m_listView.postDelayed(m_refreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
+	}			
+	
+	
+	/**
+	 * Activity out of view, so stop the data store refresh mechanism.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.e(TAG, "In onPause()");
+		
+		// stop polling the events in the background
+		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
+		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
+		m_listView.removeCallbacks(m_refreshRunnable);
+	}
+	
+
+		
+	
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
