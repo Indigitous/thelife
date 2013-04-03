@@ -29,11 +29,14 @@ public class GroupActivity extends SlidingMenuActivity {
 			nameView.setText(m_group.name);
 		}
 		
-		// attach the users-in-group list view
+		// attach the users-in-group view
 		GridView usersView = (GridView)findViewById(R.id.activity_group_users);
 		GroupAdapter adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group);
 		usersView.setAdapter(adapter);
-		TheLifeConfiguration.getUsersDS().refresh();		
+		
+		// load the database from the server in the background
+		TheLifeConfiguration.getUsersDS().addDSChangedListener(adapter);
+		TheLifeConfiguration.getUsersDS().refresh();			
 	}
 
 	@Override

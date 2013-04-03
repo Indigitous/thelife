@@ -9,10 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.UserModel;
 
-public class GroupAdapter extends ArrayAdapter<UserModel> {
+public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.DSChangedListener {
 	
 	private GroupModel m_group;
 	
@@ -21,10 +22,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 		
 		m_group = group;
 		
-		// get all the users for the current group
-		for (Integer memberId:m_group.member_ids) {
-			add(TheLifeConfiguration.getUsersDS().findById(memberId));
-		}
+		query();
 	}
 	
 	// TODO: see ApiDemos List14.java for other (maybe better?) ways for this
@@ -52,5 +50,30 @@ public class GroupAdapter extends ArrayAdapter<UserModel> {
 	
 		return userView;
 	}
+	
+	@Override
+	public void notifyDSChanged() {
+		
+		// clear data and redo query
+		clear();		
+		query();
+		
+		// redisplay
+		notifyDataSetChanged();
+	}	
+	
+	private void query() {
+		
+		// get all the users for the current group
+		for (Integer memberId:m_group.member_ids) {
+			
+			// only add known users
+			UserModel user = TheLifeConfiguration.getUsersDS().findById(memberId);
+			if (user != null) {
+				add(TheLifeConfiguration.getUsersDS().findById(memberId));
+			}
+		}	
+
+	}	
 
 }

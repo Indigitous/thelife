@@ -1,12 +1,14 @@
 package com.p2c.thelife;
 
+import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-public class MainActivity extends SlidingMenuActivity {
+public class MainActivity extends SlidingMenuActivity implements DSRefreshedListener {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +30,18 @@ public class MainActivity extends SlidingMenuActivity {
 			listView.setAdapter(adapter);
 			
 			// load the database from the server in the background
+			// note that events and users are closely related, so first refresh the users and then the events
+			TheLifeConfiguration.getUsersDS().addDSChangedListener(adapter);
+			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);
 			TheLifeConfiguration.getEventsDS().addDSChangedListener(adapter);
-			TheLifeConfiguration.getEventsDS().refresh();
+			TheLifeConfiguration.getUsersDS().refresh(); // first refresh users, then refresh events in the notifyDSRefreshed callback			
 		}
 	}
+	
+	@Override
+	public void notifyDSRefreshed() {
+		TheLifeConfiguration.getEventsDS().refresh();
+	}	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

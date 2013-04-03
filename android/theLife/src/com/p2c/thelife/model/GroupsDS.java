@@ -8,6 +8,11 @@ import android.content.Context;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
+/**
+ * The current user's groups.
+ * @author clarence
+ *
+ */
 public class GroupsDS extends AbstractDS<GroupModel> {
 	
 	public GroupsDS(Context context) {

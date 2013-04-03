@@ -9,8 +9,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.p2c.thelife.model.FriendModel;
+import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 
-public class EventsForFriendActivity extends SlidingMenuActivity {
+public class EventsForFriendActivity extends SlidingMenuActivity implements DSRefreshedListener {
 	
 	private FriendModel m_friend = null;
 
@@ -40,9 +41,17 @@ public class EventsForFriendActivity extends SlidingMenuActivity {
 		listView.setAdapter(adapter);
 		
 		// load the database from the server in the background
+		// note that events and users are closely related, so first refresh the users and then the events
+		TheLifeConfiguration.getUsersDS().addDSChangedListener(adapter);
+		TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().addDSChangedListener(adapter);
-		TheLifeConfiguration.getEventsDS().refresh();		
+		TheLifeConfiguration.getUsersDS().refresh(); // first refresh users, then refresh events in the notifyDSRefreshed callback		
 	}
+	
+	@Override
+	public void notifyDSRefreshed() {
+		TheLifeConfiguration.getEventsDS().refresh();
+	}		
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

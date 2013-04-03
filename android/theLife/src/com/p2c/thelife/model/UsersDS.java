@@ -8,7 +8,11 @@ import android.content.Context;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
-// TODO need to know current user?
+/**
+ * Datastore for all the users in the current user's groups.
+ * @author clarence
+ *
+ */
 public class UsersDS extends AbstractDS<UserModel> {
 	
 	public UsersDS(Context context) {
