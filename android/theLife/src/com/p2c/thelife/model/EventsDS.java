@@ -57,9 +57,9 @@ public class EventsDS extends AbstractDS<EventModel> {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = jsonArray.getJSONObject(i);
 
-			// look for a pledge count object in the event stream -- it is missing user_id
-			if (json.optInt("user_id", -1) == -1  && json.optInt("pledge_count", -1) != -1) {
-				int event_id = json.optInt("id");
+			// look for a pledge count event in the event stream -- it has a nonzero target event_id
+			if (json.optInt("event_id", 0) != 0) {
+				int event_id = json.optInt("event_id");
 				int pledge_count = json.optInt("pledge_count");
 				
 				// The pledge count object gives a new value for the pledge count.
@@ -74,6 +74,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 				}
 				
 			// regular EventModel object
+			// note that threshold change events don't need special handling -- the friend record is already updated by the server when the HTTP POST event is received
 			} else {
 				// create the model object
 				EventModel model = createFromJSON(json, useServer);

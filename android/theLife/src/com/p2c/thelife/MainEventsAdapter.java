@@ -56,7 +56,7 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> implements Abstr
 		
 		// only show the pledge view if the event requests it
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
-		if (event.isPledge) {
+		if (event.isPrayerRequested) {
 			pledgeView.setVisibility(View.VISIBLE);
 			String pledgeDescription = "Pray"; // TODO translated
 			pledgeView.setText(pledgeDescription);			
