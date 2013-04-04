@@ -34,7 +34,7 @@ public class CategoryModel extends AbstractModel {
 		
 		// create the category
 		return new CategoryModel(
-			json.getInt("category_id"),
+			json.getInt("id"),
 			json.getString("name"),
 			json.getString("description")
 		);

@@ -65,7 +65,7 @@ public class UserModel extends AbstractModel {
 		// create the deed
 		String imageUrl = json.optString("image_url", null);		
 		return new UserModel(
-			json.getInt("user_id"),
+			json.getInt("id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),

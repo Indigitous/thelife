@@ -1,7 +1,7 @@
 [
 
 {
-	activity_id: 1,
+	id: 1,
     title: 'Activity One Title',
     summary: 'This is summary for Activity One',
     description: 'This is the summary for the first activity. It is a very useful activity in here.',
@@ -11,7 +11,7 @@
     priority: 1    
 },
 {
-	activity_id: 2,
+	id: 2,
     title: 'Activity Two Title',
     summary: 'This is summary for Activity Two',
     description: 'This is the summary for the second activity. It is a very useful activity in here.',
@@ -21,7 +21,7 @@
     priority: 2       
 },
 {
-	activity_id: 3,
+	id: 3,
     title: 'Activity Three Title',
     summary: 'This is summary for Activity Three',
     description: 'This is the summary for the third activity. It is a very useful activity in here.',
@@ -31,7 +31,7 @@
     priority: 3      
 },
 {
-	activity_id: 4,
+	id: 4,
     title: 'Activity Four Title',
     summary: 'This is summary for Activity Four',
     description: 'This is the summary for the fourth activity. It is a very useful activity in here.',
@@ -41,7 +41,7 @@
     priority: 4         
 },
 {
-	activity_id: 5,
+	id: 5,
     title: 'Activity Five Title',
     summary: 'This is summary for Activity Five',
     description: 'This is the summary for the fifth activity. It is a very useful activity in here.',
@@ -51,7 +51,7 @@
     priority: 5         
 },
 {
-	activity_id: 6,
+	id: 6,
     title: 'Activity Six Title',
     summary: 'This is summary for Activity Six',
     description: 'This is the summary for the sixth activity. It is a very useful activity in here.',

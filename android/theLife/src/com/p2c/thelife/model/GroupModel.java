@@ -48,7 +48,7 @@ public class GroupModel extends AbstractModel {
 		
 		// create the group
 		return new GroupModel(
-			json.getInt("group_id"),
+			json.getInt("id"),
 			json.getString("name"),
 			json.getString("description"),
 			json.getInt("leader_id"),

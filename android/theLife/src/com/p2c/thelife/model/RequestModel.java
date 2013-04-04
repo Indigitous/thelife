@@ -51,7 +51,7 @@ public class RequestModel extends AbstractModel {
 			
 		// create the request
 		return new RequestModel(
-			json.getInt("request_id"),
+			json.getInt("id"),
 			json.getInt("user_id"),
 			json.getInt("group_id"),
 			type,

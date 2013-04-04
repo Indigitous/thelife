@@ -70,7 +70,7 @@ public class DeedModel extends AbstractModel {
 		// create the deed
 		String imageUrl = json.optString("image_url", null);
 		return new DeedModel(
-			json.getInt("activity_id"),
+			json.getInt("id"),
 			json.getString("title"),
 			json.getString("summary"),
 			json.getString("description"),

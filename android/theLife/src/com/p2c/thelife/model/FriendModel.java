@@ -141,7 +141,7 @@ public class FriendModel extends AbstractModel {
 		// create the friend
 		String imageUrl = json.optString("image_url", null);			
 		return new FriendModel(
-			json.getInt("friend_id"),
+			json.getInt("id"),
 			json.getString("first_name"),
 			json.getString("last_name"),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),
