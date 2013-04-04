@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="40dp"
+        android:textSize="20sp"
         android:text="@string/import_friends_from" />
 
     <Button

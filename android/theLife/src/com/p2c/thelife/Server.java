@@ -50,7 +50,7 @@ public class Server {
 		
 		// API end point
 		// returns HTTP 201 on a success, HTTP 401 on a fail
-		String urlString = Utilities.makeServerUrlString("authenticate");
+		String urlString = Utilities.makeServerUrlStringNoToken("authenticate");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -74,7 +74,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on a already taken (or missing) email, HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("register");
+		String urlString = Utilities.makeServerUrlStringNoToken("register");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();

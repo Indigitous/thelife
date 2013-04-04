@@ -49,7 +49,9 @@ public class TheLifeConfiguration {
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
-	public static final String SERVER_URL = "http://75.157.251.192:3000/v1/";
+	//public static final String SERVER_URL = "http://75.157.251.192:3000/v1/";
+	public static final String SERVER_URL = "http://thelifeapp.com:3000/v1/";
+	
 	
 	// stock images
 	private static Bitmap m_genericPersonImage;
