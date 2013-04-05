@@ -213,8 +213,38 @@ public class Server {
 			Log.e(TAG, "login()", e);
 		}
 	}	
-		
 	
+	
+	/**
+	 * Create a request asking to join a group (kind=REQUEST_MEMBERSHIP) or asking a person to join my group (kind=INVITE).
+	 */
+	public void createRequest(int groupId, String kind, String email, String sms, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
+		String urlString = Utilities.makeServerUrlString("requests");
+		
+		try {
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
+			pairs.add(new BasicNameValuePair("group_id", String.valueOf(groupId)));
+			pairs.add(new BasicNameValuePair("type", kind));
+			if (email != null) {
+				pairs.add(new BasicNameValuePair("email", email));
+			}
+			if (sms != null) {
+				pairs.add(new BasicNameValuePair("sms", sms));
+			}			
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);				
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "createRequest()", e);
+		}
+	}	
 	
 	
 	/********************************* Background thread Server access task *************************************/

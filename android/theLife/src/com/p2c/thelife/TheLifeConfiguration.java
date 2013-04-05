@@ -196,7 +196,7 @@ public class TheLifeConfiguration {
 	 * @return authentication token
 	 */
 	public static String getToken() {
-		return "CAdLfkoRDTuprzDhta52"; // TODO debugging
+		return "ztMZ1xswQywcsBeShuZ7"; // TODO debugging
 		// return m_token;
 	}	
 	

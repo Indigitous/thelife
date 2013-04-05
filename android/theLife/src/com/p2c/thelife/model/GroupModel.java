@@ -39,7 +39,7 @@ public class GroupModel extends AbstractModel {
 		
 		Log.d(TAG, "IN GROUP MODEL from JSON");
 		
-		// get the member ids
+		// get the member ids, if present
 		ArrayList<Integer> memberIds = new ArrayList<Integer>(8);
 		JSONArray jsonMemberIds = json.optJSONArray("member_ids");
 		if (jsonMemberIds != null) {

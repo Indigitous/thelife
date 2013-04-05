@@ -1,11 +1,22 @@
 package com.p2c.thelife;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class GroupsSearchActivity extends SlidingMenuActivity  {
+import com.p2c.thelife.model.GroupModel;
+
+public class GroupsSearchActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, GroupJoinDialog.Listener {
+	
+	private static final String TAG = "GroupsSearchActivity";
+	
+	private GroupModel m_group = null;
+	private ProgressDialog m_progressDialog = null;		
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +37,37 @@ public class GroupsSearchActivity extends SlidingMenuActivity  {
 		return true;
 	}
 
+	/**
+	 * User has selected a group to join. 
+	 * @param view
+	 */
+	public void selectGroup(View view) {
+		m_group = (GroupModel)view.getTag();
+		
+		// confirm the choice
+		GroupJoinDialog dialog = new GroupJoinDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());		
+	}
+	
+	
+	public GroupModel getSelectedGroup() {
+		return m_group;
+	}
 
+	@Override
+	public void notifyAttemptingServerAccess(String indicator) {
+		m_progressDialog = ProgressDialog.show(this, "Waiting", "Requesting to join group.", true, true);	// TODO translation			
+	}
+
+	@Override
+	public void notifyServerResponseAvailable(String indicator,
+			JSONObject jsonObject) {
+
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}				
+		
+	}
+	
 
 }

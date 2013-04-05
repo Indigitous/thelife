@@ -68,6 +68,8 @@
     <string name="delete_friend_prompt">Delete friend %s?</string>
     <string name="friend">friend</string>
     <string name="user">user</string>
+    <string name="join_group_prompt">Do you wish to join %s?</string>
+    
     
 
 </resources>
