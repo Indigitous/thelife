@@ -1,27 +1,21 @@
 package com.p2c.thelife;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
-public class GroupsSearchActivity extends SlidingMenuActivity implements OnEditorActionListener {
+public class GroupsSearchActivity extends SlidingMenuActivity  {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_groups_search, SlidingMenuSupport.GROUPS_POSITION);
 		
-		// listen for a search
 		EditText editText = (EditText)findViewById(R.id.search_groups_text);
-		editText.setOnEditorActionListener(this);
 		
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.search_groups_list);
-		GroupsSearchAdapter adapter = new GroupsSearchAdapter(this, android.R.layout.simple_list_item_1);
+		GroupsSearchAdapter adapter = new GroupsSearchAdapter(this, android.R.layout.simple_list_item_1, editText);
 		listView.setAdapter(adapter);		
 	}
 
@@ -32,13 +26,6 @@ public class GroupsSearchActivity extends SlidingMenuActivity implements OnEdito
 		return true;
 	}
 
-	@Override
-	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
 
-		if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-			String queryString = (String)view.getText();
-		}
-		return true;
-	}
 
 }

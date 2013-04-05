@@ -3,6 +3,7 @@ package com.p2c.thelife;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -10,10 +11,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -190,6 +193,26 @@ public class Server {
 			Log.e(TAG, "createEvent()", e);
 		}
 	}			
+	
+	
+	/**
+	 * Query against all the groups in the system.
+	 * The return value will be a JSONObject containing a single JSONArray of the groups. 
+	 */
+	public void queryGroups(String queryString, ServerListener listener, String indicator) {
+	
+		try {
+			// API end point
+			// returns HTTP 201 on a success, HTTP 401 on a fail
+			String urlString = Utilities.makeServerUrlString("groups") + "&query=" + URLEncoder.encode(queryString, "UTF-8");	
+			
+			HttpGet httpRequest = new HttpGet(urlString);
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "login()", e);
+		}
+	}	
 		
 	
 	
@@ -243,8 +266,16 @@ public class Server {
 					Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE STRING " + jsonString);					
 				}
 				
-				if (jsonString != null) {
-					jsonObject = new JSONObject(jsonString);
+				jsonString = jsonString.trim();
+				if (jsonString != null && jsonString.length() > 0) {
+					// if the result is a JSONArray, wrap it inside a JSONObject
+					if (jsonString.charAt(0) == '[') {
+						JSONArray jsonArray = new JSONArray(jsonString);
+						jsonObject = new JSONObject();
+						jsonObject.put("a",  jsonArray);
+					} else {
+						jsonObject = new JSONObject(jsonString);
+					}
 				}
 			} catch (JSONException e) {
 				Log.wtf(TAG, "ServerCall.doInBackground()", e);				

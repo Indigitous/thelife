@@ -40,10 +40,12 @@ public class GroupModel extends AbstractModel {
 		Log.d(TAG, "IN GROUP MODEL from JSON");
 		
 		// get the member ids
-		JSONArray jsonMemberIds = json.getJSONArray("member_ids");
-		ArrayList<Integer> memberIds = new ArrayList<Integer>(jsonMemberIds.length());
-		for (int i = 0; i < jsonMemberIds.length(); i++) {
-			memberIds.add(jsonMemberIds.getInt(i));
+		ArrayList<Integer> memberIds = new ArrayList<Integer>(8);
+		JSONArray jsonMemberIds = json.optJSONArray("member_ids");
+		if (jsonMemberIds != null) {
+			for (int i = 0; i < jsonMemberIds.length(); i++) {
+				memberIds.add(jsonMemberIds.getInt(i));
+			}
 		}
 		
 		// create the group
@@ -51,7 +53,7 @@ public class GroupModel extends AbstractModel {
 			json.getInt("id"),
 			json.getString("name"),
 			json.getString("description"),
-			json.getInt("leader_id"),
+			json.optInt("user_id", 0),
 			memberIds
 		);
 	}	

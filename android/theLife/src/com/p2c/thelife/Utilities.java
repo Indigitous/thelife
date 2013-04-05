@@ -69,11 +69,11 @@ public class Utilities {
 
 	
 	public static String makeServerUrlStringDebug(String server, String urlPath) {
-		return server + urlPath + "?token=" + TheLifeConfiguration.getToken();
+		return server + urlPath + "?authentication_token=" + TheLifeConfiguration.getToken();
 	}
 	
 	public static String makeServerUrlString(String urlPath) {
-		return TheLifeConfiguration.SERVER_URL + urlPath + "?token=" + TheLifeConfiguration.getToken();
+		return TheLifeConfiguration.SERVER_URL + urlPath + "?authentication_token=" + TheLifeConfiguration.getToken();
 	}
 	
 	public static String makeServerUrlStringNoToken(String urlPath) {

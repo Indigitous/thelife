@@ -32,10 +32,11 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractD
 		
 		GroupModel group = getItem(position);
 			
-		// TODO this could be done with a simple string array adapter, instead of this custom class
 		TextView nameView = (TextView)groupView.findViewById(R.id.group_name);
 		nameView.setTextSize(20.0f);
 		nameView.setText(group.name);
+		TextView descriptionView = (TextView)groupView.findViewById(R.id.group_description);
+		descriptionView.setText(group.description);		
 		
 		groupView.setTag(group);  		
 							
@@ -57,8 +58,8 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractD
 		
 		// get all the Groups for the current user
 		Collection<GroupModel> Groups = TheLifeConfiguration.getGroupsDS().findAll();
-		for (GroupModel f:Groups) {
-			add(f);
+		for (GroupModel g:Groups) {
+			add(g);
 		}		
 
 	}

@@ -265,13 +265,13 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				
 			HttpURLConnection modelsConnection = null;
 			try {			
-				Log.d(TAG, "AM NOW RUNNING READFROMSERVER with" + urls[0]);	
+				Log.d(TAG, "AM NOW RUNNING READFROMSERVER with " + urls[0]);	
 				URL modelsEP = urls[0];
 				modelsConnection = (HttpURLConnection)modelsEP.openConnection();
 				modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
 				modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 				
-				Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE CODE" + modelsConnection.getResponseCode());
+				Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE CODE " + modelsConnection.getResponseCode());
 
 				String jsonString = null;
 				if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							

@@ -49,8 +49,8 @@ public class TheLifeConfiguration {
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
-	//public static final String SERVER_URL = "http://75.157.251.192:3000/v1/";
-	public static final String SERVER_URL = "http://thelifeapp.com:3000/v1/";
+	public static final String SERVER_URL = "http://75.157.251.192:3000/v1/"; // TODO debugging
+	//public static final String SERVER_URL = "http://thelifeapp.com:3000/v1/";
 	
 	
 	// stock images
@@ -196,7 +196,8 @@ public class TheLifeConfiguration {
 	 * @return authentication token
 	 */
 	public static String getToken() {
-		return m_token;
+		return "CAdLfkoRDTuprzDhta52"; // TODO debugging
+		// return m_token;
 	}	
 	
 	/**
