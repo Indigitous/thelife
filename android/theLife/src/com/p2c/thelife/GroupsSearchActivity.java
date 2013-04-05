@@ -56,7 +56,7 @@ public class GroupsSearchActivity extends SlidingMenuFragmentActivity implements
 
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {
-		m_progressDialog = ProgressDialog.show(this, "Waiting", "Requesting to join group.", true, true);	// TODO translation			
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.requesting_to_join_group), true, true);			
 	}
 
 	@Override

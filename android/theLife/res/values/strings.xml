@@ -69,6 +69,16 @@
     <string name="friend">friend</string>
     <string name="user">user</string>
     <string name="join_group_prompt">Do you wish to join %s?</string>
+    <string name="waiting">Waiting&#8230;"</string>
+    <string name="creating_new_group">Creating new group"</string>
+    <string name="deleting_friend">Deleting friend"</string>
+    <string name="adding_friend">Adding friend"</string>
+    <string name="requesting_to_join_group">"Requesting to join group"</string>
+    <string name="retrieving_account">"Retrieving account"</string>
+    <string name="creating_account">"Creating account"</string>
+    <string name="retrieving_configuration">"Retrieving configuration"</string>
+    
+    
     
     
 

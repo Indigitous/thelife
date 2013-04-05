@@ -128,7 +128,7 @@ public class FriendsActivity
 	
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {
-		m_progressDialog = ProgressDialog.show(this, "Waiting", "Deleting Friend", true, true);	// TODO translation				
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.deleting_friend), true, true);				
 	}
 
 	

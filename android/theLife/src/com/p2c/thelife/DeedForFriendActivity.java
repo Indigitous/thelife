@@ -83,7 +83,7 @@ public class DeedForFriendActivity extends SlidingMenuFragmentActivity implement
 
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {
-		m_progressDialog = ProgressDialog.show(this, "Waiting", "Create New Group", true, true);	// TODO translation						
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_new_group), true, true);					
 	}
 
 	@Override

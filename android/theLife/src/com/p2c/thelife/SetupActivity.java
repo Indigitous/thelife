@@ -46,9 +46,9 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {
 		if (indicator.equals("login")) {
-			m_progressDialog = ProgressDialog.show(this, "Waiting", "Retrieving account", true, true);	// TODO translation
+			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 		} else {
-			m_progressDialog = ProgressDialog.show(this, "Waiting", "Creating account", true, true);	// TODO translation
+			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}
-		m_progressDialog = ProgressDialog.show(this, "Waiting", "Retrieving configuration.", true, true);	// TODO translation		
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_configuration), true, true);		
 		
 		TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
 		TheLifeConfiguration.getCategoriesDS().refresh("categories");
