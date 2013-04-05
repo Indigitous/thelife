@@ -47,7 +47,7 @@ public class DeedModel extends AbstractModel {
 		
 		this.thresholds = thresholds;
 		this.priority = priority;
-		this.category_id = category_id;		
+		this.category_id = category_id;
 	}	
 	
 

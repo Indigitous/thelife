@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.p2c.thelife.TheLifeConfiguration;
 
@@ -56,6 +57,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = jsonArray.getJSONObject(i);
+			Log.d(TAG, "ADD ANOTHER JSON OBJECT EVENT " + json);			
 
 			// look for a pledge count event in the event stream -- it has a nonzero target event_id
 			if (json.optInt("event_id", 0) != 0) {

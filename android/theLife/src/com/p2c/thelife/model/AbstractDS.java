@@ -76,7 +76,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		m_systemSettings = context.getSharedPreferences(TheLifeConfiguration.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
 		m_refreshSettingTimestampKey = refreshSettingTimestampKey;
 		m_refreshURL = Utilities.makeServerUrlString(refreshURLPath); // TODO correct
-		m_refreshURL = Utilities.makeServerUrlStringDebug("http://thelife.ballistiq.com/api/v1/", refreshURLPath); // TODO debug 
+		m_refreshURL = Utilities.makeServerUrlStringDebug("http://thelife.ballistiq.com/api/v11/", refreshURLPath); // TODO debug 
 		m_refreshDelta = m_systemSettings.getLong(refreshSettingDeltaKey, refreshDeltaDefault);
 		
 		// load model objects from the JSON cache file on this device.

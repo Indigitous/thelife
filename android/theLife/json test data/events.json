@@ -7,7 +7,7 @@
 	activity_id: 1,
 	description: '<b>Geoff</b> is talking to <b>1Thomas</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 5
 },
 {
@@ -17,7 +17,7 @@
 	activity_id: 2,
 	description: '<b>Mark</b> is talking to <b>2Abraham</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 6
 },
 {
@@ -27,7 +27,7 @@
 	activity_id: 3,
 	description: '<b>Robert</b> is talking to <b>3Clarence</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 3
 },
 {
@@ -37,7 +37,7 @@
 	activity_id: 4,
 	description: '<b>Robert</b> is talking to <b>4Nola</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 2    
 },
 {
@@ -47,7 +47,7 @@
 	activity_id: 5,
 	description: '<b>Mark</b> is talking to <b>5Charles</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 1
 },
 {
@@ -57,7 +57,7 @@
 	activity_id: 6,
 	description: '<b>Nelson</b> is talking to <b>6Thomas</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 5
 },
 {
@@ -67,7 +67,7 @@
 	activity_id: 1,
 	description: '<b>Nelson</b> is talking to <b>7Abraham</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 6
 },
 {
@@ -77,7 +77,7 @@
 	activity_id: 2,
 	description: '<b>Tak</b> is talking to <b>8Pearl</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 3
 },
 {
@@ -87,7 +87,7 @@
 	activity_id: 3,
 	description: '<b>Tak</b> is talking to <b>9Ludwig</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 2    
 },
 {
@@ -97,7 +97,7 @@
 	activity_id: 4,
 	description: '<b>Geoff</b> is talking to <b>10Sally</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 4 
 },
 {
@@ -107,7 +107,7 @@
 	activity_id: 5,
 	description: '<b>Nelson</b> is talking to <b>11Alice</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 5
 },
 {
@@ -117,7 +117,7 @@
 	activity_id: 6,
 	description: '<b>Geoff</b> is talking to <b>12Jane</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 6
 },
 {
@@ -127,7 +127,7 @@
 	activity_id: 1,
 	description: '<b>Mark</b> is talking to <b>1Thomas</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 3
 },
 {
@@ -137,7 +137,7 @@
 	activity_id: 2,
 	description: '<b>Nelson</b> is talking to <b>2Abraham</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 1    
 },
 {
@@ -147,7 +147,7 @@
 	activity_id: 3,
 	description: '<b>Tak</b> is talking to <b>3Clarence</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 5 
 },
 {
@@ -157,7 +157,7 @@
 	activity_id: 4,
 	description: '<b>Geoff</b> is talking to <b>4Nola</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 5
 },
 {
@@ -167,7 +167,7 @@
 	activity_id: 5,
 	description: '<b>Mark</b> is talking to <b>5Charles</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 6
 },
 {
@@ -177,7 +177,7 @@
 	activity_id: 6,
 	description: '<b>Robert</b> is talking to <b>6Thomas</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 3
 },
 {
@@ -187,7 +187,7 @@
 	activity_id: 1,
 	description: '<b>Nelson</b> is talking to <b>7Abraham</b> about the gospel.',
     timestamp: 0,
-    is_pledge: false,
+    prayer_requested: false,
     pledge_count: 3    
 },
 {
@@ -197,7 +197,7 @@
 	activity_id: 2,
 	description: '<b>Nelson</b> is talking to <b>8Pearl</b> about the gospel.',
     timestamp: 0,
-    is_pledge: true,
+    prayer_requested: true,
     pledge_count: 5 
 }
 
