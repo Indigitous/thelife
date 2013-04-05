@@ -1,15 +1,13 @@
 package com.p2c.thelife;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 
-public class RequestsActivity extends Activity {
+public class RequestsActivity extends SlidingMenuActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_requests);
+		super.onCreate(savedInstanceState, R.layout.activity_requests, SlidingMenuSupport.REQUESTS_POSITION);				
 	}
 
 	@Override
