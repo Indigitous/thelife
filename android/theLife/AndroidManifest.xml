@@ -133,6 +133,24 @@
                 <action android:name="com.p2c.thelife.Setup" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.RequestsActivity"
+            android:label="theLife" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.Requests" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.SettingsActivity"
+            android:label="theLife" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.Settings" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>            
         </activity>
     </application>

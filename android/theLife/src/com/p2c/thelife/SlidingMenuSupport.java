@@ -25,9 +25,10 @@ public class SlidingMenuSupport {
 	public static final int COMMUNITY_POSITION = 0;
 	public static final int FRIENDS_POSITION = 1;
 	public static final int GROUPS_POSITION = 2;
-	public static final int HELP_POSITION = 3;
-	public static final int SETTINGS_POSITION = 4;
-	public static final int TEST_POSITION = 5;	
+	public static final int REQUESTS_POSITION = 3;	
+	public static final int HELP_POSITION = 4;
+	public static final int SETTINGS_POSITION = 5;
+	public static final int TEST_POSITION = 6;	
 	
 	public SlidingMenuSupport(Activity activity, int slidingMenuPosition) {
 		
@@ -68,25 +69,29 @@ public class SlidingMenuSupport {
 
 	        		switch (position) {
 	        		
-	       				// Community
-	    				case 0: 
+	    				case COMMUNITY_POSITION: 
 	    					m_activity.startActivity(new Intent("com.p2c.thelife.Main"));
 	    					break;
 	    					
-	        			// Friends
-	        			case 1: 
+	        			case FRIENDS_POSITION: 
 	        				m_activity.startActivity(new Intent("com.p2c.thelife.Friends"));
 	        				break;
 	        				
-	               		// Groups
-	        			case 2: 
+	        			case GROUPS_POSITION: 
 	        				m_activity.startActivity(new Intent("com.p2c.thelife.Groups"));
 	        				break;
 	        				
-	                   	// Help
-	        			case 3: 
+	        			case REQUESTS_POSITION: 
+	        				m_activity.startActivity(new Intent("com.p2c.thelife.Requests"));
+	        				break;	        				
+	        				
+	        			case HELP_POSITION: 
 	        				m_activity.startActivity(new Intent("com.p2c.thelife.GlobalHelp"));
-	        				break;        	        				
+	        				break; 
+	        				
+	        			case SETTINGS_POSITION: 
+	        				m_activity.startActivity(new Intent("com.p2c.thelife.Settings"));
+	        				break;  	        				
 	        		}
         		}
 			}
