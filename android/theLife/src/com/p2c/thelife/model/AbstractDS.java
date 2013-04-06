@@ -38,6 +38,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/**
 	 * Listener interface for DS data refresh completed event. 
+	 * This is called whether or not there was any new data from the refresh.
 	 *
 	 */
 	public interface DSRefreshedListener {

@@ -7,6 +7,7 @@ import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
 import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
+import com.p2c.thelife.model.RequestsDS;
 import com.p2c.thelife.model.UsersDS;
 
 
@@ -29,6 +30,7 @@ public class TheLifeConfiguration {
 	private static UsersDS m_usersDS = null;
 	private static GroupsDS m_groupsDS = null;
 	private static EventsDS m_eventsDS = null;
+	private static RequestsDS m_requestsDS = null;	
 	
 	// user id and authentication token
 	private static int m_userId = 0;
@@ -45,7 +47,7 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_FRIENDS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
-	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
+	public static final long REFRESH_REQUESTS_DELTA = 10000; // 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
@@ -120,7 +122,15 @@ public class TheLifeConfiguration {
 	
 	public static void setEventsDS(EventsDS eventsDS) {
 		m_eventsDS = eventsDS;
-	}	
+	}
+	
+	public static RequestsDS getRequestsDS() {
+		return m_requestsDS;
+	}
+	
+	public static void setRequestsDS(RequestsDS requestsDS) {
+		m_requestsDS = requestsDS;
+	}		
 	
 	
 	/****************** Cache and image related information ******************/
