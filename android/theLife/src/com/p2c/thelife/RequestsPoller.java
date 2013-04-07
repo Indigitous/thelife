@@ -82,22 +82,14 @@ public class RequestsPoller implements DSRefreshedListener {
 	
 
 	/**
-	 * Callback when the data store has been refreshed.
+	 * Callback when the data store has been refreshed, even if the refresh failed or there were no updates.
 	 * Called from the UI thread.
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
 			
 // Log.e(TAG, "FINISHED REQUEST POLL!");
-		
-//		NotificationCompat.Builder builder = new NotificationCompat.Builder(m_app.getApplicationContext());
-//		builder.setSmallIcon(R.drawable.ic_launcher);
-//		builder.setContentTitle("theLife");
-//		builder.setContentText("A request to join your group has been received.");
-//		
-//		NotificationManager notificationManager = (NotificationManager)m_app.getSystemService(Context.NOTIFICATION_SERVICE);
-//		notificationManager.notify(m_notificationId++, builder.build());
-		
+			
 		// poll again if the app is still on screen
 		if (m_isAppVisible) {
 			m_isPolling = true;

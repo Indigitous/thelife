@@ -1,5 +1,6 @@
 package com.p2c.thelife;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import android.content.Context;
@@ -50,7 +51,7 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Ab
 	}
 
 	@Override
-	public void notifyDSChanged() {
+	public void notifyDSChanged(ArrayList<Integer> modelIds) {
 		
 		// clear data and redo local query
 		clear();		

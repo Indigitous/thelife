@@ -32,7 +32,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 *
 	 */
 	public interface DSChangedListener {
-		public void notifyDSChanged();
+		public void notifyDSChanged(ArrayList<Integer> modelIds);
 	}
 	
 	
@@ -46,6 +46,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	}
 	
 	protected ArrayList<T> m_data = new ArrayList<T>(); 	// in memory list of model objects
+	protected ArrayList<Integer> newModelIds = new ArrayList<Integer>(); // newly added models
 	
 	protected Context m_context = null;
 	protected String TAG = null;							// for logging
@@ -242,15 +243,22 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected abstract T createFromJSON(JSONObject json, boolean useServer) throws JSONException;
 	
 	
+	/**
+	 * Can be called from the UI thread or a background thread.
+	 */
 	protected void addModels(JSONArray jsonArray, boolean useServer, ArrayList<T> list) throws JSONException {
 
+		newModelIds.clear();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = jsonArray.getJSONObject(i);
 			Log.d(TAG, "ADD ANOTHER JSON OBJECT " + json);
 			
-			// create the model object
+			// create the model object 
 			T model = createFromJSON(json, useServer);
+			
+			// add the new model to the list and remember it
 			list.add(model);
+			newModelIds.add(model.id);
 		}
 	}	
 	
@@ -318,7 +326,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		@Override
 		protected void onPostExecute(ArrayList<T> data2) {
 			
-			Log.d(TAG, "HERE IN ON POST EXECUTE");
+			Log.d(TAG, "HERE IN ON POST EXECUTE with data2 size " + data2.size());
 			
 			if (data2 != null) {
 				// no error, so use the new data
@@ -358,7 +366,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 //			listener.notifyDataChanged();
 //		}
 		if (m_changedListener != null) {
-			m_changedListener.notifyDSChanged();
+			m_changedListener.notifyDSChanged(newModelIds);
 		}
 	}
 	

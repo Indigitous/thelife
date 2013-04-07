@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -52,7 +54,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 	}
 	
 	@Override
-	public void notifyDSChanged() {
+	public void notifyDSChanged(ArrayList<Integer> modelIds) {
 		
 		// clear data and redo query
 		clear();		

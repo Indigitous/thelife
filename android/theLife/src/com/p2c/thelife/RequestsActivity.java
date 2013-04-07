@@ -27,7 +27,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.activity_requests_list);
-		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1);
+		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1, getApplication());
 		m_listView.setAdapter(m_adapter);
 	}
 
@@ -38,6 +38,28 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		getMenuInflater().inflate(R.menu.requests, menu);
 		return true;
 	}
+	
+	/**
+	 * Activity in view, so start the data store refresh mechanism.
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		// set the data store listener
+		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_adapter);
+	}		
+	
+	/**
+	 * Activity out of view, so stop the data store refresh mechanism.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		// remove the data store listener
+		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_adapter);
+	}		
 	
 	
 	public void selectRequest(View view) {
