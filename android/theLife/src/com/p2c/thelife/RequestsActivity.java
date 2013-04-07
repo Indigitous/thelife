@@ -56,9 +56,11 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	public void notifyAttemptingServerAccess(String indicator) {
 		
 		String dialogMessage = "";
-		if (m_request.type.equals(RequestModel.INVITE)) {
+		if (indicator.equals("reject")) {
+			dialogMessage = getResources().getString(R.string.rejecting_request);
+		} else if (m_request.isInvite()) {
 			dialogMessage = getResources().getString(R.string.joining_group);
-		} else if (m_request.type.equals(RequestModel.REQUEST_MEMBERSHIP)) {
+		} else if (m_request.isMembershipRequest()) {
 			dialogMessage = getResources().getString(R.string.adding_new_member);
 		}
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), dialogMessage, true, true);				
@@ -73,10 +75,14 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 				
 				// successful
 				
-				// refresh my groups
-				TheLifeConfiguration.getGroupsDS().forceRefresh("postRequest");			
-			
-				// TO DO also need to immediately update my group info, while waiting for my_groups refresh?
+				// delete the request
+				TheLifeConfiguration.getRequestsDS().delete(m_request.id);
+				TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();
+				
+				// if the request was accepted, refresh my groups
+				if (indicator.equals("accept")) {							
+					TheLifeConfiguration.getGroupsDS().forceRefresh("postRequest");
+				}
 			}
 		}
 		

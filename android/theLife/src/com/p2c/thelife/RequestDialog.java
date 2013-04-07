@@ -25,24 +25,39 @@ public class RequestDialog extends AbstractServerAccessDialog {
 			
 		// set the message, content and buttons of the alert
 		Spanned message = null;
-		if (request.type.equals(RequestModel.INVITE)) {
-			message = Html.fromHtml(request.description); // + getResources().getString(R.string.request_invite_prompt));						
-		} else if (request.type.equals(RequestModel.REQUEST_MEMBERSHIP)) {
-			message = Html.fromHtml(request.description); // + getResources().getString(R.string.request_membership_prompt));						
+		if (request.isInvite()) {
+			message = Html.fromHtml(request.description);					
+		} else if (request.isMembershipRequest()) {
+			message = Html.fromHtml(request.description);					
 		} else {
 			message = Html.fromHtml("?");
 		}
 			
 		alertBuilder.setMessage(message);
-		alertBuilder.setNegativeButton(R.string.no_thanks, null); 
+		alertBuilder.setNegativeButton(R.string.no_thanks, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+				// enable a progress bar
+				((Listener)m_listener).notifyAttemptingServerAccess("reject");
+
+				// tell the server to reject the request
+				Server server = new Server();
+				int userId = request.isInvite() ? TheLifeConfiguration.getUserId() : request.user_id;
+				server.processGroupMembershipRequest(request.id, false, userId, request.group_id, (Server.ServerListener)m_listener, "processGroupMembershipRequest");				
+			}
+		});
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface di, int which) {	
 				
 				// enable a progress bar
-				((Listener)m_listener).notifyAttemptingServerAccess("request");
+				((Listener)m_listener).notifyAttemptingServerAccess("accept");
 
+				// tell the server to accept the request -- to add the user to the group
 				Server server = new Server();
-				server.addUserToGroup(request.id, request.user_id, request.group_id, (Server.ServerListener)m_listener, "join");						
+				int userId = request.isInvite() ? TheLifeConfiguration.getUserId() : request.user_id;
+				server.processGroupMembershipRequest(request.id, true, userId, request.group_id, (Server.ServerListener)m_listener, "processGroupMembershipRequest");						
 			}
 		});		
 		

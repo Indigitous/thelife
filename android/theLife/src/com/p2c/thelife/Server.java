@@ -247,19 +247,20 @@ public class Server {
 	}	
 	
 	/**
-	 * Add a user to a group, as a result of a request.
+	 * Process a request to add a user to a group.
 	 */
-	public void addUserToGroup(int requestId, int userId, int groupId, ServerListener listener, String indicator ) {
+	public void processGroupMembershipRequest(int requestId, boolean hasAccepted, int userId, int groupId, ServerListener listener, String indicator ) {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId) + "/users");
+		String urlString = Utilities.makeServerUrlString("requests/" + String.valueOf(requestId) + "/process");
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
-			pairs.add(new BasicNameValuePair("request_id", String.valueOf(groupId)));			
-			pairs.add(new BasicNameValuePair("user_id", String.valueOf(groupId)));		
+			pairs.add(new BasicNameValuePair("accepted", String.valueOf(hasAccepted)));			
+			pairs.add(new BasicNameValuePair("user_id", String.valueOf(userId)));
+			pairs.add(new BasicNameValuePair("group_id", String.valueOf(groupId)));					
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
 			
 			HttpPost httpRequest = new HttpPost(urlString);
@@ -267,7 +268,7 @@ public class Server {
 						
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
-			Log.e(TAG, "addUserToGroup()", e);
+			Log.e(TAG, "processGroupMembershipRequest()", e);
 		}
 	}		
 	

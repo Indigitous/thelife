@@ -88,6 +88,6 @@
     <string name="adding_new_member">Adding new member to group</string>
     <string name="membership_request_description">%1$s wants to join your group %2$s.</string>
     <string name="invite_request_description">You are requested to join group %1$s.</string>
-    
+    <string name="rejecting_request">Rejecting request</string>
 
 </resources>

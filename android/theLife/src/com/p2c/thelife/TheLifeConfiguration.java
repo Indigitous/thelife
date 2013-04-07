@@ -48,7 +48,7 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
 	public static final long REFRESH_REQUESTS_FIRST_DELTA = 4000; // 4 seconds before first Requests refresh
-	public static final long REFRESH_REQUESTS_DELTA = 10000; // 5 * 60 * 1000; // 5 minutes in millis
+	public static final long REFRESH_REQUESTS_DELTA = 15000; // 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
 	// note: ends with a version and a forward slash

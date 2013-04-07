@@ -40,6 +40,14 @@ public class RequestModel extends AbstractModel {
 		this.description = description;
 	}
 	
+	public boolean isInvite() {
+		return type.equals(INVITE);
+	}
+	
+	public boolean isMembershipRequest() {
+		return type.equals(REQUEST_MEMBERSHIP);
+	}
+	
 	
 	@Override
 	public String toString() {
