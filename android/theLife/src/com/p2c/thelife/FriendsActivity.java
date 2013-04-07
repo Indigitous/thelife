@@ -23,7 +23,7 @@ import com.p2c.thelife.model.FriendModel;
  *
  */
 public class FriendsActivity 
-	extends SlidingMenuFragmentActivity 
+	extends SlidingMenuPollingFragmentActivity 
 	implements OnItemLongClickListener, OnItemClickListener, Server.ServerListener, FriendDeleteDialog.Listener {
 	
 	private static final String TAG = "FriendsActivity"; 	

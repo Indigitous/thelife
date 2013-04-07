@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.UserModel;
 
-public class GroupActivity extends SlidingMenuActivity {
+public class GroupActivity extends SlidingMenuPollingActivity {
 	
 	private static final String TAG = "GroupActivity";
 	

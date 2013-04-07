@@ -14,7 +14,7 @@ import com.p2c.thelife.model.EventsDS;
  * @author clarence
  *
  */
-public class MainActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener {
+public class MainActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener {
 	
 	private static final String TAG = "MainActivity";
 	

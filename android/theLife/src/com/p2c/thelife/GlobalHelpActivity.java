@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.webkit.WebView;
 
-public class GlobalHelpActivity extends SlidingMenuActivity {
+public class GlobalHelpActivity extends SlidingMenuPollingActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

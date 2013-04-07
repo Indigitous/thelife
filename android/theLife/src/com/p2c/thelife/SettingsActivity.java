@@ -3,7 +3,9 @@ package com.p2c.thelife;
 import android.os.Bundle;
 import android.view.Menu;
 
-public class SettingsActivity extends SlidingMenuActivity {
+public class SettingsActivity extends SlidingMenuPollingActivity {
+	
+	private static final String TAG = "SettingsActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -16,5 +18,5 @@ public class SettingsActivity extends SlidingMenuActivity {
 		getMenuInflater().inflate(R.menu.settings, menu);
 		return true;
 	}
-
+	
 }

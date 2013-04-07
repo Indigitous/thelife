@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.p2c.thelife.model.GroupModel;
 
-public class GroupsSearchActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, GroupJoinDialog.Listener {
+public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, GroupJoinDialog.Listener {
 	
 	private static final String TAG = "GroupsSearchActivity";
 	

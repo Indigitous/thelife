@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
 
-public class RequestsActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, RequestDialog.Listener {
+public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestDialog.Listener {
 	
 	private static final String TAG = "RequestsActivity";
 	
@@ -25,16 +25,13 @@ public class RequestsActivity extends SlidingMenuFragmentActivity implements Ser
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_requests, SlidingMenuSupport.REQUESTS_POSITION);
 		
-		// TODO: put this code in a proper place
-		RequestsPoller poller = new RequestsPoller(getApplication(), TheLifeConfiguration.getRequestsDS());
-		poller.poll(2000);
-		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.activity_requests_list);
 		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
 	}
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

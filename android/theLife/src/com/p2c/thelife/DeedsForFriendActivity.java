@@ -12,7 +12,7 @@ import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
-public class DeedsForFriendActivity extends SlidingMenuActivity implements DSRefreshedListener {
+public class DeedsForFriendActivity extends SlidingMenuPollingActivity implements DSRefreshedListener {
 	
 	private static final String TAG = "DeedsForFriendActivity";
 	

@@ -48,6 +48,12 @@ public class TheLifeApplication extends Application {
 		TheLifeConfiguration.setFriendsDS(new FriendsDS(getApplicationContext()));		
 		TheLifeConfiguration.setEventsDS(new EventsDS(getApplicationContext()));
 		TheLifeConfiguration.setRequestsDS(new RequestsDS(getApplicationContext()));
+		
+		// initialize the application wide polling
+		TheLifeConfiguration.setRequestsPoller(
+			new RequestsPoller(TheLifeConfiguration.getRequestsDS(),
+							   TheLifeConfiguration.REFRESH_REQUESTS_FIRST_DELTA,
+							   TheLifeConfiguration.REFRESH_REQUESTS_DELTA));
 	}
 
 }

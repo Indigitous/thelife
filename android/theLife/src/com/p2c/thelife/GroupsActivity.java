@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
 
-public class GroupsActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, GroupCreateDialog.Listener {
+public class GroupsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, GroupCreateDialog.Listener {
 	
-	private static final String TAG = "DeedsDS"; 	
+	private static final String TAG = "GroupsActivity"; 	
 	
 	private GroupsAdapter m_adapter = null;
 	private ProgressDialog m_progressDialog = null;	

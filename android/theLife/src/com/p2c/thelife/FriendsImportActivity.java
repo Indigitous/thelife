@@ -16,7 +16,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendsImportActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, FriendImportManuallyDialog.Listener {
+public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, FriendImportManuallyDialog.Listener {
 	
 	private static String TAG = "FriendsImportActivity";
 	

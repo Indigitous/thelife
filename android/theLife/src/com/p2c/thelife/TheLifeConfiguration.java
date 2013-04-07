@@ -47,6 +47,7 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_FRIENDS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
+	public static final long REFRESH_REQUESTS_FIRST_DELTA = 4000; // 4 seconds before first Requests refresh
 	public static final long REFRESH_REQUESTS_DELTA = 10000; // 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
@@ -64,6 +65,9 @@ public class TheLifeConfiguration {
 	
 	// directory of local cache files
 	private static String m_cacheDirectory = null; 
+	
+	// application wide polling
+	private static RequestsPoller m_requestsPoller = null;
 	
 	
 	/*************************** System Preferences **********************/
@@ -221,6 +225,19 @@ public class TheLifeConfiguration {
 		systemSettingsEditor.putString("token", m_token);
 		systemSettingsEditor.commit();				
 	}	
+	
+	
+	
+	/********************** Application-wide polling ***********************/
+	
+	public static RequestsPoller getRequestsPoller() {
+		return m_requestsPoller;
+	}
+	
+	
+	public static void setRequestsPoller(RequestsPoller requestsPoller) {
+		m_requestsPoller = requestsPoller;
+	}
 	
 
 }

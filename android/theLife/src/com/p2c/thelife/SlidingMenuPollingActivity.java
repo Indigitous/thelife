@@ -1,17 +1,15 @@
 package com.p2c.thelife;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
 /**
- * Superclass of all FragmentActivities that use the sliding menu. 
+ * Superclass of all Activities that use the sliding menu and application-wide polling.
  * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license TODO license notice
- * 
- * Uses support library for Androids < 3.0.
  * @author clarence
  *
  */
-public class SlidingMenuFragmentActivity extends FragmentActivity {
+public class SlidingMenuPollingActivity extends Activity {
 	
 	protected SlidingMenuSupport m_support = null;
 		
@@ -21,5 +19,22 @@ public class SlidingMenuFragmentActivity extends FragmentActivity {
 		
 		m_support = new SlidingMenuSupport(this, slidingMenuPosition);
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		if (TheLifeConfiguration.isValidUser()) {
+			TheLifeConfiguration.getRequestsPoller().start();
+		}
+	}
+	
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		TheLifeConfiguration.getRequestsPoller().stop();
+	}	
 
 }

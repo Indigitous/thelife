@@ -1,15 +1,12 @@
 package com.p2c.thelife;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 /**
  * Login the user. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.

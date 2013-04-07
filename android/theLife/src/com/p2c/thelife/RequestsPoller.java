@@ -1,8 +1,7 @@
 package com.p2c.thelife;
 
-import android.app.Application;
 import android.os.Handler;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.RequestsDS;
@@ -13,25 +12,51 @@ import com.p2c.thelife.model.RequestsDS;
  */
 public class RequestsPoller implements DSRefreshedListener {
 	
-	private Application m_app = null;
+	private static final String TAG = "RequestsPoller";
+	
 	private RequestsDS m_requestsDS = null;
 	private Handler m_handler = null;
-	private int m_notificationId = 1;  // use the request_id?
+	private boolean m_isAppVisible = false;
+	private boolean m_isPolling = false;
+	private final long m_firstDelayMillis;
+	private final long m_normalDelayMillis;
+	private boolean m_isFirstPoll = true;
 	
 	
 	/**
 	 * This object must be instantiated in the UI thread!
 	 * @param requestsDS
 	 */
-	public RequestsPoller(Application app, RequestsDS requestsDS) {
+	public RequestsPoller(RequestsDS requestsDS, long firstDelayMillis, long normalDelayMillis) {
 		
-		m_app = app;
 		m_requestsDS = requestsDS;
 		m_handler = new Handler();
 		m_requestsDS.addDSRefreshedListener(this);
-		
-		Toast.makeText(m_app, "BEGINNING A NEW REQUESTS POLLER! ", Toast.LENGTH_SHORT).show();		
+		m_firstDelayMillis = firstDelayMillis;
+		m_normalDelayMillis = normalDelayMillis;
 	}
+
+	
+	/**
+	 * Android activity has resumed/started. 
+	 */
+	public void start() {
+		m_isAppVisible = true;
+		
+		if (!m_isPolling) {
+			m_isPolling = true;
+			poll(m_isFirstPoll ? m_firstDelayMillis : m_normalDelayMillis);
+			m_isFirstPoll = false;
+		}
+	}
+	
+	/**
+	 * Android activity has paused/stopped.
+	 */
+	public void stop() {
+		m_isAppVisible = false;
+	}
+	
 	
 	/**
 	 * Refresh the data store after the given delay.
@@ -55,8 +80,37 @@ public class RequestsPoller implements DSRefreshedListener {
 		
 	}
 	
+
+	/**
+	 * Callback when the data store has been refreshed.
+	 * Called from the UI thread.
+	 */
+	@Override
+	public void notifyDSRefreshed(String indicator) {
+			
+// Log.e(TAG, "FINISHED REQUEST POLL!");
+		
+//		NotificationCompat.Builder builder = new NotificationCompat.Builder(m_app.getApplicationContext());
+//		builder.setSmallIcon(R.drawable.ic_launcher);
+//		builder.setContentTitle("theLife");
+//		builder.setContentText("A request to join your group has been received.");
+//		
+//		NotificationManager notificationManager = (NotificationManager)m_app.getSystemService(Context.NOTIFICATION_SERVICE);
+//		notificationManager.notify(m_notificationId++, builder.build());
+		
+		// poll again if the app is still on screen
+		if (m_isAppVisible) {
+			m_isPolling = true;
+			poll(m_normalDelayMillis);
+		} else {
+			m_isPolling = false;
+		}
+	}
+	
+	
 	/**
 	 * Stop the polling.
+	 * Normally this would be called when the application is finishing, but that doesn't seem to be supported in Android.
 	 * Called from the UI thread.
 	 */
 	public void finish() {
@@ -67,30 +121,7 @@ public class RequestsPoller implements DSRefreshedListener {
 		m_handler = null;
 		m_requestsDS.removeDSRefreshedListener(this);
 		m_requestsDS = null;
-		m_app = null;
 		
-	}
-
-
-	/**
-	 * Callback when the data store has been refreshed.
-	 * Called from the UI thread.
-	 */
-	@Override
-	public void notifyDSRefreshed(String indicator) {
-		
-		Toast.makeText(m_app, "FINISHED ANOTHER REQUESTS DS REFRESH!", Toast.LENGTH_SHORT).show();
-		
-//		NotificationCompat.Builder builder = new NotificationCompat.Builder(m_app.getApplicationContext());
-//		builder.setSmallIcon(R.drawable.ic_launcher);
-//		builder.setContentTitle("theLife");
-//		builder.setContentText("A request to join your group has been received.");
-//		
-//		NotificationManager notificationManager = (NotificationManager)m_app.getSystemService(Context.NOTIFICATION_SERVICE);
-//		notificationManager.notify(m_notificationId++, builder.build());
-		
-		// poll again
-		poll(TheLifeConfiguration.REFRESH_REQUESTS_DELTA);
-	}
+	}	
 	
 }
