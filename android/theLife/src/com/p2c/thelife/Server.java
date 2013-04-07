@@ -321,15 +321,18 @@ public class Server {
 					Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE STRING " + jsonString);					
 				}
 				
-				jsonString = jsonString.trim();
-				if (jsonString != null && jsonString.length() > 0) {
-					// if the result is a JSONArray, wrap it inside a JSONObject
-					if (jsonString.charAt(0) == '[') {
-						JSONArray jsonArray = new JSONArray(jsonString);
-						jsonObject = new JSONObject();
-						jsonObject.put("a",  jsonArray);
-					} else {
-						jsonObject = new JSONObject(jsonString);
+				if (jsonString != null) {
+					jsonString = jsonString.trim();
+					
+					if (jsonString.length() > 0) {
+						// if the result is a JSONArray, wrap it inside a JSONObject
+						if (jsonString.charAt(0) == '[') {
+							JSONArray jsonArray = new JSONArray(jsonString);
+							jsonObject = new JSONObject();
+							jsonObject.put("a",  jsonArray);
+						} else {
+							jsonObject = new JSONObject(jsonString);
+						}
 					}
 				}
 			} catch (JSONException e) {
