@@ -34,7 +34,7 @@ public class RequestDialog extends AbstractServerAccessDialog {
 		}
 			
 		alertBuilder.setMessage(message);
-		alertBuilder.setNegativeButton(R.string.no, null); 
+		alertBuilder.setNegativeButton(R.string.no_thanks, null); 
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {	
 				

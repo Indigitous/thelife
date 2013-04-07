@@ -75,12 +75,11 @@ public class RequestsActivity extends SlidingMenuFragmentActivity implements Ser
 			if (friendId != 0) {
 				
 				// successful
-				// add user to group
-				GroupModel groupModel = TheLifeConfiguration.getGroupsDS().findById(m_request.group_id);
-				if (groupModel != null) {
-					groupModel.addUser(m_request.user_id);
-				}
-
+				
+				// refresh my groups
+				TheLifeConfiguration.getGroupsDS().forceRefresh("postRequest");			
+			
+				// TO DO also need to immediately update my group info, while waiting for my_groups refresh?
 			}
 		}
 		
