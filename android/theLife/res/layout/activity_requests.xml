@@ -8,9 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RequestsActivity" >
 
-    <TextView
+    <ListView
+        android:id="@+id/activity_requests_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_height="match_parent"
+        android:dividerHeight="8dp"
+        android:drawSelectorOnTop="false" />
 
 </RelativeLayout>

@@ -30,6 +30,15 @@ public class GroupModel extends AbstractModel {
 		this.member_ids = (ArrayList<Integer>)member_ids.clone();
 	}
 	
+	/**
+	 * Add a user to a group. This user has already been added to the group on the server.
+	 * This does not update the cache or notify listeners.
+	 * @param user_id
+	 */
+	public void addUser(int user_id) {
+		member_ids.add(user_id);
+	}
+	
 	@Override
 	public String toString() {
 		return id + ", " + name + ", " + description + ", " + leader_id + ", " + member_ids;

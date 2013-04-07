@@ -67,10 +67,10 @@
         <item>Follower of Jesus</item>
     </string-array>
 
-    <string name="delete_friend_prompt">Delete friend %s?</string>
+    <string name="delete_friend_prompt">Delete friend $s?</string>
     <string name="friend">friend</string>
     <string name="user">user</string>
-    <string name="join_group_prompt">Do you wish to join %s?</string>
+    <string name="join_group_prompt">Do you wish to join $s?</string>
     <string name="waiting">Waiting&#8230;"</string>
     <string name="creating_new_group">Creating new group"</string>
     <string name="deleting_friend">Deleting friend"</string>
@@ -81,5 +81,12 @@
     <string name="retrieving_configuration">"Retrieving configuration"</string>
     <string name="title_activity_requests">RequestsActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="request_membership_prompt">Do you want to add this person to your group?</string>
+    <string name="request_invite_prompt">Do you want to join this group?</string>
+    <string name="joining_group">Joining group</string>
+    <string name="adding_new_member">Adding new member to group</string>
+    <string name="membership_request_description">%1$s wants to join your group %2$s.</string>
+    <string name="invite_request_description">You are requested to join group %1$s.</string>
+    
 
 </resources>

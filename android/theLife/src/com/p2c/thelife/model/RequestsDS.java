@@ -8,7 +8,7 @@ import android.content.Context;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
-public class RequestsDS extends AbstractDS<GroupModel> {
+public class RequestsDS extends AbstractDS<RequestModel> {
 	
 	public RequestsDS(Context context) {
 		
@@ -24,10 +24,11 @@ public class RequestsDS extends AbstractDS<GroupModel> {
 		
 	}
 	
+	
 	/**
 	 * Needed by the abstract superclass.
 	 */
-	protected GroupModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
-		return GroupModel.fromJSON(json, useServer);
+	protected RequestModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
+		return RequestModel.fromJSON(json, useServer);
 	}	
 }

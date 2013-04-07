@@ -1,0 +1,58 @@
+[
+
+{
+	id: 1,
+	user_id: 1,
+	user_name: "Geoff",
+	group_id: 1,
+	group_name: "All Saints One",
+	kind: "REQUEST_MEMBERSHIP",
+	description: "<b>Geoff</b> wants to join your group <b>All Saints One</b>."
+},
+{
+	id: 2,
+	user_id: 2,
+	user_name: "Mark",
+	group_id: 1,
+	group_name: "All Saints One",
+	kind: "REQUEST_MEMBERSHIP",
+	description: "<b>Mark</b> wants to join your group <b>All Saints One</b>."	
+},
+{
+	id: 3,
+	user_id: 3,
+	user_name: "Albert",
+	group_id: 1,
+	group_name: "All Saints One",
+	kind: "REQUEST_MEMBERSHIP",
+	description: "<b>Albert</b> wants to join your group <b>All Saints One</b>."	
+},
+{
+	id: 4,
+	user_id: 4,
+	user_name: "Tak",
+	group_id: 3,
+	group_name: "Holy Trinity South Shore",
+	kind: "INVITE",
+	description: "<b>Tak</b> asks you to join group <b>Holy Trinity South Shore</b>."
+},
+{
+	id: 5,
+	user_id: 5,
+	user_name: "Nelson",
+	group_id: 4,
+	group_name: "Laval Central",
+	kind: "INVITE",
+	description: "<b>Nelson</b> asks you to join group <b>Laval Central</b>."
+},
+{
+	id: 6,
+	user_id: 5,
+	user_name: "Nelson",	
+	group_id: 5,
+	group_name: "Richmond North Central",
+	kind: "INVITE",
+	description: "<b>Nelson</b> asks you to join group <b>Richmond North Central</b>."
+}
+
+]
