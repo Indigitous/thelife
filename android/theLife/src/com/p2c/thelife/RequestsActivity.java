@@ -11,6 +11,9 @@ import android.widget.ListView;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
 
+/**
+ * Requests are automatically polled by the RequestsPoller class.
+ */
 public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestDialog.Listener {
 	
 	private static final String TAG = "RequestsActivity";
@@ -27,7 +30,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.activity_requests_list);
-		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1, getApplication());
+		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
 	}
 

@@ -69,7 +69,7 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> implements Abstr
 	}
 	
 	@Override
-	public void notifyDSChanged(ArrayList<Integer> modelIds) {
+	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
 		
 		// clear data and redo query
 		clear();		

@@ -32,7 +32,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 *
 	 */
 	public interface DSChangedListener {
-		public void notifyDSChanged(ArrayList<Integer> modelIds);
+		public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds);
 	}
 	
 	
@@ -46,7 +46,8 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	}
 	
 	protected ArrayList<T> m_data = new ArrayList<T>(); 	// in memory list of model objects
-	protected ArrayList<Integer> newModelIds = new ArrayList<Integer>(); // newly added models
+	protected ArrayList<Integer> m_oldModelIds = new ArrayList<Integer>(); // model ids before a refresh
+	protected ArrayList<Integer> m_newModelIds = new ArrayList<Integer>(); // model ids after a refresh
 	
 	protected Context m_context = null;
 	protected String TAG = null;							// for logging
@@ -104,6 +105,9 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				Log.wtf(TAG, "constructor", e);			
 			}
 		}
+		
+		// set the old model ids to be whatever was read from the cache
+		copyModelIds();
 	}
 	
 	/**
@@ -248,7 +252,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 */
 	protected void addModels(JSONArray jsonArray, boolean useServer, ArrayList<T> list) throws JSONException {
 
-		newModelIds.clear();
+		m_newModelIds.clear();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject json = jsonArray.getJSONObject(i);
 			Log.d(TAG, "ADD ANOTHER JSON OBJECT " + json);
@@ -258,9 +262,22 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			
 			// add the new model to the list and remember it
 			list.add(model);
-			newModelIds.add(model.id);
+			m_newModelIds.add(model.id);
 		}
 	}	
+	
+	
+	/**
+	 * Copy over the new model ids to the old model ids array.
+	 */
+	private void copyModelIds() {
+		if (m_newModelIds != null) {
+			m_oldModelIds.clear();
+			for (Integer id:m_newModelIds) {
+				m_oldModelIds.add(id);
+			}
+		}
+	}
 	
 	
 	/********************************* Background thread refresh task *************************************/
@@ -325,15 +342,17 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		 */
 		@Override
 		protected void onPostExecute(ArrayList<T> data2) {
-			
-			Log.d(TAG, "HERE IN ON POST EXECUTE with data2 size " + data2.size());
-			
+					
 			if (data2 != null) {
 				// no error, so use the new data
+				Log.d(TAG, "HERE IN ON POST EXECUTE with data2 size " + data2.size());				
 				m_data = data2;
 				
 				// tell listeners that the data has changed, on the UI thread
 				notifyDSChangedListeners(); 
+				
+				// remember the model ids for next refresh
+				copyModelIds();
 			}
 			
 			// tell listeners that the refresh has completed
@@ -353,31 +372,24 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	/**
 	 * DSChanged listener
 	 */
-	// protected ArrayList<DSListener> m_listeners = new ArrayList<DSListener>();
-	protected DSChangedListener m_changedListener = null;
+	protected ArrayList<DSChangedListener> m_changedListeners = new ArrayList<DSChangedListener>();
 	
 	public void addDSChangedListener(DSChangedListener theListener) {
-		//m_listeners.add(theListener);
-		m_changedListener = theListener;
+		m_changedListeners.add(theListener);
 	}
 	
 	public void notifyDSChangedListeners() {
-//		for (DSListener listener:m_listeners) {
-//			listener.notifyDataChanged();
-//		}
-		if (m_changedListener != null) {
-			m_changedListener.notifyDSChanged(newModelIds);
+		for (DSChangedListener listener:m_changedListeners) {
+			listener.notifyDSChanged(m_oldModelIds, m_newModelIds);
 		}
 	}
 	
 	public void removeDSChangedListener(DSChangedListener theListener) {
-		//m_listeners.remove(theListener);
-		m_changedListener = null;
+		m_changedListeners.remove(theListener);
 	}
 	
 	public void clearAllDSChangedListeners() {
-		//m_listeners.clear();
-		m_changedListener = null;
+		m_changedListeners.clear();
 	}
 	
 	

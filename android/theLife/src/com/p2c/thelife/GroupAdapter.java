@@ -54,7 +54,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 	}
 	
 	@Override
-	public void notifyDSChanged(ArrayList<Integer> modelIds) {
+	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
 		
 		// clear data and redo query
 		clear();		

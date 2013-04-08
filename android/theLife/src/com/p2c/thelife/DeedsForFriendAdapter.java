@@ -51,7 +51,7 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Ab
 	}
 
 	@Override
-	public void notifyDSChanged(ArrayList<Integer> modelIds) {
+	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
 		
 		// clear data and redo local query
 		clear();		

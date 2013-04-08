@@ -3,7 +3,6 @@ package com.p2c.thelife;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import android.app.Application;
 import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -22,12 +21,10 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 	
 	private static final String TAG = "RequestsAdapter"; 	
 	
-	private Application m_app = null;
-		
-	public RequestsAdapter(Context context, int mode, Application app) {
+	
+	public RequestsAdapter(Context context, int mode) {
 		super(context, mode);
 	
-		m_app = app;
 		query();
 	}
 	
@@ -58,7 +55,7 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 	}
 	
 	@Override
-	public void notifyDSChanged(ArrayList<Integer> modelIds) {
+	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
 		
 		// clear data and redo query
 		clear();		
@@ -66,18 +63,6 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 		
 		// redisplay
 		notifyDataSetChanged();
-		
-		// create notifications for each of the new requests
-		// TODO finish this -- but don't overwhelm Android with a full reset notification list each time
-//		for (Integer id:modelIds) {
-//			NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext());
-//			builder.setSmallIcon(R.drawable.ic_launcher); // TODO real icon
-//			builder.setContentTitle("theLife");
-//			builder.setContentText("A request to join your group has been received.");
-//			
-//			NotificationManager notificationManager = (NotificationManager)m_app.getSystemService(Context.NOTIFICATION_SERVICE);
-//			notificationManager.notify(id, builder.build());
-//		}
 	}
 	
 	private void query() {

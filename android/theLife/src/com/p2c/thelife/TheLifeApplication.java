@@ -49,7 +49,8 @@ public class TheLifeApplication extends Application {
 		TheLifeConfiguration.setEventsDS(new EventsDS(getApplicationContext()));
 		TheLifeConfiguration.setRequestsDS(new RequestsDS(getApplicationContext()));
 		
-		// initialize the application wide polling
+		// initialize the application wide polling and its notification listener
+		TheLifeConfiguration.getRequestsDS().addDSChangedListener(new RequestsDSChangedListener(this));
 		TheLifeConfiguration.setRequestsPoller(
 			new RequestsPoller(TheLifeConfiguration.getRequestsDS(),
 							   TheLifeConfiguration.REFRESH_REQUESTS_FIRST_DELTA,

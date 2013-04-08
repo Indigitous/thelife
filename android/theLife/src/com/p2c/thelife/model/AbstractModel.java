@@ -16,14 +16,8 @@ public abstract class AbstractModel {
 	}
 	
 	@Override
-	public boolean equals(Object model) {
-		
-		// TODO check that model is the same type?
-		if (model instanceof AbstractModel) {
-			return this.id == ((AbstractModel)model).id;
-		} else {
-			return false;
-		}
+	public boolean equals(Object model) {		
+		return (this.getClass() == model.getClass() && this.id == ((AbstractModel)model).id);
 	}
 	
 }
