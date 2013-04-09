@@ -1,5 +1,8 @@
 package com.p2c.thelife;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,12 +15,16 @@ import android.widget.Toast;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.UserModel;
 
-public class GroupActivity extends SlidingMenuPollingActivity {
+public class GroupActivity extends SlidingMenuPollingFragmentActivity 
+	implements Server.ServerListener, FriendDeleteDialog.Listener {
 	
 	private static final String TAG = "GroupActivity";
 	
 	private GroupModel m_group = null;	
 	private GroupAdapter m_adapter = null;
+	private UserModel m_user = null;
+	private ProgressDialog m_progressDialog = null;	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +92,49 @@ public class GroupActivity extends SlidingMenuPollingActivity {
 	
 	
 	public void selectUser(View view) {
-		UserModel user = (UserModel)view.getTag();
-		Toast.makeText(this, "Delete User " + user.getFullName(), Toast.LENGTH_SHORT).show();
+		m_user = (UserModel)view.getTag();
+		
+		UserDeleteFromGroupDialog dialog = new UserDeleteFromGroupDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());			
 	}
+	
+	
+	public GroupModel getSelectedGroup() {
+		return m_group;
+	}	
+	
+	
+	public UserModel getSelectedUser() {
+		return m_user;
+	}
+	
+	
+	@Override
+	public void notifyAttemptingServerAccess(String indicator) {
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.deleting_user), true, true);				
+	}
+
+	
+	@Override
+	public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject) {
+		
+		if (jsonObject != null) {
+			int userId = jsonObject.optInt("id", 0);
+			if (userId != 0) {
+				
+				// successful
+											
+				// delete the user from the group
+				m_group.removeUser(userId);
+				TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
+				TheLifeConfiguration.getGroupsDS().forceRefresh(null);
+			}
+		}
+		
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}				
+	}		
+	
 
 }

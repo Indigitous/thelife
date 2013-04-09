@@ -288,6 +288,9 @@ public class Server {
 	}			
 	
 	
+	/**
+	 * Update the user's profile. Users can only update their own profile.
+	 */
 	public void updateUserProfile(int userId, String firstName, String lastName, String email, String phone, ServerListener listener, String indicator) {
 		try {
 			// API endpoint
@@ -311,12 +314,15 @@ public class Server {
 	}
 	
 	
+	/**
+	 * Delete the given group.
+	 */
 	public void deleteGroup(int groupId, ServerListener listener, String indicator) {
 
 		try {
 			// API endpoint
 			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
-			String urlString = Utilities.makeServerUrlString("groups") + "&group_id=" + String.valueOf(groupId);		
+			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId));		
 			
 			HttpDelete httpRequest = new HttpDelete(urlString);
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
@@ -324,6 +330,24 @@ public class Server {
 			Log.e(TAG, "deleteGroup()", e);
 		}
 	}	
+	
+	
+	/**
+	 * Delete the given user from the given group.
+	 */
+	public void deleteUserFromGroup(int groupId, int userId, ServerListener listener, String indicator) {
+
+		try {
+			// API endpoint
+			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
+			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId) + "/users/" + String.valueOf(userId));		
+			
+			HttpDelete httpRequest = new HttpDelete(urlString);
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "deleteUserFromGroup()", e);
+		}
+	}		
 	
 	
 	/********************************* Background thread Server access task *************************************/

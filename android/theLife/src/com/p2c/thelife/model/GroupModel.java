@@ -39,6 +39,15 @@ public class GroupModel extends AbstractModel {
 		member_ids.add(user_id);
 	}
 	
+	/**
+	 * Remove a user from a group. This user has already been removed from the group on the server.
+	 * This does not update the cache or notify listeners.
+	 * @param user_id
+	 */
+	public void removeUser(int user_id) {
+		member_ids.remove(Integer.valueOf(user_id));
+	}	
+	
 	@Override
 	public String toString() {
 		return id + ", " + name + ", " + description + ", " + leader_id + ", " + member_ids;

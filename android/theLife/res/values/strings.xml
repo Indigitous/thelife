@@ -99,6 +99,10 @@
     <string name="delete_group_prompt">Delete group &lt;b>%1$s&lt;/b>?</string>
     <string name="deleting_group">Deleting group"</string>
     <string name="cannot_delete_group">You cannot delete group &lt;b>%1$s&lt;/b> because you are not the group leader.</string>
-		
+    <string name="deleting_user">Removing user from group"</string>
+    
+    <string name="delete_user_from_group_prompt">Delete user &lt;b>%1$s&lt;/b> from group &lt;b>%2$s&lt;/b>?</string>
+    <string name="cannot_delete_user_from_group">You cannot delete user &lt;b>%1$s&lt;/b> from group &lt;b>%2$s&lt;/b> because you are not the group leader.</string>
+    		
 
 </resources>
