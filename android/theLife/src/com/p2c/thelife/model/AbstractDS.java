@@ -156,6 +156,15 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		}
 	}	
 	
+	/** 
+	 * Update a model which has already been updated in the server.
+	 * This does not update the cache or notify listeners.
+	 */
+	public void update(T model) {
+		delete(model.id);
+		add(model);
+	}
+	
 	
 	/**
 	 * Force a refresh.

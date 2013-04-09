@@ -89,5 +89,12 @@
     <string name="membership_request_description">%1$s wants to join your group %2$s.</string>
     <string name="invite_request_description">You are requested to join group %1$s.</string>
     <string name="rejecting_request">Rejecting request</string>
+    
+    <string name="settings_first_name">First Name</string>
+	<string name="settings_last_name">Last Name</string>
+	<string name="settings_email">Email Address</string>
+	<string name="settings_phone">Phone Number</string>	
+    <string name="storing_account">"Storing account"</string>
+		
 
 </resources>

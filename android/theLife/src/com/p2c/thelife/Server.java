@@ -13,6 +13,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
@@ -108,7 +109,6 @@ public class Server {
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
 			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(thresholdIndex + 1))); // TODO: need a better server API here			
@@ -153,7 +153,6 @@ public class Server {
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
 			pairs.add(new BasicNameValuePair("name", name));
 			pairs.add(new BasicNameValuePair("description", description));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
@@ -179,7 +178,6 @@ public class Server {
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
 			pairs.add(new BasicNameValuePair("activity_id", String.valueOf(deedId)));
 			pairs.add(new BasicNameValuePair("friend_id", String.valueOf(friendId)));
 			pairs.add(new BasicNameValuePair("prayer_requested", withPrayerSupport ? "true" : "false"));			
@@ -226,7 +224,6 @@ public class Server {
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
 			pairs.add(new BasicNameValuePair("group_id", String.valueOf(groupId)));
 			pairs.add(new BasicNameValuePair("type", kind));
 			if (email != null) {
@@ -257,7 +254,6 @@ public class Server {
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("authentication_token", TheLifeConfiguration.getToken()));
 			pairs.add(new BasicNameValuePair("accepted", String.valueOf(hasAccepted)));			
 			pairs.add(new BasicNameValuePair("user_id", String.valueOf(userId)));
 			pairs.add(new BasicNameValuePair("group_id", String.valueOf(groupId)));					
@@ -270,7 +266,49 @@ public class Server {
 		} catch (Exception e) {
 			Log.e(TAG, "processGroupMembershipRequest()", e);
 		}
-	}		
+	}
+	
+	
+	/**
+	 * Process a request to add a user to a group.
+	 */
+	public void queryUserProfile(int userId, ServerListener listener, String indicator) {
+		
+		try {
+			// API endpoint
+			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
+			String urlString = Utilities.makeServerUrlString("my_users/" + String.valueOf(userId));
+			
+			HttpGet httpRequest = new HttpGet(urlString);
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "queryUserProfile()", e);
+		}
+	}			
+	
+	
+	public void updateUserProfile(int userId, String firstName, String lastName, String email, String phone, ServerListener listener, String indicator) {
+		try {
+			// API endpoint
+			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
+			String urlString = Utilities.makeServerUrlString("my_users/" + String.valueOf(userId));
+			
+			HttpPut httpRequest = new HttpPut(urlString);
+			
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("first_name", String.valueOf(firstName)));			
+			pairs.add(new BasicNameValuePair("last_name", String.valueOf(lastName)));
+			pairs.add(new BasicNameValuePair("email", String.valueOf(email)));
+			pairs.add(new BasicNameValuePair("phone", String.valueOf(phone)));								
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			httpRequest.setEntity(formEntity);
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "updateUserProfile()", e);
+		}		
+	}
 	
 	
 	/********************************* Background thread Server access task *************************************/
