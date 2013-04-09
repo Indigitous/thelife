@@ -29,8 +29,10 @@ public class GroupActivity extends SlidingMenuPollingActivity {
 		
 		// Show the group
 		if (m_group != null) {		
-			TextView nameView = (TextView)findViewById(R.id.activity_group_name);
-			nameView.setText(m_group.name);
+			TextView textView = (TextView)findViewById(R.id.activity_group_name);
+			textView.setText(m_group.name);
+			textView = (TextView)findViewById(R.id.activity_group_description);
+			textView.setText(m_group.description);
 		}
 		
 		// attach the users-in-group view
