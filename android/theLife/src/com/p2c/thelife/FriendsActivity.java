@@ -38,7 +38,7 @@ public class FriendsActivity
 		super.onCreate(savedInstanceState, R.layout.activity_friends, SlidingMenuSupport.FRIENDS_POSITION);
 		
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
-		FriendsAdapter m_adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
+		m_adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
 		friendsGrid.setAdapter(m_adapter);
 		
 		friendsGrid.setOnItemClickListener(this);

@@ -35,7 +35,7 @@ public class GroupActivity extends SlidingMenuPollingActivity {
 		
 		// attach the users-in-group view
 		GridView usersView = (GridView)findViewById(R.id.activity_group_users);
-		GroupAdapter m_adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group);
+		m_adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group);
 		usersView.setAdapter(m_adapter);
 	}
 	

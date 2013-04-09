@@ -30,7 +30,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity implement
 //		ExpandableListView groupsList = (ExpandableListView)findViewById(R.id.groups_list);
 //		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1);
 		ListView groupsList = (ListView)findViewById(R.id.groups_list);
-		GroupsAdapter m_adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1);
+		m_adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1);
 		groupsList.setAdapter(m_adapter);
 	}
 	
@@ -87,7 +87,6 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity implement
 			Toast.makeText(this, "Groups Help", Toast.LENGTH_SHORT).show();
 		} else if (item.getItemId() == R.id.action_search) {
 			
-System.out.println("SEARCH REQUESTED");
 //			boolean proceeded = onSearchRequested(); // does nothing, don't know why
 			Intent intent = new Intent("com.p2c.thelife.GroupsSearch");
 			startActivity(intent);
