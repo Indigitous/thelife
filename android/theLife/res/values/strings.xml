@@ -68,7 +68,7 @@
         <item>Follower of Jesus</item>
     </string-array>
 
-    <string name="delete_friend_prompt">Delete friend $s?</string>
+    <string name="delete_friend_prompt">Delete friend %s?</string>
     <string name="friend">friend</string>
     <string name="user">user</string>
     <string name="join_group_prompt">Do you wish to join $s?</string>
@@ -95,6 +95,10 @@
 	<string name="settings_email">Email Address</string>
 	<string name="settings_phone">Phone Number</string>	
     <string name="storing_account">"Storing account"</string>
+    
+    <string name="delete_group_prompt">Delete group &lt;b>%1$s&lt;/b>?</string>
+    <string name="deleting_group">Deleting group"</string>
+    <string name="cannot_delete_group">You cannot delete group &lt;b>%1$s&lt;/b> because you are not the group leader.</string>
 		
 
 </resources>

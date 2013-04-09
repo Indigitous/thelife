@@ -311,6 +311,21 @@ public class Server {
 	}
 	
 	
+	public void deleteGroup(int groupId, ServerListener listener, String indicator) {
+
+		try {
+			// API endpoint
+			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
+			String urlString = Utilities.makeServerUrlString("groups") + "&group_id=" + String.valueOf(groupId);		
+			
+			HttpDelete httpRequest = new HttpDelete(urlString);
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "deleteGroup()", e);
+		}
+	}	
+	
+	
 	/********************************* Background thread Server access task *************************************/
 	
 	private class ServerCall extends AsyncTask<String, Void, JSONObject> {
