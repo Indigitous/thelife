@@ -84,7 +84,8 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 		if (item.getItemId() == R.id.action_help) {
 			Toast.makeText(this, "Group Help", Toast.LENGTH_SHORT).show();
 		} else if (item.getItemId() == R.id.action_new) {
-			Toast.makeText(this, "Invite User to Group", Toast.LENGTH_SHORT).show();
+			UserInviteDialog dialog = new UserInviteDialog();
+			dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 		}
 		
 		return true;
@@ -111,7 +112,11 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 	
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.deleting_user), true, true);				
+		if (indicator.equals("deleteUser")) {
+			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.deleting_user), true, true);
+		} else if (indicator.equals("createRequest")) {
+			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.inviting_person), true, true);
+		}
 	}
 
 	
@@ -123,11 +128,13 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 			if (userId != 0) {
 				
 				// successful
-											
-				// delete the user from the group
-				m_group.removeUser(userId);
-				TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
-				TheLifeConfiguration.getGroupsDS().forceRefresh(null);
+				
+				if (indicator.equals("deleteUser")) {
+					// delete the user from the group data store
+					m_group.removeUser(userId);
+					TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
+					TheLifeConfiguration.getGroupsDS().forceRefresh(null);
+				} 
 			}
 		}
 		

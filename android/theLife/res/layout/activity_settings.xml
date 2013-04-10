@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/settings_first_name"
+        android:hint="@string/first_name"
         android:inputType="textPersonName" >
 
         <requestFocus android:layout_width="wrap_content" />
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/settings_last_name"
+        android:hint="@string/last_name"
         android:inputType="textPersonName" />
     
     <EditText
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/settings_email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
     
     <EditText
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/settings_phone"
+        android:hint="@string/phone"
         android:inputType="phone" />
 
     <Button
