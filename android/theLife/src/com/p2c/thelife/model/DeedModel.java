@@ -51,9 +51,15 @@ public class DeedModel extends AbstractModel {
 	}	
 	
 
-	public boolean is_applicable(FriendModel.Threshold threshold) {
+	public boolean isApplicable(FriendModel.Threshold threshold) {
 		return thresholds.contains(threshold);
 	}
+	
+	
+	public boolean isThresholdChange() {
+		return id == 1; // TODO hacky hardcoding
+	}
+	
 	
 	public static DeedModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 		

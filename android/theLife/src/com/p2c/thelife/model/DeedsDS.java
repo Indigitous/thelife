@@ -45,7 +45,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 		ArrayList<DeedModel> deeds = new ArrayList<DeedModel>();
 		
 		for (DeedModel m:m_data) {
-			if (m.is_applicable(threshold)) {
+			if (m.isApplicable(threshold)) {
 				deeds.add(m);
 			}		
 		}

@@ -19,19 +19,28 @@ public class FriendModel extends AbstractModel {
 	private static final String TAG = "FriendModel"; 	
 	
 	public enum Threshold {
-		NewContact,
-		Trusting,
-		Curious,
-		Open,
-		Seeking,
-		Entering,
-		Christian
+		NewContact(0),
+		Trusting(1),
+		Curious(2),
+		Open(3),
+		Seeking(4),
+		Entering(5),
+		Christian(6);
+		
+		public int integerValue;
+		
+		Threshold(int integerValue) {
+			this.integerValue = integerValue;
+		}
 	}
+	
+
 	
 // example EnumSet	
 //	Set<FriendModel.Threshold> allThresholds = EnumSet.allOf(FriendModel.Threshold.class);
 //	Set<FriendModel.Threshold> earlyThresholds = EnumSet.range(FriendModel.Threshold.NewContact, FriendModel.Threshold.Curious);	
 	public static final Threshold thresholdValues[] = Threshold.values();
+	
 	
 	public String firstName;
 	public String lastName;

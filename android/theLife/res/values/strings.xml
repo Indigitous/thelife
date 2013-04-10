@@ -18,7 +18,7 @@
     <string name="title_activity_activities_for_friend">DeedsForFriend</string>
     <string name="title_activity_activity_for_friend">DeedForFriendActivity</string>
     <string name="go">Go For It!</string>
-    <string name="confirm_prayer_support">Ask your group for prayer support?</string>
+    <string name="confirm_prayer_support">Ask your group(s) for prayer support?</string>
     <string name="no">No</string>
     <string name="no_thanks">No thanks</string>
     <string name="yes">Yes</string>
@@ -49,6 +49,7 @@
     <string name="password">Password</string>
     <string name="register_prompt">Please register for a new account.</string>
 
+    <!--  Note these threshold arrays must be in the same order as FriendModel.Threshold -->
     <string-array name="thresholds_short">
         <item>New Contact</item>
         <item>Trusting</item>
@@ -108,5 +109,7 @@
     <string name="inviting_person">Inviting person</string>
     
     <string name="pledge_error_from_server">Error sending prayer pledge to server.</string>
+    
+    <string name="change_threshold">Change threshold</string>
 
 </resources>

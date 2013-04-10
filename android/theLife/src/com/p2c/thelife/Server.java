@@ -21,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.p2c.thelife.model.FriendModel;
+
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -169,8 +171,9 @@ public class Server {
 	
 	/**
 	 * Create a new event for the current user.
+	 * @param newThreshold	can be null; if not null then this is the new threshold level for the event
 	 */
-	public void createEvent(int deedId, int friendId, boolean withPrayerSupport, ServerListener listener, String indicator) {
+	public void createEvent(int deedId, int friendId, boolean withPrayerSupport, FriendModel.Threshold newThreshold, ServerListener listener, String indicator) {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
@@ -180,7 +183,10 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("activity_id", String.valueOf(deedId)));
 			pairs.add(new BasicNameValuePair("friend_id", String.valueOf(friendId)));
-			pairs.add(new BasicNameValuePair("prayer_requested", withPrayerSupport ? "true" : "false"));			
+			pairs.add(new BasicNameValuePair("prayer_requested", withPrayerSupport ? "true" : "false"));
+			if (newThreshold != null) {
+				pairs.add(new BasicNameValuePair("new_threshold", String.valueOf(newThreshold.integerValue)));
+			}
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 			
 			HttpPost httpRequest = new HttpPost(urlString);
