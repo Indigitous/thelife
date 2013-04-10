@@ -17,7 +17,7 @@
         android:label="theLife"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.p2c.thelife.MainActivity"
+            android:name="com.p2c.thelife.EventsForCommunityActivity"
             android:label="theLife" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.p2c.thelife.Main" />
+                <action android:name="com.p2c.thelife.EventsForCommunity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
