@@ -347,7 +347,26 @@ public class Server {
 		} catch (Exception e) {
 			Log.e(TAG, "deleteUserFromGroup()", e);
 		}
-	}		
+	}
+	
+	
+	/**
+	 * Pledge to pray for the given event.
+	 */
+	public void pledgeToPray(int eventId, ServerListener listener, String indicator) {
+		
+		try {
+			// API endpoint
+			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
+			String urlString = Utilities.makeServerUrlString("events/" + String.valueOf(eventId) + "/pledge");		
+			
+			HttpPut httpRequest = new HttpPut(urlString);
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);					
+		} catch (Exception e) {
+			Log.e(TAG, "pledgeToPray()", e);
+		}
+		
+	}
 	
 	
 	/********************************* Background thread Server access task *************************************/

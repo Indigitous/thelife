@@ -106,5 +106,7 @@
     
     <string name="invite_person_to_group">Invite person to group</string>
     <string name="inviting_person">Inviting person</string>
+    
+    <string name="pledge_error_from_server">Error sending prayer pledge to server.</string>
 
 </resources>

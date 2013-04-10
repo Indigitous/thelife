@@ -60,7 +60,8 @@ public class MainEventsAdapter extends ArrayAdapter<EventModel> implements Abstr
 		if (event.isPrayerRequested) {
 			pledgeView.setVisibility(View.VISIBLE);
 			String pledgeDescription = "Pray"; // TODO translated
-			pledgeView.setText(pledgeDescription);			
+			pledgeView.setText(pledgeDescription);	
+			pledgeView.setTag(event);
 		} else {
 			pledgeView.setVisibility(View.GONE);
 		}

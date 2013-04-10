@@ -1,12 +1,18 @@
 package com.p2c.thelife;
 
+import org.json.JSONObject;
+
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
+import com.p2c.thelife.Server.ServerListener;
+import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.EventsDS;
 
 /**
@@ -14,7 +20,7 @@ import com.p2c.thelife.model.EventsDS;
  * @author clarence
  *
  */
-public class MainActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener {
+public class MainActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener, ServerListener {
 	
 	private static final String TAG = "MainActivity";
 	
@@ -108,6 +114,27 @@ public class MainActivity extends SlidingMenuPollingActivity implements EventsDS
 			startActivity(new Intent("com.p2c.thelife.CommunityHelp"));
 		}
 		return true;
+	}
+	
+	
+	public void pledgeToPray(View view) {
+		EventModel event = (EventModel)view.getTag();
+		
+		// send the pledge to the server
+		Server server = new Server();
+		server.pledgeToPray(event.id, this, "pledgeToPray");
+	}
+
+
+	@Override
+	public void notifyServerResponseAvailable(String indicator,	JSONObject jsonObject) {
+		if (jsonObject == null) {
+			
+			new AlertDialog.Builder(this)
+				.setMessage(getResources().getString(R.string.pledge_error_from_server))
+				.setNegativeButton(R.string.cancel, null).show(); 
+
+		}		
 	}
 
 }
