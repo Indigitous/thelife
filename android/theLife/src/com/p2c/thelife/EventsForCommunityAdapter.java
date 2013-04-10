@@ -18,11 +18,11 @@ import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 import com.p2c.thelife.model.AbstractDS;
 
-public class MainEventsAdapter extends ArrayAdapter<EventModel> implements AbstractDS.DSChangedListener {
+public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implements AbstractDS.DSChangedListener {
 	
-	private static final String TAG = "MainEventsAdapter"; 	
+	private static final String TAG = "EventsForCommunityAdapter"; 	
 		
-	public MainEventsAdapter(Context context, int mode) {
+	public EventsForCommunityAdapter(Context context, int mode) {
 		super(context, mode);
 				
 		query();

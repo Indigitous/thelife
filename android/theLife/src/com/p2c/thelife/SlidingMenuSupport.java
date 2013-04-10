@@ -70,7 +70,7 @@ public class SlidingMenuSupport {
 	        		switch (position) {
 	        		
 	    				case COMMUNITY_POSITION: 
-	    					m_activity.startActivity(new Intent("com.p2c.thelife.Main"));
+	    					m_activity.startActivity(new Intent("com.p2c.thelife.EventsForCommunity"));
 	    					break;
 	    					
 	        			case FRIENDS_POSITION: 

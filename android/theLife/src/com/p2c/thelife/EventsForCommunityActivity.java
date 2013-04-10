@@ -20,23 +20,23 @@ import com.p2c.thelife.model.EventsDS;
  * @author clarence
  *
  */
-public class MainActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener, ServerListener {
+public class EventsForCommunityActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener, ServerListener {
 	
-	private static final String TAG = "MainActivity";
+	private static final String TAG = "EventsForCommunityActivity";
 	
 	private ListView m_listView = null;
-	private MainEventsAdapter m_adapter = null;
+	private EventsForCommunityAdapter m_adapter = null;
 	private Runnable m_refreshRunnable = null;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_main, SlidingMenuSupport.COMMUNITY_POSITION);
+		super.onCreate(savedInstanceState, R.layout.activity_events_for_community, SlidingMenuSupport.COMMUNITY_POSITION);
 		Log.e(TAG, "In onCreate()"); // TODO
 		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.activity_main_events);
-		m_adapter = new MainEventsAdapter(this, android.R.layout.simple_list_item_1);
+		m_adapter = new EventsForCommunityAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
 		
 		// data store refresh runnable			
@@ -117,6 +117,9 @@ public class MainActivity extends SlidingMenuPollingActivity implements EventsDS
 	}
 	
 	
+	/**
+	 * User has chosen to pledge prayer for the event.
+	 */
 	public void pledgeToPray(View view) {
 		EventModel event = (EventModel)view.getTag();
 		
