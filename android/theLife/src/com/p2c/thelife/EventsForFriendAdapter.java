@@ -33,7 +33,6 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		query();
 	}
 	
-	// see ApiDemos List14.java for other (maybe better?) ways for this
 	// TODO this routine is duplicated
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -85,11 +84,10 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 	
 	private void query() {
 		// get all the Events for the current user
-		Collection<EventModel> events = TheLifeConfiguration.getEventsDS().findByFriend(m_friend.friend_id);
+		Collection<EventModel> events = TheLifeConfiguration.getEventsDS().findByFriend(m_friend.id);
 		for (EventModel m:events) {
 			add(m);
 		}
-		Log.d(TAG, "FOUND EVENTS FOR FRIEND " + m_friend + ": " + getCount());
 	}	
 
 }

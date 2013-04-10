@@ -51,7 +51,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		m_adapter = new EventsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
 		m_listView.setAdapter(m_adapter);
 		
-		// data store refresh runnable
+		// events data store refresh runnable
 		m_refreshRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -77,8 +77,8 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	
 	
 	/**
-	 * Called when the data store refresh has completed.
-	 * Will put another data store refresh onto the UI thread queue.
+	 * Called when the events data store refresh has completed.
+	 * Will put another events data store refresh onto the UI thread queue.
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
@@ -88,7 +88,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	
 	
 	/**
-	 * Activity out of view, so stop the data store refresh mechanism.
+	 * Activity out of view, so stop the events data store refresh mechanism.
 	 */
 	@Override
 	protected void onPause() {

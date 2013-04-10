@@ -33,7 +33,6 @@ public class FriendModel extends AbstractModel {
 //	Set<FriendModel.Threshold> earlyThresholds = EnumSet.range(FriendModel.Threshold.NewContact, FriendModel.Threshold.Curious);	
 	public static final Threshold thresholdValues[] = Threshold.values();
 	
-	public int    friend_id;
 	public String firstName;
 	public String lastName;
 	public Bitmap image;  			// TODO is this an image id, image or what?
