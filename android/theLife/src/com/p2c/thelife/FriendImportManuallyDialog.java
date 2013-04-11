@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 
+import com.p2c.thelife.model.FriendModel;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -37,12 +39,13 @@ public class FriendImportManuallyDialog extends AbstractServerAccessDialog {
 				String lastName = lastNameField.getText().toString();
 				Spinner thresholdField = (Spinner)view.findViewById(R.id.import_friend_threshold);
 				int thresholdIndex = thresholdField.getSelectedItemPosition();
+				FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex];				
 				
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createFriend");
 
 				Server server = new Server();
-				server.createFriend(firstName, lastName, thresholdIndex, (Server.ServerListener)m_listener, "createFriend");				
+				server.createFriend(firstName, lastName, threshold, (Server.ServerListener)m_listener, "createFriend");				
 				
 				Toast.makeText(getActivity(), "ADD FRIEND " + firstName + " " + lastName, Toast.LENGTH_SHORT).show();					
 			}

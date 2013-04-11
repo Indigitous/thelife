@@ -5,140 +5,140 @@
     first_name: '1Thomas',
     last_name: 'Smith',
     image_url: 'hardy.png',
-    threshold: 5
+    threshold_id: 5
 },
 {
 	id: 2,
     first_name: '2Abraham',
     last_name: 'Jones',
     image_url: 'lincoln.png',
-    threshold: 6
+    threshold_id: 6
 },
 {
 	id: 3,
     first_name: '3Clarence',
     last_name: 'Robertson',
     image_url: 'clarence.png',
-    threshold: 3
+    threshold_id: 3
 },
 {
 	id: 4,
     first_name: '4Nola',
     last_name: 'Johnson',
     image_url: 'treeswater.png',
-    threshold: 2    
+    threshold_id: 2    
 },
 {
 	id: 5,
     first_name: '5Charles',
     last_name: 'Martin',
     image_url: 'darwin.png',
-    threshold: 1 
+    threshold_id: 1 
 },
 {
 	id: 6,
     first_name: '6Thomas',
     last_name: 'Trudeau',
     image_url: 'henry4.png',
-    threshold: 5
+    threshold_id: 5
 },
 {
 	id: 7,
     first_name: '7Abraham',
     last_name: 'Wilson',
     image_url: 'salad.png',
-    threshold: 6
+    threshold_id: 6
 },
 {
 	id: 8,
     first_name: '8Pearl',
     last_name: 'Buck',
     image_url: 'buck.png',
-    threshold: 3
+    threshold_id: 3
 },
 {
 	id: 9,
     first_name: '9Ludwig',
     last_name: 'Beethoven',
     image_url: 'beethoven.png',
-    threshold: 2    
+    threshold_id: 2    
 },
 {
 	id: 10,
     first_name: '10Sally',
     last_name: 'Minor',
     image_url: 'girl.png',
-    threshold: 4 
+    threshold_id: 4 
 },
 {
 	id: 11,
     first_name: '11Alice',
     last_name: 'Henries',
     image_url: 'woman.png',
-    threshold: 5
+    threshold_id: 5
 },
 {
 	id: 12,
     first_name: '12Jane',
     last_name: 'Harman',
     image_url: 'harman.png',
-    threshold: 6
+    threshold_id: 6
 },
 {
 	id: 13,
     first_name: '13William',
     last_name: 'Shakespeare',
     image_url: 'shakespeare.png',
-    threshold: 3
+    threshold_id: 3
 },
 {
 	id: 14,
     first_name: '14BF',
     last_name: 'Wilson',
     image_url: 'bfwilson.png',
-    threshold: 1    
+    threshold_id: 1    
 },
 {
 	id: 15,
     first_name: '15Melodious',
     last_name: 'Dolce',
     image_url: 'musician.png',
-    threshold: 5 
+    threshold_id: 5 
 },
 {
 	id: 16,
     first_name: '16Theodore',
     last_name: 'Roosevelt',
     image_url: 'roosevelt.png',
-    threshold: 5
+    threshold_id: 5
 },
 {
 	id: 17,
     first_name: '17Art',
     last_name: 'Rembrandt',
     image_url: 'rembrandt.png',
-    threshold: 6
+    threshold_id: 6
 },
 {
 	id: 18,
     first_name: '18General',
     last_name: 'Brady',
     image_url: 'brady.png',
-    threshold: 3
+    threshold_id: 3
 },
 {
 	id: 19,
     first_name: '19Lucio',
     last_name: 'Rossetti',
     image_url: 'rossetti.png',
-    threshold: 3    
+    threshold_id: 3    
 },
 {
 	id: 20,
     first_name: '20James',
     last_name: 'Abram',
     image_url: 'abram.png',
-    threshold: 5 
+    threshold_id: 5 
 }
 
 ]

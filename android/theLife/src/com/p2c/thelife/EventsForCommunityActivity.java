@@ -35,7 +35,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		Log.e(TAG, "In onCreate()"); // TODO
 		
 		// attach the event list view
-		m_listView = (ListView)findViewById(R.id.activity_main_events);
+		m_listView = (ListView)findViewById(R.id.events_for_community_list);
 		m_adapter = new EventsForCommunityAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
 		
@@ -104,7 +104,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.events_for_community, menu);
 		return true;
 	}
 	

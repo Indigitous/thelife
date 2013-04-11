@@ -31,8 +31,6 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_groups, SlidingMenuSupport.GROUPS_POSITION);	
 		
-//		ExpandableListView groupsList = (ExpandableListView)findViewById(R.id.groups_list);
-//		ExpandableGroupsAdapter adapter = new ExpandableGroupsAdapter(this, android.R.layout.simple_list_item_1);
 		ListView groupsList = (ListView)findViewById(R.id.groups_list);
 		m_adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1);
 		groupsList.setAdapter(m_adapter);

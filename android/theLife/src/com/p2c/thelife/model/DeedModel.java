@@ -69,8 +69,8 @@ public class DeedModel extends AbstractModel {
 		JSONArray jsThresholds = json.optJSONArray("thresholds");
 		Set<FriendModel.Threshold> thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
 		for (int j = 0; j < jsThresholds.length(); j++) {
-			int intThreshold = jsThresholds.getInt(j);
-			thresholds.add(FriendModel.thresholdValues[intThreshold]);
+			int thresholdIndex = FriendModel.thresholdId2Index(jsThresholds.getInt(j));
+			thresholds.add(FriendModel.thresholdValues[thresholdIndex]);
 		}
 		
 		// create the deed

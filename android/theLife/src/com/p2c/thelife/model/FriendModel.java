@@ -19,13 +19,13 @@ public class FriendModel extends AbstractModel {
 	private static final String TAG = "FriendModel"; 	
 	
 	public enum Threshold {
-		NewContact(0),
-		Trusting(1),
-		Curious(2),
-		Open(3),
-		Seeking(4),
-		Entering(5),
-		Christian(6);
+		NewContact(1),
+		Trusting(2),
+		Curious(3),
+		Open(4),
+		Seeking(5),
+		Entering(6),
+		Christian(7);
 		
 		public int integerValue;
 		
@@ -35,11 +35,18 @@ public class FriendModel extends AbstractModel {
 	}
 	
 
-	
-// example EnumSet	
-//	Set<FriendModel.Threshold> allThresholds = EnumSet.allOf(FriendModel.Threshold.class);
-//	Set<FriendModel.Threshold> earlyThresholds = EnumSet.range(FriendModel.Threshold.NewContact, FriendModel.Threshold.Curious);	
+	// all threshold values
 	public static final Threshold thresholdValues[] = Threshold.values();
+	
+	/**
+	 * The server is using threshold ids, which start at one.
+	 * The device wants to use a base zero index.
+	 * @param thresholdId
+	 * @return
+	 */
+	public static int thresholdId2Index(int thresholdId) {
+		return thresholdId - 1;
+	}
 	
 	
 	public String firstName;
@@ -143,8 +150,8 @@ public class FriendModel extends AbstractModel {
 		
 		Log.d(TAG, "fromJSON()");
 		
-		int thresholdInt = json.getInt("threshold");
-		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdInt];
+		int thresholdIndex = thresholdId2Index(json.getInt("threshold_id"));
+		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex];
 			
 		// create the friend
 		String imageUrl = json.optString("image_url", null);			

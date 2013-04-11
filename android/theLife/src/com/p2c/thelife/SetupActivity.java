@@ -167,7 +167,7 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 				m_progressDialog.dismiss();
 				
 				// go to the main screen
-				Intent intent = new Intent("com.p2c.thelife.Main");
+				Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
 				startActivity(intent);
 				return;				
 			}					

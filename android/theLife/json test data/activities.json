@@ -6,7 +6,7 @@
     summary: '$uf has changed $ff to $t',
     description: 'Change the threshold level for a friend.',
     category_id: 1,
-    thresholds: [0,1,2,3,4,5,6],
+    thresholds: [1,2,3,4,5,6,7],
     image_url: 'cross.png',
     priority: 1    
 },
@@ -16,7 +16,7 @@
     summary: 'This is summary for Activity One',
     description: 'This is the summary for the first activity. It is a very useful activity in here.',
     category_id: 1,
-    thresholds: [0,1,2],
+    thresholds: [1,2,3],
     image_url: 'cross.png',
     priority: 1    
 },
@@ -26,7 +26,7 @@
     summary: 'This is summary for Activity Two',
     description: 'This is the summary for the second activity. It is a very useful activity in here.',
     category_id: 1,
-    thresholds: [0,1,2],
+    thresholds: [1,2,3],
     image_url: 'cross.png',
     priority: 2       
 },
@@ -36,7 +36,7 @@
     summary: 'This is summary for Activity Three',
     description: 'This is the summary for the third activity. It is a very useful activity in here.',
     category_id: 1,
-    thresholds: [3,4,5],
+    thresholds: [4,5,6],
     image_url: 'cross.png',
     priority: 3      
 },
@@ -46,7 +46,7 @@
     summary: 'This is summary for Activity Four',
     description: 'This is the summary for the fourth activity. It is a very useful activity in here.',
     category_id: 2,
-    thresholds: [3,4,5],
+    thresholds: [4,5,6],
     image_url: 'cross.png',
     priority: 4         
 },
@@ -56,7 +56,7 @@
     summary: 'This is summary for Activity Five',
     description: 'This is the summary for the fifth activity. It is a very useful activity in here.',
     category_id: 2,
-    thresholds: [2,3,4],
+    thresholds: [3,4,5],
     image_url: 'cross.png',
     priority: 5         
 },
@@ -66,7 +66,7 @@
     summary: 'This is summary for Activity Six',
     description: 'This is the summary for the sixth activity. It is a very useful activity in here.',
     category_id: 2,
-    thresholds: [2,3,4],
+    thresholds: [3,4,5],
     image_url: 'cross.png',
     priority: 6         
 }

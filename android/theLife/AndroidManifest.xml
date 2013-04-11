@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.p2c.thelife.EventsForCommunityActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.CommunityHelpActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.CommunityHelp" />
 
@@ -41,7 +41,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.FriendsActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Friends" />
 
@@ -61,7 +61,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GroupsActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Groups" />
 
@@ -74,7 +74,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GlobalHelpActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GlobalHelp" />
 
@@ -83,7 +83,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.EventsForFriendActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.FriendActivity" />
 
@@ -92,7 +92,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.DeedsForFriendActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.DeedsForFriend" />
 
@@ -101,7 +101,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.DeedForFriendActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.DeedForFriend" />
 
@@ -110,7 +110,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GroupActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GroupActivity" />
 
@@ -119,7 +119,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.FriendsImportActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.FriendsImport" />
 
@@ -137,7 +137,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.RequestsActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Requests" />
 
@@ -146,7 +146,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.SettingsActivity"
-            android:label="theLife" >
+            android:label="" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Settings" />
 

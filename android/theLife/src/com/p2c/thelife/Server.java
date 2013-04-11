@@ -103,7 +103,7 @@ public class Server {
 	/**
 	 * Create a new friend for the current user.
 	 */
-	public void createFriend(String firstName, String lastName, int thresholdIndex, ServerListener listener, String indicator) {
+	public void createFriend(String firstName, String lastName, FriendModel.Threshold threshold, ServerListener listener, String indicator) {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a bad threshold), HTTP 201 on a success
@@ -113,7 +113,7 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
-			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(thresholdIndex + 1))); // TODO: need a better server API here			
+			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.integerValue))); // TODO: need a better server API here			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
 			
 			HttpPost httpRequest = new HttpPost(urlString);
@@ -185,7 +185,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("friend_id", String.valueOf(friendId)));
 			pairs.add(new BasicNameValuePair("prayer_requested", withPrayerSupport ? "true" : "false"));
 			if (newThreshold != null) {
-				pairs.add(new BasicNameValuePair("new_threshold", String.valueOf(newThreshold.integerValue)));
+				pairs.add(new BasicNameValuePair("new_threshold_id", String.valueOf(newThreshold.integerValue)));
 			}
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 			
@@ -417,10 +417,16 @@ public class Server {
 				String jsonString = null;
 				if (responseCode >= 200 && responseCode <= 299) {			
 					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					HttpEntity httpEntity = httpResponse.getEntity();					
-					httpEntity.writeTo(outStream);		
-					jsonString = outStream.toString("UTF-8");
-//					jsonString = Utilities.readBufferedStream(new InputStreamReader(httpEntity.getContent()));
+					HttpEntity httpEntity = httpResponse.getEntity();
+					
+					// make sure there is a response to read
+					if (httpEntity != null) {
+						httpEntity.writeTo(outStream);		
+						jsonString = outStream.toString("UTF-8");
+					} else {
+						jsonString = "";
+					}
+					
 					Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE STRING " + jsonString);					
 				}
 				

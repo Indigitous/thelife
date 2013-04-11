@@ -9,7 +9,7 @@
     tools:context=".EventsForCommunityActivity" >
 
     <ListView
-        android:id="@+id/activity_main_events"
+        android:id="@+id/events_for_community_list"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:dividerHeight="8dp"
