@@ -32,8 +32,6 @@ public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implemen
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
-		// convertView is null only once, at position 0
-
 		// get the view
 		View eventView = convertView;
 		if (eventView == null) {
