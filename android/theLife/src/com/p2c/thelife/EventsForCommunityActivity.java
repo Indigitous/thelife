@@ -32,7 +32,9 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_events_for_community, SlidingMenuSupport.COMMUNITY_POSITION);
-		Log.e(TAG, "In onCreate()"); // TODO
+		
+		// remove the application label at the top
+		super.setTitle("");
 		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.events_for_community_list);
