@@ -17,7 +17,7 @@ public class FriendsDS extends AbstractDS<FriendModel> {
 				"FriendsDS", 
 				"friends.json",
 				"refresh_friends_timestamp_key",
-				"friends.json",
+				"my_friends",
 				"refresh_friends_delta_key",
 				TheLifeConfiguration.REFRESH_FRIENDS_DELTA
 			);		

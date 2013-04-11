@@ -22,7 +22,7 @@ public class UsersDS extends AbstractDS<UserModel> {
 				"UsersDS", 
 				"users.json",
 				"refresh_users_timestamp_key",
-				"users.json",
+				"users", // TODO must be in a group
 				"refresh_users_delta_key",
 				TheLifeConfiguration.REFRESH_USERS_DELTA
 			);		

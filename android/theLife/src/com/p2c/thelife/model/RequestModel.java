@@ -72,7 +72,7 @@ public class RequestModel extends AbstractModel {
 			json.getString("kind"),
 			json.optString("email"),
 			json.optString("sms"),
-			json.getString("description")
+			json.optString("description", "Placeholder Request Description")
 		);
 		
 //		// set the description, which needs the Resources

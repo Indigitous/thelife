@@ -190,7 +190,8 @@ public class TheLifeConfiguration {
 	/************************** User information ***************************/
 	
 	public static int getUserId() {
-		return m_userId;
+		return 9; // TODO debugging
+		//return m_userId;
 	}
 	
 	public static boolean isValidUser() {
@@ -210,7 +211,7 @@ public class TheLifeConfiguration {
 	 * @return authentication token
 	 */
 	public static String getToken() {
-		return "vH4Bpc3zsE9tpJtnGhsU"; // TODO debugging
+		return "jEA3NPZYsZ4Y5pnsqYys"; // TODO debugging
 		// return m_token;
 	}	
 	

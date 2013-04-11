@@ -17,7 +17,7 @@ public class CategoriesDS extends AbstractDS<CategoryModel> {
 				"CategoriesDS", 
 				"categories.json",
 				"refresh_categories_timestamp_key",
-				"categories.json",
+				"categories",
 				"refresh_categories_delta_key",
 				TheLifeConfiguration.REFRESH_CATEGORIES_DELTA
 			);		

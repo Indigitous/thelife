@@ -29,7 +29,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 			"DeedsDS", 
 			"deeds.json",
 			"refresh_deeds_timestamp_key",
-			"activities.json",
+			"activities",
 			"refresh_deeds_delta_key",
 			TheLifeConfiguration.REFRESH_DEEDS_DELTA
 		);

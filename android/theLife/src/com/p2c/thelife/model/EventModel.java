@@ -53,9 +53,9 @@ public class EventModel extends AbstractModel {
 			json.getInt("activity_id"),
 			json.optInt("event_id", 0),
 			json.getString("description"),
-			json.getLong("created_at"),
+			json.optLong("created_at", System.currentTimeMillis()),
 			json.getBoolean("prayer_requested"),
-			json.getInt("pledge_count")
+			json.optInt("pledge_count", 0)
 		);
 	}	
 

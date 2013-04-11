@@ -15,14 +15,16 @@ import com.p2c.thelife.BitmapCache;
 
 
 // POJO - plain old java object
-// TODO - deeds to move a friend to a different (lower or higher) threshold
 /**
  * Deed/activity model
  *
  */
 public class DeedModel extends AbstractModel {
 	
-	private static final String TAG = "DeedModel"; 
+	private static final String TAG = "DeedModel";
+	
+	// this deed id is reserved for the change threshold deed
+	private static final int CHANGE_THRESHOLD_ID = 1;
 	
 	public String 	title;
 	public String	summary;
@@ -57,7 +59,7 @@ public class DeedModel extends AbstractModel {
 	
 	
 	public boolean isThresholdChange() {
-		return id == 1; // TODO hacky hardcoding
+		return id == CHANGE_THRESHOLD_ID;
 	}
 	
 	
@@ -66,20 +68,28 @@ public class DeedModel extends AbstractModel {
 		Log.d(TAG, "IN DEED MODEL from JSON");
 		
 		// set up the thresholds
-		JSONArray jsThresholds = json.optJSONArray("thresholds");
-		Set<FriendModel.Threshold> thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
-		for (int j = 0; j < jsThresholds.length(); j++) {
-			int thresholdIndex = FriendModel.thresholdId2Index(jsThresholds.getInt(j));
-			thresholds.add(FriendModel.thresholdValues[thresholdIndex]);
-		}
+		JSONArray jsThresholds = null;
+		jsThresholds = json.optJSONArray("threshold_ids");
 		
+		Set<FriendModel.Threshold> thresholds = null;
+		if (jsThresholds != null) {
+			thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
+			for (int j = 0; j < jsThresholds.length(); j++) {
+				int thresholdIndex = FriendModel.thresholdId2Index(jsThresholds.getInt(j));
+				thresholds.add(FriendModel.thresholdValues[thresholdIndex]);
+			}
+		} else {
+			// handle a missing threshold field from Server
+			thresholds = EnumSet.allOf(FriendModel.Threshold.class);
+		}
+			
 		// create the deed
 		String imageUrl = json.optString("image_url", null);
 		return new DeedModel(
 			json.getInt("id"),
 			json.getString("title"),
 			json.getString("summary"),
-			json.getString("description"),
+			json.getString("full_description"),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericDeedImage()),
 			thresholds,
 			json.getInt("priority"),

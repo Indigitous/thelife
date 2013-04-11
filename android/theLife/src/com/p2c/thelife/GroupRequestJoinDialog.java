@@ -14,7 +14,7 @@ import com.p2c.thelife.model.RequestModel;
  * @author clarence
  *
  */
-public class GroupJoinDialog extends AbstractServerAccessDialog {
+public class GroupRequestJoinDialog extends AbstractServerAccessDialog {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class GroupJoinDialog extends AbstractServerAccessDialog {
 		final GroupModel group = ((GroupsSearchActivity)m_listener).getSelectedGroup();		
 			
 		// set the message and buttons of the alert
-		String message = getResources().getString(R.string.join_group_prompt, group.name);				
+		String message = getResources().getString(R.string.request_join_group_prompt, group.name);				
 		alertBuilder.setMessage(message);
 		alertBuilder.setNegativeButton(R.string.cancel, null); 
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.p2c.thelife.model.GroupModel;
 
-public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, GroupJoinDialog.Listener {
+public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, GroupRequestJoinDialog.Listener {
 	
 	private static final String TAG = "GroupsSearchActivity";
 	
@@ -45,7 +45,7 @@ public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity imp
 		m_group = (GroupModel)view.getTag();
 		
 		// confirm the choice
-		GroupJoinDialog dialog = new GroupJoinDialog();
+		GroupRequestJoinDialog dialog = new GroupRequestJoinDialog();
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());		
 	}
 	

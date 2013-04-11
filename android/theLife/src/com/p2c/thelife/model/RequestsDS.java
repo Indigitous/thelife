@@ -17,7 +17,7 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 				"RequestsDS", 
 				"requests.json",
 				"refresh_requests_timestamp_key",
-				"requests.json",
+				"my_requests",
 				"refresh_requests_delta_key",
 				TheLifeConfiguration.REFRESH_REQUESTS_DELTA
 			);		

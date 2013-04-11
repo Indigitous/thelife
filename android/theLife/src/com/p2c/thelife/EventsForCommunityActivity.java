@@ -66,7 +66,6 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e(TAG, "In onResume()"); // TODO
 		
 		// load the data store from the server in the background
 		if (TheLifeConfiguration.isValidUser()) {
@@ -94,7 +93,6 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.e(TAG, "In onPause()"); // TODO
 		
 		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);

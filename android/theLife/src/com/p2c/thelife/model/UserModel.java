@@ -70,8 +70,8 @@ public class UserModel extends AbstractModel {
 			json.getString("last_name"),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),
 			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonThumbnail()),			
-			json.getString("email"),
-			json.getString("phone")
+			json.optString("email", ""),
+			json.optString("phone", "")
 		);
 	}	
 
