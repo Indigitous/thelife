@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
 		android:textSize="12sp"         
-        android:text="Pray" 
+        android:text="@string/pray" 
         android:onClick="pledgeToPray" />
 
 </LinearLayout>

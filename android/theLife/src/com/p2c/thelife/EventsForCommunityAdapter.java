@@ -59,7 +59,7 @@ public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implemen
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
 		if (event.isPrayerRequested) {
 			pledgeView.setVisibility(View.VISIBLE);
-			String pledgeDescription = "Pray"; // TODO translated
+			String pledgeDescription = getContext().getResources().getString(R.string.pray) + " " + event.pledgeCount;
 			pledgeView.setText(pledgeDescription);	
 			pledgeView.setTag(event);
 		} else {

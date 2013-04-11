@@ -62,7 +62,7 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
 		if (event.isPrayerRequested) {
 			pledgeView.setVisibility(View.VISIBLE);
-			String pledgeDescription = "Pray"; // TODO translated
+			String pledgeDescription = getContext().getResources().getString(R.string.pray) + " " + event.pledgeCount;			
 			pledgeView.setText(pledgeDescription);			
 		} else {
 			pledgeView.setVisibility(View.GONE);

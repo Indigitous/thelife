@@ -111,5 +111,6 @@
     <string name="pledge_error_from_server">Error sending prayer pledge to server.</string>
     
     <string name="change_threshold">Change threshold</string>
+    <string name="pray">Pray</string>
 
 </resources>
