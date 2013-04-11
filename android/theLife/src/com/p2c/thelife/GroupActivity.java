@@ -54,7 +54,6 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e(TAG, "In onResume()");
 		
 		// load the database from the server in the background
 		TheLifeConfiguration.getUsersDS().addDSChangedListener(m_adapter);
@@ -67,7 +66,6 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.e(TAG, "In onPause()");
 		
 		TheLifeConfiguration.getUsersDS().removeDSChangedListener(m_adapter);
 	}

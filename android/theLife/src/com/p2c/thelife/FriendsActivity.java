@@ -51,7 +51,6 @@ public class FriendsActivity
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e(TAG, "In onResume()");
 		
 		// load the database from the server in the background
 		TheLifeConfiguration.getFriendsDS().addDSChangedListener(m_adapter);  
@@ -64,7 +63,6 @@ public class FriendsActivity
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.e(TAG, "In onPause()");
 		
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 	}

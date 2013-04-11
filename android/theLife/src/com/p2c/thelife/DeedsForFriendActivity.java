@@ -47,7 +47,6 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e(TAG, "In onResume()");
 		
 		// load the data store from the server in the background
 		// note that categories and deeds are closely related, so first refresh the categories and then the deeds
@@ -73,7 +72,6 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.e(TAG, "In onPause()");
 		
 		TheLifeConfiguration.getDeedsDS().removeDSChangedListener(m_adapter);				
 		TheLifeConfiguration.getCategoriesDS().removeDSRefreshedListener(this);

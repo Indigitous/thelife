@@ -67,7 +67,6 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e(TAG, "In onResume()"); // TODO
 		
 		// load the data store from the server in the background
 		TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
@@ -93,7 +92,6 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.e(TAG, "In onPause()");
 		
 		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);

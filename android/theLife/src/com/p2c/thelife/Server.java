@@ -133,7 +133,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 404 on an unknown friend, HTTP 201 on a success TODO check this
-		String urlString = Utilities.makeServerUrlString("friends") + "&friend_id=" + String.valueOf(friendId);
+		String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId));
 		
 		try {
 			HttpDelete httpRequest = new HttpDelete(urlString);
