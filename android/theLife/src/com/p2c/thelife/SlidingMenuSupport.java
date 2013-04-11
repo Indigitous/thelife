@@ -28,7 +28,7 @@ public class SlidingMenuSupport {
 	public static final int REQUESTS_POSITION = 3;	
 	public static final int HELP_POSITION = 4;
 	public static final int SETTINGS_POSITION = 5;
-	public static final int TEST_POSITION = 6;	
+	public static final int TEST_POSITION = 6;
 	
 	public SlidingMenuSupport(Activity activity, int slidingMenuPosition) {
 		
