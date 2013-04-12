@@ -58,18 +58,36 @@ public class UserModel extends AbstractModel {
 		return id + ", " + firstName + ", " + lastName + ", " + email + ", " + phone;
 	}
 	
+	/**
+	 * Will attempt to load the image or use the placeholder.
+	 * @param id
+	 * @param useServer
+	 * @return
+	 */
+	public static Bitmap getImage(int id, boolean useServer) {
+		return BitmapCache.getBitmapFromSystem("users", id, "image", useServer, TheLifeConfiguration.getGenericPersonImage());
+	}
+	
+	/**
+	 * Will attempt to load the image or use the placeholder.
+	 * @param id
+	 * @param useServer
+	 * @return
+	 */
+	public static Bitmap getThumbnail(int id, boolean useServer) {
+		return BitmapCache.getBitmapFromSystem("users", id, "thumbnail", useServer, TheLifeConfiguration.getGenericPersonThumbnail());
+	}		
+	
 	public static UserModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
-		
-		Log.d(TAG, "fromJSON()");
-					
+							
 		// create the deed
-		String imageUrl = json.optString("image_url", null);		
+		int id = json.getInt("id");		
 		return new UserModel(
-			json.getInt("id"),
+			id,
 			json.getString("first_name"),
 			json.getString("last_name"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonThumbnail()),			
+			getImage(id, useServer),
+			getThumbnail(id, useServer),			
 			json.optString("email", ""),
 			json.optString("phone", "")
 		);

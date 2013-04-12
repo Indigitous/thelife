@@ -46,17 +46,15 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		
 		// get the event for this view
 		EventModel event = getItem(position);
-		UserModel user = TheLifeConfiguration.getUsersDS().findById(event.user_id);
-		FriendModel friend = TheLifeConfiguration.getFriendsDS().findById(event.friend_id);
 
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
 		String eventDescription = event.description; // Utilities.fillTemplateString(getContext().getResources(), user, friend, event.description);
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap((user == null) ? TheLifeConfiguration.getMissingDataThumbnail() : (user != null) ? user.thumbnail : TheLifeConfiguration.getGenericPersonThumbnail());
+		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id, false));
 		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.imageView2);
-		imageView2.setImageBitmap((friend == null) ? TheLifeConfiguration.getMissingDataThumbnail() : (friend != null) ? friend.thumbnail : TheLifeConfiguration.getGenericPersonThumbnail());			
+		imageView2.setImageBitmap(FriendModel.getThumbnail(event.friend_id, false));			
 		
 		// only show the pledge view if the event requests it
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				

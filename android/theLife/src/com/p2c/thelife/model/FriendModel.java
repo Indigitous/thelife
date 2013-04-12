@@ -141,26 +141,44 @@ public class FriendModel extends AbstractModel {
 		}
 	}	
 	
+	/**
+	 * Will attempt to load the image or use the placeholder.
+	 * @param id
+	 * @param useServer
+	 * @return
+	 */
+	public static Bitmap getImage(int id, boolean useServer) {
+		return BitmapCache.getBitmapFromSystem("friends", id, "image", useServer, TheLifeConfiguration.getGenericPersonImage());
+	}
+	
+	/**
+	 * Will attempt to load the image or use the placeholder.
+	 * @param id
+	 * @param useServer
+	 * @return
+	 */
+	public static Bitmap getThumbnail(int id, boolean useServer) {
+		return BitmapCache.getBitmapFromSystem("friends", id, "thumbnail", useServer, TheLifeConfiguration.getGenericPersonThumbnail());
+	}	
+	
 	@Override
 	public String toString() {
 		return id + ", " + firstName + ", " + lastName + ", " + threshold;
 	}
 	
 	public static FriendModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
-		
-		Log.d(TAG, "fromJSON()");
-		
+			
 		int thresholdIndex = thresholdId2Index(json.getInt("threshold_id"));
 		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex];
 			
 		// create the friend
-		String imageUrl = json.optString("image_url", null);			
+		int id = json.getInt("id");
 		return new FriendModel(
-			json.getInt("id"),
+			id,
 			json.getString("first_name"),
 			json.getString("last_name"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonImage()),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericPersonThumbnail()),				
+			getImage(id, useServer),
+			getThumbnail(id, useServer),				
 			threshold
 		);
 	}

@@ -40,14 +40,13 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 		
 		// get the request for this view
 		RequestModel request = getItem(position);
-		UserModel user = TheLifeConfiguration.getUsersDS().findById(request.user_id);
 
 		TextView textViewDescription = (TextView)requestView.findViewById(R.id.textViewDescription);
 		String description = request.description;
 		textViewDescription.setText(Html.fromHtml(description));
 		
 		ImageView imageView1 = (ImageView)requestView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap((user == null) ? TheLifeConfiguration.getMissingDataThumbnail() : (user != null) ? user.thumbnail : TheLifeConfiguration.getGenericPersonThumbnail());
+		imageView1.setImageBitmap(UserModel.getThumbnail(request.user_id, false));
 		
 		requestView.setTag(request);		
 		

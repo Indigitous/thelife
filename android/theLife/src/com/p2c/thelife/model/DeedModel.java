@@ -64,9 +64,7 @@ public class DeedModel extends AbstractModel {
 	
 	
 	public static DeedModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
-		
-		Log.d(TAG, "IN DEED MODEL from JSON");
-		
+				
 		// set up the thresholds
 		JSONArray jsThresholds = null;
 		jsThresholds = json.optJSONArray("threshold_ids");
@@ -84,18 +82,30 @@ public class DeedModel extends AbstractModel {
 		}
 			
 		// create the deed
-		String imageUrl = json.optString("image_url", null);
+		int id = json.getInt("id");
 		return new DeedModel(
-			json.getInt("id"),
+			id,
 			json.getString("title"),
 			json.getString("summary"),
 			json.getString("full_description"),
-			BitmapCache.getBitmapFromSystem(imageUrl, useServer, TheLifeConfiguration.getGenericDeedImage()),
+			getThumbnail(id, useServer),
 			thresholds,
 			json.getInt("priority"),
 			json.getInt("category_id")
 		);
 	}
+	
+	
+	/**
+	 * Will attempt to load the image or use the placeholder.
+	 * @param id
+	 * @param useServer
+	 * @return
+	 */
+	public static Bitmap getThumbnail(int id, boolean useServer) {
+		return BitmapCache.getBitmapFromSystem("activities", id, "thumbnail", useServer, TheLifeConfiguration.getGenericDeedImage());
+	}
+	
 	
 	@Override
 	public String toString() {

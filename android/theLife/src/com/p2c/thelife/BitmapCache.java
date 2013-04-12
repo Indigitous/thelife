@@ -23,14 +23,18 @@ import android.util.Log;
 public class BitmapCache {
 	
 	private static final String TAG = "BitmapCache";
+	
+	private static String getCacheFileName(String dataType, int id, String type) {
+		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + type + ".png";
+	}
 
 	/**
-	 * Get the bitmap at the given URL.
+	 * Get the bitmap at the given URL and, if successful, write it to disk cache. Will not throw an exception.
 	 * Note: must not be called on the main/UI thread. 
 	 * @param urlString
 	 * @return the bitmap or null if any exception
 	 */
-	public static Bitmap getBitmapAtURLSafe(String urlPath) {
+	private static Bitmap getBitmapAtURLSafe(String urlPath, String cacheFileName) {
 		
 		InputStream is = null;
 		HttpURLConnection connection = null;
@@ -40,26 +44,26 @@ public class BitmapCache {
 		try {
 			
 			// attempt to get the bitmap from the server
-			//URL url = newURL(Utilities.makeServerUrlString(urlPath)); // TODO correct
-			URL url = new URL(Utilities.makeServerUrlStringDebug("http://thelife.ballistiq.com/api/v1/", urlPath)); // TODO debug
+			URL url = new URL(Utilities.makeServerUrlString(urlPath));
 			connection = (HttpURLConnection)url.openConnection();
 			is =  new BufferedInputStream(connection.getInputStream());
 			bitmap = BitmapFactory.decodeStream(is);
 			
 			// save the bitmap to cache
 			if (bitmap != null) {
-				os = new BufferedOutputStream(new FileOutputStream(TheLifeConfiguration.getCacheDirectory() + urlPath)); // TODO
+				os = new BufferedOutputStream(new FileOutputStream(cacheFileName));
 				bitmap.compress(CompressFormat.PNG, 90, os);
 				os.close();
 			}
 			
 		} catch (Exception e) {
-			Log.e(TAG, "getBitmapAtURLSafe()", e);
+			Log.e(TAG, "getBitmapAtURLSafe() ", e); //  + e.getMessage() + e.getCause());
 		} finally {
 			if (is != null) {
 				try { is.close(); } catch (IOException e) { }
+			}
+			if (os != null) {
 				try { os.close(); } catch (IOException e) { }
-				
 			}
 			if (connection != null) {
 				connection.disconnect();
@@ -72,29 +76,33 @@ public class BitmapCache {
 	
 	/**
 	 * Get the bitmap from the server if permitted and if available.
-	 * @param urlString		where to get bitmap
+	 * @param dataType		dataType of bitmap: "friends", "users" or "activities"
+	 * @param id			model id
+	 * @param type			type of bitmap: "image" or "thumbnail"
 	 * @param useServer		can only be true if not on UI thread
 	 * @param fallbackBitmap
 	 * @return
 	 */
-	public static Bitmap getBitmapFromSystem(String url, boolean useServer, Bitmap fallbackBitmap) {
+	public static Bitmap getBitmapFromSystem(String dataType, int id, String type, boolean useServer, Bitmap fallbackBitmap) {
 		Bitmap bitmap = null;
 		
-		if (url != null) {
+		if (id != 0) {
 			// first try to find the bitmap in the disk cache
-			if (new File(TheLifeConfiguration.getCacheDirectory() + url).exists()) {
-				bitmap = BitmapFactory.decodeFile(TheLifeConfiguration.getCacheDirectory() + url);
+			String fileName = getCacheFileName(dataType, id, type);
+			if (new File(fileName).exists()) {
+				bitmap = BitmapFactory.decodeFile(fileName);
 			}
 		
 			// if not in the disk cache and if permitted, get the bitmap from the server
 			if (bitmap == null && useServer) {
-				bitmap = BitmapCache.getBitmapAtURLSafe(url);
+				bitmap = BitmapCache.getBitmapAtURLSafe(dataType + "/" + String.valueOf(id) + "/" + type, fileName);
 			}
+			
 		}
 		
-		// use generic image if no image is available
+		// use fall back if no image is available
 		if (bitmap == null) {
-			bitmap = TheLifeConfiguration.getGenericDeedImage();
+			bitmap = fallbackBitmap;
 		}
 		
 		return bitmap;
