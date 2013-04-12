@@ -13,16 +13,19 @@ import android.widget.TextView;
 
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.GroupModel;
+import com.p2c.thelife.model.GroupUsersDS;
 import com.p2c.thelife.model.UserModel;
 
 public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.DSChangedListener {
 	
 	private GroupModel m_group;
+	private GroupUsersDS m_groupUsersDS;
 	
-	public GroupAdapter(Context context, int mode, GroupModel group) {
+	public GroupAdapter(Context context, int mode, GroupModel group, GroupUsersDS groupUsersDS) {
 		super(context, mode);
 		
 		m_group = group;
+		m_groupUsersDS = groupUsersDS;
 		
 		query();
 	}
@@ -66,16 +69,11 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 	
 	private void query() {
 		
-		// get all the users for the current group
-		for (Integer memberId:m_group.member_ids) {
-			
-			// only add known users
-			UserModel user = TheLifeConfiguration.getUsersDS().findById(memberId);
-			if (user != null) {
-				add(TheLifeConfiguration.getUsersDS().findById(memberId));
-			}
-		}	
-
+		ArrayList<UserModel> users = m_groupUsersDS.findAll();
+		
+		for (UserModel m:users) {
+			add(m);
+		}
 	}	
 
 }

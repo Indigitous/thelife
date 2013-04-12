@@ -4,7 +4,6 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
+import com.p2c.thelife.model.GroupUsersDS;
 import com.p2c.thelife.model.UserModel;
 
-public class GroupActivity extends SlidingMenuPollingFragmentActivity 
-	implements Server.ServerListener, FriendDeleteDialog.Listener {
+public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, UserDeleteFromGroupDialog.Listener {
 	
 	private static final String TAG = "GroupActivity";
 	
@@ -24,6 +23,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 	private GroupAdapter m_adapter = null;
 	private UserModel m_user = null;
 	private ProgressDialog m_progressDialog = null;	
+	private GroupUsersDS m_groupUsersDS = null;
 	
 
 	@Override
@@ -40,12 +40,15 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 			textView.setText(m_group.name);
 			textView = (TextView)findViewById(R.id.activity_group_description);
 			textView.setText(m_group.description);
+			
+			// data store of users in this group
+			m_groupUsersDS = new GroupUsersDS(this, m_group.id);			
+			
+			// attach the users-in-group view
+			GridView usersView = (GridView)findViewById(R.id.activity_group_users);
+			m_adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group, m_groupUsersDS);
+			usersView.setAdapter(m_adapter);
 		}
-		
-		// attach the users-in-group view
-		GridView usersView = (GridView)findViewById(R.id.activity_group_users);
-		m_adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group);
-		usersView.setAdapter(m_adapter);
 	}
 	
 	/**
@@ -55,9 +58,11 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 	protected void onResume() {
 		super.onResume();
 		
-		// load the database from the server in the background
-		TheLifeConfiguration.getUsersDS().addDSChangedListener(m_adapter);
-		TheLifeConfiguration.getUsersDS().refresh(null);				
+		if (m_group != null) {
+			// load the database from the server in the background
+			m_groupUsersDS.addDSChangedListener(m_adapter);
+			m_groupUsersDS.refresh(null);
+		}
 	}		
 	
 	/**
@@ -67,7 +72,9 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 	protected void onPause() {
 		super.onPause();
 		
-		TheLifeConfiguration.getUsersDS().removeDSChangedListener(m_adapter);
+		if (m_group != null) {
+			m_groupUsersDS.removeDSChangedListener(m_adapter);
+		}
 	}
 
 	@Override
@@ -82,8 +89,10 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 		if (item.getItemId() == R.id.action_help) {
 			Toast.makeText(this, "Group Help", Toast.LENGTH_SHORT).show();
 		} else if (item.getItemId() == R.id.action_new) {
-			UserInviteDialog dialog = new UserInviteDialog();
-			dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+			if (m_group != null) {
+				UserInviteDialog dialog = new UserInviteDialog();
+				dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+			}
 		}
 		
 		return true;
@@ -130,8 +139,8 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity
 				if (indicator.equals("deleteUser")) {
 					// delete the user from the group data store
 					m_group.removeUser(userId);
-					TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
-					TheLifeConfiguration.getGroupsDS().forceRefresh(null);
+					m_groupUsersDS.notifyDSChangedListeners();
+					m_groupUsersDS.forceRefresh(null);
 				} 
 			}
 		}
