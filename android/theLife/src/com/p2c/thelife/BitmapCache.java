@@ -46,14 +46,20 @@ public class BitmapCache {
 			// attempt to get the bitmap from the server
 			URL url = new URL(Utilities.makeServerUrlString(urlPath));
 			connection = (HttpURLConnection)url.openConnection();
-			is =  new BufferedInputStream(connection.getInputStream());
-			bitmap = BitmapFactory.decodeStream(is);
 			
-			// save the bitmap to cache
-			if (bitmap != null) {
-				os = new BufferedOutputStream(new FileOutputStream(cacheFileName));
-				bitmap.compress(CompressFormat.PNG, 90, os);
-				os.close();
+			int responseCode = connection.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				is =  new BufferedInputStream(connection.getInputStream());
+				bitmap = BitmapFactory.decodeStream(is);
+				
+				// save the bitmap to cache
+				if (bitmap != null) {
+					os = new BufferedOutputStream(new FileOutputStream(cacheFileName));
+					bitmap.compress(CompressFormat.PNG, 90, os);
+					os.close();
+				}
+			} else {
+				Log.e(TAG, "getBitmapAtURLSafe() HTTP code " + responseCode);
 			}
 			
 		} catch (Exception e) {
