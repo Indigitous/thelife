@@ -34,7 +34,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		super.onCreate(savedInstanceState, R.layout.activity_events_for_community, SlidingMenuSupport.COMMUNITY_POSITION);
 		
 		// remove the application label at the top
-		super.setTitle("");
+		//super.setTitle("");
 		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.events_for_community_list);

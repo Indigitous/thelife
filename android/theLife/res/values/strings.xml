@@ -112,5 +112,17 @@
     
     <string name="change_threshold">Change threshold</string>
     <string name="pray">Pray</string>
-
+    
+    <string name="events_title">Events</string>
+    <string name="help_title">Help</string>
+    <string name="friends_title">My Friends</string>
+    <string name="search_groups_title">Search Groups</string>
+    <string name="groups_title">My Groups</string>
+    <string name="activities_title">Activities</string>
+    <string name="activity_title">Activity</string>
+    <string name="group_title">My Group</string>
+    <string name="setup_title">Set Up</string>
+    <string name="requests_title">Requests</string>
+    <string name="settings_title">Settings</string>
+    
 </resources>
