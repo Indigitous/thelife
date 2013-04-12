@@ -36,20 +36,20 @@ public class SetupRegisterDialog extends AbstractServerAccessDialog {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				EditText usernameField = (EditText)view.findViewById(R.id.setup_register_username);
-				String username = usernameField.getText().toString();
+				EditText emailField = (EditText)view.findViewById(R.id.setup_register_email);
+				String email = emailField.getText().toString();
 				EditText passwordField = (EditText)view.findViewById(R.id.setup_register_password);
 				String password = passwordField.getText().toString();
 				EditText firstNameField = (EditText)view.findViewById(R.id.setup_register_first_name);
 				String firstName = firstNameField.getText().toString();
 				EditText lastNameField = (EditText)view.findViewById(R.id.setup_register_last_name);
-				String lastName = lastNameField.getText().toString();				
+				String lastName = lastNameField.getText().toString();
 							
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("register");
 
 				Server server = new Server();
-				server.register(username, password, firstName, lastName, (Server.ServerListener)m_listener, "register");
+				server.register(email, password, firstName, lastName, (Server.ServerListener)m_listener, "register");
 			}
 		}); 
 		
