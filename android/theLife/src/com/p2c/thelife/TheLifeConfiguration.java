@@ -204,6 +204,10 @@ public class TheLifeConfiguration {
 		//return (m_user != null) ? m_user.id : 0;
 	}
 	
+	public static UserModel getUser() {
+		return m_user;
+	}
+	
 	public static boolean isValidUser() {
 		return m_user != null;
 	}

@@ -68,13 +68,13 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 			if (jsonObject != null) {
 				
 				UserModel user = UserModel.fromJSON(jsonObject, false);
-				TheLifeConfiguration.getUsersDS().update(user);
+				TheLifeConfiguration.setUser(user);
 				
 				// update the UI with the result of the query
 				if (indicator.equals("queryUserProfile")) {
 					
 					// the user using the app
-					user = TheLifeConfiguration.getUsersDS().findById(TheLifeConfiguration.getUserId());
+					user = TheLifeConfiguration.getUser();
 					
 					// update the UI
 					TextView textView = null;
