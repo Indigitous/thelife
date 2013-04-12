@@ -52,7 +52,7 @@ public class SlidingMenuSupportAdapter extends ArrayAdapter<String> {
 				imageView1.setImageDrawable(getContext().getResources().getDrawable(R.drawable.menu_groups));
 				break;	
 			case SlidingMenuSupport.REQUESTS_POSITION:
-				imageView1.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_launcher));
+				imageView1.setImageDrawable(getContext().getResources().getDrawable(R.drawable.old_ic_launcher));
 				break;	
 			case SlidingMenuSupport.HELP_POSITION:
 				imageView1.setImageDrawable(getContext().getResources().getDrawable(R.drawable.menu_help));

@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.p2c.thelife.EventsForCommunityActivity" 
-            android:label="@string/events_title" >
+            android:label="theLife" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
