@@ -4,7 +4,7 @@
         android:id="@+id/action_new"
         android:orderInCategory="60"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/action_new"
+        android:icon="@drawable/action_add_contact"
         android:title="@string/action_new"/>           
     
     <item
