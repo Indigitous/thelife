@@ -130,7 +130,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator,	JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject) {
 		if (jsonObject == null) {
 			
 			new AlertDialog.Builder(this)

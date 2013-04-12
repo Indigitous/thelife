@@ -74,7 +74,7 @@ System.out.println("WILL QUERY FOR " + queryString);
 	}
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator,	JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject) {
 
 System.out.println("GOT queryGroups response: " + jsonObject);
 		

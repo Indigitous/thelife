@@ -87,7 +87,7 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 	}
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
 		
 		if (jsonObject != null) {
 			int eventId = jsonObject.optInt("id", 0);

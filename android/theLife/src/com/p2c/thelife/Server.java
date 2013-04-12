@@ -44,9 +44,10 @@ public class Server {
 	public interface ServerListener {
 		/**
 		 * @param indicator		returned to the listener
+		 * @param httpCode 		HTTP code return value, example 200
 		 * @param jsonObject	the result of the server call, null if there was a failure
 		 */
-		public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject);
+		public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject);
 	}
 	
 	/**
@@ -382,6 +383,7 @@ public class Server {
 		private HttpUriRequest m_httpRequest = null;
 		private ServerListener m_listener = null;
 		private String m_indicator = null;
+		private int m_httpCode = -1;
 		
 		public ServerCall(HttpUriRequest httpRequest, ServerListener listener, String indicator) {
 			m_httpRequest = httpRequest;
@@ -410,12 +412,12 @@ public class Server {
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TheLifeConfiguration.HTTP_READ_TIMEOUT);
 				
 				HttpResponse httpResponse = httpClient.execute(m_httpRequest);
-				int responseCode = httpResponse.getStatusLine().getStatusCode();
+				m_httpCode = httpResponse.getStatusLine().getStatusCode();
 				
-				System.out.println("HERE IS THE STATUS CODE " + responseCode);
+				System.out.println("HERE IS THE STATUS CODE " + m_httpCode);
 				
 				String jsonString = null;
-				if (responseCode >= 200 && responseCode <= 299) {			
+				if (m_httpCode >= 200 && m_httpCode <= 299) {			
 					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 					HttpEntity httpEntity = httpResponse.getEntity();
 					
@@ -465,7 +467,7 @@ public class Server {
 			
 			Log.d(TAG, "HERE IN ON POST EXECUTE");
 			
-			m_listener.notifyServerResponseAvailable(m_indicator, jsonObject);
+			m_listener.notifyServerResponseAvailable(m_indicator, m_httpCode, jsonObject);
 		}
 	}
 

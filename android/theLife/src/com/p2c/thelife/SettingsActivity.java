@@ -59,7 +59,7 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 
 	
 	@Override
-	public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}

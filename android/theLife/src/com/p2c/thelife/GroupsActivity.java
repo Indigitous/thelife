@@ -98,7 +98,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	}
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
 		
 		if (jsonObject != null) {
 			int groupId = jsonObject.optInt("id", 0);
