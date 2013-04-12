@@ -143,10 +143,10 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 			TheLifeConfiguration.getDeedsDS().refresh("deeds");
 		} else if (indicator.equals("deeds")) {
 			TheLifeConfiguration.getDeedsDS().removeDSRefreshedListener(this);			
-			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);			
-			TheLifeConfiguration.getUsersDS().refresh("users");
-		} else if (indicator.equals("users")) {
-			TheLifeConfiguration.getUsersDS().removeDSRefreshedListener(this);			
+//			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);			
+//			TheLifeConfiguration.getUsersDS().refresh("users");
+//		} else if (indicator.equals("users")) {
+//			TheLifeConfiguration.getUsersDS().removeDSRefreshedListener(this);			
 			TheLifeConfiguration.getGroupsDS().addDSRefreshedListener(this);
 			TheLifeConfiguration.getGroupsDS().refresh("groups");	
 		} else if (indicator.equals("groups")) {
