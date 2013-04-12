@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.slidingmenu.lib.SlidingMenu;
@@ -49,10 +48,10 @@ public class SlidingMenuSupport {
         View appMenu = m_slidingMenu.getMenu();
         appMenu.setBackgroundColor(android.graphics.Color.LTGRAY);
         
-        // add the commands to the sliding menu
+        // add the commands to the sliding menu using an adapter
         ListView commandsView = (ListView)appMenu.findViewById(R.id.app_menu_command_list);
-        ArrayAdapter<String> commands = new ArrayAdapter<String>(m_activity, android.R.layout.simple_list_item_1);
         String[] commandList = m_activity.getResources().getStringArray(R.array.app_menu_commands);
+        SlidingMenuSupportAdapter commands = new SlidingMenuSupportAdapter(m_activity, android.R.layout.simple_list_item_1);
         for (String s: commandList) {
             commands.add(s);
         }      

@@ -69,6 +69,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 	
 	private void query() {
 		
+		// get all the users in the group
 		ArrayList<UserModel> users = m_groupUsersDS.findAll();
 		
 		for (UserModel m:users) {
