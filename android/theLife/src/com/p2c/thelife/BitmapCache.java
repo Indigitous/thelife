@@ -94,6 +94,7 @@ public class BitmapCache {
 			}
 		
 			// if not in the disk cache and if permitted, get the bitmap from the server
+			// TODO: obfuscate the id in the URL?
 			if (bitmap == null && useServer) {
 				bitmap = BitmapCache.getBitmapAtURLSafe(dataType + "/" + String.valueOf(id) + "/" + type, fileName);
 			}
