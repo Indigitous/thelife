@@ -125,4 +125,6 @@
     <string name="requests_title">Requests</string>
     <string name="settings_title">Settings</string>
     
+    <string name="registration_successful">You are now registered.</string>
+    
 </resources>

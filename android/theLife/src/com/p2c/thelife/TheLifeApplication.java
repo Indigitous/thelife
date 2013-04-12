@@ -30,7 +30,7 @@ public class TheLifeApplication extends Application {
 		// initialize configuration from system settings
 		SharedPreferences systemSettings = 
 			getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);
-		TheLifeConfiguration.setSystemSettings(systemSettings);
+		TheLifeConfiguration.loadSystemSettings(systemSettings);
 		
 		// initialize placeholder images before initializing data stores
 		TheLifeConfiguration.setGenericPersonImage(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help)));

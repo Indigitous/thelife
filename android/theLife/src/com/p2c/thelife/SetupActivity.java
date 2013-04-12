@@ -61,17 +61,24 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 			// make sure that some data was returned
 			if (jsonObject != null) {
 				
+				// the app user
+				UserModel user = null;
+				try {
+					user = UserModel.fromJSON(jsonObject, false);
+				} catch (Exception e) {
+					Log.e(TAG, "notifyServerResponseAvailable " + indicator, e);
+				}
+				String token = jsonObject.optString("authentication_token", "");				
+				
 				// LOGIN
 				if (indicator.equals("login")) {
-					int userId = jsonObject.optInt("id", 0);
-					String token = jsonObject.optString("authentication_token", "");
-					if (userId != 0 && token != "") {
-						Toast.makeText(this, "THE USER ID IS " + userId, Toast.LENGTH_SHORT).show(); // TODO
+					if (user != null && user.id != 0 && token != "") {
+						Toast.makeText(this, "THE USER ID IS " + user.id, Toast.LENGTH_SHORT).show(); // TODO
 						
 						// successful login
 						
 						// store the user configuration result
-						TheLifeConfiguration.setUserId(userId);
+						TheLifeConfiguration.setUser(user);
 						TheLifeConfiguration.setToken(token);
 						
 						// refresh data stores							
@@ -82,24 +89,13 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 				// REGISTER
 				} else if (indicator.equals("register")) {
 					
-					int userId = jsonObject.optInt("id", 0);
-					String token = jsonObject.optString("authentication_token", "");
-					String email = jsonObject.optString("authentication_token", "");
-					String firstName = jsonObject.optString("first_name", "");
-					String lastName = jsonObject.optString("last_name", "");
-					
-					if (userId != 0 && token != "" && email != "") {
-						Toast.makeText(this, "THE USER ID IS " + userId, Toast.LENGTH_SHORT).show(); // TODO
+					if (user != null && user.id != 0 && token != "" && user.email != "") {
+						Toast.makeText(this, getResources().getString(R.string.registration_successful), Toast.LENGTH_SHORT).show(); 
 						
 						// successful register
 						
-						// Add the user to the list of known users (would be the only user).
-						// The new user record will be superceded by the upcoming fullRefresh().
-						UserModel user = new UserModel(userId, firstName, lastName, null, email, "");
-						TheLifeConfiguration.getUsersDS().add(user);
-						
 						// store the user configuration result
-						TheLifeConfiguration.setUserId(userId);
+						TheLifeConfiguration.setUser(user);
 						TheLifeConfiguration.setToken(token);
 						
 						// refresh data stores

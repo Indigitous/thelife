@@ -8,6 +8,7 @@ import com.p2c.thelife.model.EventsDS;
 import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
 import com.p2c.thelife.model.RequestsDS;
+import com.p2c.thelife.model.UserModel;
 import com.p2c.thelife.model.UsersDS;
 
 
@@ -32,8 +33,8 @@ public class TheLifeConfiguration {
 	private static EventsDS m_eventsDS = null;
 	private static RequestsDS m_requestsDS = null;	
 	
-	// user id and authentication token
-	private static int m_userId = 0;
+	// app user and authentication token
+	private static UserModel m_user = null;
 	private static String m_token = null;
 	
 	public static final int HTTP_CONNECTION_TIMEOUT = 5000; // in millis
@@ -43,9 +44,9 @@ public class TheLifeConfiguration {
 	// refresh deltas: time before a refresh
 	public static final long REFRESH_DEEDS_DELTA = 24 * 60 * 60 * 1000; // 1 day in millis
 	public static final long REFRESH_CATEGORIES_DELTA = REFRESH_DEEDS_DELTA;
-	public static final long REFRESH_EVENTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
+	public static final long REFRESH_EVENTS_DELTA = 1 * 60 * 1000; // 5 minutes in millis
 	public static final long REFRESH_FRIENDS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
-	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
+	public static final long REFRESH_GROUPS_DELTA = 30 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
 	public static final long REFRESH_REQUESTS_FIRST_DELTA = 4000; // 4 seconds before first Requests refresh
 	public static final long REFRESH_REQUESTS_DELTA = 15000; // 5 * 60 * 1000; // 5 minutes in millis
@@ -71,11 +72,20 @@ public class TheLifeConfiguration {
 	
 	
 	/*************************** System Preferences **********************/
-	public static void setSystemSettings(SharedPreferences systemSettings) {
+	public static void loadSystemSettings(SharedPreferences systemSettings) {
 		m_systemSettings = systemSettings;
 		
-		m_userId = m_systemSettings.getInt("user_id", 0);
-		m_token = m_systemSettings.getString("token", "");
+		int userId = m_systemSettings.getInt("user_id", 0);
+		if (userId != 0) {
+			String firstName = m_systemSettings.getString("user_first_name", "");
+			String lastName = m_systemSettings.getString("user_last_name", "");	
+			String email = m_systemSettings.getString("user_email", "");		
+			String phone = m_systemSettings.getString("user_phone", "");		
+			
+			m_user = new UserModel(userId, firstName, lastName, null, email, phone);
+		}
+		
+		m_token = m_systemSettings.getString("token", "");		
 	}
 	
 	/*************************** Data Stores *****************************/
@@ -187,23 +197,32 @@ public class TheLifeConfiguration {
 		m_missingDataThumbnail = missingDataThumbnail;
 	}		
 	
-	/************************** User information ***************************/
+	/************************** App User information ***************************/
 	
 	public static int getUserId() {
 		return 9; // TODO debugging
-		//return m_userId;
+		//return (m_user != null) ? m_user.id : 0;
 	}
 	
 	public static boolean isValidUser() {
-		return m_userId != 0;
+		return m_user != null;
 	}
 	
-	public static void setUserId(int user_id) {
-		m_userId = user_id;
-		
+	public static void setUser(UserModel user) {
+
+		m_user = user;
 		SharedPreferences.Editor systemSettingsEditor = m_systemSettings.edit();
-		systemSettingsEditor.putInt("user_id", m_userId);
-		systemSettingsEditor.commit();		
+		
+		if (m_user != null) {
+			systemSettingsEditor.putInt("user_id", m_user.id);
+			systemSettingsEditor.putString("user_first_name", m_user.firstName);
+			systemSettingsEditor.putString("user_last_name", m_user.lastName);	
+			systemSettingsEditor.putString("user_email", m_user.email);		
+			systemSettingsEditor.putString("user_phone", m_user.phone);		
+			systemSettingsEditor.commit();		
+		} else {
+			systemSettingsEditor.putInt("user_id", 0); // marks a not-valid user
+		}
 	}	
 	
 	/**
@@ -211,7 +230,7 @@ public class TheLifeConfiguration {
 	 * @return authentication token
 	 */
 	public static String getToken() {
-		return "jEA3NPZYsZ4Y5pnsqYys"; // TODO debugging
+		return "huzFuk837n5i4Ncegtat"; // TODO debugging
 		// return m_token;
 	}	
 	
