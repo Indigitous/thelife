@@ -29,7 +29,7 @@ public class SetupRegisterDialog extends AbstractServerAccessDialog {
 		// set the message, content and buttons of the alert
 		alertBuilder.setMessage(R.string.register_prompt);
 		alertBuilder.setView(view);
-		alertBuilder.setNegativeButton(R.string.cancel, null); 
+		alertBuilder.setNegativeButton(R.string.cancel, null);
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			
 			@Override

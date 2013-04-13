@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,8 +57,8 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 			title.setText(Utilities.fillTemplateString(getResources(), m_friend, m_deed.title));				
 			
 			// description
-			TextView description = (TextView)findViewById(R.id.deed_for_friend_description);
-			description.setText(Utilities.fillTemplateString(getResources(), m_friend, m_deed.description));				
+			WebView description = (WebView)findViewById(R.id.deed_for_friend_description);
+			description.loadData(m_deed.description, "text/html", null);
 		}
 	}
 
