@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
-import com.p2c.thelife.model.AbstractDS;
 
 public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implements AbstractDS.DSChangedListener {
 	
@@ -45,6 +46,11 @@ public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implemen
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
 		String eventDescription = event.description; // Utilities.fillTemplateString(getContext().getResources(), user, friend, event.description);
 		textViewDescription.setText(Html.fromHtml(eventDescription));
+		
+		TextView textViewTime = (TextView)eventView.findViewById(R.id.textViewTime);
+		String eventTime = DateUtils.getRelativeDateTimeString(getContext(), event.timestamp, 
+			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
+		textViewTime.setText(Html.fromHtml(eventTime));		
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
 		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id, false));

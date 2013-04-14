@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import android.content.Context;
 import android.text.Html;
-import android.util.Log;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +14,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
-import com.p2c.thelife.model.AbstractDS;
 
 public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements AbstractDS.DSChangedListener {
 	
@@ -54,7 +54,12 @@ public class EventsForFriendAdapter extends ArrayAdapter<EventModel> implements 
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
 		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id, false));
 		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.imageView2);
-		imageView2.setImageBitmap(FriendModel.getThumbnail(event.friend_id, false));			
+		imageView2.setImageBitmap(FriendModel.getThumbnail(event.friend_id, false));	
+		
+		TextView textViewTime = (TextView)eventView.findViewById(R.id.textViewTime);
+		String eventTime = DateUtils.getRelativeDateTimeString(getContext(), event.timestamp, 
+			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
+		textViewTime.setText(Html.fromHtml(eventTime));		
 		
 		// only show the pledge view if the event requests it
 		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
