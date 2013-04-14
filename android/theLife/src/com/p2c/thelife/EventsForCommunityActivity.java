@@ -16,7 +16,7 @@ import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.EventsDS;
 
 /**
- * This activity uses polling to get fresh events.
+ * This activity uses polling to get fresh events into the data store and display while the activity is visible.
  * @author clarence
  *
  */
@@ -26,7 +26,11 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	
 	private ListView m_listView = null;
 	private EventsForCommunityAdapter m_adapter = null;
-	private Runnable m_refreshRunnable = null;
+	
+	// refresh the data store and display
+	private Runnable m_datastoreRefreshRunnable = null;
+	// refresh the events list view
+	private Runnable m_displayRefreshRunnable = null;	
 	
 	
 	@Override
@@ -36,27 +40,37 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		// remove the application label at the top
 		//super.setTitle("");
 		
+		// If the current user has not been authenticated, jump to login or register instead.
+		if (!TheLifeConfiguration.isValidUser()) {
+			// not authenticated user, so login or register
+			Intent intent = new Intent("com.p2c.thelife.Setup");
+			startActivity(intent);
+		}		
+		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.events_for_community_list);
 		m_adapter = new EventsForCommunityAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
 		
-		// data store refresh runnable			
-		m_refreshRunnable = new Runnable() {
+		// events data store refresh runnable
+		// this will refresh the data store from the server.
+		m_datastoreRefreshRunnable = new Runnable() {
 			@Override
 			public void run() {
 				TheLifeConfiguration.getEventsDS().refresh(null);
 			}
-		};		
-					
-		// If the current user is an authenticated, go ahead with the rest of the activity.
-		// But if the current user has not been authenticated, login or register.
-		if (!TheLifeConfiguration.isValidUser()) {
-			// not authenticated user, so login or register
-			Intent intent = new Intent("com.p2c.thelife.Setup");
-			startActivity(intent);
-		}
-			
+		};
+		
+		// timestamps in events list view refresh runnable
+		m_displayRefreshRunnable = new Runnable() {
+			@Override
+			public void run() {
+				m_adapter.notifyDataSetChanged();
+				
+				// refresh the display again in one minute
+				m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);				
+			}
+		};
 	}
 	
 	
@@ -73,6 +87,9 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
 			TheLifeConfiguration.getEventsDS().refresh(null);
 		}
+		
+		// refresh the display every 60 seconds
+		m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);
 	}	
 	
 	
@@ -83,7 +100,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
-		m_listView.postDelayed(m_refreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
+		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
 	
 	
@@ -97,7 +114,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
-		m_listView.removeCallbacks(m_refreshRunnable);
+		m_listView.removeCallbacks(m_datastoreRefreshRunnable);
 	}
 	
 
@@ -113,6 +130,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		if (item.getItemId() == R.id.action_help) {
 			startActivity(new Intent("com.p2c.thelife.CommunityHelp"));
 		}
+		
 		return true;
 	}
 	

@@ -90,6 +90,6 @@ public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implemen
 			add(m);
 		}				
 
-	}			
+	}
 
 }

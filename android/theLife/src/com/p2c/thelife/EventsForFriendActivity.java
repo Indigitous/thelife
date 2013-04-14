@@ -13,7 +13,7 @@ import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 
 /**
- * This activity uses polling to get new events.
+ * This activity uses polling to get new events into the data store and display while the activity is visible.
  * @author clarence
  *
  */
@@ -24,7 +24,11 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	private FriendModel m_friend = null;
 	private ListView m_listView = null;
 	private EventsForFriendAdapter m_adapter = null;
-	private Runnable m_refreshRunnable = null;	
+	
+	// refresh the data store and display
+	private Runnable m_datastoreRefreshRunnable = null;	
+	// refresh the events list view
+	private Runnable m_displayRefreshRunnable = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +56,24 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		m_listView.setAdapter(m_adapter);
 		
 		// events data store refresh runnable
-		m_refreshRunnable = new Runnable() {
+		// this will refresh the data store from the server.		
+		m_datastoreRefreshRunnable = new Runnable() {
 			@Override
 			public void run() {
 				TheLifeConfiguration.getEventsDS().refresh(null);
 			}
-		};				
+		};	
+		
+		// timestamps in events list view refresh runnable
+		m_displayRefreshRunnable = new Runnable() {
+			@Override
+			public void run() {
+				m_adapter.notifyDataSetChanged();
+				
+				// refresh the display again in one minute
+				m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);				
+			}
+		};		
 	}
 	
 	
@@ -72,6 +88,9 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 		TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().refresh(null);
+		
+		// refresh the display every 60 seconds
+		m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);		
 	}	
 	
 	
@@ -82,7 +101,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	@Override
 	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
-		m_listView.postDelayed(m_refreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
+		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
 	
 	
@@ -96,7 +115,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
-		m_listView.removeCallbacks(m_refreshRunnable);
+		m_listView.removeCallbacks(m_datastoreRefreshRunnable);
 	}	
 	
 
