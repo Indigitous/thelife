@@ -67,7 +67,8 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 		try {
 			if (jsonObject != null) {
 				
-				UserModel user = UserModel.fromJSON(jsonObject, false);
+				UserModel user = TheLifeConfiguration.getUser();
+				user.setFromPartialJSON(jsonObject);				
 				TheLifeConfiguration.setUser(user);
 				
 				// update the UI with the result of the query

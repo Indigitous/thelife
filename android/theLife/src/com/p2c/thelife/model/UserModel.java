@@ -92,5 +92,28 @@ public class UserModel extends AbstractModel {
 			json.optString("phone", "")
 		);
 	}	
-
+	
+	
+	/**
+	 * Read optional fields from the JSON, and if present, change the current object. 
+	 * @param json
+	 */
+	public void setFromPartialJSON(JSONObject json) {
+		String newEmail = json.optString("email",  null);
+		if (newEmail != null) {
+			this.email = newEmail; 
+		}
+		String newPhone = json.optString("phone", null);
+		if (newPhone != null) {
+			this.phone = newPhone;
+		}
+		String newFirstName = json.optString("first_name", null);
+		if (newFirstName != null) {
+			this.firstName = newFirstName; 
+		}
+		String newLastName = json.optString("last_name", null);
+		if (newLastName != null) {
+			this.lastName = newLastName;
+		}
+	}
 }
