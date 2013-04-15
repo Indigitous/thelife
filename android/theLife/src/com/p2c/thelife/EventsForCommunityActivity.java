@@ -65,10 +65,12 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		m_displayRefreshRunnable = new Runnable() {
 			@Override
 			public void run() {
-				m_adapter.notifyDataSetChanged();
-				
-				// refresh the display again in one minute
-				m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);				
+				if (m_adapter != null && m_listView != null) {
+					m_adapter.notifyDataSetChanged();
+					
+					// refresh the display again in one minute
+					m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);
+				}
 			}
 		};
 	}
