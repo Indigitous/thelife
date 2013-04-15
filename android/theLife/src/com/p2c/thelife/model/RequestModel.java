@@ -69,7 +69,7 @@ public class RequestModel extends AbstractModel {
 			json.getInt("id"),
 			json.getInt("user_id"),
 			json.getInt("group_id"),
-			json.getString("kind"),
+			json.getString("type"),
 			json.optString("email"),
 			json.optString("sms"),
 			json.optString("description", "Placeholder Request Description")
