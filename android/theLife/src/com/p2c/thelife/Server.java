@@ -114,7 +114,7 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
-			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.integerValue))); // TODO: need a better server API here			
+			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId))); // TODO: need a better server API here			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
 			
 			HttpPost httpRequest = new HttpPost(urlString);
@@ -128,7 +128,7 @@ public class Server {
 	
 	
 	/**
-	 * Create a new friend for the current user.
+	 * Delete an existing friend for the current user.
 	 */
 	public void deleteFriend(int friendId, ServerListener listener, String indicator) {
 		
@@ -143,6 +143,26 @@ public class Server {
 			Log.e(TAG, "deleteFriend()", e);
 		}
 	}	
+	
+	
+	public void updateFriend(int friendId, FriendModel.Threshold threshold, ServerListener listener, String indicator) {
+		// API endpoint
+		// returns HTTP 404 on an unknown friend, HTTP 201 on a success TODO check this
+		
+		try {
+			String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId));
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId)));		
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			
+			HttpPut httpRequest = new HttpPut(urlString);
+			httpRequest.setEntity(formEntity);			
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);				
+		} catch (Exception e) {
+			Log.e(TAG, "updateFriend()", e);
+		}		
+	}
 	
 	
 	/**
@@ -186,7 +206,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("friend_id", String.valueOf(friendId)));
 			pairs.add(new BasicNameValuePair("prayer_requested", withPrayerSupport ? "true" : "false"));
 			if (newThreshold != null) {
-				pairs.add(new BasicNameValuePair("new_threshold_id", String.valueOf(newThreshold.integerValue)));
+				pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(newThreshold.serverId)));
 			}
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);		
 			
@@ -202,6 +222,7 @@ public class Server {
 	
 	/**
 	 * Query against all the groups in the system.
+	 * @param queryString	string to search in group names and descriptions. If null, then return all groups.
 	 * The return value will be a JSONObject containing a single JSONArray of the groups. 
 	 */
 	public void queryGroups(String queryString, ServerListener listener, String indicator) {
@@ -277,7 +298,7 @@ public class Server {
 	
 	
 	/**
-	 * Process a request to add a user to a group.
+	 * Get the user's account record.
 	 */
 	public void queryUserProfile(int userId, ServerListener listener, String indicator) {
 		

@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.p2c.thelife.BitmapCache;
 import com.p2c.thelife.R;
@@ -27,10 +26,10 @@ public class FriendModel extends AbstractModel {
 		Entering(6),
 		Christian(7);
 		
-		public int integerValue;
+		public int serverId;
 		
-		Threshold(int integerValue) {
-			this.integerValue = integerValue;
+		Threshold(int serverId) {
+			this.serverId = serverId;
 		}
 	}
 	
