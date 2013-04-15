@@ -22,7 +22,7 @@ public class GroupsDS extends AbstractDS<GroupModel> {
 				"GroupsDS", 
 				"groups.json",
 				"refresh_groups_timestamp_key",
-				"groups", // TODO should be my_groups
+				"my_groups",
 				"refresh_groups_delta_key",
 				TheLifeConfiguration.REFRESH_GROUPS_DELTA
 			);		
