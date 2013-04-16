@@ -6,12 +6,14 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.p2c.thelife.model.GroupModel;
 
-public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, GroupRequestJoinDialog.Listener {
+public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, OnItemClickListener, GroupRequestJoinDialog.Listener {
 	
 	private static final String TAG = "GroupsSearchActivity";
 	
@@ -27,7 +29,9 @@ public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity imp
 		// attach the event list view
 		ListView listView = (ListView)findViewById(R.id.search_groups_list);
 		GroupsSearchAdapter adapter = new GroupsSearchAdapter(this, android.R.layout.simple_list_item_1, editText);
-		listView.setAdapter(adapter);		
+		listView.setAdapter(adapter);
+		
+		listView.setOnItemClickListener(this);		
 	}
 
 	@Override
@@ -41,8 +45,9 @@ public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity imp
 	 * User has selected a group to join. 
 	 * @param view
 	 */
-	public void selectGroup(View view) {
-		m_group = (GroupModel)view.getTag();
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {	
+		m_group = (GroupModel)arg1.getTag();
 		
 		// confirm the choice
 		GroupRequestJoinDialog dialog = new GroupRequestJoinDialog();

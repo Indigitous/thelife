@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
@@ -34,9 +33,7 @@ public class GroupRequestJoinDialog extends AbstractServerAccessDialog {
 				((Listener)m_listener).notifyAttemptingServerAccess("createJoinGroupRequest");
 
 				Server server = new Server();
-				server.createRequest(group.id, RequestModel.REQUEST_MEMBERSHIP, null, null, (Server.ServerListener)m_listener, "createRequest");		
-				
-				Toast.makeText(getActivity(), "REQUEST TO JOIN GROUP " + group.name + " ", Toast.LENGTH_SHORT).show();					
+				server.createRequest(group.id, RequestModel.REQUEST_MEMBERSHIP, null, null, (Server.ServerListener)m_listener, "createRequest");						
 			}
 		});		
 		

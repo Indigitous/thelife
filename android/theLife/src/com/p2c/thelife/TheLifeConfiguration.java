@@ -49,12 +49,12 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_GROUPS_DELTA = 30 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
 	public static final long REFRESH_REQUESTS_FIRST_DELTA = 4000; // 4 seconds before first Requests refresh
-	public static final long REFRESH_REQUESTS_DELTA = 15000; // 5 * 60 * 1000; // 5 minutes in millis
+	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
-	public static final String SERVER_URL = "http://75.157.251.192:3000/v1/"; // TODO debugging
-	//public static final String SERVER_URL = "http://thelifeapp.com:3000/v1/";
+	//public static final String SERVER_URL = "http://75.157.251.192:3000/v1/"; // TODO debugging
+	public static final String SERVER_URL = "http://srv1.thelifeapp.com:3000/v1/";
 	
 	
 	// stock images
@@ -200,8 +200,7 @@ public class TheLifeConfiguration {
 	/************************** App User information ***************************/
 	
 	public static int getUserId() {
-		return 9; // TODO debugging
-		//return (m_user != null) ? m_user.id : 0;
+		return (m_user != null) ? m_user.id : 0;
 	}
 	
 	public static UserModel getUser() {
@@ -234,13 +233,11 @@ public class TheLifeConfiguration {
 	 * @return authentication token
 	 */
 	public static String getToken() {
-		return "bwXg4RLjcNQdPykp15zt"; // TODO debugging
-		// return m_token;
+		return m_token;
 	}	
 	
 	/**
-	 * 
-	 * @return authentication token
+	 * set the authentication token
 	 */
 	public static void setToken(String token) {
 		m_token = token;

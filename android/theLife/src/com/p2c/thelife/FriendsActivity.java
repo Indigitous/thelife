@@ -37,6 +37,9 @@ public class FriendsActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_friends, SlidingMenuSupport.FRIENDS_POSITION);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
 		m_adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
 		friendsGrid.setAdapter(m_adapter);
@@ -82,6 +85,10 @@ public class FriendsActivity
 		} else if (item.getItemId() == R.id.action_new) {
 			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
 			startActivity(intent);
+		} else if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);			
 		}
 		
 		return true;

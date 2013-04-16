@@ -72,7 +72,7 @@
     <string name="delete_friend_prompt">Delete friend %s?</string>
     <string name="friend">friend</string>
     <string name="user">user</string>
-    <string name="request_join_group_prompt">Do you wish to join $s?</string>
+    <string name="request_join_group_prompt">Do you wish to join %1$s?</string>
     <string name="waiting">Waiting&#8230;"</string>
     <string name="creating_new_group">Creating new group"</string>
     <string name="deleting_friend">Deleting friend"</string>
@@ -90,6 +90,7 @@
     <string name="membership_request_description">%1$s wants to join your group %2$s.</string>
     <string name="invite_request_description">You are requested to join group %1$s.</string>
     <string name="rejecting_request">Rejecting request</string>
+    <string name="creating_new_event">Creating new event</string>
     
     <string name="first_name">First Name</string>
 	<string name="last_name">Last Name</string>

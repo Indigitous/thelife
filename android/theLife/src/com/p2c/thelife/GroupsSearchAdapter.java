@@ -112,6 +112,6 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnE
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}				
-	}	
+	}
 
 }

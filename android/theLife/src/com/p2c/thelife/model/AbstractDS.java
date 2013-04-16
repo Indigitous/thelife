@@ -56,7 +56,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected boolean m_isRefreshing = false; 				// lock to prevent more than one thread refresh at any time
 	protected String m_refreshIndicator = null;
 	protected String m_refreshSettingTimestampKey = null;
-	protected String m_refreshURL = null; 
+	protected String m_refreshURLPath = null; 
 	protected long m_refreshDelta = 0;						// in seconds
 
 	
@@ -78,8 +78,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		m_cacheFileName = TheLifeConfiguration.getCacheDirectory() + cacheFileName;
 		m_systemSettings = context.getSharedPreferences(TheLifeConfiguration.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
 		m_refreshSettingTimestampKey = refreshSettingTimestampKey;
-		m_refreshURL = Utilities.makeServerUrlString(refreshURLPath);
-		// m_refreshURL = Utilities.makeServerUrlStringDebug("http://thelife.ballistiq.com/api/v11/", refreshURLPath); // TODO debug 
+		m_refreshURLPath = refreshURLPath;
 		m_refreshDelta = m_systemSettings.getLong(refreshSettingDeltaKey, refreshDeltaDefault);
 		
 		// load model objects from the JSON cache file on this device.
@@ -205,7 +204,8 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					m_isRefreshing = true;
 					m_refreshIndicator = refreshIndicator;
 					Log.d(TAG, "WILL NOW RUN BACKGROUND MODELS REFRESH");
-					new readFromServer().execute(new URL(m_refreshURL));
+					String refreshURL = Utilities.makeServerUrlString(m_refreshURLPath);
+					new readFromServer().execute(new URL(refreshURL));
 				} catch (MalformedURLException e) {
 					Log.e(TAG, "refresh()", e);
 				} finally {
