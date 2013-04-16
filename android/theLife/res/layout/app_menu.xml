@@ -11,16 +11,18 @@
         android:layout_height="80dp" >
 
 	    <ImageView
-	        android:id="@+id/imageView1"
+	        android:id="@+id/app_menu_user_image"
 	        android:layout_width="wrap_content"
 	        android:layout_height="fill_parent"
-	        android:src="@drawable/thelife" />
-	    
-	    <ImageView
-	        android:id="@+id/imageView2"
+	        android:src="@drawable/generic_avatar_image" />
+
+	    <TextView
+	        android:id="@+id/app_menu_user_name"
 	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"
-	        android:src="@drawable/p2c" />
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:text="Large Text"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     </LinearLayout>
     

@@ -33,7 +33,7 @@ public class GroupRequestJoinDialog extends AbstractServerAccessDialog {
 				((Listener)m_listener).notifyAttemptingServerAccess("createJoinGroupRequest");
 
 				Server server = new Server();
-				server.createRequest(group.id, RequestModel.REQUEST_MEMBERSHIP, null, null, (Server.ServerListener)m_listener, "createRequest");						
+				server.createRequest(group.id, RequestModel.REQUEST_MEMBERSHIP, null, null, (Server.ServerListener)m_listener, "createRequest");				
 			}
 		});		
 		

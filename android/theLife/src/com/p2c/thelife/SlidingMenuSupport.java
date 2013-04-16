@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.p2c.thelife.model.UserModel;
 import com.slidingmenu.lib.SlidingMenu;
 
 /**
@@ -47,6 +50,14 @@ public class SlidingMenuSupport {
         m_slidingMenu.setMenu(R.layout.app_menu);
         View appMenu = m_slidingMenu.getMenu();
         appMenu.setBackgroundColor(android.graphics.Color.LTGRAY);
+        
+        // show the app user
+        if (TheLifeConfiguration.isValidUser()) {
+	        ImageView imageView = (ImageView)appMenu.findViewById(R.id.app_menu_user_image);
+	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getUserId(), false));
+	        TextView textView = (TextView)appMenu.findViewById(R.id.app_menu_user_name);
+	        textView.setText(TheLifeConfiguration.getUser().getFullName());
+        }
         
         // add the commands to the sliding menu using an adapter
         ListView commandsView = (ListView)appMenu.findViewById(R.id.app_menu_command_list);
