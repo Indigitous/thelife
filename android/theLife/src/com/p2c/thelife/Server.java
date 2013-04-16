@@ -457,7 +457,7 @@ public class Server {
 					jsonString = jsonString.trim();
 					
 					if (jsonString.length() > 0) {
-						// if the result is a JSONArray, wrap it inside a JSONObject
+						// if the result is a JSONArray, wrap it inside a JSONObject called "a"
 						if (jsonString.charAt(0) == '[') {
 							JSONArray jsonArray = new JSONArray(jsonString);
 							jsonObject = new JSONObject();

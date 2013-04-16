@@ -3,6 +3,7 @@ package com.p2c.thelife;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,6 +21,9 @@ import com.p2c.thelife.model.GroupModel;
 public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnEditorActionListener, Server.ServerListener {
 	
 	private static final String TAG = "GroupsSearchAdapter"; 
+	
+	private ProgressDialog m_progressDialog = null;	
+	
 		
 	public GroupsSearchAdapter(Context context, int mode, EditText searchView) {
 		super(context, mode);
@@ -57,8 +61,8 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnE
 	
 	private void query(String queryString) {
 		
-System.out.println("WILL QUERY FOR " + queryString);
 		// send the query to the server; server will call back with notifyServerResponseAvailable
+		notifyAttemptingServerAccess("queryGroups");
 		Server server = new Server();
 		server.queryGroups(queryString, this, "queryGroups");
 	}	
@@ -72,13 +76,20 @@ System.out.println("WILL QUERY FOR " + queryString);
 		}
 		return true;
 	}
+	
+	public void notifyAttemptingServerAccess(String indicator) {
+		m_progressDialog = ProgressDialog.show(getContext(), 
+			getContext().getResources().getString(R.string.waiting), 
+			getContext().getResources().getString(R.string.querying), true);
+				
+	}	
 
 	@Override
 	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject) {
-
-System.out.println("GOT queryGroups response: " + jsonObject);
-		
+	
 		if (jsonObject != null) {
+			
+			// look for a JSONArray wrapped in an JSON object under key "a"
 			JSONArray jsonArray = jsonObject.optJSONArray("a");
 			if (jsonArray != null) {
 				clear();
@@ -97,6 +108,10 @@ System.out.println("GOT queryGroups response: " + jsonObject);
 		
 		// redisplay
 		notifyDataSetChanged();		
+		
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}				
 	}	
 
 }

@@ -127,4 +127,6 @@
     
     <string name="registration_successful">You are now registered.</string>
     
+    <string name="querying">Querying</string>
+    
 </resources>
