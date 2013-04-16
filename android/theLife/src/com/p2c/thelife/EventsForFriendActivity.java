@@ -3,7 +3,6 @@ package com.p2c.thelife;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -11,6 +10,9 @@ import android.widget.TextView;
 
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
  * This activity uses polling to get new events into the data store and display while the activity is visible.
@@ -33,7 +35,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_friend, SlidingMenuSupport.NO_POSITION);
-			
+					
 		// Get the friend for this deed
 		int friendId = getIntent().getIntExtra("friend_id", 0);
 		m_friend = TheLifeConfiguration.getFriendsDS().findById(friendId);
@@ -124,7 +126,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.friend, menu);
+		getSupportMenuInflater().inflate(R.menu.friend, menu);
 		return true;
 	}
 	
@@ -137,5 +139,16 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		
 		return true;
 	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.Friends");
+			startActivity(intent);
+		}
+		
+		return true;
+	}		
 
 }

@@ -3,15 +3,18 @@ package com.p2c.thelife;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.p2c.thelife.Server.ServerListener;
 import com.p2c.thelife.model.UserModel;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public class SettingsActivity extends SlidingMenuPollingActivity implements ServerListener {
 	
@@ -23,7 +26,7 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_settings, SlidingMenuSupport.SETTINGS_POSITION);
-		
+				
 		// show the progress dialog while getting the user profile
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 		Server server = new Server();
@@ -32,8 +35,10 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.settings, menu);
+		getSupportMenuInflater().inflate(R.menu.settings, menu);
 		return true;
 	}
 	
@@ -96,5 +101,16 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 			Log.e(TAG, "notifyServerResponseAvailable() " + indicator, e);
 		}
 	}	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}
+		
+		return true;
+	}				
 	
 }

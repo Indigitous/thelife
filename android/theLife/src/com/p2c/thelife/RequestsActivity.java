@@ -3,13 +3,15 @@ package com.p2c.thelife;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
 
-import com.p2c.thelife.model.GroupModel;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.RequestModel;
+
 
 /**
  * Requests are automatically polled by the RequestsPoller class.
@@ -27,7 +29,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_requests, SlidingMenuSupport.REQUESTS_POSITION);
-		
+				
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.activity_requests_list);
 		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1);
@@ -38,7 +40,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.requests, menu);
+		getSupportMenuInflater().inflate(R.menu.requests, menu);
 		return true;
 	}
 	
@@ -116,5 +118,16 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		}						
 		
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);			
+		}
+		
+		return true;
+	}			
 
 }

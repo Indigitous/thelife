@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -11,13 +13,15 @@ import android.support.v4.app.FragmentActivity;
  * @author clarence
  *
  */
-public class SlidingMenuPollingFragmentActivity extends FragmentActivity {
+public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity {
 	
 	protected SlidingMenuSupport m_support = null;
 		
 	protected void onCreate(Bundle savedInstanceState, int layout_res, int slidingMenuPosition) {
 		super.onCreate(savedInstanceState);
 		setContentView(layout_res);
+		
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);		
 		
 		m_support = new SlidingMenuSupport(this, slidingMenuPosition);
 	}

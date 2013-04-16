@@ -3,11 +3,12 @@ package com.p2c.thelife;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.FriendModel;
 
 
@@ -31,9 +32,19 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity im
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.import_friends, menu);
+		getSupportMenuInflater().inflate(R.menu.import_friends, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.Friends");
+			startActivity(intent);
+		}
+		
+		return true;
+	}		
 	
 	public boolean importFriendsByPhone(View view) {
 		return true;

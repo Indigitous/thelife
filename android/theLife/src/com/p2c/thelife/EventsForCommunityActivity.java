@@ -6,14 +6,15 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import com.p2c.thelife.Server.ServerListener;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.EventsDS;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
  * This activity uses polling to get fresh events into the data store and display while the activity is visible.
@@ -123,7 +124,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.events_for_community, menu);
+		getSupportMenuInflater().inflate(R.menu.events_for_community, menu);
 		return true;
 	}
 	

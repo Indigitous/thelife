@@ -7,8 +7,6 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -17,6 +15,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 
 public class GroupsActivity extends SlidingMenuPollingFragmentActivity 
 	implements OnItemLongClickListener, OnItemClickListener, Server.ServerListener, GroupCreateDialog.Listener {
@@ -30,7 +32,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_groups, SlidingMenuSupport.GROUPS_POSITION);	
-		
+				
 		ListView groupsList = (ListView)findViewById(R.id.groups_list);
 		m_adapter = new GroupsAdapter(this, android.R.layout.simple_list_item_1);
 		groupsList.setAdapter(m_adapter);
@@ -64,7 +66,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.groups, menu);
+		getSupportMenuInflater().inflate(R.menu.groups, menu);
 		return true;
 	}
 	
@@ -75,7 +77,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 			Toast.makeText(this, "Groups Help", Toast.LENGTH_SHORT).show();
 		} else if (item.getItemId() == R.id.action_search) {
 			
-//			boolean proceeded = onSearchRequested(); // does nothing, don't know why
+//			boolean proceeded = onSearchRequested(); // Android built-in search support: does nothing, don't know why
 			Intent intent = new Intent("com.p2c.thelife.GroupsSearch");
 			startActivity(intent);
 			
@@ -83,6 +85,10 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 			
 			GroupCreateDialog dialog = new GroupCreateDialog();
 			dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+		} else if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);			
 		}
 		
 		return true;

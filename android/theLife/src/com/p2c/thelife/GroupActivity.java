@@ -3,9 +3,8 @@ package com.p2c.thelife;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -14,6 +13,9 @@ import android.widget.Toast;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.GroupUsersDS;
 import com.p2c.thelife.model.UserModel;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, UserDeleteFromGroupDialog.Listener {
 	
@@ -80,7 +82,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.group, menu);
+		getSupportMenuInflater().inflate(R.menu.group, menu);
 		return true;
 	}
 	
@@ -93,6 +95,9 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 				UserInviteDialog dialog = new UserInviteDialog();
 				dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 			}
+		}  else if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.Groups");
+			startActivity(intent);			
 		}
 		
 		return true;

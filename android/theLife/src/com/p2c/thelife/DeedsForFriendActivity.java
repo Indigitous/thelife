@@ -2,15 +2,16 @@ package com.p2c.thelife;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
+
 
 public class DeedsForFriendActivity extends SlidingMenuPollingActivity implements DSRefreshedListener {
 	
@@ -22,7 +23,7 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_deeds_for_friend, SlidingMenuSupport.NO_POSITION);
-			
+					
 		// Get the friend for this deed
 		int friendId = getIntent().getIntExtra("friend_id", 0);
 		m_friend = TheLifeConfiguration.getFriendsDS().findById(friendId);
@@ -83,7 +84,7 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.deeds_for_friend, menu);
+		getSupportMenuInflater().inflate(R.menu.deeds_for_friend, menu);
 		return true;
 	}
 	
@@ -104,5 +105,16 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 		
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.EventsForFriend");
+			intent.putExtra("friend_id", m_friend.id);
+			startActivity(intent);
+		}
+		
+		return true;
+	}					
 
 }

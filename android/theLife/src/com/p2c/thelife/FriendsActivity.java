@@ -5,9 +5,6 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,6 +13,10 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.p2c.thelife.model.FriendModel;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 
 /**
  * Show the friends of the current user.
@@ -36,10 +37,7 @@ public class FriendsActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_friends, SlidingMenuSupport.FRIENDS_POSITION);
-		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+				
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
 		m_adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
 		friendsGrid.setAdapter(m_adapter);
@@ -74,7 +72,7 @@ public class FriendsActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.friends, menu);
+		getSupportMenuInflater().inflate(R.menu.friends, menu);
 		return true;
 	}
 	
@@ -104,7 +102,7 @@ public class FriendsActivity
 		// get the friend associated with this view
 		m_friend = (FriendModel)arg1.getTag();
 		
-		Intent intent = new Intent("com.p2c.thelife.FriendActivity");
+		Intent intent = new Intent("com.p2c.thelife.EventsForFriend");
 		intent.putExtra("friend_id", m_friend.id);
 		startActivity(intent);
 	}

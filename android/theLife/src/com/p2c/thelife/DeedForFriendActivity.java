@@ -3,8 +3,8 @@ package com.p2c.thelife;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -14,6 +14,11 @@ import android.widget.Toast;
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
+
 
 public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, EventCreateDialog.Listener {
 	
@@ -65,9 +70,20 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.deed_for_friend, menu);
+		getSupportMenuInflater().inflate(R.menu.deed_for_friend, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {	
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent("com.p2c.thelife.DeedsForFriend");
+			intent.putExtra("friend_id", m_friend.id);			
+			startActivity(intent);
+		}
+		
+		return true;
+	}				
 	
 	public void doDeed(View view) {
 		EventCreateDialog dialog = new EventCreateDialog();

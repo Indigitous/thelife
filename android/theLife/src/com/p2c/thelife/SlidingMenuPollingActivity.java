@@ -1,7 +1,8 @@
 package com.p2c.thelife;
 
-import android.app.Activity;
 import android.os.Bundle;
+
+import com.actionbarsherlock.app.SherlockActivity;
 
 /**
  * Superclass of all Activities that use the sliding menu and application-wide polling.
@@ -9,13 +10,15 @@ import android.os.Bundle;
  * @author clarence
  *
  */
-public class SlidingMenuPollingActivity extends Activity {
+public class SlidingMenuPollingActivity extends SherlockActivity {
 	
 	protected SlidingMenuSupport m_support = null;
 		
 	protected void onCreate(Bundle savedInstanceState, int layout_res, int slidingMenuPosition) {
 		super.onCreate(savedInstanceState);
 		setContentView(layout_res);
+		
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);		
 		
 		m_support = new SlidingMenuSupport(this, slidingMenuPosition);
 	}

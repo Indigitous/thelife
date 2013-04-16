@@ -389,7 +389,9 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	public void notifyDSChangedListeners() {
 		for (DSChangedListener listener:m_changedListeners) {
-			listener.notifyDSChanged(m_oldModelIds, m_newModelIds);
+			if (listener != null) {
+				listener.notifyDSChanged(m_oldModelIds, m_newModelIds);
+			}
 		}
 	}
 	
