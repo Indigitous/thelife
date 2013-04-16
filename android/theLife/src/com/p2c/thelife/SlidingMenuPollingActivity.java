@@ -5,8 +5,9 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockActivity;
 
 /**
- * Superclass of all Activities that use the sliding menu and application-wide polling.
+ * Superclass of all Activities that use the sliding menu and application-wide polling and Sherlock ActionBar.
  * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license TODO license notice
+ * SherlockActionBar is from http://actionbarsherlock.com/, Apache 2.0 license TODO license notice
  * @author clarence
  *
  */
