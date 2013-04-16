@@ -20,7 +20,7 @@
 	        android:id="@+id/settings_image"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@drawable/unknown" />
+	        android:src="@drawable/generic_avatar_image" />
 	    
 	    <TextView
 	        android:id="@+id/settings_name_by_image"

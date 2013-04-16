@@ -17,7 +17,7 @@
 	        android:layout_width="60dp"
 	        android:layout_height="60dp"
 	        android:paddingLeft="0dp"        
-	        android:paddingRight="0dp"
+	        android:paddingRight="4dp"
 	        android:src="@drawable/ic_launcher" />
 	    
 	   <ImageView
@@ -25,7 +25,7 @@
 	        android:layout_width="60dp"
 	        android:layout_height="60dp"
 	        android:paddingLeft="0dp"        
-	        android:paddingRight="0dp"        
+	        android:paddingRight="4dp"        
 	        android:src="@drawable/ic_launcher" />    
 	            
 	   <!-- event description and time -->
