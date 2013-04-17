@@ -79,4 +79,9 @@ public class Utilities {
 	public static String makeServerUrlStringNoToken(String urlPath) {
 		return TheLifeConfiguration.SERVER_URL + urlPath;
 	}	
+	
+	
+	public static boolean successfulHttpCode(int httpCode) {
+		return (httpCode >= 200) && (httpCode <= 299);
+	}
 }

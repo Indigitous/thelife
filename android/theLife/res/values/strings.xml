@@ -31,7 +31,7 @@
     <string name="title_activity_import_friends">ImportFriendsActivity</string>
     <string name="title_activity_import_friends">Import Friends</string>
     <string name="import_friends_from">Import friends from:</string>
-    <string name="import_by_phone">Phone</string>
+    <string name="import_by_phone">Mobile Phone</string>
     <string name="import_by_facebook">Facebook</string>
     <string name="import_manually">Manual Entry</string>
     <string name="add_friend">Add Friend</string>
@@ -95,7 +95,7 @@
     <string name="first_name">First Name</string>
 	<string name="last_name">Last Name</string>
 	<string name="email">Email Address</string>
-	<string name="phone">Phone Number</string>	
+	<string name="phone">Mobile Phone Number</string>	
     <string name="storing_account">"Storing account"</string>
     
     <string name="delete_group_prompt">Delete group &lt;b>%1$s&lt;/b>?</string>

@@ -21,11 +21,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.p2c.thelife.model.FriendModel;
-
+import android.graphics.Bitmap;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.p2c.thelife.model.FriendModel;
 
 
 /**
@@ -323,7 +324,7 @@ public class Server {
 		try {
 			// API endpoint
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-			String urlString = Utilities.makeServerUrlString("my_users/" + String.valueOf(userId));
+			String urlString = Utilities.makeServerUrlString("users/" + String.valueOf(userId));
 			
 			HttpPut httpRequest = new HttpPut(urlString);
 			
@@ -331,7 +332,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("first_name", String.valueOf(firstName)));			
 			pairs.add(new BasicNameValuePair("last_name", String.valueOf(lastName)));
 			pairs.add(new BasicNameValuePair("email", String.valueOf(email)));
-			pairs.add(new BasicNameValuePair("phone", String.valueOf(phone)));								
+			// pairs.add(new BasicNameValuePair("mobile", String.valueOf(phone)));	// TODO							
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
 			httpRequest.setEntity(formEntity);
 						
@@ -397,6 +398,38 @@ public class Server {
 	}
 	
 	
+	/**
+	 * Update the image at <urlPrefix>/<id>/<type>
+	 * @param urlPrefix		either "users", "friends" or "activities"
+	 * @param id
+	 * @param type  		either "image" or "thumbnail"
+	 * @param bitmap
+	 * @param listener
+	 * @param indicator
+	 */
+	public void updateBitmap(String urlPrefix, int id, String type, Bitmap bitmap, ServerListener listener, String indicator) {
+		try {
+			// API endpoint
+			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
+			String urlString = Utilities.makeServerUrlString(urlPrefix + "/" + String.valueOf(id) + "/" + type);
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			String bitmapName = urlPrefix + String.valueOf(id) + type + ".png";
+			
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+//			pairs.add(new BasicNameValuePair(bitmapName, bitmap));	// TODO for binary POST		
+						
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			httpRequest.setEntity(formEntity);
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "updateBitmap()", e);
+		}		
+	}
+	
+	
+	
 	/********************************* Background thread Server access task *************************************/
 	
 	private class ServerCall extends AsyncTask<String, Void, JSONObject> {
@@ -438,7 +471,7 @@ public class Server {
 				System.out.println("HERE IS THE STATUS CODE " + m_httpCode);
 				
 				String jsonString = null;
-				if (m_httpCode >= 200 && m_httpCode <= 299) {			
+				if (Utilities.successfulHttpCode(m_httpCode)) {			
 					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 					HttpEntity httpEntity = httpResponse.getEntity();
 					

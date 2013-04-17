@@ -31,6 +31,8 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 	private static final String TAG = "SettingsActivity";
 	
 	private ProgressDialog m_progressDialog = null;	
+	private Bitmap m_updatedBitmap = null;
+	private UserModel m_updatedUser = null;
 	
 	private static final int REQUESTCODE_CAMERA = 1;
 	private static final int REQUESTCODE_GALLERY = 2;
@@ -57,18 +59,20 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 	
 	
 	public boolean setUserProfile(View view) {
-		Toast.makeText(this, "User profile set", Toast.LENGTH_SHORT).show();
 		
+		// set the updated user record
 		TextView textView = null;
-		textView = (TextView)findViewById(R.id.settings_name_by_image);
-		String firstName = textView.getText().toString();
 		textView = (TextView)findViewById(R.id.settings_first_name);
-		String lastName = textView.getText().toString();
+		String firstName = textView.getText().toString();		
 		textView = (TextView)findViewById(R.id.settings_last_name);
-		String email = textView.getText().toString();	
+		String lastName = textView.getText().toString();		
 		textView = (TextView)findViewById(R.id.settings_email);
+		String email = textView.getText().toString();
+		textView = (TextView)findViewById(R.id.settings_phone);
 		String phone = textView.getText().toString();
-					
+		m_updatedUser = new UserModel(TheLifeConfiguration.getUserId(), firstName, lastName, null, email, phone);
+		
+		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_account), true, true);
 		Server server = new Server();
 		server.updateUserProfile(TheLifeConfiguration.getUserId(), firstName, lastName, email, phone, this, "updateUserProfile");		
@@ -78,24 +82,23 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 	
 	@Override
 	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
-		if (m_progressDialog != null) {
-			m_progressDialog.dismiss();
-			m_progressDialog = null;
-		}
 		
 		try {
-			// use the existing app user record
-			UserModel user = TheLifeConfiguration.getUser();
-			
-			// update app user record with latest from server 
-			if (jsonObject != null) {	
-				user.setFromPartialJSON(jsonObject);				
-				TheLifeConfiguration.setUser(user);
-			}
-				
-			// update the UI with the result of the query
 			if (indicator.equals("queryUserProfile")) {
 				
+				closeProgressBar();				
+				
+				// update the UI with the result of the query
+
+				// use the existing app user record
+				UserModel user = TheLifeConfiguration.getUser();
+				
+				// update app user record with latest from server 
+				if (jsonObject != null) {	
+					user.setFromPartialJSON(jsonObject);				
+					TheLifeConfiguration.setUser(user);
+				}
+					
 				// update the UI
 				TextView textView = null;
 				textView = (TextView)findViewById(R.id.settings_name_by_image);
@@ -108,6 +111,30 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 				textView.setText(user.email);
 				textView = (TextView)findViewById(R.id.settings_phone);
 				textView.setText(user.phone);
+				
+			} else if (indicator.equals("updateUserProfile")) {
+				
+				if (Utilities.successfulHttpCode(httpCode)) {
+					
+					// update the UI and app user
+					TextView textView = (TextView)findViewById(R.id.settings_name_by_image);				
+					textView.setText(m_updatedUser.getFullName());
+					TheLifeConfiguration.setUser(m_updatedUser);					
+	
+					// have updated the user profile, so now update the user profile image if necessary
+					if (m_updatedBitmap != null) {
+						updateImageOnServer(m_updatedBitmap);
+					} else {
+						closeProgressBar();
+					}
+				}
+				
+			} else if (indicator.equals("updateBitmap")) {
+				
+				if (Utilities.successfulHttpCode(httpCode)) {
+					m_updatedBitmap = null;
+				}
+				closeProgressBar();			
 			}
 		}
 		catch (Exception e) {
@@ -178,11 +205,10 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 				
 				// just get the low res camera image from the activity result 
 				Bundle bundle = intent.getExtras();
-				Bitmap bitmap = (Bitmap)bundle.get("data");
-				System.out.println("GOT A CAMERA BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
+				m_updatedBitmap = (Bitmap)bundle.get("data");
 				
 				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
-				imageView.setImageBitmap(bitmap);
+				imageView.setImageBitmap(m_updatedBitmap);
 			} else if (requestCode == REQUESTCODE_GALLERY) {
 
 				// waiting
@@ -252,17 +278,35 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
 			
-			if (m_progressDialog != null) {
-				m_progressDialog.dismiss();
-				m_progressDialog = null;
-			}
+			closeProgressBar();
+			
+			m_updatedBitmap = bitmap;
 			
 			// display the final bitmap
-			if (bitmap != null) {
+			if (m_updatedBitmap != null) {
 				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
-				imageView.setImageBitmap(bitmap);
+				imageView.setImageBitmap(m_updatedBitmap);
 			}
 		}		
+	}
+	
+	/**
+	 * Update the image on the server.
+	 * @param bitmap
+	 */
+	private void updateImageOnServer(Bitmap bitmap) {
+		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
+		
+		Server server = new Server();
+		server.updateBitmap("users", TheLifeConfiguration.getUserId(), "image", bitmap, this, "updateBitmap");
+	}
+	
+	
+	private void closeProgressBar() {
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+			m_progressDialog = null;
+		}	
 	}
 	
 }
