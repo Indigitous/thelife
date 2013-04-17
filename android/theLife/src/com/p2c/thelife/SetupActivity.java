@@ -73,7 +73,6 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 				// LOGIN
 				if (indicator.equals("login")) {
 					if (user != null && user.id != 0 && token != "") {
-						Toast.makeText(this, "THE USER ID IS " + user.id, Toast.LENGTH_SHORT).show(); // TODO
 						
 						// successful login
 						

@@ -84,32 +84,30 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 		}
 		
 		try {
-			// TODO use the existing record if the server call failed
-			if (jsonObject != null) {
-				
-				UserModel user = TheLifeConfiguration.getUser();
+			// use the existing app user record
+			UserModel user = TheLifeConfiguration.getUser();
+			
+			// update app user record with latest from server 
+			if (jsonObject != null) {	
 				user.setFromPartialJSON(jsonObject);				
 				TheLifeConfiguration.setUser(user);
+			}
 				
-				// update the UI with the result of the query
-				if (indicator.equals("queryUserProfile")) {
-					
-					// the user using the app
-					user = TheLifeConfiguration.getUser();
-					
-					// update the UI
-					TextView textView = null;
-					textView = (TextView)findViewById(R.id.settings_name_by_image);
-					textView.setText(user.getFullName());
-					textView = (TextView)findViewById(R.id.settings_first_name);
-					textView.setText(user.firstName);
-					textView = (TextView)findViewById(R.id.settings_last_name);
-					textView.setText(user.lastName);	
-					textView = (TextView)findViewById(R.id.settings_email);
-					textView.setText(user.email);
-					textView = (TextView)findViewById(R.id.settings_phone);
-					textView.setText(user.phone);	
-				}
+			// update the UI with the result of the query
+			if (indicator.equals("queryUserProfile")) {
+				
+				// update the UI
+				TextView textView = null;
+				textView = (TextView)findViewById(R.id.settings_name_by_image);
+				textView.setText(user.getFullName());
+				textView = (TextView)findViewById(R.id.settings_first_name);
+				textView.setText(user.firstName);
+				textView = (TextView)findViewById(R.id.settings_last_name);
+				textView.setText(user.lastName);	
+				textView = (TextView)findViewById(R.id.settings_email);
+				textView.setText(user.email);
+				textView = (TextView)findViewById(R.id.settings_phone);
+				textView.setText(user.phone);
 			}
 		}
 		catch (Exception e) {
