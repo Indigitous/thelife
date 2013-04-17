@@ -15,7 +15,7 @@ import android.support.v4.app.DialogFragment;
  * @author clarence
  *
  */
-public class SelectImageDialog extends DialogFragment {
+public class ImageSelectDialog extends DialogFragment {
 	
 	public static final int REQUESTCODE_CAMERA = 1;
 	public static final int REQUESTCODE_GALLERY = 2;

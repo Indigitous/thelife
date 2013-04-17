@@ -156,7 +156,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 	 * @param view
 	 */
 	public void selectImage(View view) {
-		SelectImageDialog dialog = new SelectImageDialog();
+		ImageSelectDialog dialog = new ImageSelectDialog();
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());			
 	}
 	
@@ -171,7 +171,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		if (resultCode != Activity.RESULT_CANCELED) {
 			
-			if (requestCode == SelectImageDialog.REQUESTCODE_CAMERA) {
+			if (requestCode == ImageSelectDialog.REQUESTCODE_CAMERA) {
 				
 				// just get the low res camera image from the activity result 
 				Bundle bundle = intent.getExtras();
@@ -179,15 +179,13 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				
 				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
 				imageView.setImageBitmap(m_updatedBitmap);
-			} else if (requestCode == SelectImageDialog.REQUESTCODE_GALLERY) {
+			} else if (requestCode == ImageSelectDialog.REQUESTCODE_GALLERY) {
 
 				// waiting
 				m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.processing_image), true, true);
 
 				// activity result is a image content URI
-				Uri contentUri = intent.getData();
-				System.out.println("The URI is " + contentUri);
-				
+				Uri contentUri = intent.getData();				
 				InputStream is = null;
 				try {
 					// get the bitmap in a background thread
