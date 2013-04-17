@@ -55,7 +55,7 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 			
 			// icon
 			ImageView image = (ImageView)findViewById(R.id.deed_for_friend_image);
-			image.setImageBitmap(m_deed.image);
+//			image.setImageBitmap(m_deed.image);  // TODO deed image
 			
 			// title			
 			TextView title = (TextView)findViewById(R.id.deed_for_friend_title);

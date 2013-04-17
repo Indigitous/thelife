@@ -12,7 +12,7 @@
         android:paddingRight="0dp"
         android:paddingTop="5dp"
         android:layout_gravity="center"        
-        android:src="@drawable/pray" />    
+        android:src="@drawable/generic_avatar_thumbnail" />    
         
     <TextView
         android:id="@+id/group_member_name"

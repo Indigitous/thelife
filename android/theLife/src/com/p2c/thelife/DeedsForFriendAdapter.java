@@ -40,7 +40,7 @@ public class DeedsForFriendAdapter extends ArrayAdapter<DeedModel> implements Ab
 		DeedModel deed = getItem(position);
 
 		ImageView imageView = (ImageView)deedView.findViewById(R.id.deed_image);
-		imageView.setImageBitmap(deed.image);
+//		imageView.setImageBitmap(deed.image); // TODO when activity images are supported
 		
 		TextView textView = (TextView)deedView.findViewById(R.id.deed_title);
 		textView.setText(Utilities.fillTemplateString(getContext().getResources(), m_friend, deed.title));

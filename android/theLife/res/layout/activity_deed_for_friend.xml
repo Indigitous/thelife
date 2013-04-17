@@ -38,7 +38,7 @@
 	        android:paddingLeft="0dp"        
 	        android:paddingRight="0dp"   
 	        android:layout_gravity="left"        
-	        android:src="@drawable/pray" />    
+	        android:src="@drawable/generic_activity" />    
 	            
 	    <TextView
 	        android:id="@+id/deed_for_friend_title"

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
-import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
 
