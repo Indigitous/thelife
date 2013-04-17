@@ -130,7 +130,7 @@
     
     <string name="querying">Querying</string>
     
-    <string name="confirm_update_image">Update your avatar photo?</string>
+    <string name="confirm_update_image">Update your photo?</string>
     <string name="get_camera_photo">From camera"</string>
     <string name="get_gallery_photo">From gallery</string>
     
