@@ -84,6 +84,7 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 		}
 		
 		try {
+			// TODO use the existing record if the server call failed
 			if (jsonObject != null) {
 				
 				UserModel user = TheLifeConfiguration.getUser();
