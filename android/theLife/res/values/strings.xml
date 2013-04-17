@@ -123,11 +123,17 @@
     <string name="activity_title">Activity</string>
     <string name="group_title">My Group</string>
     <string name="setup_title">Set Up</string>
-    <string name="requests_title">Notifications</string>
+    <string name="requests_title">Requests</string>
     <string name="settings_title">Settings</string>
     
     <string name="registration_successful">You are now registered.</string>
     
     <string name="querying">Querying</string>
+    
+    <string name="confirm_update_image">Update your avatar photo?</string>
+    <string name="get_camera_photo">From camera"</string>
+    <string name="get_gallery_photo">From gallery</string>
+    
+    <string name="processing_image">Processing image</string>
     
 </resources>

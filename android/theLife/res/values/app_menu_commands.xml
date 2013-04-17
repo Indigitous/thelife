@@ -4,7 +4,7 @@
 	    <item name="community">Community</item>  
 	    <item name="friends">Friends</item>    
 	    <item name="groups_menu">Groups</item> 
-	    <item name="requests">Notifications</item>    
+	    <item name="requests">Requests</item>    
 	    <item name="help_menu">Help</item>    
 	    <item name="settings_menu">Settings</item>
     </string-array>
