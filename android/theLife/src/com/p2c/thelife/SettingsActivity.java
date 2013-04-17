@@ -26,16 +26,13 @@ import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.Server.ServerListener;
 import com.p2c.thelife.model.UserModel;
 
-public class SettingsActivity extends SlidingMenuPollingActivity implements ServerListener {
+public class SettingsActivity extends SlidingMenuPollingFragmentActivity implements ServerListener {
 	
 	private static final String TAG = "SettingsActivity";
 	
 	private ProgressDialog m_progressDialog = null;	
 	private Bitmap m_updatedBitmap = null;
 	private UserModel m_updatedUser = null;
-	
-	private static final int REQUESTCODE_CAMERA = 1;
-	private static final int REQUESTCODE_GALLERY = 2;
 	
 
 	@Override
@@ -159,35 +156,8 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 	 * @param view
 	 */
 	public void selectImage(View view) {
-		
-		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		dialog.setMessage(getResources().getString(R.string.confirm_update_image));
-		dialog.setNegativeButton(R.string.cancel, null);	
-		dialog.setNeutralButton(R.string.get_camera_photo, new DialogInterface.OnClickListener() {
-			
-			/**
-			 * Use the built in camera app to take a picture.
-			 */
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(intent, REQUESTCODE_CAMERA);			
-			}
-		});
-		dialog.setPositiveButton(R.string.get_gallery_photo, new DialogInterface.OnClickListener() {
-			
-			/**
-			 * Use the built in gallery app to get an existing picture.
-			 */
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-				intent.setType("image/*");
-				startActivityForResult(intent, REQUESTCODE_GALLERY);	
-			}
-		});
-		
-		dialog.show();
+		SelectImageDialog dialog = new SelectImageDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());			
 	}
 	
 	
@@ -201,7 +171,7 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 		
 		if (resultCode != Activity.RESULT_CANCELED) {
 			
-			if (requestCode == REQUESTCODE_CAMERA) {
+			if (requestCode == SelectImageDialog.REQUESTCODE_CAMERA) {
 				
 				// just get the low res camera image from the activity result 
 				Bundle bundle = intent.getExtras();
@@ -209,7 +179,7 @@ public class SettingsActivity extends SlidingMenuPollingActivity implements Serv
 				
 				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
 				imageView.setImageBitmap(m_updatedBitmap);
-			} else if (requestCode == REQUESTCODE_GALLERY) {
+			} else if (requestCode == SelectImageDialog.REQUESTCODE_GALLERY) {
 
 				// waiting
 				m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.processing_image), true, true);
