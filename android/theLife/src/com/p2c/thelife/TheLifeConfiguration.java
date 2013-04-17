@@ -37,7 +37,7 @@ public class TheLifeConfiguration {
 	private static UserModel m_user = null;
 	private static String m_token = null;
 	
-	public static final int HTTP_CONNECTION_TIMEOUT = 5000; // in millis
+	public static final int HTTP_CONNECTION_TIMEOUT = 10000; // in millis
 	public static final int HTTP_READ_TIMEOUT = 15000;  // in millis
 	public static final String SYSTEM_PREFERENCES_FILE = "system_prefs";	
 	
