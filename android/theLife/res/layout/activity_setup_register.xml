@@ -3,6 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+    <ImageView
+        android:id="@+id/settings_image"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/generic_avatar_image" 
+        android:onClick="selectImage" />    
    
     <EditText
         android:id="@+id/setup_register_first_name"
@@ -37,6 +44,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPassword" />    
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/register"
+        android:onClick="register" />
 
 </LinearLayout>

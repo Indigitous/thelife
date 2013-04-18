@@ -39,8 +39,9 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 	}
 	
 	public void registerUser(View view) {
-		SetupRegisterDialog dialog = new SetupRegisterDialog();
-		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());		
+		// go to the register screen
+		Intent intent = new Intent("com.p2c.thelife.SetupRegister");
+		startActivity(intent);				
 	}
 	
 	@Override

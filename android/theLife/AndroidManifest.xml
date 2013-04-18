@@ -137,6 +137,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.p2c.thelife.SetupRegisterActivity"
+            android:label="@string/setup_title" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.SetupRegister" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+        <activity
             android:name="com.p2c.thelife.RequestsActivity"
             android:label="@string/requests_title" >
             <intent-filter>
