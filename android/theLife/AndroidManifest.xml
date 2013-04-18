@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.CommunityHelpActivity"
-            android:label="@string/help_title" >
+            android:label="@string/title_help" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.CommunityHelp" />
 
@@ -41,7 +41,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.FriendsActivity"
-            android:label="@string/friends_title" >
+            android:label="@string/title_friends" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Friends" />
 
@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.p2c.thelife.GroupsSearchActivity" 
-            	  android:label="@string/search_groups_title" >
+            	  android:label="@string/title_search_groups" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GroupsSearch" />
 
@@ -62,7 +62,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GroupsActivity"
-            android:label="@string/groups_title" >
+            android:label="@string/title_groups" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Groups" />
 
@@ -75,7 +75,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GlobalHelpActivity"
-            android:label="@string/help_title" >
+            android:label="@string/title_help" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GlobalHelp" />
 
@@ -84,7 +84,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.EventsForFriendActivity"
-            android:label="@string/events_title" >
+            android:label="@string/title_events" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.EventsForFriend" />
 
@@ -93,7 +93,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.DeedsForFriendActivity"
-            android:label="@string/activities_title" >
+            android:label="@string/title_activities" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.DeedsForFriend" />
 
@@ -102,7 +102,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.DeedForFriendActivity"
-            android:label="@string/activity_title" >
+            android:label="@string/title_activity" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.DeedForFriend" />
 
@@ -111,7 +111,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GroupActivity"
-            android:label="@string/group_title" >
+            android:label="@string/title_group" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GroupActivity" />
 
@@ -120,7 +120,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.FriendsImportActivity"
-            android:label="@string/friends_title" >
+            android:label="@string/title_friends" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.FriendsImport" />
 
@@ -129,7 +129,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.SetupActivity"
-            android:label="@string/setup_title" >
+            android:label="@string/title_setup" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Setup" />
 
@@ -138,7 +138,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.SetupRegisterActivity"
-            android:label="@string/setup_title" >
+            android:label="@string/title_register" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.SetupRegister" />
 
@@ -147,7 +147,7 @@
         </activity>        
         <activity
             android:name="com.p2c.thelife.RequestsActivity"
-            android:label="@string/requests_title" >
+            android:label="@string/title_requests" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Requests" />
 
@@ -156,7 +156,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.SettingsActivity"
-            android:label="@string/settings_title" >
+            android:label="@string/title_settings" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Settings" />
 
