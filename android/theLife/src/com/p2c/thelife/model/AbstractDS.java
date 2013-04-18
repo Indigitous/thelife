@@ -90,13 +90,16 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		// load model objects from the JSON cache file on this device.
 		// TODO: is this too slow for the main thread?
 		if (TheLifeConfiguration.isValidUser()) {
+			
+			FileReader fileReader = null;
 			try {
 				File cacheFile = new File(m_cacheFileName);
 				if (cacheFile.exists())
 				{
 					Log.d(TAG, "THE MODELS CACHE FILE EXISTS");
 					
-					String jsonString = Utilities.readBufferedStream(new FileReader(cacheFile));
+					fileReader = new FileReader(cacheFile);
+					String jsonString = Utilities.readBufferedStream(fileReader);
 					if (jsonString != null) {
 						JSONArray jsonArray = new JSONArray(jsonString);					
 						addModels(jsonArray, false, m_data);
@@ -108,6 +111,10 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				Log.e(TAG, "constructor", e);
 			} catch (JSONException e) {
 				Log.wtf(TAG, "constructor", e);			
+			} finally {
+				if (fileReader != null) {
+					try { fileReader.close(); } catch (Exception e) {}
+				}
 			}
 		}
 		
