@@ -14,12 +14,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-public class SetupActivity extends FragmentActivity implements Server.ServerListener, AbstractServerAccessDialog.Listener, DSRefreshedListener {
+public class SetupActivity extends BaseSetupActivity implements Server.ServerListener, AbstractServerAccessDialog.Listener {
 	
 	private static final String TAG = "SetupActivity";
 	
-	private ProgressDialog m_progressDialog = null;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,11 +44,7 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 	
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {
-		if (indicator.equals("login")) {
-			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
-		} else {
-			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);
-		}
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 	}
 	
 	
@@ -85,24 +79,6 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 						fullRefresh();
 						return;
 					}
-					
-				// REGISTER
-				} else if (indicator.equals("register")) {
-					
-					if (user != null && user.id != 0 && token != "" && user.email != "") {
-						Toast.makeText(this, getResources().getString(R.string.registration_successful), Toast.LENGTH_SHORT).show(); 
-						
-						// successful register
-						
-						// store the user configuration result
-						TheLifeConfiguration.setUser(user);
-						TheLifeConfiguration.setToken(token);
-						
-						// refresh data stores
-						fullRefresh();
-						return;
-					}					
-					
 				}
 				
 				//TODO show errors correctly
@@ -110,65 +86,11 @@ public class SetupActivity extends FragmentActivity implements Server.ServerList
 		}
 		
 		// failed login or register
-		Toast.makeText(this, "INCORRECT " + indicator, Toast.LENGTH_SHORT).show(); 
+		Toast.makeText(this, "Incorrect Login", Toast.LENGTH_SHORT).show(); 
 
+		closeProgressBar();
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
-		}
-	}
-	
-	
-	/**
-	 * Full refresh of the data stores.
-	 */
-	private void fullRefresh() {	
-		if (m_progressDialog != null) {
-			m_progressDialog.dismiss();
-		}
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_configuration), true, true);		
-		
-		TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
-		TheLifeConfiguration.getCategoriesDS().refresh("categories");
-	}
-
-	/**
-	 * Chain together the data stores' refresh callbacks so that all data stores are refreshed sequentially.
-	 * Not pretty but it works.
-	 */
-	@Override
-	public void notifyDSRefreshed(String indicator) {
-		if (indicator.equals("categories")) {
-			TheLifeConfiguration.getCategoriesDS().removeDSRefreshedListener(this);
-			TheLifeConfiguration.getDeedsDS().addDSRefreshedListener(this);			
-			TheLifeConfiguration.getDeedsDS().refresh("deeds");
-		} else if (indicator.equals("deeds")) {
-			TheLifeConfiguration.getDeedsDS().removeDSRefreshedListener(this);			
-//			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);			
-//			TheLifeConfiguration.getUsersDS().refresh("users");
-//		} else if (indicator.equals("users")) {
-//			TheLifeConfiguration.getUsersDS().removeDSRefreshedListener(this);			
-			TheLifeConfiguration.getGroupsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getGroupsDS().refresh("groups");	
-		} else if (indicator.equals("groups")) {
-			TheLifeConfiguration.getGroupsDS().removeDSRefreshedListener(this);			
-			TheLifeConfiguration.getFriendsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getFriendsDS().refresh("friends");	
-		} else if (indicator.equals("friends")) {
-			TheLifeConfiguration.getFriendsDS().removeDSRefreshedListener(this);			
-			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);			
-			TheLifeConfiguration.getEventsDS().refresh("events");
-		} else if (indicator.equals("events")) {
-			TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);			
-			if (m_progressDialog != null) {
-				m_progressDialog.dismiss();
-				
-				// go to the main screen
-				Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
-				startActivity(intent);
-				return;				
-			}					
-		} else {
-			Log.wtf(TAG, "unknown refresh indicator " + indicator);
 		}
 	}
 

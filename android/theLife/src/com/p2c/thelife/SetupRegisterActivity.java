@@ -22,11 +22,10 @@ import com.p2c.thelife.model.UserModel;
  * @author clarence
  *
  */
-public class SetupRegisterActivity extends FragmentActivity	implements Server.ServerListener, DSRefreshedListener, ImageSelectSupport.Listener {
+public class SetupRegisterActivity extends BaseSetupActivity implements Server.ServerListener, ImageSelectSupport.Listener {
 	
 	private static final String TAG = "SetupRegisterActivity";
 	
-	private ProgressDialog m_progressDialog = null;
 	private Bitmap m_bitmap = null;
 	private UserModel m_user = null;
 	private String m_token = null;
@@ -166,69 +165,6 @@ public class SetupRegisterActivity extends FragmentActivity	implements Server.Se
 		
 		// refresh data stores
 		fullRefresh();
-	}
-	
-	
-	private void closeProgressBar() {
-		if (m_progressDialog != null) {
-			m_progressDialog.dismiss();
-			m_progressDialog = null;
-		}	
-	}		
-	
-	
-	/**
-	 * Full refresh of the data stores.
-	 */
-	private void fullRefresh() {	
-		if (m_progressDialog != null) {
-			m_progressDialog.dismiss();
-		}
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_configuration), true, true);		
-		
-		TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
-		TheLifeConfiguration.getCategoriesDS().refresh("categories");
-	}
-
-	/**
-	 * Chain together the data stores' refresh callbacks so that all data stores are refreshed sequentially.
-	 * Not pretty but it works.
-	 */
-	@Override
-	public void notifyDSRefreshed(String indicator) {
-		if (indicator.equals("categories")) {
-			TheLifeConfiguration.getCategoriesDS().removeDSRefreshedListener(this);
-			TheLifeConfiguration.getDeedsDS().addDSRefreshedListener(this);			
-			TheLifeConfiguration.getDeedsDS().refresh("deeds");
-		} else if (indicator.equals("deeds")) {
-			TheLifeConfiguration.getDeedsDS().removeDSRefreshedListener(this);			
-//			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);			
-//			TheLifeConfiguration.getUsersDS().refresh("users");
-//		} else if (indicator.equals("users")) {
-//			TheLifeConfiguration.getUsersDS().removeDSRefreshedListener(this);			
-			TheLifeConfiguration.getGroupsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getGroupsDS().refresh("groups");	
-		} else if (indicator.equals("groups")) {
-			TheLifeConfiguration.getGroupsDS().removeDSRefreshedListener(this);			
-			TheLifeConfiguration.getFriendsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getFriendsDS().refresh("friends");	
-		} else if (indicator.equals("friends")) {
-			TheLifeConfiguration.getFriendsDS().removeDSRefreshedListener(this);			
-			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);			
-			TheLifeConfiguration.getEventsDS().refresh("events");
-		} else if (indicator.equals("events")) {
-			TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);			
-			if (m_progressDialog != null) {
-				m_progressDialog.dismiss();
-				
-				// go to the main screen
-				Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
-				startActivity(intent);
-				return;				
-			}					
-		} else {
-			Log.wtf(TAG, "unknown refresh indicator " + indicator);
-		}
 	}
 
 }
