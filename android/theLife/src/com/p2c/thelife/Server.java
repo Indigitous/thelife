@@ -459,7 +459,7 @@ public class Server {
 				
 			AndroidHttpClient httpClient = null;
 			try {			
-				Log.d(TAG, "STARTING ServerCall with " + urls[0]);	
+				Log.d(TAG, "STARTING ServerCall " + m_httpRequest.getMethod() + " " + urls[0]);	
 								
 				httpClient = AndroidHttpClient.newInstance(m_indicator);
 				httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
@@ -483,7 +483,7 @@ public class Server {
 						jsonString = "";
 					}
 					
-					Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE STRING " + jsonString);					
+					Log.d(TAG, "GOT THE SERVER CALL RESPONSE STRING " + jsonString);					
 				}
 				
 				if (jsonString != null) {
@@ -505,7 +505,9 @@ public class Server {
 			} catch (MalformedURLException e) {
 				Log.wtf(TAG, "ServerCall().doInBackground", e);
 			} catch (IOException e) {
-				Log.e(TAG, "ServerCall().doInBackground", e);				
+				Log.e(TAG, "ServerCall().doInBackground", e);
+			} catch (Exception e) {
+				Log.e(TAG, "ServerCall().doInBackground", e);
 			} finally {
 				if (httpClient != null) {
 					httpClient.close();
@@ -519,7 +521,7 @@ public class Server {
 		@Override
 		protected void onPostExecute(JSONObject jsonObject) {
 			
-			Log.d(TAG, "HERE IN ON POST EXECUTE");
+			Log.d(TAG, "HERE IN ON POST EXECUTE with " + m_indicator);
 			
 			m_listener.notifyServerResponseAvailable(m_indicator, m_httpCode, jsonObject);
 		}

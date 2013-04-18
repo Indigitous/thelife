@@ -1,32 +1,22 @@
 package com.p2c.thelife;
 
-import java.io.InputStream;
-
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.Server.ServerListener;
 import com.p2c.thelife.model.UserModel;
 
-public class SettingsActivity extends SlidingMenuPollingFragmentActivity implements ServerListener {
+public class SettingsActivity extends SlidingMenuPollingFragmentActivity implements ServerListener, ImageSelectSupport.Listener {
 	
 	private static final String TAG = "SettingsActivity";
 	
@@ -124,6 +114,8 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 					} else {
 						closeProgressBar();
 					}
+				} else {
+					closeProgressBar();
 				}
 				
 			} else if (indicator.equals("updateBitmap")) {
@@ -163,100 +155,29 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 	
 	/**
 	 * Get the result of the photo gathering intent.
-	 * See tutorial at http://developer.android.com/training/camera/photobasics.html.
 	 * 
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		
-		if (resultCode != Activity.RESULT_CANCELED) {
-			
-			if (requestCode == ImageSelectDialog.REQUESTCODE_CAMERA) {
-				
-				// just get the low res camera image from the activity result 
-				Bundle bundle = intent.getExtras();
-				m_updatedBitmap = (Bitmap)bundle.get("data");
-				
-				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
-				imageView.setImageBitmap(m_updatedBitmap);
-			} else if (requestCode == ImageSelectDialog.REQUESTCODE_GALLERY) {
-
-				// waiting
-				m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.processing_image), true, true);
-
-				// activity result is a image content URI
-				Uri contentUri = intent.getData();				
-				InputStream is = null;
-				try {
-					// get the bitmap in a background thread
-					new GetExternalBitmap().execute(contentUri);
-				} catch (Exception e) {
-					Log.e(TAG, "onActivityResult()", e);
-				} finally {
-					if (is != null) {
-						try { is.close(); } catch (Exception e) { }
-						is = null;
-					}
-				}
-			}
-		}
-		
+		// let the support object handle it
+		ImageSelectSupport support = new ImageSelectSupport(this, this);
+		support.onActivityResult(requestCode, resultCode, intent);
 	}
 	
+	
 	/**
-	 * Because the external bitmap can be large and internet connections slow, get and process the external bitmap from another thread.
-	 * @author clarence
-	 *
+	 * Callback from ImageSelectSupport
 	 */
-	private class GetExternalBitmap extends AsyncTask<Uri, Void, Bitmap> {
-
-		// background thread
-		@Override
-		protected Bitmap doInBackground(Uri... params) {
-			
-			InputStream is = null;
-			Bitmap bitmap = null;
-			try {
-				// first pass: just get the size of the image
-				is = getContentResolver().openInputStream(params[0]);								
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inJustDecodeBounds = true;
-				BitmapFactory.decodeStream(is, null, options);
-				is.close();
-				System.out.println("GOT AN EXTERNAL BITMAP SIZE HxW " + options.outHeight + "x" + options.outWidth);			
-				
-				// second pass: get the scaled down version of the image
-				is = getContentResolver().openInputStream(params[0]);
-				options.inJustDecodeBounds = false;
-				options.inSampleSize = Math.min(options.outHeight / 160, options.outWidth / 160);
-				bitmap = BitmapFactory.decodeStream(is, null, options);								
-			} catch (Exception e) {
-				Log.e(TAG, "GetExternalBitmap()", e);
-			} finally {
-				if (is != null) {
-					try { is.close(); } catch (Exception e) { }
-					is = null;
-				}
-			}
-			
-			return bitmap;
-		}
+	@Override
+	public void notifyImageSelected(Bitmap bitmap) {
+		m_updatedBitmap = bitmap;
 		
-		// UI thread		
-		@Override
-		protected void onPostExecute(Bitmap bitmap) {
-			
-			closeProgressBar();
-			
-			m_updatedBitmap = bitmap;
-			
-			// display the final bitmap
-			if (m_updatedBitmap != null) {
-				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
-				imageView.setImageBitmap(m_updatedBitmap);
-			}
-		}		
-	}
+		
+		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
+		imageView.setImageBitmap(m_updatedBitmap);		
+	}	
+	
 	
 	/**
 	 * Update the image on the server.
