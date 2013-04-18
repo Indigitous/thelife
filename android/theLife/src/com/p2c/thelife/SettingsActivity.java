@@ -97,7 +97,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				textView = (TextView)findViewById(R.id.settings_email);
 				textView.setText(user.email);
 				textView = (TextView)findViewById(R.id.settings_phone);
-				textView.setText(user.phone);
+				textView.setText(user.mobile);
 				
 			} else if (indicator.equals("updateUserProfile")) {
 				

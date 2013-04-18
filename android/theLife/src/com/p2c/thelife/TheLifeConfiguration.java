@@ -80,9 +80,9 @@ public class TheLifeConfiguration {
 			String firstName = m_systemSettings.getString("user_first_name", "");
 			String lastName = m_systemSettings.getString("user_last_name", "");	
 			String email = m_systemSettings.getString("user_email", "");		
-			String phone = m_systemSettings.getString("user_phone", "");		
+			String mobile = m_systemSettings.getString("user_mobile", "");		
 			
-			m_user = new UserModel(userId, firstName, lastName, null, email, phone);
+			m_user = new UserModel(userId, firstName, lastName, null, email, mobile);
 		}
 		
 		m_token = m_systemSettings.getString("token", "");		
@@ -221,7 +221,7 @@ public class TheLifeConfiguration {
 			systemSettingsEditor.putString("user_first_name", m_user.firstName);
 			systemSettingsEditor.putString("user_last_name", m_user.lastName);	
 			systemSettingsEditor.putString("user_email", m_user.email);		
-			systemSettingsEditor.putString("user_phone", m_user.phone);		
+			systemSettingsEditor.putString("user_mobile", m_user.mobile);		
 			systemSettingsEditor.commit();		
 		} else {
 			systemSettingsEditor.putInt("user_id", 0); // marks a not-valid user

@@ -53,9 +53,11 @@ public class FriendModel extends AbstractModel {
 	public Bitmap image;  			// TODO is this an image id, image or what?
 	public Bitmap thumbnail;
 	public Threshold threshold;
+	public String email;
+	public String mobile;
 	
 	
-	public FriendModel(int friend_id, String firstName, String lastName, Bitmap image, Bitmap thumbnail, Threshold threshold) {
+	public FriendModel(int friend_id, String firstName, String lastName, Bitmap image, Bitmap thumbnail, Threshold threshold, String email, String mobile) {
 		
 		super(friend_id);
 		
@@ -74,11 +76,13 @@ public class FriendModel extends AbstractModel {
 		}
 		
 		this.threshold = threshold;
+		this.email = email;
+		this.mobile = mobile;
 	}
 	
 	
-	public FriendModel(int friend_id, String firstName, String lastName, Bitmap image, Threshold threshold) {
-		this(friend_id, firstName, lastName, image, image, threshold);
+	public FriendModel(int friend_id, String firstName, String lastName, Bitmap image, Threshold threshold, String email, String mobile) {
+		this(friend_id, firstName, lastName, image, image, threshold, email, mobile);
 	}
 	
 	
@@ -178,7 +182,9 @@ public class FriendModel extends AbstractModel {
 			json.getString("last_name"),
 			getImage(id, useServer),
 			getThumbnail(id, useServer),				
-			threshold
+			threshold,
+			json.getString("email"),
+			json.getString("mobile")
 		);
 	}
 		

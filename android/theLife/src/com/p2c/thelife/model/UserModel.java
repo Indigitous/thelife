@@ -21,9 +21,9 @@ public class UserModel extends AbstractModel {
 	public Bitmap   image;  	// TODO is this an image id, image or what?
 	public Bitmap   thumbnail;
 	public String   email;
-	public String   phone;
+	public String   mobile;
 	
-	public UserModel(int user_id, String firstName, String lastName, Bitmap image, Bitmap thumbnail, String email, String phone) {
+	public UserModel(int user_id, String firstName, String lastName, Bitmap image, Bitmap thumbnail, String email, String mobile) {
 		
 		super(user_id);
 
@@ -42,11 +42,11 @@ public class UserModel extends AbstractModel {
 		}
 		
 		this.email = email;
-		this.phone = phone;
+		this.mobile = mobile;
 	}
 	
-	public UserModel(int user_id, String firstName, String lastName, Bitmap image, String email, String phone) {
-		this(user_id, firstName, lastName, image, image, email, phone);
+	public UserModel(int user_id, String firstName, String lastName, Bitmap image, String email, String mobile) {
+		this(user_id, firstName, lastName, image, image, email, mobile);
 	}
 	
 	public String getFullName() {
@@ -55,7 +55,7 @@ public class UserModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return id + ", " + firstName + ", " + lastName + ", " + email + ", " + phone;
+		return id + ", " + firstName + ", " + lastName + ", " + email + ", " + mobile;
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class UserModel extends AbstractModel {
 			getImage(id, useServer),
 			getThumbnail(id, useServer),			
 			json.optString("email", ""),
-			json.optString("phone", "")
+			json.optString("mobile", "")
 		);
 	}	
 	
@@ -103,9 +103,9 @@ public class UserModel extends AbstractModel {
 		if (newEmail != null) {
 			this.email = newEmail; 
 		}
-		String newPhone = json.optString("phone", null);
-		if (newPhone != null) {
-			this.phone = newPhone;
+		String newMobile = json.optString("mobile", null);
+		if (newMobile != null) {
+			this.mobile = newMobile;
 		}
 		String newFirstName = json.optString("first_name", null);
 		if (newFirstName != null) {
