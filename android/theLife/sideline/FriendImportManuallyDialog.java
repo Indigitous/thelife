@@ -23,7 +23,7 @@ public class FriendImportManuallyDialog extends AbstractServerAccessDialog {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
-		final View view = inflater.inflate(R.layout.dialog_import_friend_manually, null);
+		final View view = inflater.inflate(R.layout.activity_import_friend_manually, null);
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
 			
 		// set the message, content and buttons of the alert
