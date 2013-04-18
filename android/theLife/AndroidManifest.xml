@@ -128,6 +128,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.p2c.thelife.FriendImportManuallyActivity"
+            android:label="@string/title_friend_import" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.FriendImportManually" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+        <activity
             android:name="com.p2c.thelife.SetupActivity"
             android:label="@string/title_setup" >
             <intent-filter>
