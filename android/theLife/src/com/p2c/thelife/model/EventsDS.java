@@ -14,6 +14,11 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 public class EventsDS extends AbstractDS<EventModel> {
+	
+	private static final String TAG = "EventsDS";
+	
+	// maximum number of events on a full refresh
+	public static final int MAX_EVENTS = 100;
 		
 	public EventsDS(Context context) {
 		
@@ -40,6 +45,35 @@ public class EventsDS extends AbstractDS<EventModel> {
 		
 		return events;
 	}	
+	
+	
+	@Override
+	public void refresh(String indicator) {
+		super.refresh(indicator, MAX_EVENTS);
+	}
+	
+	@Override
+	public void forceRefresh(String indicator) {
+		super.forceRefresh(indicator, MAX_EVENTS);
+	}
+	
+	
+	/**
+	 * Refresh with events newer than the latest event in the datastore.
+	 * @param indicator
+	 */
+	public void refreshAfter(String indicator) {
+		
+		// newest event is at the start
+		EventModel newestEvent = m_data.get(0);
+		
+		// refresh after the newest event, if there is one
+		if (newestEvent != null) {
+			super.refresh(indicator, MAX_EVENTS, "&after=" + String.valueOf(newestEvent.id), MODE_PREPEND);
+		} else {
+			super.refresh(indicator, MAX_EVENTS);
+		}
+	}
 	
 	/**
 	 * Needed by the abstract superclass.

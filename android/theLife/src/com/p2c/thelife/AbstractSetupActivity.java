@@ -37,7 +37,7 @@ public abstract class AbstractSetupActivity extends FragmentActivity implements 
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_configuration), true, true);		
 		
 		TheLifeConfiguration.getCategoriesDS().addDSRefreshedListener(this);
-		TheLifeConfiguration.getCategoriesDS().refresh("categories");
+		TheLifeConfiguration.getCategoriesDS().forceRefresh("categories");
 	}
 
 	
@@ -50,23 +50,23 @@ public abstract class AbstractSetupActivity extends FragmentActivity implements 
 		if (indicator.equals("categories")) {
 			TheLifeConfiguration.getCategoriesDS().removeDSRefreshedListener(this);
 			TheLifeConfiguration.getDeedsDS().addDSRefreshedListener(this);			
-			TheLifeConfiguration.getDeedsDS().refresh("deeds");
+			TheLifeConfiguration.getDeedsDS().forceRefresh("deeds");
 		} else if (indicator.equals("deeds")) {
 			TheLifeConfiguration.getDeedsDS().removeDSRefreshedListener(this);			
 //			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);			
-//			TheLifeConfiguration.getUsersDS().refresh("users");
+//			TheLifeConfiguration.getUsersDS().forceRefresh("users");
 //		} else if (indicator.equals("users")) {
 //			TheLifeConfiguration.getUsersDS().removeDSRefreshedListener(this);			
 			TheLifeConfiguration.getGroupsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getGroupsDS().refresh("groups");	
+			TheLifeConfiguration.getGroupsDS().forceRefresh("groups");	
 		} else if (indicator.equals("groups")) {
 			TheLifeConfiguration.getGroupsDS().removeDSRefreshedListener(this);			
 			TheLifeConfiguration.getFriendsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getFriendsDS().refresh("friends");	
+			TheLifeConfiguration.getFriendsDS().forceRefresh("friends");	
 		} else if (indicator.equals("friends")) {
 			TheLifeConfiguration.getFriendsDS().removeDSRefreshedListener(this);			
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);			
-			TheLifeConfiguration.getEventsDS().refresh("events");
+			TheLifeConfiguration.getEventsDS().forceRefresh("events");
 		} else if (indicator.equals("events")) {
 			TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);			
 			if (m_progressDialog != null) {

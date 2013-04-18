@@ -62,7 +62,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		m_datastoreRefreshRunnable = new Runnable() {
 			@Override
 			public void run() {
-				TheLifeConfiguration.getEventsDS().refresh(null);
+				TheLifeConfiguration.getEventsDS().refreshAfter(null);
 			}
 		};	
 		
@@ -91,7 +91,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		// load the data store from the server in the background
 		TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 		TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
-		TheLifeConfiguration.getEventsDS().refresh(null);
+		TheLifeConfiguration.getEventsDS().refresh(null); // TODO refreshAfter(null) ?
 		
 		// refresh the display every 60 seconds
 		m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);		

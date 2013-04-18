@@ -41,11 +41,11 @@ public class Utilities {
 	 * Read from the given stream.
 	 * Note that InputStreamReader is buffered.
 	 * @param is
-	 * @return the string containing JSON, or null if an error
+	 * @return the string from the file, or null if an error
 	 */
 	public static String readBufferedStream(InputStreamReader is) {
 
-		String jsonString = null;
+		String streamData = null;
 		
 		try {
 			char buffer[] = new char[1024];
@@ -59,12 +59,12 @@ public class Utilities {
 				numBytesRead = is.read(buffer);
 			}
 			
-			jsonString = new String(jsonBuffer.buffer(), 0, totalBytesRead);
+			streamData = new String(jsonBuffer.buffer(), 0, totalBytesRead);
 		} catch (IOException e) {
 			Log.e(TAG, "readBufferedStream()", e);
 		}
 		
-		return jsonString;
+		return streamData;
 	}		
 
 	

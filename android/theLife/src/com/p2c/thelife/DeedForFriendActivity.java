@@ -126,7 +126,7 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 				EventModel event = new EventModel(eventId, userId, friendId, deedId, 0, description, timestamp, isPledge, pledgeCount);
 				TheLifeConfiguration.getEventsDS().add(event);
 				TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
-				TheLifeConfiguration.getEventsDS().forceRefresh(null); // TODO make this persistent in cache or do a forceRefresh() which hits the server?
+				TheLifeConfiguration.getEventsDS().forceRefresh(null);
 			}
 		}
 		

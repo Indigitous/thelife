@@ -58,6 +58,12 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected String m_refreshSettingTimestampKey = null;
 	protected String m_refreshURLPath = null; 
 	protected long m_refreshDelta = 0;						// in seconds
+	
+	// what to do with new data that has just been read, compared to the existing data
+	protected int MODE_REPLACE = 0;
+	protected int MODE_PREPEND = 1;
+	protected int MODE_APPEND = 2;
+	protected int m_newDataMode = MODE_REPLACE;
 
 	
 	/**
@@ -136,7 +142,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * This does not update the cache or notify listeners.
 	 */
 	public void add(T model) {
-		m_data.add(model);
+		m_data.add(0, model); // add to the start of the list
 	}
 	
 	/**
@@ -166,27 +172,59 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	
 	/**
-	 * Force a refresh.
+	 * Force a refresh, reading in all the records.
 	 * @param refreshIndicator
 	 */
 	public void forceRefresh(String refreshIndicator) {
-		
-		if (!m_isRefreshing) {
-			
-			// force a refresh by erasing the timestamp indicating when the last time a refresh was done
-			SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
-			system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
-			system_settings_editor.commit();			
-			
-			refresh(refreshIndicator);
-		}
+		forceRefresh(refreshIndicator, 0);
 	}
 	
 	
 	/**
-	 * Refresh the model objects cache.
+	 * Force a refresh, reading in up to the maximum number of most recent records.
+	 * @param refreshIndicator
+	 * @param max
+	 */
+	public void forceRefresh(String refreshIndicator, int max) {
+		
+		if (!m_isRefreshing) {
+			
+			// force a refresh by erasing the timestamp indicating previous refresh time
+			SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
+			system_settings_editor.putLong(m_refreshSettingTimestampKey, 0L);
+			system_settings_editor.commit();			
+			
+			refresh(refreshIndicator, max, null, MODE_REPLACE);
+		}
+	}
+		
+	
+	/**
+	 * Refresh the model objects cache, reading in unlimited number of records.
+	 * @param refreshIndicator
 	 */
 	public void refresh(String refreshIndicator) {
+		refresh(refreshIndicator, 0, null, MODE_REPLACE);
+	}
+	
+	
+	/**
+	 * Refresh the model objects cache, reading in up to the maximum number of most recent records.
+	 * @param refreshIndicator
+	 * @param max
+	 */
+	public void refresh(String refreshIndicator, int max) {
+		refresh(refreshIndicator, max, null, MODE_REPLACE);
+	}
+	
+	
+	/**
+	 * Refresh the model objects cache, reading in up to the maximum number of most recent records according to the given parameter.
+	 * @param 	params			in URL encoded form, example: "&after=12345"
+	 * @param	newDataMode 	either MODE_REPLACE, MODE_PREPEND or MODE_APPEND, what to do with the data that is read in, compared to any existing data
+	 * If a refresh was done recently, this call will do nothing.
+	 */
+	public void refresh(String refreshIndicator, int max, String params, int newDataMode) {
 		
 		// find when the model objects were most recently refreshed
 		long lastRefresh = m_systemSettings.getLong(m_refreshSettingTimestampKey, 0);
@@ -205,6 +243,18 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					m_refreshIndicator = refreshIndicator;
 					Log.d(TAG, "WILL NOW RUN BACKGROUND MODELS REFRESH");
 					String refreshURL = Utilities.makeServerUrlString(m_refreshURLPath);
+					
+					// add on optional parameters
+					if (max != 0) {
+						refreshURL += "&max=" + String.valueOf(max);
+					}
+					if (params != null) {
+						refreshURL += params;
+					}
+					
+					m_newDataMode = newDataMode;
+					
+					// run in background thread
 					new readFromServer().execute(new URL(refreshURL));
 				} catch (MalformedURLException e) {
 					Log.e(TAG, "refresh()", e);
@@ -215,6 +265,10 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			
 		}
 	}	
+
+	
+	/********************************** helper routines ********************************/
+	
 	
 	
 	/**
@@ -222,7 +276,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * @param jsonString
 	 * @return true if the write succeeded, false if it failed
 	 */
-	public boolean writeJSONCache(String jsonString) {
+	protected boolean replaceJSONCache(String jsonString) {
 		
 		boolean success = true;
 		
@@ -243,9 +297,82 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		return success;
 	}
 	
+	/**
+	 * Prepend the new JSON, in newDataJSONString, to the cache file.
+	 * @param newDataJSONString
+	 * @param oldData
+	 * @param newData
+	 * @return
+	 */
+	protected boolean prependJSONCache(String newDataJSONString, int oldDataSize, int newDataSize) {
+		
+		boolean success = true;
+		
+		if (newDataSize > 0) {
+			if (oldDataSize == 0) {
+				// if there isn't any old data, just write the file
+				replaceJSONCache(newDataJSONString);
+			} else {
+				
+				// make sure the cache file is really there
+				File cacheFile = new File(m_cacheFileName);
+				if (!cacheFile.exists()) {
+					Log.wtf(TAG, "prependJSONCache() missing cache file " + m_cacheFileName);
+					success = false;
+				} else {				
+					
+					FileReader fileReader = null;
+					FileWriter fileWriter = null;					
+					try {
+					
+						// read in the old JSON data
+						fileReader = new FileReader(cacheFile);
+						String oldDataJSONString = Utilities.readBufferedStream(fileReader);
+						fileReader.close();
+						fileReader = null;
+						
+						// write the new JSON data at the start of the file, 
+						//      adding a comma after the final '}' and skipping the final ']'
+						fileWriter = new FileWriter(cacheFile);
+						int finalBraceIndex = newDataJSONString.lastIndexOf('}');					
+						fileWriter.write(newDataJSONString, 0, finalBraceIndex + 1);
+						fileWriter.write(',');
+						
+						// write the old JSON next, starting with the first '{' and thus skipping the first '['
+						int firstBraceIndex = oldDataJSONString.indexOf('{');
+						fileWriter.write(oldDataJSONString, firstBraceIndex, oldDataJSONString.length() - firstBraceIndex);
+						fileWriter.close();
+						fileWriter = null;
+						
+					} catch (Exception e) {
+						Log.e(TAG, "prependJSONCache()", e);
+						success = false;
+					} finally {
+						if (fileReader != null) {
+							try { fileReader.close(); } catch (Exception e) { }
+						}
+						if (fileWriter != null) {
+							try { fileWriter.close(); } catch (Exception e) { }
+						}						
+					}
+				}
+			}
+		}
+		
+		return success;
+	}
 	
-	/********************************** helper routines ********************************/
 	
+	protected void replaceModels(ArrayList <T> newModels) {
+		m_data = newModels;
+	}
+	
+	
+	protected void prependModels(ArrayList <T> newModels) {
+		m_data.addAll(0, newModels);
+	}
+	
+		
 	/**
 	 * Create a model object from JSON.
 	 * @param context
@@ -257,7 +384,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	
 	/**
-	 * Can be called from the UI thread or a background thread.
+	 * Can be called from the UI thread (from constructor) or a background thread (normal case).
 	 */
 	protected void addModels(JSONArray jsonArray, boolean useServer, ArrayList<T> list) throws JSONException {
 
@@ -300,13 +427,13 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				
 			HttpURLConnection modelsConnection = null;
 			try {			
-				Log.d(TAG, "AM NOW RUNNING READFROMSERVER with " + urls[0]);	
+				Log.d(TAG, "DS READFROMSERVER with " + urls[0]);	
 				URL modelsEP = urls[0];
 				modelsConnection = (HttpURLConnection)modelsEP.openConnection();
 				modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
 				modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 				
-				Log.d(TAG, "GOT THE MODELS CONNECTION RESPONSE CODE " + modelsConnection.getResponseCode());
+				Log.d(TAG, "DS HTTP RESPONSE CODE " + modelsConnection.getResponseCode());
 
 				String jsonString = null;
 				if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
@@ -321,8 +448,8 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					addModels(jsonArray, true, data2);
 					
 					// write the new data models to disk
-					if (writeJSONCache(jsonString)) {
-						
+					boolean success = (m_newDataMode == MODE_REPLACE) ? replaceJSONCache(jsonString) : prependJSONCache(jsonString, m_data.size(), data2.size());
+					if (success) {
 						// remember the timestamp of this successful refresh
 						
 						SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
@@ -354,8 +481,13 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					
 			if (data2 != null) {
 				// no error, so use the new data
-				Log.d(TAG, "HERE IN ON POST EXECUTE with data2 size " + data2.size());				
-				m_data = data2;
+				Log.d(TAG, "DS ON POST EXECUTE with data2 size " + data2.size());
+				
+				if (m_newDataMode == MODE_REPLACE) {
+					replaceModels(data2);
+				} else {
+					prependModels(data2);
+				}
 				
 				// tell listeners that the data has changed, on the UI thread
 				notifyDSChangedListeners(); 

@@ -58,7 +58,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		m_datastoreRefreshRunnable = new Runnable() {
 			@Override
 			public void run() {
-				TheLifeConfiguration.getEventsDS().refresh(null);
+				TheLifeConfiguration.getEventsDS().refreshAfter(null);
 			}
 		};
 		
@@ -88,7 +88,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		if (TheLifeConfiguration.isValidUser()) {
 			TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getEventsDS().refresh(null);
+			TheLifeConfiguration.getEventsDS().refresh(null);  // TODO refreshAfter(null) ?
 		}
 		
 		// refresh the display every 60 seconds
@@ -103,6 +103,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
+System.out.println("JUST FINISHED ANOTHER EVENTS DS REFRESH!!!");
 		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
 	

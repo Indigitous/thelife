@@ -65,7 +65,7 @@ public class FriendsActivity
 	protected void onPause() {
 		super.onPause();
 		
-		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
+		TheLifeConfiguration.getFriendsDS().removeDSChangedListener(m_adapter);
 	}
 		
 
