@@ -47,7 +47,7 @@
     <string name="login_prompt">Please login to your account.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="register_prompt">Please register for a new account. If you received an invite via email, please use that email address.</string>
+    <string name="register_prompt">If you received an invite via email, please use that email address.</string>
 
     <!--  Note these threshold arrays must be in the same order as FriendModel.Threshold -->
     <string-array name="thresholds_short">
