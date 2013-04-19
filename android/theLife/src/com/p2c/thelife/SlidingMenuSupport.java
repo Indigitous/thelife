@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.p2c.thelife.model.UserModel;
+import com.p2c.thelife.model.OwnerDS;
 import com.slidingmenu.lib.SlidingMenu;
 
 /**
@@ -17,11 +18,12 @@ import com.slidingmenu.lib.SlidingMenu;
  * @author clarence
  *
  */ 
-public class SlidingMenuSupport {
+public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
 	
 	protected Activity    m_activity;
 	protected SlidingMenu m_slidingMenu;
 	protected int         m_slidingMenuPosition;
+	protected View		  m_appMenu;
 	
 	public static final int NO_POSITION = -1;
 	public static final int COMMUNITY_POSITION = 0;
@@ -48,19 +50,13 @@ public class SlidingMenuSupport {
         m_slidingMenu.setBehindWidth((int)(250 * m_activity.getResources().getDisplayMetrics().density));
         
         m_slidingMenu.setMenu(R.layout.app_menu);
-        View appMenu = m_slidingMenu.getMenu();
-        appMenu.setBackgroundColor(android.graphics.Color.LTGRAY);
+        m_appMenu = m_slidingMenu.getMenu();
+        m_appMenu.setBackgroundColor(android.graphics.Color.LTGRAY);
         
-        // show the app user
-        if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
-	        ImageView imageView = (ImageView)appMenu.findViewById(R.id.app_menu_user_image);
-	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId(), false));
-	        TextView textView = (TextView)appMenu.findViewById(R.id.app_menu_user_name);
-	        textView.setText(TheLifeConfiguration.getOwnerDS().getUser().getFullName());
-        }
+        showOwner();
         
         // add the commands to the sliding menu using an adapter
-        ListView commandsView = (ListView)appMenu.findViewById(R.id.app_menu_command_list);
+        ListView commandsView = (ListView)m_appMenu.findViewById(R.id.app_menu_command_list);
         String[] commandList = m_activity.getResources().getStringArray(R.array.app_menu_commands);
         SlidingMenuSupportAdapter commands = new SlidingMenuSupportAdapter(m_activity, android.R.layout.simple_list_item_1);
         for (String s: commandList) {
@@ -106,6 +102,21 @@ public class SlidingMenuSupport {
         		}
 			}
 		});   
+	}
+
+	@Override
+	public void notifyOwnerDSChanged() {
+		showOwner();
 	}		
 	
+	
+	private void showOwner() {
+        // show the app user
+        if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
+	        ImageView imageView = (ImageView)m_appMenu.findViewById(R.id.app_menu_user_image);
+	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId(), false));
+	        TextView textView = (TextView)m_appMenu.findViewById(R.id.app_menu_user_name);
+	        textView.setText(TheLifeConfiguration.getOwnerDS().getUser().getFullName());
+        }		
+	}
 }

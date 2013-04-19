@@ -33,6 +33,8 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
 			TheLifeConfiguration.getRequestsPoller().start();
 		}
+		
+		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);		
 	}
 	
 	
@@ -41,6 +43,7 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 		super.onPause();
 		
 		TheLifeConfiguration.getRequestsPoller().stop();
+		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);				
 	}		
 
 }

@@ -22,7 +22,7 @@ public class OwnerDS {
 	private UserModel m_user = null;
 	private String m_token = null;	
 	
-	public interface OwnerDSChangedListener {
+	public interface DSChangedListener {
 		public void notifyOwnerDSChanged();
 	}
 	
@@ -75,7 +75,7 @@ public class OwnerDS {
 		}
 		
 		// tell all the listeners about the change
-		notifyOwnerDSChangedListeners();
+		notifyDSChangedListeners();
 	}	
 	
 	
@@ -106,25 +106,25 @@ public class OwnerDS {
 	/**
 	 * OwnerDSChanged listener
 	 */
-	protected ArrayList<OwnerDSChangedListener> m_changedListeners = new ArrayList<OwnerDSChangedListener>();
+	protected ArrayList<DSChangedListener> m_changedListeners = new ArrayList<DSChangedListener>();
 	
-	public void addOwnerDSChangedListener(OwnerDSChangedListener theListener) {
+	public void addDSChangedListener(DSChangedListener theListener) {
 		m_changedListeners.add(theListener);
 	}
 	
-	public void notifyOwnerDSChangedListeners() {
-		for (OwnerDSChangedListener listener:m_changedListeners) {
+	public void notifyDSChangedListeners() {
+		for (DSChangedListener listener:m_changedListeners) {
 			if (listener != null) {
 				listener.notifyOwnerDSChanged();
 			}
 		}
 	}
 	
-	public void removeOwnerDSChangedListener(OwnerDSChangedListener theListener) {
+	public void removeDSChangedListener(DSChangedListener theListener) {
 		m_changedListeners.remove(theListener);
 	}
 	
-	public void clearAllOwnerDSChangedListeners() {
+	public void clearAllDSChangedListeners() {
 		m_changedListeners.clear();
 	}	
 
