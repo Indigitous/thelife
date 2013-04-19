@@ -1,6 +1,7 @@
 package com.p2c.thelife;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
@@ -15,6 +16,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.json.JSONArray;
@@ -414,13 +416,11 @@ public class Server {
 			String urlString = Utilities.makeServerUrlString(urlPrefix + "/" + String.valueOf(id) + "/" + type);
 			
 			HttpPost httpRequest = new HttpPost(urlString);
-			String bitmapName = urlPrefix + String.valueOf(id) + type + ".png";
 			
-			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-//			pairs.add(new BasicNameValuePair(bitmapName, bitmap));	// TODO for binary POST		
+			File file = new File(BitmapCache.generateFullCacheFileName(urlPrefix, id, type));
+			FileEntity fileEntity = new FileEntity(file, "image/png");		
 						
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
-			httpRequest.setEntity(formEntity);
+			httpRequest.setEntity(fileEntity);
 						
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {

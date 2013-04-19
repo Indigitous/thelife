@@ -26,6 +26,7 @@ public class BitmapCache {
 	
 		
 	public static String generateFullCacheFileName(String dataType, int id, String type) {
+		type = "image"; // TODO only support image not thumbnail for now
 		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + type + ".png";
 	}
 	
@@ -91,6 +92,7 @@ public class BitmapCache {
 	
 	
 	public static void saveBitmapToCache(String dataType, int id, String type, Bitmap bitmap) {
+		type = "image"; // TODO only support image not thumbnail for now		
 		String fileName = generateFullCacheFileName(dataType, id, type);
 		saveBitmapToCache(fileName, bitmap);
 	}
@@ -105,6 +107,7 @@ public class BitmapCache {
 	 * @return
 	 */
 	public static Bitmap getBitmapFromSystem(String dataType, int id, String type, boolean useServer, Bitmap fallbackBitmap) {
+		type = "image"; // TODO only support image not thumbnail for now		
 		Bitmap bitmap = null;
 		
 		if (id != 0) {
