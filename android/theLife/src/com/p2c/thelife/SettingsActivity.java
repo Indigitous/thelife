@@ -98,6 +98,9 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				textView.setText(user.email);
 				textView = (TextView)findViewById(R.id.settings_phone);
 				textView.setText(user.mobile);
+				Bitmap bitmap = UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId(), false);
+				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
+				imageView.setImageBitmap(bitmap);
 				
 			} else if (indicator.equals("updateUserProfile")) {
 				
