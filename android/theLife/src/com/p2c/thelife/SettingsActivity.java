@@ -124,6 +124,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 			} else if (indicator.equals("updateBitmap")) {
 				
 				if (Utilities.successfulHttpCode(httpCode)) {
+					TheLifeConfiguration.getOwnerDS().notifyDSChangedListeners();
 					m_updatedBitmap = null;
 				}
 				closeProgressBar();			
