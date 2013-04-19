@@ -97,8 +97,9 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 					
 					// check to see if there is an image needing to be sent to the server
 					if (m_bitmap != null) {
+						BitmapCache.saveBitmapToCache("friends", friend.id, "image", m_bitmap);						
 						Server server = new Server();
-						server.updateBitmap("friends", TheLifeConfiguration.getUserId(), "image", m_bitmap, this, "updateBitmap");
+						server.updateBitmap("friends", friend.id, "image", m_bitmap, this, "updateBitmap");
 					} else {
 						finishImport();
 					}

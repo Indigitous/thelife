@@ -186,6 +186,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 	private void updateImageOnServer(Bitmap bitmap) {
 		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
 		
+		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getUserId(), "image", bitmap);								
 		Server server = new Server();
 		server.updateBitmap("users", TheLifeConfiguration.getUserId(), "image", bitmap, this, "updateBitmap");
 	}
