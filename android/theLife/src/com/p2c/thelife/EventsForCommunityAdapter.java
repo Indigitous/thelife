@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.EventModel;
@@ -43,29 +44,32 @@ public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implemen
 		// get the event for this view
 		EventModel event = getItem(position);
 
-		TextView textViewDescription = (TextView)eventView.findViewById(R.id.textViewDescription);
+		TextView textViewDescription = (TextView)eventView.findViewById(R.id.event_description);
 		String eventDescription = event.description; // Utilities.fillTemplateString(getContext().getResources(), user, friend, event.description);
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
-		TextView textViewTime = (TextView)eventView.findViewById(R.id.textViewTime);
+		TextView textViewTime = (TextView)eventView.findViewById(R.id.event_time);
 		String eventTime = DateUtils.getRelativeDateTimeString(getContext(), event.timestamp, 
 			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
 		textViewTime.setText(Html.fromHtml(eventTime));		
 		
-		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.imageView1);
+		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.event_image1);
 		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id, false));
-		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.imageView2);
+		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.event_image2);
 		imageView2.setImageBitmap(FriendModel.getThumbnail(event.friend_id, false));		
 		
 		// only show the pledge view if the event requests it
-		CheckBox pledgeView = (CheckBox)eventView.findViewById(R.id.pledgeView);				
+		ToggleButton pledgeView = (ToggleButton)eventView.findViewById(R.id.event_pledge);
+		TextView peoplePrayedView = (TextView)eventView.findViewById(R.id.event_people_prayed);
 		if (event.isPrayerRequested) {
 			pledgeView.setVisibility(View.VISIBLE);
-			String pledgeDescription = getContext().getResources().getString(R.string.pray) + " " + event.pledgeCount;
-			pledgeView.setText(pledgeDescription);	
+			peoplePrayedView.setVisibility(View.VISIBLE);
+//			String pledgeDescription = getContext().getResources().getString(R.string.pray) + " " + event.pledgeCount;
+//			pledgeView.setText(pledgeDescription);	
 			pledgeView.setTag(event);
 		} else {
 			pledgeView.setVisibility(View.GONE);
+			peoplePrayedView.setVisibility(View.GONE);			
 		}
 		
 		return eventView;

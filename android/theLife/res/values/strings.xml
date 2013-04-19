@@ -100,6 +100,7 @@
     
     <string name="change_threshold">Change threshold</string>
     <string name="pray">Pray</string>
+    <string name="prayed">Prayed</string>
     
     <string name="title_events">Events</string>
     <string name="title_help">Help</string>

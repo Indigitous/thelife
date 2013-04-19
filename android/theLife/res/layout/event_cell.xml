@@ -8,59 +8,79 @@
     <!--  this works for Nexus 4 1280x760?: 80dp/16sp/12sp -->
     <LinearLayout
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
+	    android:layout_height="wrap_content"
 	    android:paddingTop="8dp"
 	    android:orientation="horizontal" >
         
 	    <ImageView
-	        android:id="@+id/imageView1"
+	        android:id="@+id/event_image1"
 	        android:layout_width="60dp"
 	        android:layout_height="60dp"
 	        android:paddingLeft="0dp"        
 	        android:paddingRight="4dp"
-	        android:src="@drawable/ic_launcher" />
+	        android:src="@drawable/generic_avatar_thumbnail" />
 	    
 	   <ImageView
-	        android:id="@+id/imageView2"
+	        android:id="@+id/event_image2"
 	        android:layout_width="60dp"
 	        android:layout_height="60dp"
 	        android:paddingLeft="0dp"        
 	        android:paddingRight="4dp"        
-	        android:src="@drawable/ic_launcher" />    
+	        android:src="@drawable/generic_avatar_thumbnail" />    
 	            
 	   <!-- event description and time -->
 	    <LinearLayout
 	    	android:layout_width="match_parent"
-	    	android:layout_height="60dp"        
+	    	android:layout_height="wrap_content"        
 	        android:orientation="vertical" >
+	        
 		    <TextView
-		        android:id="@+id/textViewDescription"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        android:textSize="12sp" 		        
-		        android:text="Placeholder Text In Here" />        
-	    				        
-		    <TextView
-		        android:id="@+id/textViewTime"
+		        android:id="@+id/event_time"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="0"
-		        android:textSize="10sp" 
-		        android:layout_gravity="right"
-		        android:text="Just Now" />
-			  
+		        android:layout_gravity="left"
+		        android:text="Just Now" 
+		        android:textColor="#a7a7a7"
+		        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    	        
+		    <TextView
+		        android:id="@+id/event_description"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:layout_marginTop="8dp"
+		        android:text="Placeholder Text In Here"
+		        android:textAppearance="?android:attr/textAppearanceMedium" />
 	    </LinearLayout>
 	    
-    </LinearLayout>
+    </LinearLayout>     
 	  
-    <CheckBox
-        android:id="@+id/pledgeView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-		android:textSize="12sp"         
-        android:text="@string/pray" 
-        android:onClick="pledgeToPray" />
+    <LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"        
+        android:orientation="horizontal" >
+	     
+		<TextView
+			android:id="@+id/event_people_prayed"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_gravity="center_vertical"
+			android:text="5 People prayed"
+		    android:textColor="#a7a7a7"			
+			android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+    	<ToggleButton
+	        android:id="@+id/event_pledge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="right"
+	        android:textOn="@string/prayed"
+	        android:textOff="@string/pray"
+	        android:drawableLeft="@drawable/pray_normal" 
+	        android:onClick="pledgeToPray" />
+	</LinearLayout>    
+        
 
 </LinearLayout>
