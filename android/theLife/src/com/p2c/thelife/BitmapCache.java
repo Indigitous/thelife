@@ -24,8 +24,26 @@ public class BitmapCache {
 	
 	private static final String TAG = "BitmapCache";
 	
-	private static String getCacheFileName(String dataType, int id, String type) {
+		
+	public static String generateFullCacheFileName(String dataType, int id, String type) {
 		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + type + ".png";
+	}
+	
+	
+	private static void saveBitmapToCache(String cacheFileName, Bitmap bitmap) {
+		if (bitmap != null) {
+			
+			OutputStream os = null;
+			try {
+				os = new BufferedOutputStream(new FileOutputStream(cacheFileName));
+				bitmap.compress(CompressFormat.PNG, 90, os);
+			} catch (Exception e) {
+				Log.e(TAG, "saveBitmapToCache " + cacheFileName, e);
+			} finally {
+				try { if (os != null) os.close(); } catch (Exception e) { }
+			}
+			
+		}
 	}
 
 	/**
@@ -39,7 +57,6 @@ public class BitmapCache {
 		InputStream is = null;
 		HttpURLConnection connection = null;
 		Bitmap bitmap = null;
-		OutputStream os = null;
 		
 		try {
 			
@@ -53,11 +70,7 @@ public class BitmapCache {
 				bitmap = BitmapFactory.decodeStream(is);
 				
 				// save the bitmap to cache
-				if (bitmap != null) {
-					os = new BufferedOutputStream(new FileOutputStream(cacheFileName));
-					bitmap.compress(CompressFormat.PNG, 90, os);
-					os.close();
-				}
+				saveBitmapToCache(cacheFileName, bitmap);
 			} else {
 				Log.e(TAG, "getBitmapAtURLSafe() HTTP code " + responseCode);
 			}
@@ -68,9 +81,6 @@ public class BitmapCache {
 			if (is != null) {
 				try { is.close(); } catch (IOException e) { }
 			}
-			if (os != null) {
-				try { os.close(); } catch (IOException e) { }
-			}
 			if (connection != null) {
 				connection.disconnect();
 			}
@@ -79,6 +89,11 @@ public class BitmapCache {
 		return bitmap;
 	}
 	
+	
+	public static void saveBitmapToCache(String dataType, int id, String type, Bitmap bitmap) {
+		String fileName = generateFullCacheFileName(dataType, id, type);
+		saveBitmapToCache(fileName, bitmap);
+	}
 	
 	/**
 	 * Get the bitmap from the server if permitted and if available.
@@ -94,7 +109,7 @@ public class BitmapCache {
 		
 		if (id != 0) {
 			// first try to find the bitmap in the disk cache
-			String fileName = getCacheFileName(dataType, id, type);
+			String fileName = generateFullCacheFileName(dataType, id, type);
 			if (new File(fileName).exists()) {
 				bitmap = BitmapFactory.decodeFile(fileName);
 			}
