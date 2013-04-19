@@ -72,8 +72,8 @@ public class SetupActivity extends AbstractSetupActivity implements Server.Serve
 						// successful login
 						
 						// store the user configuration result
-						TheLifeConfiguration.setUser(user);
-						TheLifeConfiguration.setToken(token);
+						TheLifeConfiguration.getOwnerDS().setUser(user);
+						TheLifeConfiguration.getOwnerDS().setToken(token);
 						
 						// refresh data stores							
 						fullRefresh();

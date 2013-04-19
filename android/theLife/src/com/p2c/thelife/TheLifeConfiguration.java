@@ -1,4 +1,5 @@
 package com.p2c.thelife;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
@@ -7,8 +8,8 @@ import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
 import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
+import com.p2c.thelife.model.OwnerDS;
 import com.p2c.thelife.model.RequestsDS;
-import com.p2c.thelife.model.UserModel;
 import com.p2c.thelife.model.UsersDS;
 
 
@@ -31,15 +32,11 @@ public class TheLifeConfiguration {
 	private static UsersDS m_usersDS = null;
 	private static GroupsDS m_groupsDS = null;
 	private static EventsDS m_eventsDS = null;
-	private static RequestsDS m_requestsDS = null;	
-	
-	// app user and authentication token
-	private static UserModel m_user = null;
-	private static String m_token = null;
+	private static RequestsDS m_requestsDS = null;
+	private static OwnerDS m_ownerDS = null;
 	
 	public static final int HTTP_CONNECTION_TIMEOUT = 10000; // in millis
 	public static final int HTTP_READ_TIMEOUT = 15000;  // in millis
-	public static final String SYSTEM_PREFERENCES_FILE = "system_prefs";	
 	
 	// refresh deltas: time before a refresh
 	public static final long REFRESH_DEEDS_DELTA = 24 * 60 * 60 * 1000; // 1 day in millis
@@ -72,21 +69,16 @@ public class TheLifeConfiguration {
 	
 	
 	/*************************** System Preferences **********************/
-	public static void loadSystemSettings(SharedPreferences systemSettings) {
-		m_systemSettings = systemSettings;
-		
-		int userId = m_systemSettings.getInt("user_id", 0);
-		if (userId != 0) {
-			String firstName = m_systemSettings.getString("user_first_name", "");
-			String lastName = m_systemSettings.getString("user_last_name", "");	
-			String email = m_systemSettings.getString("user_email", "");		
-			String mobile = m_systemSettings.getString("user_mobile", "");		
-			
-			m_user = new UserModel(userId, firstName, lastName, null, email, mobile);
-		}
-		
-		m_token = m_systemSettings.getString("token", "");		
+	
+	public static SharedPreferences getSystemSettings() {
+		return m_systemSettings;
 	}
+	
+	public static void loadSystemSettings(Context context) {
+		m_systemSettings = context.getSharedPreferences("system_prefs", Context.MODE_PRIVATE);		
+	}
+	
+
 	
 	/*************************** Data Stores *****************************/
 	
@@ -146,6 +138,14 @@ public class TheLifeConfiguration {
 		m_requestsDS = requestsDS;
 	}		
 	
+	public static OwnerDS getOwnerDS() {
+		return m_ownerDS;
+	}
+	
+	public static void setOwnerDS(OwnerDS ownerDS) {
+		m_ownerDS = ownerDS;
+	}	
+	
 	
 	/****************** Cache and image related information ******************/
 	
@@ -195,58 +195,7 @@ public class TheLifeConfiguration {
 	
 	public static void setMissingDataThumbnail(Bitmap missingDataThumbnail) {
 		m_missingDataThumbnail = missingDataThumbnail;
-	}		
-	
-	/************************** App User information ***************************/
-	
-	public static int getUserId() {
-		return (m_user != null) ? m_user.id : 0;
 	}
-	
-	public static UserModel getUser() {
-		return m_user;
-	}
-	
-	public static boolean isValidUser() {
-		return m_user != null;
-	}
-	
-	public static void setUser(UserModel user) {
-
-		m_user = user;
-		SharedPreferences.Editor systemSettingsEditor = m_systemSettings.edit();
-		
-		if (m_user != null) {
-			systemSettingsEditor.putInt("user_id", m_user.id);
-			systemSettingsEditor.putString("user_first_name", m_user.firstName);
-			systemSettingsEditor.putString("user_last_name", m_user.lastName);	
-			systemSettingsEditor.putString("user_email", m_user.email);		
-			systemSettingsEditor.putString("user_mobile", m_user.mobile);		
-			systemSettingsEditor.commit();		
-		} else {
-			systemSettingsEditor.putInt("user_id", 0); // marks a not-valid user
-		}
-	}	
-	
-	/**
-	 * 
-	 * @return authentication token
-	 */
-	public static String getToken() {
-		return m_token;
-	}	
-	
-	/**
-	 * set the authentication token
-	 */
-	public static void setToken(String token) {
-		m_token = token;
-		
-		SharedPreferences.Editor systemSettingsEditor = m_systemSettings.edit();
-		systemSettingsEditor.putString("token", m_token);
-		systemSettingsEditor.commit();				
-	}	
-	
 	
 	
 	/********************** Application-wide polling ***********************/

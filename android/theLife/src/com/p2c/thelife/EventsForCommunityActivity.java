@@ -42,7 +42,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		//super.setTitle("");
 		
 		// If the current user has not been authenticated, jump to login or register instead.
-		if (!TheLifeConfiguration.isValidUser()) {
+		if (!TheLifeConfiguration.getOwnerDS().isValidUser()) {
 			// not authenticated user, so login or register
 			Intent intent = new Intent("com.p2c.thelife.Setup");
 			startActivity(intent);
@@ -85,7 +85,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		super.onResume();
 		
 		// load the data store from the server in the background
-		if (TheLifeConfiguration.isValidUser()) {
+		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
 			TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
 			TheLifeConfiguration.getEventsDS().refresh(null);  // TODO refreshAfter(null) ?

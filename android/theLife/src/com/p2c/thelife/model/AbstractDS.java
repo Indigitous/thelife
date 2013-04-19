@@ -51,7 +51,6 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	protected Context m_context = null;
 	protected String TAG = null;							// for logging
-	protected SharedPreferences m_systemSettings = null;	
 	protected String m_cacheFileName = null; 				// must be set in subclass
 	protected boolean m_isRefreshing = false; 				// lock to prevent more than one thread refresh at any time
 	protected String m_refreshIndicator = null;
@@ -82,14 +81,13 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		m_context = context;
 		TAG = tag;
 		m_cacheFileName = TheLifeConfiguration.getCacheDirectory() + cacheFileName;
-		m_systemSettings = context.getSharedPreferences(TheLifeConfiguration.SYSTEM_PREFERENCES_FILE, Context.MODE_PRIVATE);
 		m_refreshSettingTimestampKey = refreshSettingTimestampKey;
 		m_refreshURLPath = refreshURLPath;
-		m_refreshDelta = m_systemSettings.getLong(refreshSettingDeltaKey, refreshDeltaDefault);
+		m_refreshDelta = TheLifeConfiguration.getSystemSettings().getLong(refreshSettingDeltaKey, refreshDeltaDefault);
 		
 		// load model objects from the JSON cache file on this device.
 		// TODO: is this too slow for the main thread?
-		if (TheLifeConfiguration.isValidUser()) {
+		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
 			
 			FileReader fileReader = null;
 			try {
@@ -197,7 +195,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		if (!m_isRefreshing) {
 			
 			// force a refresh by erasing the timestamp indicating previous refresh time
-			SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
+			SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
 			system_settings_editor.putLong(m_refreshSettingTimestampKey, 0L);
 			system_settings_editor.commit();			
 			
@@ -234,7 +232,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	public void refresh(String refreshIndicator, int max, String params, int newDataMode) {
 		
 		// find when the model objects were most recently refreshed
-		long lastRefresh = m_systemSettings.getLong(m_refreshSettingTimestampKey, 0);
+		long lastRefresh = TheLifeConfiguration.getSystemSettings().getLong(m_refreshSettingTimestampKey, 0);
 		Log.d(TAG, "the last refresh was " + lastRefresh);
 		
 		// TODO: for debugging
@@ -459,7 +457,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					if (success) {
 						// remember the timestamp of this successful refresh
 						
-						SharedPreferences.Editor system_settings_editor = m_systemSettings.edit();
+						SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
 						system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
 						system_settings_editor.commit();
 					}					

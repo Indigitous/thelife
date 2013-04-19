@@ -32,7 +32,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		// show the progress dialog while getting the user profile
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 		Server server = new Server();
-		server.queryUserProfile(TheLifeConfiguration.getUserId(), this, "queryUserProfile");		
+		server.queryUserProfile(TheLifeConfiguration.getOwnerDS().getUserId(), this, "queryUserProfile");		
 	}
 
 	@Override
@@ -57,12 +57,12 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		String email = textView.getText().toString();
 		textView = (TextView)findViewById(R.id.settings_phone);
 		String phone = textView.getText().toString();
-		m_updatedUser = new UserModel(TheLifeConfiguration.getUserId(), firstName, lastName, null, email, phone);
+		m_updatedUser = new UserModel(TheLifeConfiguration.getOwnerDS().getUserId(), firstName, lastName, null, email, phone);
 		
 		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_account), true, true);
 		Server server = new Server();
-		server.updateUserProfile(TheLifeConfiguration.getUserId(), firstName, lastName, email, phone, this, "updateUserProfile");		
+		server.updateUserProfile(TheLifeConfiguration.getOwnerDS().getUserId(), firstName, lastName, email, phone, this, "updateUserProfile");		
 		return true;
 	}
 
@@ -78,12 +78,12 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				// update the UI with the result of the query
 
 				// use the existing app user record
-				UserModel user = TheLifeConfiguration.getUser();
+				UserModel user = TheLifeConfiguration.getOwnerDS().getUser();
 				
 				// update app user record with latest from server 
 				if (jsonObject != null) {	
 					user.setFromPartialJSON(jsonObject);				
-					TheLifeConfiguration.setUser(user);
+					TheLifeConfiguration.getOwnerDS().setUser(user);
 				}
 					
 				// update the UI
@@ -106,7 +106,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 					// update the UI and app user
 					TextView textView = (TextView)findViewById(R.id.settings_name_by_image);				
 					textView.setText(m_updatedUser.getFullName());
-					TheLifeConfiguration.setUser(m_updatedUser);					
+					TheLifeConfiguration.getOwnerDS().setUser(m_updatedUser);					
 	
 					// have updated the user profile, so now update the user profile image if necessary
 					if (m_updatedBitmap != null) {
@@ -186,9 +186,9 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 	private void updateImageOnServer(Bitmap bitmap) {
 		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
 		
-		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getUserId(), "image", bitmap);								
+		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);								
 		Server server = new Server();
-		server.updateBitmap("users", TheLifeConfiguration.getUserId(), "image", bitmap, this, "updateBitmap");
+		server.updateBitmap("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateBitmap");
 	}
 	
 	

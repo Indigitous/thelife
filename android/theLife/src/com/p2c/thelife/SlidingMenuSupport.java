@@ -52,11 +52,11 @@ public class SlidingMenuSupport {
         appMenu.setBackgroundColor(android.graphics.Color.LTGRAY);
         
         // show the app user
-        if (TheLifeConfiguration.isValidUser()) {
+        if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
 	        ImageView imageView = (ImageView)appMenu.findViewById(R.id.app_menu_user_image);
-	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getUserId(), false));
+	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId(), false));
 	        TextView textView = (TextView)appMenu.findViewById(R.id.app_menu_user_name);
-	        textView.setText(TheLifeConfiguration.getUser().getFullName());
+	        textView.setText(TheLifeConfiguration.getOwnerDS().getUser().getFullName());
         }
         
         // add the commands to the sliding menu using an adapter

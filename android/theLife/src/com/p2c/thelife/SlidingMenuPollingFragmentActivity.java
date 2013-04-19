@@ -30,7 +30,7 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 	protected void onResume() {
 		super.onResume();
 		
-		if (TheLifeConfiguration.isValidUser()) {
+		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
 			TheLifeConfiguration.getRequestsPoller().start();
 		}
 	}

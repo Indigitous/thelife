@@ -150,9 +150,9 @@ public class SetupRegisterActivity extends AbstractSetupActivity implements Serv
 	private void updateImageOnServer(Bitmap bitmap) {
 		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
 		
-		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getUserId(), "image", bitmap);										
+		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);										
 		Server server = new Server();
-		server.updateBitmap("users", TheLifeConfiguration.getUserId(), "image", bitmap, this, "updateBitmap");
+		server.updateBitmap("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateBitmap");
 	}
 	
 	
@@ -161,8 +161,8 @@ public class SetupRegisterActivity extends AbstractSetupActivity implements Serv
 		closeProgressBar();
 				
 		// store the user configuration result
-		TheLifeConfiguration.setUser(user);
-		TheLifeConfiguration.setToken(token);
+		TheLifeConfiguration.getOwnerDS().setUser(user);
+		TheLifeConfiguration.getOwnerDS().setToken(token);
 		
 		// refresh data stores
 		fullRefresh();

@@ -1,13 +1,12 @@
 package com.p2c.thelife;
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.p2c.thelife.model.CategoriesDS;
 import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
 import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
+import com.p2c.thelife.model.OwnerDS;
 import com.p2c.thelife.model.RequestsDS;
 import com.p2c.thelife.model.UsersDS;
 
@@ -28,19 +27,18 @@ public class TheLifeApplication extends Application {
 		super.onCreate();
 					
 		// initialize configuration from system settings
-		SharedPreferences systemSettings = 
-			getApplicationContext().getSharedPreferences("system_prefs", Context.MODE_PRIVATE);
-		TheLifeConfiguration.loadSystemSettings(systemSettings);
+		TheLifeConfiguration.loadSystemSettings(getApplicationContext());
 		
-		// initialize placeholder images before initializing data stores
+		// initialize placeholder images and cache directory before initializing data stores
 		TheLifeConfiguration.setGenericPersonImage(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.generic_avatar_image)));
 		TheLifeConfiguration.setGenericPersonThumbnail(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.generic_avatar_thumbnail)));
 		TheLifeConfiguration.setGenericDeedImage(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_help)));
 		TheLifeConfiguration.setMissingDataImage(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_flynav)));
 		TheLifeConfiguration.setMissingDataThumbnail(Utilities.getBitmapFromDrawable(getResources().getDrawable(R.drawable.action_flynav)));
+		TheLifeConfiguration.setCacheDirectory(getApplicationContext().getCacheDir().getAbsolutePath() + "/");		
 				
 		// initialize the data stores, reading from cache if available
-		TheLifeConfiguration.setCacheDirectory(getApplicationContext().getCacheDir().getAbsolutePath() + "/");		
+		TheLifeConfiguration.setOwnerDS(new OwnerDS());				
 		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext()));				
 		TheLifeConfiguration.setDeedsDS(new DeedsDS(getApplicationContext()));
 		TheLifeConfiguration.setUsersDS(new UsersDS(getApplicationContext()));

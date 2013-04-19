@@ -24,7 +24,7 @@ public class UserDeleteFromGroupDialog extends AbstractServerAccessDialog {
 		final UserModel user = ((GroupActivity)m_listener).getSelectedUser();
 		
 		// Make sure the current user is the group leader, and therefore allowed to delete the given user
-		if (group.leader_id == TheLifeConfiguration.getUserId()) {		
+		if (group.leader_id == TheLifeConfiguration.getOwnerDS().getUserId()) {		
 		
 			// set the message, content and buttons of the alert
 			String message = getResources().getString(R.string.delete_user_from_group_prompt, user.getFullName(), group.name);
