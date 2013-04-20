@@ -32,7 +32,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	private Runnable m_datastoreRefreshRunnable = null;
 	// refresh the events list view
 	private Runnable m_displayRefreshRunnable = null;	
-	
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
