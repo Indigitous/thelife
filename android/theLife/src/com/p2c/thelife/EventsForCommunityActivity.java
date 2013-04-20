@@ -38,8 +38,8 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_events_for_community, SlidingMenuSupport.COMMUNITY_POSITION);
 		
-		// remove the application label at the top
-		//super.setTitle("");
+		// no up arrow for home activity
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);		
 		
 		// If the current user has not been authenticated, jump to login or register instead.
 		if (!TheLifeConfiguration.getOwnerDS().isValidUser()) {
