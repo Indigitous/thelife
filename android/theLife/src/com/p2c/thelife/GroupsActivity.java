@@ -112,7 +112,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 				
 				// successful
 				
-				if (indicator.equals("groupCreate")) {
+				if (indicator.equals("createGroup")) {
 					String name = jsonObject.optString("name", "");
 					String description = jsonObject.optString("full_description", "");
 					
