@@ -64,8 +64,15 @@ public class EventsForCommunityAdapter extends ArrayAdapter<EventModel> implemen
 		if (event.isPrayerRequested) {
 			pledgeView.setVisibility(View.VISIBLE);
 			peoplePrayedView.setVisibility(View.VISIBLE);
-//			String pledgeDescription = getContext().getResources().getString(R.string.pray) + " " + event.pledgeCount;
-//			pledgeView.setText(pledgeDescription);	
+			
+			// show the pledge count
+			if (event.pledgeCount == 1) {
+				peoplePrayedView.setText(getContext().getResources().getString(R.string.people_prayed_singular));
+			} else {
+				String prayedText = getContext().getResources().getString(R.string.people_prayed_plural, event.pledgeCount);
+				peoplePrayedView.setText(prayedText);
+			}
+
 			pledgeView.setTag(event);
 		} else {
 			pledgeView.setVisibility(View.GONE);
