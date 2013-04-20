@@ -11,7 +11,7 @@ import android.support.v4.app.DialogFragment;
  * @author clarence
  *
  */
-public abstract class AbstractServerAccessDialog extends DialogFragment {
+public abstract class ServerAccessDialogAbstract extends DialogFragment {
 	
 	public interface Listener {
 		public void notifyAttemptingServerAccess(String indicator);

@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-public class SetupActivity extends AbstractSetupActivity implements Server.ServerListener, AbstractServerAccessDialog.Listener {
+public class SetupActivity extends SetupActivityAbstract implements Server.ServerListener, ServerAccessDialogAbstract.Listener {
 	
 	private static final String TAG = "SetupActivity";
 	

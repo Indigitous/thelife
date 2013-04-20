@@ -12,7 +12,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendDeleteDialog extends AbstractServerAccessDialog {
+public class FriendDeleteDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

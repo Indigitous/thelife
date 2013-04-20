@@ -13,7 +13,7 @@ import com.p2c.thelife.model.GroupModel;
  * @author clarence
  *
  */
-public class GroupDeleteDialog extends AbstractServerAccessDialog {
+public class GroupDeleteDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

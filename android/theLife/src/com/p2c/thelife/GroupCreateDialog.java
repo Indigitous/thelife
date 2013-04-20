@@ -14,7 +14,7 @@ import android.widget.Toast;
  * @author clarence
  *
  */
-public class GroupCreateDialog extends AbstractServerAccessDialog {
+public class GroupCreateDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

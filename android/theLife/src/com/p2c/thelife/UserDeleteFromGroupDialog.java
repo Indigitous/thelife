@@ -13,7 +13,7 @@ import com.p2c.thelife.model.UserModel;
  * Remove a user from a group. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.
  *
  */
-public class UserDeleteFromGroupDialog extends AbstractServerAccessDialog {
+public class UserDeleteFromGroupDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

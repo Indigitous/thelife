@@ -12,7 +12,7 @@ import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
  * @author clarence
  *
  */
-public abstract class AbstractSetupActivity extends FragmentActivity implements DSRefreshedListener {
+public abstract class SetupActivityAbstract extends FragmentActivity implements DSRefreshedListener {
 	
 	private static final String TAG = "BaseSetupActivity";
 	

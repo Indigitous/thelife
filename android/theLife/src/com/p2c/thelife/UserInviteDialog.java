@@ -17,7 +17,7 @@ import com.p2c.thelife.model.RequestModel;
  * @author clarence
  *
  */
-public class UserInviteDialog extends AbstractServerAccessDialog {
+public class UserInviteDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

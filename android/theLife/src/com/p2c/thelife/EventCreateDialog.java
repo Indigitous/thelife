@@ -16,7 +16,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class EventCreateDialog extends AbstractServerAccessDialog {
+public class EventCreateDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

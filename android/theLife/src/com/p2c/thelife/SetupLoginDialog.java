@@ -13,7 +13,7 @@ import android.widget.EditText;
  * @author clarence
  *
  */
-public class SetupLoginDialog extends AbstractServerAccessDialog {
+public class SetupLoginDialog extends ServerAccessDialogAbstract {
 	
 	private static final String TAG = "SetupLoginDialog";
 		

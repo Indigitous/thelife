@@ -22,7 +22,7 @@ import com.p2c.thelife.model.UserModel;
  * @author clarence
  *
  */
-public class SetupRegisterActivity extends AbstractSetupActivity implements Server.ServerListener, ImageSelectSupport.Listener {
+public class SetupRegisterActivity extends SetupActivityAbstract implements Server.ServerListener, ImageSelectSupport.Listener {
 	
 	private static final String TAG = "SetupRegisterActivity";
 	
