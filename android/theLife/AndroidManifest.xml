@@ -10,12 +10,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+ <!--  android:theme="@style/AppTheme" -->
+ <!--  android:theme="@style/Theme.Sherlock.Light" -->
     <application
         android:name="com.p2c.thelife.TheLifeApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="theLife"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Sherlock.Light" 
+        >
         <activity
             android:name="com.p2c.thelife.EventsForCommunityActivity" 
             android:label="theLife" >
