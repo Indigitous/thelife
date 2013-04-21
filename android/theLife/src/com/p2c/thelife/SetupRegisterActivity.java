@@ -60,7 +60,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 
 		// send the registration to the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);		
-		Server server = new Server();
+		Server server = new Server(this);
 		server.register(email, password, firstName, lastName, this, "register");		
 	}
 	
@@ -151,7 +151,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
 		
 		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);										
-		Server server = new Server();
+		Server server = new Server(this);
 		server.updateBitmap("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateBitmap");
 	}
 	

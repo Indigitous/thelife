@@ -25,6 +25,9 @@ public class TheLifeApplication extends Application {
 	 */
 	public void onCreate() {
 		super.onCreate();
+		
+		// TODO Supposed to avoid connection pooling and thus actually close connections. But does it work?
+		// System.setProperty("http.keepAlive", "false");
 					
 		// initialize configuration from system settings
 		TheLifeConfiguration.loadSystemSettings(getApplicationContext());

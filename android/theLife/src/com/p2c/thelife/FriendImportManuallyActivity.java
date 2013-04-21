@@ -69,7 +69,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.adding_friend), true, true);		
 
-		Server server = new Server();
+		Server server = new Server(this);
 		server.createFriend(firstName, lastName, threshold, this, "createFriend");						
 	}
 	
@@ -98,7 +98,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 					// check to see if there is an image needing to be sent to the server
 					if (m_bitmap != null) {
 						BitmapCache.saveBitmapToCache("friends", friend.id, "image", m_bitmap);						
-						Server server = new Server();
+						Server server = new Server(this);
 						server.updateBitmap("friends", friend.id, "image", m_bitmap, this, "updateBitmap");
 					} else {
 						finishImport();

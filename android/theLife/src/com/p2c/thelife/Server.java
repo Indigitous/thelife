@@ -23,10 +23,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.p2c.thelife.model.FriendModel;
 
@@ -40,6 +42,8 @@ public class Server {
 	
 	private static final String TAG = "Server";
 	
+	private Context m_context = null;
+	
 	/**
 	 * To receive the server's response, implement this callback.
 	 *
@@ -51,6 +55,12 @@ public class Server {
 		 * @param jsonObject	the result of the server call, null if there was a failure
 		 */
 		public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject);
+	}
+	
+	
+	
+	public Server(Context context) {
+		m_context = context;
 	}
 	
 	/**
@@ -438,6 +448,7 @@ public class Server {
 		private ServerListener m_listener = null;
 		private String m_indicator = null;
 		private int m_httpCode = -1;
+		private boolean m_connectionTimeout = false;
 		
 		public ServerCall(HttpUriRequest httpRequest, ServerListener listener, String indicator) {
 			m_httpRequest = httpRequest;
@@ -458,6 +469,7 @@ public class Server {
 			// See their doc at http://hc.apache.org/httpcomponents-client-ga/tutorial/html/fundamentals.html.
 				
 			AndroidHttpClient httpClient = null;
+			HttpEntity httpEntity = null;
 			try {			
 				Log.d(TAG, "STARTING ServerCall " + m_httpRequest.getMethod() + " " + urls[0]);	
 								
@@ -473,7 +485,7 @@ public class Server {
 				String jsonString = null;
 				if (Utilities.successfulHttpCode(m_httpCode)) {			
 					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					HttpEntity httpEntity = httpResponse.getEntity();
+					httpEntity = httpResponse.getEntity();
 					
 					// make sure there is a response to read
 					if (httpEntity != null) {
@@ -504,6 +516,9 @@ public class Server {
 				Log.wtf(TAG, "ServerCall.doInBackground()", e);				
 			} catch (MalformedURLException e) {
 				Log.wtf(TAG, "ServerCall().doInBackground", e);
+			} catch (org.apache.http.conn.ConnectTimeoutException e) {
+				m_connectionTimeout = true;
+				Log.e(TAG, "ServerCall().doInBackground", e);
 			} catch (IOException e) {
 				Log.e(TAG, "ServerCall().doInBackground", e);
 			} catch (Exception e) {
@@ -511,6 +526,11 @@ public class Server {
 			} finally {
 				if (httpClient != null) {
 					httpClient.close();
+					httpClient = null;
+				}
+				if (httpEntity != null) {
+					try { httpEntity.consumeContent(); } catch (Exception e) { }
+					httpEntity = null;
 				}
 			}	
 			
@@ -520,6 +540,11 @@ public class Server {
 		// UI thread		
 		@Override
 		protected void onPostExecute(JSONObject jsonObject) {
+			if (m_connectionTimeout) {
+				Utilities.showErrorToast(m_context, "SERVER CONN TIMEOUT " + m_indicator, Toast.LENGTH_SHORT);
+				m_connectionTimeout = false;
+			}
+			m_context = null;
 			
 			Log.d(TAG, "HERE IN ON POST EXECUTE with " + m_indicator);
 			

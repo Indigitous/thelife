@@ -32,7 +32,7 @@ public class GroupRequestJoinDialog extends ServerAccessDialogAbstract {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createJoinGroupRequest");
 
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.createRequest(group.id, RequestModel.REQUEST_MEMBERSHIP, null, null, (Server.ServerListener)m_listener, "createRequest");				
 			}
 		});		

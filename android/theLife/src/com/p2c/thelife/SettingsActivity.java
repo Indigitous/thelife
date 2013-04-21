@@ -31,7 +31,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				
 		// show the progress dialog while getting the user profile
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
-		Server server = new Server();
+		Server server = new Server(this);
 		server.queryUserProfile(TheLifeConfiguration.getOwnerDS().getUserId(), this, "queryUserProfile");		
 	}
 
@@ -61,7 +61,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_account), true, true);
-		Server server = new Server();
+		Server server = new Server(this);
 		server.updateUserProfile(TheLifeConfiguration.getOwnerDS().getUserId(), firstName, lastName, email, phone, this, "updateUserProfile");		
 		return true;
 	}
@@ -191,7 +191,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
 		
 		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);								
-		Server server = new Server();
+		Server server = new Server(this);
 		server.updateBitmap("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateBitmap");
 	}
 	

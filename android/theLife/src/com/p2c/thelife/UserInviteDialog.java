@@ -47,7 +47,7 @@ public class UserInviteDialog extends ServerAccessDialogAbstract {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createRequest");
 
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.createRequest(group.id, RequestModel.INVITE, email, phone, (Server.ServerListener)m_listener, "createRequest");
 			}
 		});		

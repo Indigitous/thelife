@@ -146,7 +146,7 @@ System.out.println("JUST FINISHED ANOTHER EVENTS DS REFRESH!!!");
 		EventModel event = (EventModel)view.getTag();
 		
 		// send the pledge to the server
-		Server server = new Server();
+		Server server = new Server(this);
 		server.pledgeToPray(event.id, this, "pledgeToPray");
 	}
 

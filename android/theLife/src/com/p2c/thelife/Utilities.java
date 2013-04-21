@@ -5,11 +5,15 @@ import java.io.InputStreamReader;
 
 import org.apache.http.util.CharArrayBuffer;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
@@ -83,5 +87,17 @@ public class Utilities {
 	
 	public static boolean successfulHttpCode(int httpCode) {
 		return (httpCode >= 200) && (httpCode <= 299);
+	}
+	
+	
+	public static void showErrorToast(Context context, String text, int duration) {
+		Toast toast = new Toast(context);
+		TextView textView = new TextView(context);
+		textView.setText(text);
+		textView.setBackgroundColor(Color.RED);
+		textView.setTextColor(Color.WHITE);
+		toast.setView(textView);
+		toast.show();
+		toast = null;
 	}
 }

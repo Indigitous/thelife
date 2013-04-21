@@ -38,7 +38,7 @@ public class GroupCreateDialog extends ServerAccessDialogAbstract {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createGroup");
 
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.createGroup(name, description, (Server.ServerListener)m_listener, "createGroup");		
 				
 				Toast.makeText(getActivity(), "CREATE GROUP " + name + " ", Toast.LENGTH_SHORT).show();					

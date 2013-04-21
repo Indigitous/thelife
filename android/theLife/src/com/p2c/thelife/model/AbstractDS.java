@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.p2c.thelife.TheLifeConfiguration;
 import com.p2c.thelife.Utilities;
@@ -57,6 +58,8 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected String m_refreshSettingTimestampKey = null;
 	protected String m_refreshURLPath = null; 
 	protected long m_refreshDelta = 0;						// in seconds
+	
+	private boolean m_connectionTimeout = false;
 	
 	// what to do with new data that has just been read, compared to the existing data
 	protected int MODE_REPLACE = 0;
@@ -156,6 +159,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 */
 	public void delete(int id) {
 		
+		// TODO check this!
 		int index = 0;
 		for (T m:m_data) {
 			if (m.id == id) {
@@ -466,6 +470,9 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				Log.wtf(TAG, "readFromServer()", e);				
 			} catch (MalformedURLException e) {
 				Log.wtf(TAG, "readFromServer()", e);
+} catch (java.net.SocketTimeoutException e) {
+m_connectionTimeout = true;
+Log.e(TAG, "readFromServer()", e);
 			} catch (IOException e) {
 				Log.e(TAG, "readFromServer()", e);				
 			} finally {
@@ -483,6 +490,11 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		 */
 		@Override
 		protected void onPostExecute(ArrayList<T> data2) {
+			
+			if (m_connectionTimeout) {
+				Utilities.showErrorToast(m_context, TAG + " CONN TIMEOUT ", Toast.LENGTH_SHORT);	
+				m_connectionTimeout = false;
+			}
 					
 			if (data2 != null) {
 				// no error, so use the new data

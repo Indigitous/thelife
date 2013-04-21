@@ -46,7 +46,7 @@ public class SetupRegisterDialog extends AbstractServerAccessDialog {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("register");
 
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.register(email, password, firstName, lastName, (Server.ServerListener)m_listener, "register");
 			}
 		}); 

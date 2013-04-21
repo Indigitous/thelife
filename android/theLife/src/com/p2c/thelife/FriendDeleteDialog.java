@@ -31,7 +31,7 @@ public class FriendDeleteDialog extends ServerAccessDialogAbstract {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("deleteFriend");
 
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.deleteFriend(friend.id, (Server.ServerListener)m_listener, "deleteFriend");						
 			}
 		});		

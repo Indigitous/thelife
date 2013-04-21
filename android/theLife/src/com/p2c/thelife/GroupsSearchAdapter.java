@@ -63,7 +63,7 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnE
 		
 		// send the query to the server; server will call back with notifyServerResponseAvailable
 		notifyAttemptingServerAccess("queryGroups");
-		Server server = new Server();
+		Server server = new Server(getContext());
 		server.queryGroups(queryString, this, "queryGroups");
 	}	
 	

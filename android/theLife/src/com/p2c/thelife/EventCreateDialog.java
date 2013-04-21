@@ -44,7 +44,7 @@ public class EventCreateDialog extends ServerAccessDialogAbstract {
 				((Listener)m_listener).notifyAttemptingServerAccess("createEvent");
 				
 				FriendModel.Threshold threshold = getThreshold(deed, view);
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.createEvent(deed.id, friend.id, false, threshold, (Server.ServerListener)m_listener, "createEvent");		
 			}
 		});				
@@ -54,7 +54,7 @@ public class EventCreateDialog extends ServerAccessDialogAbstract {
 				((Listener)m_listener).notifyAttemptingServerAccess("createEvent");
 
 				FriendModel.Threshold threshold = getThreshold(deed, view);				
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.createEvent(deed.id, friend.id, true, threshold, (Server.ServerListener)m_listener, "createEvent");						
 			}
 		});		

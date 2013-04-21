@@ -42,7 +42,7 @@ public class SetupLoginDialog extends ServerAccessDialogAbstract {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("login");
 
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.login(username, password, (Server.ServerListener)m_listener, "login");
 			}
 		}); 

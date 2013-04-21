@@ -44,7 +44,7 @@ public class FriendImportManuallyDialog extends AbstractServerAccessDialog {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createFriend");
 
-				Server server = new Server();
+				Server server = new Server(getActivity());
 				server.createFriend(firstName, lastName, threshold, (Server.ServerListener)m_listener, "createFriend");				
 				
 				Toast.makeText(getActivity(), "ADD FRIEND " + firstName + " " + lastName, Toast.LENGTH_SHORT).show();					

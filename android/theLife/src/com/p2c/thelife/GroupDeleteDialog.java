@@ -35,7 +35,7 @@ public class GroupDeleteDialog extends ServerAccessDialogAbstract {
 					// enable a progress bar
 					((Listener)m_listener).notifyAttemptingServerAccess("deleteGroup");
 	
-					Server server = new Server();
+					Server server = new Server(getActivity());
 					server.deleteGroup(group.id, (Server.ServerListener)m_listener, "deleteGroup");						
 				}
 			});	
