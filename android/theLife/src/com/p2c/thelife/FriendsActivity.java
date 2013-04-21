@@ -12,10 +12,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.p2c.thelife.model.FriendModel;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.model.FriendModel;
 
 
 /**
@@ -138,18 +137,13 @@ public class FriendsActivity
 	@Override
 	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
 		
-		if (jsonObject != null) {
-			int friendId = jsonObject.optInt("id", 0);
-			if (friendId != 0) {
-				
-				// successful
-											
-				// delete the friend from the list
-				TheLifeConfiguration.getFriendsDS().delete(friendId);
-				TheLifeConfiguration.getFriendsDS().notifyDSChangedListeners();
-				TheLifeConfiguration.getFriendsDS().forceRefresh(null);
-			}
-		}
+		if (Utilities.successfulHttpCode(httpCode)) {
+			
+			// successful server call (deleteFriend)
+			
+			// refresh the cache
+			TheLifeConfiguration.getFriendsDS().forceRefresh(null);			
+		}		
 		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();

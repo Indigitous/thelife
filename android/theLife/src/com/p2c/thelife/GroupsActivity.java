@@ -106,13 +106,13 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
 		
-		if (jsonObject != null) {
-			int groupId = jsonObject.optInt("id", 0);
-			if (groupId != 0) {
-				
-				// successful
-				
-				if (indicator.equals("createGroup")) {
+		if (Utilities.successfulHttpCode(httpCode)) {
+			
+			// successful server call (createGroup, deleteGroup)
+			
+			if (indicator.equals("createGroup")) {
+				int groupId = jsonObject.optInt("id", 0);
+				if (groupId != 0) {				
 					String name = jsonObject.optString("name", "");
 					String description = jsonObject.optString("full_description", "");
 					
@@ -122,13 +122,11 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 					GroupModel group = new GroupModel(groupId, name, description, TheLifeConfiguration.getOwnerDS().getUserId(), memberIds);
 					TheLifeConfiguration.getGroupsDS().add(group);
 					TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
-					TheLifeConfiguration.getGroupsDS().forceRefresh(null);
-					
-				} else if (indicator.equals("groupDelete")) {
-					TheLifeConfiguration.getGroupsDS().delete(groupId);
-					TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
 				}
 			}
+			
+			// refresh the cache
+			TheLifeConfiguration.getGroupsDS().forceRefresh(null);			
 		}
 		
 		if (m_progressDialog != null) {
