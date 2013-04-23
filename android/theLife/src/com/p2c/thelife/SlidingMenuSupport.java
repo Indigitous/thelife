@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,14 +26,14 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
 	protected int         m_slidingMenuPosition;
 	protected View		  m_appMenu;
 	
-	public static final int NO_POSITION = -1;
+	public static final int NO_POSITION = -2;
+	public static final int REQUESTS_POSITION = -1;		
 	public static final int COMMUNITY_POSITION = 0;
 	public static final int FRIENDS_POSITION = 1;
 	public static final int GROUPS_POSITION = 2;
-	public static final int REQUESTS_POSITION = 3;	
-	public static final int HELP_POSITION = 4;
-	public static final int SETTINGS_POSITION = 5;
-	public static final int TEST_POSITION = 6;
+	public static final int HELP_POSITION = 3;
+	public static final int SETTINGS_POSITION = 4;
+	public static final int TEST_POSITION = 5;
 	
 	public SlidingMenuSupport(Activity activity, int slidingMenuPosition) {
 		
@@ -51,7 +52,13 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
         
         m_slidingMenu.setMenu(R.layout.app_menu);
         m_appMenu = m_slidingMenu.getMenu();
-        m_appMenu.setBackgroundColor(android.graphics.Color.LTGRAY);
+        LinearLayout appMenuNotificationNumber = (LinearLayout)m_appMenu.findViewById(R.id.app_menu_notification);
+        appMenuNotificationNumber.setOnClickListener(new TextView.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				m_activity.startActivity(new Intent("com.p2c.thelife.Requests"));
+			}
+		});
         
         showOwner();
         

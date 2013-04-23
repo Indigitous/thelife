@@ -2,14 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"    
+    android:background="#34383A"   
     android:orientation="vertical" >
+    
+	<LinearLayout
+	    android:id="@+id/app_menu_notification"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+		android:background="#23282A"
+		android:paddingTop="6dp"
+		android:paddingBottom="6dp"
+		android:orientation="horizontal"
+		>
+		
+	   <TextView
+	       android:id="@+id/app_menu_notification_number"
+	       android:layout_width="@dimen/activity_horizontal_margin"
+	       android:layout_height="match_parent"
+	       android:layout_weight="0"
+	       android:gravity="center"      
+	       android:padding="2dp"
+	       android:text="0"	       
+	       />
+	
+	   <TextView
+	       android:id="@+id/app_menu_notification_number"
+	       android:layout_width="20dp"
+	       android:layout_height="match_parent"
+	       android:layout_weight="0"
+	       android:gravity="center"      
+	       android:padding="2dp"
+	       android:textColor="#ffffff"	       
+	       android:textAppearance="?android:attr/textAppearanceSmall"	       
+	       android:background="@drawable/round_red"
+	       android:text="0"
+	       />
+	         
+	   <TextView
+	       android:id="@+id/app_menu_notification"
+	       android:layout_width="0dp"
+	       android:layout_height="wrap_content"
+	       android:layout_weight="1"
+	       android:layout_gravity="center_vertical"
+	       android:paddingLeft="2dp"
+	       android:textColor="#ffffff"
+	       android:textAppearance="?android:attr/textAppearanceMedium"
+	       android:text="@string/notification_plural" />
+	</LinearLayout>    
 
     <LinearLayout
         android:layout_width="wrap_content"
+    	android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_height="60dp" >
 
 	    <ImageView
@@ -27,14 +71,15 @@
 	        android:layout_weight="1"
 	        android:layout_gravity="center_vertical"
 	        android:text="Large Text"
+	        android:textColor="#ffffff"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
     </LinearLayout>
     
-
     <ListView
         android:id="@+id/app_menu_command_list"
         android:paddingTop="10dp"
+    	android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </ListView>

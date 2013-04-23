@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 	android:paddingTop="8dp"
+	android:background="#34383A"
 	android:orientation="horizontal" >
 
    <ImageView
@@ -19,6 +20,7 @@
        android:layout_height="wrap_content"
        android:layout_weight="1"
        android:layout_gravity="center_vertical"
+       android:textColor="#ffffff"
        android:textAppearance="?android:attr/textAppearanceMedium"
        android:text="Placeholder Text In Here" />
 			  
