@@ -17,8 +17,8 @@
     
     <ImageView
         android:id="@+id/settings_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/generic_avatar_image" 
         android:onClick="selectImage" />    
    
@@ -28,7 +28,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/first_name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName" >
+        <requestFocus />
+	</EditText>        
     
     <EditText
         android:id="@+id/setup_register_last_name"
