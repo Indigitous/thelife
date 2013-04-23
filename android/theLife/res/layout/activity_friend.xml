@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#d0d4d9"    
     tools:context=".EventsForFriendActivity" >
 
     <LinearLayout 
@@ -58,9 +59,11 @@
 
    	<ListView
         android:id="@+id/activity_friend_events"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:dividerHeight="8dp"
-        android:drawSelectorOnTop="false" />    
+        android:dividerHeight="@dimen/activity_vertical_margin"
+        android:divider="#d0d4d9"        
+        android:drawSelectorOnTop="false" />        
+
     	    
 </LinearLayout>
