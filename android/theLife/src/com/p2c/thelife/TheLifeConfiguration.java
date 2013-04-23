@@ -50,8 +50,8 @@ public class TheLifeConfiguration {
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
-	private static String m_serverURL = "http://75.157.251.192:3000/v1/"; // TODO debugging
-	// private static String m_serverURL = "http://srv1.thelifeapp.com:3000/v1/";
+	//private static String m_serverURL = "http://75.157.251.192:3000/v1/"; // TODO debugging
+	private static String m_serverURL = "http://srv1.thelifeapp.com:3000/v1/";
 	
 	
 	// stock images
