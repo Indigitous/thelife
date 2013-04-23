@@ -110,7 +110,7 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 			int eventId = jsonObject.optInt("id", 0);
 			if (eventId != 0) {
 				
-				// successful
+				// successful "createEvent"
 				
 				Toast.makeText(this, "THE event ID IS " + eventId, Toast.LENGTH_SHORT).show();
 				
@@ -127,6 +127,11 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 				TheLifeConfiguration.getEventsDS().add(event);
 				TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
 				TheLifeConfiguration.getEventsDS().forceRefresh(null);
+				
+				// back to the friends screen
+				Intent intent = new Intent("com.p2c.thelife.Friends");
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);							
 			}
 		}
 		
