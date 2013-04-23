@@ -29,6 +29,6 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 	 * Needed by the abstract superclass.
 	 */
 	protected RequestModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
-		return RequestModel.fromJSON(json, useServer);
+		return RequestModel.fromJSON(m_context.getResources(), json, useServer);
 	}	
 }

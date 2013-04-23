@@ -74,8 +74,8 @@
     <string name="request_invite_prompt">Do you want to join this group?</string>
     <string name="joining_group">Joining group</string>
     <string name="adding_new_member">Adding new member to group</string>
-    <string name="membership_request_description">%1$s wants to join your group %2$s.</string>
-    <string name="invite_request_description">You are requested to join group %1$s.</string>
+    <string name="membership_request_description"><b>%1$s</b> wants to join your group <b>%2$s</b>.</string>
+    <string name="invite_request_description"><b>%1$s</b> invites you to join group <b>%1$s</b>.</string>
     <string name="rejecting_request">Rejecting request</string>
     <string name="creating_new_event">Creating new event</string>
     <string name="first_name">First Name</string>

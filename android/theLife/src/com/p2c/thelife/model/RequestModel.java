@@ -3,7 +3,11 @@ package com.p2c.thelife.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.res.Resources;
 import android.util.Log;
+
+import com.p2c.thelife.R;
+import com.p2c.thelife.TheLifeConfiguration;
 
 
 
@@ -26,10 +30,10 @@ public class RequestModel extends AbstractModel {
 									// 		INVITE means the user_id, who is the group leader of group_id, requests email/sms to join
 	public String email;			// for INVITE: this is the invited person's email
 	public String sms;				// for INVITE: this is the invited person's SMS
-	public String description;
+	public String finalDescription; // description with template place holders replaced with real values
 	
 	
-	public RequestModel(int request_id, int user_id, int group_id, String type, String email, String sms, String description) {
+	public RequestModel(Resources resources, int request_id, int user_id, String userName, int group_id, String groupName, String type, String email, String sms) {
 		super(request_id);
 		
 		this.user_id = user_id;
@@ -37,7 +41,7 @@ public class RequestModel extends AbstractModel {
 		this.type = type;
 		this.email = email;		
 		this.sms = sms;
-		this.description = description;
+		this.finalDescription = getFinalDescription(resources);
 	}
 	
 	public boolean isInvite() {
@@ -51,38 +55,71 @@ public class RequestModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return id + ", " + user_id + ", " + userName + "," + group_id + ", " + groupName + ", " + email + ", " + sms + "," + description;
+		return id + ", " + user_id + ", " + userName + "," + group_id + ", " + groupName + ", " + email + ", " + sms + "," + finalDescription;
 	}
 	
-	public static RequestModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
+	
+	/**
+	 * Replace the template place holders in the description with the real values.
+	 * 		$u = user's full name
+	 * 		$g = group name
+	 */
+	private String getFinalDescription(Resources resources) {
+		String finalDescription = null;
+		
+		// user name parameter
+		String paramUserName = this.userName;
+		if (paramUserName == null) {
+			UserModel user = TheLifeConfiguration.getUsersDS().findById(user_id);
+			if (user != null) {
+				paramUserName = user.getFullName();
+			}
+		}
+		if (paramUserName == null) {
+			paramUserName = "";
+		}
+		
+		// friend name parameter
+		String paramGroupName = this.groupName;
+		if (paramGroupName == null) {
+			GroupModel group = TheLifeConfiguration.getGroupsDS().findById(group_id);
+			if (group != null) {
+				paramGroupName = group.name;
+			}
+		}
+		if (paramGroupName == null) {
+			paramGroupName = "";
+		}
+		
+		if (this.type.equals(INVITE)) {
+			finalDescription = resources.getString(R.string.invite_request_description, paramUserName, paramGroupName);
+		} else if (this.type.equals(REQUEST_MEMBERSHIP)) {
+			finalDescription = resources.getString(R.string.membership_request_description, paramUserName, paramGroupName);
+		} else {
+			finalDescription = "<" + this.type + ">";
+		}
+		
+		return finalDescription;
+	}	
+	
+	
+	public static RequestModel fromJSON(Resources resources, JSONObject json, boolean useServer) throws JSONException {
 		
 		Log.d(TAG, "fromJSON()");
-		
-		// TODO decide on "kind" or "type"
-		String type = json.optString("type");
-		if (type == null) {
-			type = json.optString("kind");
-		}
-					
+							
 		// create the request
 		return new RequestModel(
+			resources,
 			json.getInt("id"),
 			json.getInt("user_id"),
+			json.optString("user_name", null),			
 			json.getInt("group_id"),
+			json.optString("group_name", null),		
 			json.getString("type"),
 			json.optString("email"),
-			json.optString("sms"),
-			json.optString("description", "Placeholder Request Description")
+			json.optString("sms")
 		);
 		
-//		// set the description, which needs the Resources
-//		if (type.equals(REQUEST_MEMBERSHIP)) {
-//			request.description = context.getResources().getString(R.string.membership_request_description, request.userName, request.groupName);
-//		} else if (type.equals(INVITE)) {
-//			request.description = context.getResources().getString(R.string.invite_request_description, request.groupName);
-//		} else {
-//			request.description = "";
-//		}
 	}
 		
 

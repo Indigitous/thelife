@@ -26,9 +26,9 @@ public class RequestDialog extends ServerAccessDialogAbstract {
 		// set the message, content and buttons of the alert
 		Spanned message = null;
 		if (request.isInvite()) {
-			message = Html.fromHtml(request.description);					
+			message = Html.fromHtml(request.finalDescription);					
 		} else if (request.isMembershipRequest()) {
-			message = Html.fromHtml(request.description);					
+			message = Html.fromHtml(request.finalDescription);					
 		} else {
 			message = Html.fromHtml("?");
 		}

@@ -42,7 +42,7 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 		RequestModel request = getItem(position);
 
 		TextView textViewDescription = (TextView)requestView.findViewById(R.id.textViewDescription);
-		String description = request.description;
+		String description = request.finalDescription;
 		textViewDescription.setText(Html.fromHtml(description));
 		
 		ImageView imageView1 = (ImageView)requestView.findViewById(R.id.imageView1);

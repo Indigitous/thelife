@@ -41,9 +41,9 @@ public class RequestsDSChangedListener implements RequestsDS.DSChangedListener {
 				RequestModel newRequest = TheLifeConfiguration.getRequestsDS().findById(id);
 				
 				NotificationCompat.Builder builder = new NotificationCompat.Builder(m_app.getApplicationContext());
-				builder.setSmallIcon(R.drawable.ic_launcher); // TODO real icon
+				builder.setSmallIcon(R.drawable.ic_launcher);
 				builder.setContentTitle("theLife");
-				String description = newRequest.description;
+				String description = newRequest.finalDescription;
 				builder.setContentText(Html.fromHtml(description));
 				
 				PendingIntent intent = PendingIntent.getActivity(m_app.getApplicationContext(), 0, new Intent("com.p2c.thelife.Requests"), 0);
