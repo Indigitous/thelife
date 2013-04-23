@@ -79,7 +79,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 	 * Needed by the abstract superclass.
 	 */
 	protected EventModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
-		return EventModel.fromJSON(json, useServer);
+		return EventModel.fromJSON(m_context.getResources(), json, useServer);
 	}	
 	
 	

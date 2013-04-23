@@ -5,18 +5,17 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 
 
@@ -114,18 +113,14 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 				
 				Toast.makeText(this, "THE event ID IS " + eventId, Toast.LENGTH_SHORT).show();
 				
-				int userId = jsonObject.optInt("user_id", 0);
-				int friendId = jsonObject.optInt("friend_id", 0);
-				int deedId = jsonObject.optInt("deed_id", 0);				
-				String description = jsonObject.optString("description", "");
-				long timestamp = jsonObject.optLong("timestamp", 0);
-				boolean isPledge = jsonObject.optBoolean("is_pledge", false);
-				int pledgeCount = jsonObject.optInt("pledge_count", 0);
-				
-				// add the event to the list of known events
-				EventModel event = new EventModel(eventId, userId, friendId, deedId, 0, description, timestamp, isPledge, pledgeCount);
-				TheLifeConfiguration.getEventsDS().add(event);
-				TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+				try {
+					// add the new event to the data store
+					EventModel event = EventModel.fromJSON(getResources(), jsonObject, false);
+					TheLifeConfiguration.getEventsDS().add(event);
+					TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+				} catch (Exception e) {
+					Log.e(TAG, "notifyServerResponseAvailable()", e);
+				}
 				TheLifeConfiguration.getEventsDS().forceRefresh(null);
 				
 				// back to the friends screen

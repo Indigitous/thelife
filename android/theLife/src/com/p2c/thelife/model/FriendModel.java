@@ -48,6 +48,18 @@ public class FriendModel extends AbstractModel {
 	}
 	
 	
+	/**
+	 * Convert the given server threshold id to a Threshold enum.
+	 * @param thresholdId
+	 * @return
+	 */
+	public static Threshold thresholdId2Threshold(int thresholdId) {
+		int thresholdIndex = thresholdId2Index(thresholdId);
+		return FriendModel.thresholdValues[thresholdIndex];
+	}
+	
+	
+	
 	public String firstName;
 	public String lastName;
 	public Bitmap image;  			// TODO is this an image id, image or what?
@@ -90,10 +102,8 @@ public class FriendModel extends AbstractModel {
 		return firstName + " " + lastName;
 	}
 	
-	/**
-	 * @return String   short string version of the threshold
-	 */
-	public String getThresholdShortString(Resources resources) {
+	
+	public static String getThresholdShortString(Resources resources, Threshold threshold) {
 
 		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
 		
@@ -117,11 +127,16 @@ public class FriendModel extends AbstractModel {
 		}
 	}
 	
+	
 	/**
-	 * @return String   medium string version of the threshold
+	 * @return String   short string version of the threshold
 	 */
-	public String getThresholdMediumString(Resources resources) {
-		
+	public String getThresholdShortString(Resources resources) {
+		return FriendModel.getThresholdShortString(resources, threshold);
+	}
+	
+	
+	public static String getThresholdMediumString(Resources resources, Threshold threshold) {
 		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
 		
 		switch (threshold) {
@@ -141,8 +156,17 @@ public class FriendModel extends AbstractModel {
 				return thresholdStrings[6];	
 			default:
 				return resources.getString(R.string.threshold_unknown_medium);
-		}
+		}		
+	}
+	
+	
+	/**
+	 * @return String   medium string version of the threshold
+	 */
+	public String getThresholdMediumString(Resources resources) {
+		return FriendModel.getThresholdMediumString(resources, threshold);
 	}	
+	
 	
 	/**
 	 * Will attempt to load the image or use the placeholder.
@@ -171,8 +195,7 @@ public class FriendModel extends AbstractModel {
 	
 	public static FriendModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 			
-		int thresholdIndex = thresholdId2Index(json.getInt("threshold_id"));
-		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex];
+		FriendModel.Threshold threshold = thresholdId2Threshold(json.getInt("threshold_id"));
 			
 		// create the friend
 		int id = json.getInt("id");

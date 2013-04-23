@@ -39,7 +39,7 @@ public abstract class EventsAdapterAbstract extends ArrayAdapter<EventModel> imp
 		EventModel event = getItem(position);
 
 		TextView textViewDescription = (TextView)eventView.findViewById(R.id.event_description);
-		String eventDescription = event.description; // Utilities.fillTemplateString(getContext().getResources(), user, friend, event.description);
+		String eventDescription = event.finalDescription;
 		textViewDescription.setText(Html.fromHtml(eventDescription));
 		
 		TextView textViewTime = (TextView)eventView.findViewById(R.id.event_time);
