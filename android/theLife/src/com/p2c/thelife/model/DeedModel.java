@@ -53,8 +53,23 @@ public class DeedModel extends AbstractModel {
 	}	
 	
 
+	/**
+	 * whether or not the deed/activity is applicable to the given threshold
+	 * @param threshold
+	 * @return
+	 */
 	public boolean isApplicable(FriendModel.Threshold threshold) {
 		return thresholds.contains(threshold);
+	}
+	
+	
+	/**
+	 * Whether or not the deed/activity is generally applicable to all thresholds.
+	 * Deeds/activities not marked with any thresholds are generally applicable to all thresholds.
+	 * @return
+	 */
+	public boolean isGenerallyApplicable() {
+		return thresholds.size() == 0;
 	}
 	
 	

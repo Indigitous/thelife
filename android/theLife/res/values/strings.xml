@@ -31,8 +31,8 @@
     <string name="group_name">Group Name</string>
     <string name="group_description">Description</string>
     <string name="setup_prompt">Welcome to theLife!\n\nPlease login\nor create a new account.</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
+    <string name="login">Log In</string>
+    <string name="register">Get Started</string>
     <string name="login_prompt">Please login to your account.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

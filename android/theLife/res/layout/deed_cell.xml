@@ -12,7 +12,7 @@
         android:paddingLeft="0dp"        
         android:paddingRight="0dp"   
         android:layout_gravity="center"        
-        android:src="@drawable/generic_activity" />    
+        android:src="@drawable/generic_activity" />
         
     <TextView
         android:id="@+id/deed_title"

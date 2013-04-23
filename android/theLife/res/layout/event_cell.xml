@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
-	android:padding="4dp"    
+	android:padding="4dp" 
+	android:background="@drawable/round_white"   
     android:orientation="vertical" >
 
     <!--  this works for 800x480:, 60dp/12sp/10sp -->
@@ -80,6 +80,7 @@
 	        android:layout_gravity="right"
 	        android:textOn="@string/prayed"
 	        android:textOff="@string/pray"
+	        android:background="@drawable/round_gray"
 	        android:drawableLeft="@drawable/pray_normal" 
 	        android:onClick="pledgeToPray" />
 	</LinearLayout>    
