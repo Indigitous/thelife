@@ -68,7 +68,8 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
         SlidingMenuSupportAdapter commands = new SlidingMenuSupportAdapter(m_activity, android.R.layout.simple_list_item_1);
         for (String s: commandList) {
             commands.add(s);
-        }      
+        }
+        commands.add("TEST"); // TODO debugging
         commandsView.setAdapter(commands);
         
         // listen for a sliding menu selection
@@ -104,6 +105,11 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
 	        				
 	        			case SETTINGS_POSITION: 
 	        				m_activity.startActivity(new Intent("com.p2c.thelife.Settings"));
+	        				break;
+	        				
+	        			// debugging
+	        			case TEST_POSITION: 
+	        				m_activity.startActivity(new Intent("com.p2c.thelife.Test"));
 	        				break;  	        				
 	        		}
         		}

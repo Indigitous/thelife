@@ -38,7 +38,7 @@
     <string name="password">Password</string>
     <string name="register_prompt">If you received an invite via email, please use that email address.</string>
 
-    <!--  Note these threshold arrays must be in the same order as FriendModel.Threshold -->
+    <!-- Note these threshold arrays must be in the same order as FriendModel.Threshold -->
     <string-array name="thresholds_short">
         <item>New Contact</item>
         <item>Trusting</item>
@@ -78,32 +78,25 @@
     <string name="invite_request_description">You are requested to join group %1$s.</string>
     <string name="rejecting_request">Rejecting request</string>
     <string name="creating_new_event">Creating new event</string>
-    
     <string name="first_name">First Name</string>
-	<string name="last_name">Last Name</string>
-	<string name="email">Email Address</string>
-	<string name="phone">Mobile Phone Number</string>	
+    <string name="last_name">Last Name</string>
+    <string name="email">Email Address</string>
+    <string name="phone">Mobile Phone Number</string>
     <string name="storing_account">"Storing account"</string>
-    
     <string name="delete_group_prompt">Delete group &lt;b>%1$s&lt;/b>?</string>
     <string name="deleting_group">Deleting group"</string>
     <string name="cannot_delete_group">You cannot delete group &lt;b>%1$s&lt;/b> because you are not the group leader.</string>
     <string name="deleting_user">Removing user from group"</string>
-    
     <string name="delete_user_from_group_prompt">Delete user &lt;b>%1$s&lt;/b> from group &lt;b>%2$s&lt;/b>?</string>
     <string name="cannot_delete_user_from_group">You cannot delete user &lt;b>%1$s&lt;/b> from group &lt;b>%2$s&lt;/b> because you are not the group leader.</string>
-    
     <string name="invite_person_to_group">Invite person to group</string>
     <string name="inviting_person">Inviting person</string>
-    
     <string name="pledge_error_from_server">Error sending prayer pledge to server.</string>
-    
     <string name="change_threshold">Change threshold</string>
     <string name="pray">Pray</string>
     <string name="prayed">Prayed</string>
     <string name="people_prayed_singular">1 Person prayed</string>
     <string name="people_prayed_plural">%1$d People prayed</string>
-    
     <string name="title_events">Events</string>
     <string name="title_help">Help</string>
     <string name="title_friends">My Friends</string>
@@ -117,17 +110,13 @@
     <string name="title_settings">Settings</string>
     <string name="title_register">Register</string>
     <string name="title_friend_import">Import Friend</string>
-    
     <string name="registration_successful">You are now registered.</string>
-    
     <string name="querying">Querying</string>
-    
     <string name="confirm_update_image">Update your photo?</string>
     <string name="get_camera_photo">From camera"</string>
     <string name="get_gallery_photo">From gallery</string>
-    
     <string name="processing_image">Processing image</string>
-    
     <string name="friend_import_error">Error importing friend</string>
-    
+    <string name="title_activity_test">TestActivity</string>
+
 </resources>

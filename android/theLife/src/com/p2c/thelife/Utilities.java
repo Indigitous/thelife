@@ -77,11 +77,11 @@ public class Utilities {
 	}
 	
 	public static String makeServerUrlString(String urlPath) {
-		return TheLifeConfiguration.SERVER_URL + urlPath + "?authentication_token=" + TheLifeConfiguration.getOwnerDS().getToken();
+		return TheLifeConfiguration.getServerUrl() + urlPath + "?authentication_token=" + TheLifeConfiguration.getOwnerDS().getToken();
 	}
 	
 	public static String makeServerUrlStringNoToken(String urlPath) {
-		return TheLifeConfiguration.SERVER_URL + urlPath;
+		return TheLifeConfiguration.getServerUrl() + urlPath;
 	}	
 	
 	

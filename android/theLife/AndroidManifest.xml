@@ -7,24 +7,27 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
-    
-    <uses-feature android:name="android.hardware.camera" android:required="false" /> 
-    <uses-feature android:name="android.hardware.screen.portrait" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.screen.portrait"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
- <!--  android:theme="@style/AppTheme" -->
- <!--  android:theme="@style/Theme.Sherlock.Light" -->
+    <!-- android:theme="@style/AppTheme" -->
+    <!-- android:theme="@style/Theme.Sherlock.Light" -->
     <application
         android:name="com.p2c.thelife.TheLifeApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="theLife"
-        android:theme="@style/Theme.Sherlock.Light.DarkActionBar" 
-        >
+        android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
         <activity
-            android:name="com.p2c.thelife.EventsForCommunityActivity" 
-            android:label="theLife" 
+            android:name="com.p2c.thelife.EventsForCommunityActivity"
+            android:label="theLife"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,8 +42,8 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.CommunityHelpActivity"
-            android:label="@string/title_help"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_help"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.CommunityHelp" />
 
@@ -49,17 +52,18 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.FriendsActivity"
-            android:label="@string/title_friends"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_friends"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Friends" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.p2c.thelife.GroupsSearchActivity" 
-            	  android:label="@string/title_search_groups"  
-            	  android:screenOrientation="portrait">
+        <activity
+            android:name="com.p2c.thelife.GroupsSearchActivity"
+            android:label="@string/title_search_groups"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GroupsSearch" />
 
@@ -72,7 +76,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GroupsActivity"
-            android:label="@string/title_groups"  
+            android:label="@string/title_groups"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Groups" />
@@ -86,7 +90,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GlobalHelpActivity"
-            android:label="@string/title_help"  
+            android:label="@string/title_help"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GlobalHelp" />
@@ -96,8 +100,8 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.EventsForFriendActivity"
-            android:label="@string/title_events"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_events"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.EventsForFriend" />
 
@@ -106,8 +110,8 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.DeedsForFriendActivity"
-            android:label="@string/title_activities"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_activities"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.DeedsForFriend" />
 
@@ -116,8 +120,8 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.DeedForFriendActivity"
-            android:label="@string/title_activity"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_activity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.DeedForFriend" />
 
@@ -126,8 +130,8 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.GroupActivity"
-            android:label="@string/title_group"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_group"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.GroupActivity" />
 
@@ -136,8 +140,8 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.FriendsImportActivity"
-            android:label="@string/title_friends"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_friends"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.FriendsImport" />
 
@@ -146,18 +150,18 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.FriendImportManuallyActivity"
-            android:label="@string/title_friend_import"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_friend_import"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.FriendImportManually" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>        
+        </activity>
         <activity
             android:name="com.p2c.thelife.SetupActivity"
-            android:label="@string/title_setup"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_setup"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Setup" />
 
@@ -166,18 +170,18 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.SetupRegisterActivity"
-            android:label="@string/title_register"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_register"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.SetupRegister" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>        
+        </activity>
         <activity
             android:name="com.p2c.thelife.RequestsActivity"
-            android:label="@string/title_requests"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_requests"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Requests" />
 
@@ -186,13 +190,22 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.SettingsActivity"
-            android:label="@string/title_settings"  
-            android:screenOrientation="portrait">
+            android:label="@string/title_settings"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Settings" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>            
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.TestActivity"
+            android:label="@string/title_activity_test"            
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.Test" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 
