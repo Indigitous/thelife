@@ -426,7 +426,7 @@ public class Server {
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
 			String urlString = Utilities.makeServerUrlString(urlPrefix + "/" + String.valueOf(id) + "/" + type);
 			
-			HttpPost httpRequest = new HttpPost(urlString);
+			HttpPut httpRequest = new HttpPut(urlString);
 			
 			File file = new File(BitmapCache.generateFullCacheFileName(urlPrefix, id, type));
 			FileEntity fileEntity = new FileEntity(file, "image/png");		
@@ -525,14 +525,18 @@ public class Server {
 			} catch (Exception e) {
 				Log.e(TAG, "ServerCall().doInBackground", e);
 			} finally {
-				if (httpClient != null) {
-					httpClient.close();
-					httpClient = null;
-				}
 				if (httpEntity != null) {
 					try { httpEntity.consumeContent(); } catch (Exception e) { }
 					httpEntity = null;
 				}
+				if (httpClient != null) {
+					
+					// from the Apache doc; may help connection timeout problems?
+					httpClient.getConnectionManager().closeExpiredConnections();
+					
+					httpClient.close();
+					httpClient = null;
+				}				
 			}	
 			
 			return jsonObject;
