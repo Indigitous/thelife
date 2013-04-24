@@ -1,5 +1,6 @@
 package com.p2c.thelife;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -28,10 +29,14 @@ public class SlidingMenuPollingActivity extends SherlockActivity {
 	protected void onResume() {
 		super.onResume();
 		
-		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
-			TheLifeConfiguration.getRequestsPoller().start();
+		// guard against an not-valid user
+		if (!TheLifeConfiguration.getOwnerDS().isValidUser()) {
+			Intent intent = new Intent("com.p2c.thelife.Setup");
+			startActivity(intent);
+			finish();
 		}
 		
+		TheLifeConfiguration.getRequestsPoller().start();
 		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);
 	}
 	

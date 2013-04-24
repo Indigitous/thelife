@@ -1,9 +1,9 @@
 package com.p2c.thelife;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 /**
  * Superclass of all FragmentActivities that use the sliding menu. 
@@ -30,10 +30,14 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 	protected void onResume() {
 		super.onResume();
 		
-		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
-			TheLifeConfiguration.getRequestsPoller().start();
+		// guard against an not-valid user
+		if (!TheLifeConfiguration.getOwnerDS().isValidUser()) {
+			Intent intent = new Intent("com.p2c.thelife.Setup");
+			startActivity(intent);
+			finish();
 		}
 		
+		TheLifeConfiguration.getRequestsPoller().start();
 		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);		
 	}
 	
