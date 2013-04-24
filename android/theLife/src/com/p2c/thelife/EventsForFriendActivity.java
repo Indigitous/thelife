@@ -26,6 +26,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	private FriendModel m_friend = null;
 	private ListView m_listView = null;
 	private EventsForFriendAdapter m_adapter = null;
+	private TextView m_noEventsView = null;	
 	
 	// refresh the data store and display
 	private Runnable m_datastoreRefreshRunnable = null;	
@@ -34,7 +35,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_friend, SlidingMenuSupport.NO_POSITION);
+		super.onCreate(savedInstanceState, R.layout.activity_events_for_friend, SlidingMenuSupport.NO_POSITION);
 					
 		// Get the friend for this deed
 		int friendId = getIntent().getIntExtra("friend_id", 0);
@@ -51,11 +52,15 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 			TextView thresholdView = (TextView)findViewById(R.id.activity_friend_threshold);
 			thresholdView.setText(m_friend.getThresholdMediumString(getResources()));
 		}
-		
+			
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.activity_friend_events);
 		m_adapter = new EventsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
 		m_listView.setAdapter(m_adapter);
+		
+		// show a message if there are no events
+		m_noEventsView = (TextView)findViewById(R.id.events_for_friend_none);
+		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);				
 		
 		// events data store refresh runnable
 		// this will refresh the data store from the server.		
@@ -105,6 +110,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	@Override
 	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
+		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);						
 		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
 	

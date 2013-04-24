@@ -5,16 +5,15 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-
-import com.p2c.thelife.Server.ServerListener;
-import com.p2c.thelife.model.EventModel;
-import com.p2c.thelife.model.EventsDS;
+import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.Server.ServerListener;
+import com.p2c.thelife.model.EventModel;
+import com.p2c.thelife.model.EventsDS;
 
 /**
  * This activity uses polling to get fresh events into the data store and display while the activity is visible.
@@ -27,6 +26,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	
 	private ListView m_listView = null;
 	private EventsForCommunityAdapter m_adapter = null;
+	private TextView m_noEventsView = null;
 	
 	// refresh the data store and display
 	private Runnable m_datastoreRefreshRunnable = null;
@@ -39,7 +39,11 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		super.onCreate(savedInstanceState, R.layout.activity_events_for_community, SlidingMenuSupport.COMMUNITY_POSITION);
 		
 		// no up arrow for home activity
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);		
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);	
+		
+		// show a message if there are no events
+		m_noEventsView = (TextView)findViewById(R.id.events_for_community_none);
+		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);
 		
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.events_for_community_list);
@@ -55,7 +59,8 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 			}
 		};
 		
-		// timestamps in events list view refresh runnable
+		// this will refresh the timestamps inside the list view's events
+		// this is all local -- server is not involved
 		m_displayRefreshRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -84,7 +89,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 			TheLifeConfiguration.getEventsDS().refresh(null);  // TODO refreshAfter(null) ?
 		}
 		
-		// refresh the display every 60 seconds
+		// refresh the display every minute
 		m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);
 	}	
 	
@@ -96,7 +101,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
-System.out.println("JUST FINISHED ANOTHER EVENTS DS REFRESH!!!");
+		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);						
 		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
 	

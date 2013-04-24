@@ -58,6 +58,15 @@
         	
     	</LinearLayout>
     </LinearLayout>
+    
+    <TextView
+        android:id="@+id/events_for_friend_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/no_friend_events"
+        android:textStyle="italic"
+        android:textAppearance="?android:attr/textAppearanceMedium" />       
 
    	<ListView
         android:id="@+id/activity_friend_events"

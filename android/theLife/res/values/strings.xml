@@ -121,5 +121,9 @@
     <string name="processing_image">Processing image</string>
     <string name="friend_import_error">Error importing friend</string>
     <string name="title_activity_test">TestActivity</string>
+    
+    <string name="no_community_events">There are no community events to show.</string>
+    <string name="no_friend_events">There are no events to show for this friend.</string>
+    
 
 </resources>

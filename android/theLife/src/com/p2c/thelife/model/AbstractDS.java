@@ -180,6 +180,11 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	}
 	
 	
+	public int count() {
+		return m_data.size();
+	}
+	
+	
 	/**
 	 * Force a refresh, reading in all the records.
 	 * @param refreshIndicator
