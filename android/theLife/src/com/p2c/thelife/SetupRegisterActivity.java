@@ -96,7 +96,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 			
 			} else {
 				// failed register
-				Toast.makeText(this, "Incorrect Registration", Toast.LENGTH_SHORT).show(); 
+				Toast.makeText(this, getResources().getString(R.string.registration_failed), Toast.LENGTH_SHORT).show(); 
 				
 				closeProgressBar();
 			}

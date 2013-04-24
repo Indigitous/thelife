@@ -97,6 +97,7 @@
     <string name="prayed">Prayed</string>
     <string name="people_prayed_singular">1 Person prayed</string>
     <string name="people_prayed_plural">%1$d People prayed</string>
+    <string name="title_community">Community</string>
     <string name="title_events">Events</string>
     <string name="title_help">Help</string>
     <string name="title_friends">My Friends</string>

@@ -2,17 +2,15 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
-import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
-import com.p2c.thelife.model.UserModel;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
+
+import com.p2c.thelife.model.UserModel;
 
 public class SetupActivity extends SetupActivityAbstract implements Server.ServerListener, ServerAccessDialogAbstract.Listener {
 	
@@ -85,8 +83,8 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 			}
 		}
 		
-		// failed login or register
-		Toast.makeText(this, "Incorrect Login", Toast.LENGTH_SHORT).show(); 
+		// failed login
+		Toast.makeText(this, getResources().getString(R.string.login_failed), Toast.LENGTH_SHORT).show(); 
 
 		closeProgressBar();
 		if (m_progressDialog != null) {

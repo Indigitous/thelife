@@ -75,7 +75,7 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 				// go to the main screen
 				Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
 				startActivity(intent);
-				return;				
+				finish();		
 			}					
 		} else {
 			Log.wtf(TAG, "unknown refresh indicator " + indicator);

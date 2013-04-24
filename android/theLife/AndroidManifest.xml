@@ -25,15 +25,25 @@
         android:icon="@drawable/ic_launcher"
         android:label="theLife"
         android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        
         <activity
-            android:name="com.p2c.thelife.EventsForCommunityActivity"
+            android:name="com.p2c.thelife.InitialActivity"
             android:label="theLife"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.p2c.thelife.Initial" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+        <activity
+            android:name="com.p2c.thelife.EventsForCommunityActivity"
+            android:label="@string/title_community"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.EventsForCommunity" />
 
@@ -161,7 +171,8 @@
         <activity
             android:name="com.p2c.thelife.SetupActivity"
             android:label="@string/title_setup"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+             >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Setup" />
 
@@ -171,7 +182,8 @@
         <activity
             android:name="com.p2c.thelife.SetupRegisterActivity"
             android:label="@string/title_register"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.SetupRegister" />
 
