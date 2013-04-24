@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Html;
 
 import com.p2c.thelife.model.FriendModel;
 
@@ -23,7 +24,7 @@ public class FriendDeleteDialog extends ServerAccessDialogAbstract {
 			
 		// set the message, content and buttons of the alert
 		String message = getResources().getString(R.string.delete_friend_prompt, friend.getFullName());		
-		alertBuilder.setMessage(message);
+		alertBuilder.setMessage(Html.fromHtml(message));
 		alertBuilder.setNegativeButton(R.string.cancel, null); 
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {	

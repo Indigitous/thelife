@@ -10,10 +10,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.FriendModel;
 
 
@@ -24,13 +26,14 @@ import com.p2c.thelife.model.FriendModel;
  */
 public class FriendsActivity 
 	extends SlidingMenuPollingFragmentActivity 
-	implements OnItemLongClickListener, OnItemClickListener, Server.ServerListener, FriendDeleteDialog.Listener {
+	implements OnItemLongClickListener, OnItemClickListener, Server.ServerListener, FriendDeleteDialog.Listener, DSRefreshedListener {
 	
 	private static final String TAG = "FriendsActivity"; 	
 	
 	private FriendsAdapter m_adapter = null;	
 	private FriendModel m_friend = null; // selected friend
-	private ProgressDialog m_progressDialog = null;	
+	private ProgressDialog m_progressDialog = null;
+	private View m_noFriendsView = null;
 
 
 	@Override
@@ -40,6 +43,10 @@ public class FriendsActivity
 		GridView friendsGrid = (GridView)findViewById(R.id.grid_friends);
 		m_adapter = new FriendsAdapter(this, android.R.layout.simple_list_item_1);
 		friendsGrid.setAdapter(m_adapter);
+		
+		// show a message if there are no friends
+		m_noFriendsView = (TextView)findViewById(R.id.friends_none);
+		m_noFriendsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);		
 		
 		friendsGrid.setOnItemClickListener(this);
 		friendsGrid.setOnItemLongClickListener(this);
@@ -54,6 +61,7 @@ public class FriendsActivity
 		
 		// load the database from the server in the background
 		TheLifeConfiguration.getFriendsDS().addDSChangedListener(m_adapter);  
+		TheLifeConfiguration.getFriendsDS().addDSRefreshedListener(this);				
 		TheLifeConfiguration.getFriendsDS().refresh(null);			
 	}		
 	
@@ -65,6 +73,7 @@ public class FriendsActivity
 		super.onPause();
 		
 		TheLifeConfiguration.getFriendsDS().removeDSChangedListener(m_adapter);
+		TheLifeConfiguration.getGroupsDS().removeDSRefreshedListener(this);						
 	}
 		
 
@@ -89,6 +98,12 @@ public class FriendsActivity
 		}
 		
 		return true;
+	}	
+
+	
+	@Override
+	public void notifyDSRefreshed(String indicator) {
+		m_noFriendsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);								
 	}		
 	
 
@@ -148,6 +163,6 @@ public class FriendsActivity
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}				
-	}		
+	}	
 
 }

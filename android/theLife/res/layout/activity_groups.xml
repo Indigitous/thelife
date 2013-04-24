@@ -8,6 +8,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".GroupsActivity" >
+    
+    <TextView
+        android:id="@+id/groups_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/no_groups"
+        android:textStyle="italic"
+        android:textAppearance="?android:attr/textAppearanceLarge" />        
        
 	<ListView
         android:id="@+id/groups_list"

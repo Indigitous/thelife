@@ -40,15 +40,15 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		
 		// no up arrow for home activity
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);	
-		
-		// show a message if there are no events
-		m_noEventsView = (TextView)findViewById(R.id.events_for_community_none);
-		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);
-		
+			
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.events_for_community_list);
 		m_adapter = new EventsForCommunityAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
+		
+		// show a message if there are no events
+		m_noEventsView = (TextView)findViewById(R.id.events_for_community_none);
+		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);		
 		
 		// events data store refresh runnable
 		// this will refresh the data store from the server.

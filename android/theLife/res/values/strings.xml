@@ -58,7 +58,7 @@
         <item>Follower of Jesus</item>
     </string-array>
 
-    <string name="delete_friend_prompt">Delete friend %s?</string>
+    <string name="delete_friend_prompt">Delete friend &lt;b>%1$s&lt;/b>?</string>
     <string name="friend">friend</string>
     <string name="user">user</string>
     <string name="request_join_group_prompt">Do you wish to join %1$s?</string>
@@ -124,6 +124,8 @@
     
     <string name="no_community_events">There are no community events to show.</string>
     <string name="no_friend_events">There are no events to show for this friend.</string>
+    <string name="no_groups">There are no groups to show.</string>
+    <string name="no_friends">There are no friends to show.</string>
     
 
 </resources>
