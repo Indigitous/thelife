@@ -36,7 +36,7 @@
     <string name="login_prompt">Please login to your account.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="register_prompt">If you received an invite via email, please use that email address.</string>
+    <string name="register_prompt">Please register for an account.</string>
 
     <!-- Note these threshold arrays must be in the same order as FriendModel.Threshold -->
     <string-array name="thresholds_short">
@@ -110,6 +110,8 @@
     <string name="title_settings">Settings</string>
     <string name="title_register">Register</string>
     <string name="title_friend_import">Import Friend</string>
+    <string name="login_failed">Incorrect Login</string>
+    <string name="registration_failed">Incorrect Registration</string>
     <string name="registration_successful">You are now registered.</string>
     <string name="querying">Querying</string>
     <string name="confirm_update_image">Update your photo?</string>
