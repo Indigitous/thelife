@@ -54,6 +54,19 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	}
 	
 	
+	public Collection<DeedModel> findByCategoryAndThreshold(int categoryId, FriendModel.Threshold threshold) {
+		ArrayList<DeedModel> deeds = new ArrayList<DeedModel>();
+		
+		for (DeedModel m:m_data) {
+			if (m.category_id == categoryId && m.isApplicable(threshold)) {
+				deeds.add(m);
+			}		
+		}
+		
+		return deeds;		
+	}
+	
+	
 	/**
 	 * Needed by the abstract superclass.
 	 */
