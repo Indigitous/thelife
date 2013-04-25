@@ -27,7 +27,7 @@ public class BitmapCache {
 		
 	public static String generateFullCacheFileName(String dataType, int id, String type) {
 		type = "image"; // TODO only support image not thumbnail for now
-		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + type + ".png";
+		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + type + ".jpg";
 	}
 	
 	
@@ -37,7 +37,7 @@ public class BitmapCache {
 			OutputStream os = null;
 			try {
 				os = new BufferedOutputStream(new FileOutputStream(cacheFileName));
-				bitmap.compress(CompressFormat.PNG, 90, os);
+				bitmap.compress(CompressFormat.JPEG, 50, os);
 			} catch (Exception e) {
 				Log.e(TAG, "saveBitmapToCache " + cacheFileName, e);
 			} finally {
