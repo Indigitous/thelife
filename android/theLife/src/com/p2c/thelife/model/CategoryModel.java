@@ -1,5 +1,7 @@
 package com.p2c.thelife.model;
 
+import java.util.ArrayList;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +16,7 @@ public class CategoryModel extends AbstractModel {
 	
 	public String   name;
 	public String   description;
+	public ArrayList<Integer> deed_ids; // used to simplify showing the deeds for a friend activity
 	
 	public CategoryModel(int category_id, String name, String description) {
 		
@@ -21,12 +24,30 @@ public class CategoryModel extends AbstractModel {
 
 		this.name = name;
 		this.description = description;
+		this.deed_ids = null;
 	}
 	
+	
+	public void clearDeeds() {
+		if (deed_ids != null) {
+			deed_ids.clear();
+		}
+	}
+	
+	
+	public void addDeed(int deedId) {
+		if (deed_ids == null) {
+			deed_ids = new ArrayList<Integer>();
+		}
+		deed_ids.add(deedId);
+	}
+	
+	 
 	@Override
 	public String toString() {
 		return id + ", " + name + ", " + description;
 	}
+	
 	
 	public static CategoryModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 		

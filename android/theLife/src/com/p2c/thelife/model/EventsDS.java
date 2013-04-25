@@ -34,7 +34,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 		
 	}
 	
-	public Collection<EventModel> findByFriend(int friendId) {
+	public ArrayList<EventModel> findByFriend(int friendId) {
 		ArrayList<EventModel> events = new ArrayList<EventModel>();
 		
 		for (EventModel m:m_data) {

@@ -41,7 +41,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	 * @param threshold
 	 * @return all deed model objects applicable to the given threshold
 	 */
-	public Collection<DeedModel> findByThreshold(FriendModel.Threshold threshold) {
+	public ArrayList<DeedModel> findByThreshold(FriendModel.Threshold threshold) {
 		ArrayList<DeedModel> deeds = new ArrayList<DeedModel>();
 		
 		for (DeedModel m:m_data) {
@@ -54,7 +54,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	}
 	
 	
-	public Collection<DeedModel> findByCategoryAndThreshold(int categoryId, FriendModel.Threshold threshold) {
+	public ArrayList<DeedModel> findByCategoryAndThreshold(int categoryId, FriendModel.Threshold threshold) {
 		ArrayList<DeedModel> deeds = new ArrayList<DeedModel>();
 		
 		for (DeedModel m:m_data) {

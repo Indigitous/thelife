@@ -3,7 +3,7 @@ package com.p2c.thelife;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
@@ -36,8 +36,8 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 			TextView thresholdView = (TextView)findViewById(R.id.deeds_for_friend_threshold);
 			thresholdView.setText(m_friend.getThresholdMediumString(getResources()));
 			
-			ListView activitiesView = (ListView)findViewById(R.id.deeds_for_friend_list);
-			m_adapter = new DeedsForFriendAdapter(this, android.R.layout.simple_list_item_1, m_friend);
+			ExpandableListView activitiesView = (ExpandableListView)findViewById(R.id.deeds_for_friend_list);
+			m_adapter = new DeedsForFriendAdapter(this, m_friend);
 			activitiesView.setAdapter(m_adapter);
 		}		
 	}

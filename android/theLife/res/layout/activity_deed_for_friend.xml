@@ -12,7 +12,7 @@
  	<TextView 
       	android:id="@+id/deed_for_friend_name"  
         android:text="Friend Name"
-        android:textSize="16sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"    
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"    	    	        
         />    
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Seeking God"
-        android:textSize="12sp"
+		android:textAppearance="?android:attr/textAppearanceMedium"            
         android:textStyle="italic"
         />
 

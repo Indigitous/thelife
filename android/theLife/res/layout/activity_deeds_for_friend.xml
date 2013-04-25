@@ -2,17 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context=".DeedsForFriendActivity" >
     
  	<TextView 
       	android:id="@+id/deeds_for_friend_name"  
         android:text="Place Holder"
-        android:textSize="16sp"
+		android:textAppearance="?android:attr/textAppearanceLarge"            
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"    	    	        
         />    
@@ -21,16 +21,18 @@
         android:id="@+id/deeds_for_friend_threshold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"            
         android:text="Threshold"
-        android:textSize="12sp"
         android:textStyle="italic"
         android:onClick="selectDeed"
         />
     
-	<ListView
-        android:id="@+id/deeds_for_friend_list"
-        android:paddingTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+	<ExpandableListView
+	    android:id="@+id/deeds_for_friend_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:drawSelectorOnTop="true"
+	    android:groupIndicator="@drawable/action_arrow_left"
+	    android:paddingTop="10dp" />
 
 </LinearLayout>

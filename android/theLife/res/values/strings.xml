@@ -127,5 +127,8 @@
     <string name="no_groups">There are no groups to show.</string>
     <string name="no_friends">There are no friends to show.</string>
     
+    <string name="null_category_name">Other</string>
+    <string name="null_category_description">Other activities</string>
+    
 
 </resources>

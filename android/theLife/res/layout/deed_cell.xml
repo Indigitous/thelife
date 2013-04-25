@@ -3,24 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" 
+    android:paddingLeft="32dp"    
     android:onClick="selectDeed" >
     
     <ImageView
         android:id="@+id/deed_image"
-        android:layout_height="60dp"
-        android:layout_width="60dp"        
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"        
         android:paddingLeft="0dp"        
-        android:paddingRight="0dp"   
+        android:paddingRight="4dp"   
         android:layout_gravity="center"        
         android:src="@drawable/generic_activity" />
         
     <TextView
         android:id="@+id/deed_title"
         android:layout_width="0dp"
-	    android:layout_height="60dp"    
+	    android:layout_height="wrap_content"    
 	    android:layout_weight="1"
-    	android:gravity="center_vertical"                
-        android:textSize="16sp"
+    	android:layout_gravity="center_vertical" 
+    	android:textAppearance="?android:attr/textAppearanceMedium"        	               
         android:text="Placeholder Text In Here" /> 
 
 </LinearLayout>
