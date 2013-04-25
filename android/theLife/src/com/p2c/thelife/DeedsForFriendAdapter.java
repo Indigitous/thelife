@@ -187,6 +187,8 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 			
 		TextView nameView = (TextView)categoryView.findViewById(R.id.category_title);
 		nameView.setText(category.name);
+		TextView descriptionView = (TextView)categoryView.findViewById(R.id.category_description);
+		descriptionView.setText(category.description);		
 		
 		categoryView.setTag(category);		
 							

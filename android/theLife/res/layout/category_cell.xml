@@ -3,18 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="32dp"    
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
            
     <TextView
         android:id="@+id/category_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
     	android:layout_gravity="left" 	
     	android:layout_weight="1"
-    	android:paddingTop="10dp"    
-    	android:paddingBottom="10dp"
+    	android:paddingTop="6dp"    
+    	android:paddingBottom="0dp"
     	android:textStyle="italic"
 		android:textAppearance="?android:attr/textAppearanceLarge"    
         android:text="Placeholder Text In Here" /> 
+        
+    <TextView
+        android:id="@+id/category_description"
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:layout_gravity="left" 	
+    	android:layout_weight="1"
+		android:textAppearance="?android:attr/textAppearanceSmall"    
+        android:text="Placeholder Text In Here" />     
 
 </LinearLayout>
