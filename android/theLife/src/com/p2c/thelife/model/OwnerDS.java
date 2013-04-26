@@ -37,7 +37,7 @@ public class OwnerDS {
 			String email = systemSettings.getString("user_email", "");		
 			String mobile = systemSettings.getString("user_mobile", "");		
 			
-			m_user = new UserModel(userId, firstName, lastName, null, email, mobile);
+			m_user = new UserModel(userId, firstName, lastName, email, mobile);
 		}
 		
 		m_token = systemSettings.getString("token", "");		

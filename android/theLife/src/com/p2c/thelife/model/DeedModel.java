@@ -29,7 +29,6 @@ public class DeedModel extends AbstractModel {
 	public String 	title;
 	public String	summary;
 	public String 	description;
-	public Bitmap	image;  		// TODO is this an image id, image or what?
 	public Set<FriendModel.Threshold> thresholds;
 	public int 		priority;
 	public int		category_id;	
@@ -40,13 +39,6 @@ public class DeedModel extends AbstractModel {
 		this.title = title;
 		this.summary = summary;
 		this.description = description;
-
-		if (image == null) {
-			this.image = TheLifeConfiguration.getGenericDeedImage();
-		} else {
-			this.image = image;
-		}
-		
 		this.thresholds = thresholds;
 		this.priority = priority;
 		this.category_id = category_id;

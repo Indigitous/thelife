@@ -18,36 +18,19 @@ public class UserModel extends AbstractModel {
 	
 	public String   firstName;
 	public String   lastName;
-	public Bitmap   image;  	// TODO is this an image id, image or what?
-	public Bitmap   thumbnail;
 	public String   email;
 	public String   mobile;
 	
-	public UserModel(int user_id, String firstName, String lastName, Bitmap image, Bitmap thumbnail, String email, String mobile) {
+	public UserModel(int user_id, String firstName, String lastName, String email, String mobile) {
 		
 		super(user_id);
 
 		this.firstName = firstName;
 		this.lastName = lastName;
-		
-		if (image == null) {
-			this.image = TheLifeConfiguration.getGenericPersonImage();
-		} else {
-			this.image = image;
-		}
-		if (thumbnail == null) {
-			this.thumbnail = TheLifeConfiguration.getGenericPersonThumbnail();
-		} else {
-			this.thumbnail = thumbnail;
-		}
-		
 		this.email = email;
 		this.mobile = mobile;
 	}
 	
-	public UserModel(int user_id, String firstName, String lastName, Bitmap image, String email, String mobile) {
-		this(user_id, firstName, lastName, image, image, email, mobile);
-	}
 	
 	public String getFullName() {
 		return firstName + " " + lastName;
@@ -85,9 +68,7 @@ public class UserModel extends AbstractModel {
 		return new UserModel(
 			id,
 			json.getString("first_name"),
-			json.getString("last_name"),
-			getImage(id, useServer),
-			getThumbnail(id, useServer),			
+			json.getString("last_name"),	
 			json.optString("email", ""),
 			json.optString("mobile", "")
 		);

@@ -90,7 +90,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 					
 					// add the friend to the list of known friends
 					FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex]; 
-					FriendModel friend = new FriendModel(friendId, firstName, lastName, null, threshold, "", "");
+					FriendModel friend = new FriendModel(friendId, firstName, lastName, threshold, "", "");
 					TheLifeConfiguration.getFriendsDS().add(friend);
 					TheLifeConfiguration.getFriendsDS().notifyDSChangedListeners();
 					TheLifeConfiguration.getFriendsDS().forceRefresh(null);
