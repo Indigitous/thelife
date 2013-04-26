@@ -17,40 +17,47 @@ public class EventModel extends AbstractModel {
 	private static final String TAG = "EventModel";
 	
 	public int     user_id;
+	public String  userName;		// redundant info, but helps event templates
 	public int     friend_id;
+	public String  friendName;		// redundant info, but helps event templates	
 	public int     deed_id;
 	public int     targetEvent_id;  // if it is nonzero then this event is about the target event, which only happens for pledgeCount updates
+	public String  finalDescription; // description with template place holders replaced with real values	
 	public long    timestamp; 		// in milliseconds, android.text.format.Time
 	public boolean isPrayerRequested;   
 	public int     pledgeCount;
+	public boolean hasPledged;		// whether or not the app owner has already pledged for this event
 	public String  thresholdString; // threshold in short string form
-	public String  userName;		// redundant info, but helps event templates
-	public String  friendName;		// redundant info, but helps event templates
-	public String  finalDescription; // description with template place holders replaced with real values
 	
 	
 	
-	public EventModel(Resources resources, int event_id, int user_id, int friend_id, int deed_id, int targetEvent_id, 
-					  String description, long timestamp, boolean isPrayerRequested, int pledgeCount, int threshold_id, String userName, String friendName) {
+	public EventModel(Resources resources, int event_id, int user_id, String userName, int friend_id, String friendName, int deed_id, int targetEvent_id, 
+					  String description, long timestamp, boolean isPrayerRequested, int pledgeCount, boolean hasPledged, int threshold_id) {
 		super (event_id);
 		
-		this.user_id = user_id;		
+		this.user_id = user_id;
+		this.userName = userName;		
 		this.friend_id = friend_id;
+		this.friendName = friendName;
 		this.deed_id = deed_id;
 		this.targetEvent_id = targetEvent_id;
+		
+		// final description needs to have the template parameters replaced with the real values
+		this.finalDescription = getFinalDescription(description);
+		
 		this.timestamp = timestamp;
 		this.isPrayerRequested = isPrayerRequested;
 		this.pledgeCount = pledgeCount;
+		this.hasPledged = hasPledged;
+		
+		// use the short string threshold name
 		this.thresholdString = getThresholdString(resources, threshold_id);
-		this.userName = userName;
-		this.friendName = friendName;
-		this.finalDescription = getFinalDescription(description);
 	}
 	
 	@Override
 	public String toString() {
-		return id + ", " + user_id + ", " + friend_id + ", " + deed_id + ", " + targetEvent_id + ", " + 
-			finalDescription + ", " + timestamp + ", " + isPrayerRequested + ", " + pledgeCount + ", " + thresholdString + "," + userName + ", " + friendName;
+		return id + ", " + user_id + ", " + userName + ", " + friend_id + ", " + friendName + "," + deed_id + ", " + targetEvent_id + ", " + 
+			finalDescription + ", " + timestamp + ", " + isPrayerRequested + ", " + pledgeCount + ", " + hasPledged + ", " + thresholdString;
 	}
 	
 	
@@ -117,16 +124,17 @@ public class EventModel extends AbstractModel {
 			resources,
 			json.getInt("id"),
 			json.getInt("user_id"),
+			json.optString("user_name", null),			
 			json.getInt("friend_id"),
+			json.optString("friend_name", null),		
 			json.getInt("activity_id"),
 			json.optInt("event_id", 0),
 			json.getString("description"),
 			json.optLong("created_at", 1366950022126L),
 			json.getBoolean("prayer_requested"),
 			json.optInt("pledges_count", 0),
-			json.optInt("threshold_id", 0),
-			json.optString("user_name", null),
-			json.optString("friend_name", null)
+			json.optBoolean("has_pledged", false),
+			json.optInt("threshold_id", 0)
 		);
 	}	
 

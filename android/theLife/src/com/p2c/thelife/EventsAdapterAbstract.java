@@ -56,7 +56,11 @@ public abstract class EventsAdapterAbstract extends ArrayAdapter<EventModel> imp
 		ToggleButton pledgeView = (ToggleButton)eventView.findViewById(R.id.event_pledge);
 		TextView peoplePrayedView = (TextView)eventView.findViewById(R.id.event_people_prayed);
 		if (event.isPrayerRequested) {
-			pledgeView.setVisibility(View.VISIBLE);
+			
+			// only show the pledge icon if not the event is not from the owner
+			pledgeView.setVisibility((event.user_id == TheLifeConfiguration.getOwnerDS().getUserId()) ? View.GONE : View.VISIBLE);
+			
+			pledgeView.setChecked(event.hasPledged);
 			peoplePrayedView.setVisibility(View.VISIBLE);
 			
 			// show the pledge count

@@ -409,9 +409,10 @@ public class Server {
 		try {
 			// API endpoint
 			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
+			// returns "errors" error string if already pledged to pray for this event
 			String urlString = Utilities.makeServerUrlString("events/" + String.valueOf(eventId) + "/pledge");		
 			
-			HttpPut httpRequest = new HttpPut(urlString);
+			HttpPost httpRequest = new HttpPost(urlString);
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);					
 		} catch (Exception e) {
 			Log.e(TAG, "pledgeToPray()", e);
