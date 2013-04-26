@@ -98,7 +98,8 @@ public class BitmapCache {
 	}
 	
 	/**
-	 * Get the bitmap from the server if permitted and if available.
+	 * If the bitmap is not in the local file cache, 
+	 * get the bitmap from the server if permitted (useServer == true) and if available. 
 	 * @param dataType		dataType of bitmap: "friends", "users" or "activities"
 	 * @param id			model id
 	 * @param type			type of bitmap: "image" or "thumbnail"

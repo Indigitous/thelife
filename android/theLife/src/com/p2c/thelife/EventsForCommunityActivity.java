@@ -16,7 +16,10 @@ import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.EventsDS;
 
 /**
- * This activity uses polling to get fresh events into the data store and display while the activity is visible.
+ * This activity uses polling to get fresh events into the data store and display while the activity is visible. 
+ * 		[AsyncTask, getEventsDS().refreshAfter(), REFRESH_EVENTS_DELTA]
+ * This activity also uses View.postDelayed to update the timestamps on each displayed event.
+ * 		[View.postDelayed, local UI thread only, every minute] 
  * @author clarence
  *
  */
