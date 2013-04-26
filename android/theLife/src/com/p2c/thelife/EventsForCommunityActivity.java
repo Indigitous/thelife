@@ -153,13 +153,12 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject) {
-		if (jsonObject == null) {
-			
+	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
+		
+		if (!Utilities.isSuccessfulHttpCode(httpCode)) {			
 			new AlertDialog.Builder(this)
 				.setMessage(getResources().getString(R.string.pledge_error_from_server))
 				.setNegativeButton(R.string.cancel, null).show(); 
-
 		}		
 	}
 

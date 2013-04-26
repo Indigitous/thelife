@@ -60,9 +60,10 @@ public class Server {
 		/**
 		 * @param indicator		returned to the listener
 		 * @param httpCode 		HTTP code return value, example 200
-		 * @param jsonObject	the result of the server call, null if there was a failure
+		 * @param jsonObject	the result of the server call, can be null
+		 * @param errorString	error message, can be null
 		 */
-		public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject);
+		public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString);
 	}
 	
 	
@@ -466,6 +467,7 @@ public class Server {
 		private String m_indicator = null;
 		private int m_httpCode = -1;
 		private boolean m_connectionTimeout = false;
+		private String m_errorString = null;
 		
 		public ServerCall(HttpUriRequest httpRequest, ServerListener listener, String indicator) {
 			m_httpRequest = httpRequest;
@@ -487,6 +489,7 @@ public class Server {
 				
 			AndroidHttpClient httpClient = null;
 			HttpEntity httpEntity = null;
+			ByteArrayOutputStream outStream = null;
 			try {			
 				Log.d(TAG, "STARTING ServerCall " + m_httpRequest.getMethod() + " " + urls[0]);	
 								
@@ -500,24 +503,21 @@ public class Server {
 				System.out.println("HERE IS THE STATUS CODE " + m_httpCode);
 				
 				String jsonString = null;
-				if (Utilities.successfulHttpCode(m_httpCode)) {			
-					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					httpEntity = httpResponse.getEntity();
-					
-					// make sure there is a response to read
-					if (httpEntity != null) {
-						httpEntity.writeTo(outStream);		
-						jsonString = outStream.toString("UTF-8");
-					} else {
-						jsonString = "";
-					}
-					
-					Log.d(TAG, "GOT THE SERVER CALL RESPONSE STRING " + jsonString);					
+				httpEntity = httpResponse.getEntity();
+				
+				// make sure there is a response to read
+				if (httpEntity != null) {
+					outStream = new ByteArrayOutputStream();						
+					httpEntity.writeTo(outStream);		
+					jsonString = outStream.toString("UTF-8");
 				}
+				
+				Log.d(TAG, "GOT THE SERVER CALL RESPONSE STRING " + jsonString);					
 				
 				if (jsonString != null) {
 					jsonString = jsonString.trim();
 					
+					// look for the JSON reply value
 					if (jsonString.length() > 0) {
 						// if the result is a JSONArray, wrap it inside a JSONObject called "a"
 						if (jsonString.charAt(0) == '[') {
@@ -526,8 +526,26 @@ public class Server {
 							jsonObject.put("a",  jsonArray);
 						} else {
 							jsonObject = new JSONObject(jsonString);
+							
+							// look for an error
+							JSONObject errorObject = jsonObject.optJSONObject("errors");
+							if (errorObject != null) {
+								// there is an error, so build a string from the JSON
+								JSONArray names = errorObject.names();
+								if (names.length() > 0) {
+									String errorKey = (String)names.get(0);
+									m_errorString = errorKey + " - ";
+									JSONArray jsonArrayErrors = errorObject.optJSONArray(errorKey);
+									jsonArrayErrors.get(0);
+									if (jsonArrayErrors.length() > 0) {
+										m_errorString += jsonArrayErrors.getString(0);
+									}
+								}
+							}
 						}
 					}
+					
+
 				}
 			} catch (JSONException e) {
 				Log.wtf(TAG, "ServerCall.doInBackground()", e);				
@@ -541,6 +559,10 @@ public class Server {
 			} catch (Exception e) {
 				Log.e(TAG, "ServerCall().doInBackground", e);
 			} finally {
+				if (outStream != null) {
+					try { outStream.close(); } catch (Exception e) { }
+					outStream = null;
+				}
 				if (httpEntity != null) {
 					try { httpEntity.consumeContent(); } catch (Exception e) { }
 					httpEntity = null;
@@ -562,14 +584,19 @@ public class Server {
 		@Override
 		protected void onPostExecute(JSONObject jsonObject) {
 			if (m_connectionTimeout) {
-				Utilities.showErrorToast(m_context, "SERVER CONN TIMEOUT " + m_indicator, Toast.LENGTH_SHORT);
+				Utilities.showConnectionErrorToast(m_context, "SERVER CONN TIMEOUT " + m_indicator, Toast.LENGTH_SHORT);
 				m_connectionTimeout = false;
 			}
+			if (m_errorString != null) {
+				Utilities.showErrorToast(m_context, m_errorString, Toast.LENGTH_SHORT);
+				m_connectionTimeout = false;
+			}			
+
 			m_context = null;
 			
 			Log.d(TAG, "HERE IN ON POST EXECUTE with " + m_indicator);
 			
-			m_listener.notifyServerResponseAvailable(m_indicator, m_httpCode, jsonObject);
+			m_listener.notifyServerResponseAvailable(m_indicator, m_httpCode, jsonObject, m_errorString);
 		}
 	}
 

@@ -103,16 +103,14 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 	}
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 		
-		if (jsonObject != null) {
+		if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
 			int eventId = jsonObject.optInt("id", 0);
 			if (eventId != 0) {
 				
 				// successful "createEvent"
-				
-				Toast.makeText(this, "THE event ID IS " + eventId, Toast.LENGTH_SHORT).show();
-				
+								
 				try {
 					// add the new event to the data store
 					EventModel event = EventModel.fromJSON(getResources(), jsonObject, false);

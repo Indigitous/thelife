@@ -85,16 +85,28 @@ public class Utilities {
 	}	
 	
 	
-	public static boolean successfulHttpCode(int httpCode) {
+	public static boolean isSuccessfulHttpCode(int httpCode) {
 		return (httpCode >= 200) && (httpCode <= 299);
 	}
+	
+	
+	public static void showConnectionErrorToast(Context context, String text, int duration) {
+		Toast toast = new Toast(context);
+		TextView textView = new TextView(context);
+		textView.setText(text);
+		textView.setBackgroundColor(Color.RED);
+		textView.setTextColor(Color.WHITE);
+		toast.setView(textView);
+		toast.show();
+		toast = null;
+	}	
 	
 	
 	public static void showErrorToast(Context context, String text, int duration) {
 		Toast toast = new Toast(context);
 		TextView textView = new TextView(context);
 		textView.setText(text);
-		textView.setBackgroundColor(Color.RED);
+		textView.setBackgroundColor(Color.BLUE);
 		textView.setTextColor(Color.WHITE);
 		toast.setView(textView);
 		toast.show();

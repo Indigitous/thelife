@@ -68,20 +68,19 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 
 	
 	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 		
 		try {
 			if (indicator.equals("queryUserProfile")) {
 				
-				closeProgressBar();				
-				
-				// update the UI with the result of the query
+				// Update the UI with the result of the query.
+				// But if the query failed, use the local information.
 
 				// use the existing app user record
 				UserModel user = TheLifeConfiguration.getOwnerDS().getUser();
 				
 				// update app user record with latest from server 
-				if (jsonObject != null) {	
+				if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {	
 					user.setFromPartialJSON(jsonObject);				
 					TheLifeConfiguration.getOwnerDS().setUser(user);
 				}
@@ -101,10 +100,12 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				Bitmap bitmap = UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId(), false);
 				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
 				imageView.setImageBitmap(bitmap);
+			
+				closeProgressBar();				
 				
 			} else if (indicator.equals("updateUserProfile")) {
 				
-				if (Utilities.successfulHttpCode(httpCode)) {
+				if (Utilities.isSuccessfulHttpCode(httpCode)) {
 					
 					// update the UI and app user
 					TextView textView = (TextView)findViewById(R.id.settings_name_by_image);				
@@ -123,7 +124,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				
 			} else if (indicator.equals("updateImage")) {
 				
-				if (Utilities.successfulHttpCode(httpCode)) {
+				if (Utilities.isSuccessfulHttpCode(httpCode)) {
 					TheLifeConfiguration.getOwnerDS().notifyDSChangedListeners();
 					m_updatedBitmap = null;
 				}

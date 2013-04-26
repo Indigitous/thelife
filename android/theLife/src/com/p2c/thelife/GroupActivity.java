@@ -133,22 +133,9 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 
 	
 	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 		
-		if (jsonObject != null) {
-			int userId = jsonObject.optInt("id", 0);
-			if (userId != 0) {
-				
-				// successful
-				
-				if (indicator.equals("deleteUser")) {
-					// delete the user from the group data store
-					m_group.removeUser(userId);
-					m_groupUsersDS.notifyDSChangedListeners();
-					m_groupUsersDS.forceRefresh(null);
-				} 
-			}
-		}
+		// deleteUser does not return the deleted id
 		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();

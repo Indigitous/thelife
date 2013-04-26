@@ -150,9 +150,9 @@ public class FriendsActivity
 
 	
 	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 		
-		if (Utilities.successfulHttpCode(httpCode)) {
+		if (Utilities.isSuccessfulHttpCode(httpCode)) {
 			
 			// successful server call (deleteFriend)
 			

@@ -78,7 +78,7 @@ public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity imp
 	}
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
 
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();

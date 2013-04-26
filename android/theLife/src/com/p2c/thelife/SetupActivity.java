@@ -47,12 +47,12 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 	
 	
 	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 					
 		// make sure the user hasn't already cancelled
 		if (m_progressDialog.isShowing()) {
 			// make sure that some data was returned
-			if (jsonObject != null) {
+			if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
 				
 				// the app user
 				UserModel user = null;

@@ -75,10 +75,10 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	
 	
 	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 
 		if (indicator.equals("createFriend")) {
-			if (Utilities.successfulHttpCode(httpCode) && jsonObject != null) {
+			if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
 				int friendId = jsonObject.optInt("id", 0);
 				if (friendId != 0) {
 					

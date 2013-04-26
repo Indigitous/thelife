@@ -85,9 +85,11 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnE
 	}	
 
 	@Override
-	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
 	
-		if (jsonObject != null) {
+		// queryGroups
+		
+		if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
 			
 			// look for a JSONArray wrapped in an JSON object under key "a"
 			JSONArray jsonArray = jsonObject.optJSONArray("a");
@@ -103,11 +105,11 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnE
 				} catch (Exception e) {
 					Log.wtf(TAG, "notifyServerResponseAvailable()", e);
 				}
+		
+				// redisplay
+				notifyDataSetChanged();
 			}
 		}
-		
-		// redisplay
-		notifyDataSetChanged();		
 		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();

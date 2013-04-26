@@ -66,13 +66,13 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	
 	
 	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject) {
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 
 		// Register
 		if (indicator.equals("register")) {
 			
 			// make sure that some data was returned
-			if (jsonObject != null) {
+			if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
 				
 				// get the app user and token
 				try {
