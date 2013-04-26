@@ -61,6 +61,10 @@ public abstract class EventsAdapterAbstract extends ArrayAdapter<EventModel> imp
 			pledgeView.setVisibility((event.user_id == TheLifeConfiguration.getOwnerDS().getUserId()) ? View.GONE : View.VISIBLE);
 			
 			pledgeView.setChecked(event.hasPledged);
+			if (pledgeView.isChecked()) {
+				pledgeView.setClickable(false);
+			}
+			
 			peoplePrayedView.setVisibility(View.VISIBLE);
 			
 			// show the pledge count
