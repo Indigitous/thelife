@@ -106,7 +106,7 @@ public class SetupActivity
 			closeProgressBar();
 			
 		// Update bitmap
-		} else if (indicator.equals("updateBitmap")) {
+		} else if (indicator.equals("updateImage")) {
 			finishLoginOrRegistration(m_user, m_token);	
 		}
 	}
@@ -117,7 +117,6 @@ public class SetupActivity
 	 * @param view
 	 */
 	public void selectImage(View view) {
-Toast.makeText(this, "IN selectImage", Toast.LENGTH_SHORT).show();		
 		ImageSelectDialog dialog = new ImageSelectDialog();
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());			
 	}
@@ -130,7 +129,6 @@ Toast.makeText(this, "IN selectImage", Toast.LENGTH_SHORT).show();
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		
-Toast.makeText(this, "IN onActivityResult", Toast.LENGTH_SHORT).show();
 		// let the support object handle it
 		ImageSelectSupport support = new ImageSelectSupport(this, this);
 		support.onActivityResult(requestCode, resultCode, intent);
@@ -144,7 +142,6 @@ Toast.makeText(this, "IN onActivityResult", Toast.LENGTH_SHORT).show();
 	public void notifyImageSelected(Bitmap bitmap) {
 		m_bitmap = bitmap;
 		
-Toast.makeText(this, "IN notifyImageSelected", Toast.LENGTH_SHORT).show();
 		ImageView imageView = m_registerDialog.getImageView();
 		imageView.setImageBitmap(bitmap);	
 	}	
@@ -159,7 +156,7 @@ Toast.makeText(this, "IN notifyImageSelected", Toast.LENGTH_SHORT).show();
 		
 		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);										
 		Server server = new Server(this);
-		server.updateBitmap("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateBitmap");
+		server.updateImage("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateImage");
 	}
 	
 	

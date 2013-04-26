@@ -121,7 +121,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 					closeProgressBar();
 				}
 				
-			} else if (indicator.equals("updateBitmap")) {
+			} else if (indicator.equals("updateImage")) {
 				
 				if (Utilities.successfulHttpCode(httpCode)) {
 					TheLifeConfiguration.getOwnerDS().notifyDSChangedListeners();
@@ -192,7 +192,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);								
 		Server server = new Server(this);
-		server.updateBitmap("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateBitmap");
+		server.updateImage("users", TheLifeConfiguration.getOwnerDS().getUserId(), this, "updateImage");
 	}
 	
 	

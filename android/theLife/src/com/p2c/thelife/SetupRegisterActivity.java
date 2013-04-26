@@ -102,7 +102,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 			}
 				
 		// Update bitmap
-		} else if (indicator.equals("updateBitmap")) {
+		} else if (indicator.equals("updateImage")) {
 			finishRegistration(m_user, m_token);	
 		}
 	}
@@ -152,7 +152,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		
 		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);										
 		Server server = new Server(this);
-		server.updateBitmap("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap, this, "updateBitmap");
+		server.updateImage("users", TheLifeConfiguration.getOwnerDS().getUserId(), this, "updateImage");
 	}
 	
 	

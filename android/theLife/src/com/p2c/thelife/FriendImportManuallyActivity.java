@@ -99,7 +99,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 					if (m_bitmap != null) {
 						BitmapCache.saveBitmapToCache("friends", friend.id, "image", m_bitmap);						
 						Server server = new Server(this);
-						server.updateBitmap("friends", friend.id, "image", m_bitmap, this, "updateBitmap");
+						server.updateImage("friends", friend.id, this, "updateImage");
 					} else {
 						finishImport();
 					}
@@ -108,7 +108,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 				}
 			}
 				
-		} else if (indicator.equals("updateBitmap")) {
+		} else if (indicator.equals("updateImage")) {
 			finishImport();
 			
 			return;

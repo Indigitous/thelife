@@ -16,7 +16,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.json.JSONArray;
@@ -24,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -35,6 +33,16 @@ import com.p2c.thelife.model.FriendModel;
 
 /**
  * Call the Server using REST calls.
+ * Uses a downloaded version of Apache HttpClient, httpcomponents-client-4.2.5, 
+ * because standard Android HttpClient does not support multipart forms. TODO license
+ * The downloaded JARs are:
+ * 		commons-codec-1.6.jar
+ * 		commons-logging-1.1.1.jar
+ * 		fluent-hc-4.2.5.jar
+ * 		httpclient-4.2.5.jar
+ * 		httpclient-cache-4.2.5.jar
+ * 		httpcore-4.2.4.jar
+ * 		httpmime-4.2.5.jar
  * @author clarence
  *
  */
@@ -339,15 +347,16 @@ public class Server {
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
 			String urlString = Utilities.makeServerUrlString("users/" + String.valueOf(userId));
 			
-			HttpPut httpRequest = new HttpPut(urlString);
+			HttpPut httpRequest = new HttpPut(urlString);	
 			
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", String.valueOf(firstName)));			
 			pairs.add(new BasicNameValuePair("last_name", String.valueOf(lastName)));
 			pairs.add(new BasicNameValuePair("email", String.valueOf(email)));
-			pairs.add(new BasicNameValuePair("mobile", String.valueOf(mobile)));	// TODO							
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
-			httpRequest.setEntity(formEntity);
+			pairs.add(new BasicNameValuePair("mobile", String.valueOf(mobile)));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs);
+			
+			httpRequest.setEntity(entity);
 						
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
@@ -412,30 +421,36 @@ public class Server {
 	
 	
 	/**
-	 * Update the image at <urlPrefix>/<id>/<type>
+	 * Update the image at <urlPrefix>/<id>. The image must already be in the local file cache.
 	 * @param urlPrefix		either "users", "friends" or "activities"
 	 * @param id
-	 * @param type  		either "image" or "thumbnail"
 	 * @param bitmap
 	 * @param listener
 	 * @param indicator
 	 */
-	public void updateBitmap(String urlPrefix, int id, String type, Bitmap bitmap, ServerListener listener, String indicator) {
+	public void updateImage(String urlPrefix, int id, ServerListener listener, String indicator) {
 		try {
 			// API endpoint
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-			String urlString = Utilities.makeServerUrlString(urlPrefix + "/" + String.valueOf(id) + "/" + type);
-			
+			String urlString = Utilities.makeServerUrlString(urlPrefix + "/" + String.valueOf(id));
+
 			HttpPut httpRequest = new HttpPut(urlString);
 			
-			File file = new File(BitmapCache.generateFullCacheFileName(urlPrefix, id, type));
-			FileEntity fileEntity = new FileEntity(file, "image/png");		
-						
-			httpRequest.setEntity(fileEntity);
+			// only update the image, and the server will also update its thumbnail
+			File file = new File(BitmapCache.generateFullCacheFileName(urlPrefix, id, "image"));
+			
+			// multipart entity not supported in standard Android HttpClient library, so this uses a downloaded version of apache HttpClient instead.
+			org.apache.http.entity.mime.MultipartEntity entity = 
+				new org.apache.http.entity.mime.MultipartEntity(org.apache.http.entity.mime.HttpMultipartMode.STRICT);
+			org.apache.http.entity.mime.content.FileBody fileBody = 
+				new org.apache.http.entity.mime.content.FileBody(file, "image/jpeg");
+			entity.addPart("image", fileBody);
+					
+			httpRequest.setEntity(entity);
 						
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
-			Log.e(TAG, "updateBitmap()", e);
+			Log.e(TAG, "updateImage()", e);
 		}		
 	}
 	
