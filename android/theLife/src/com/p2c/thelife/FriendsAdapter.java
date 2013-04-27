@@ -35,7 +35,7 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> implements Abstrac
 		FriendModel friend = getItem(position);
 		
 		ImageView imageView = (ImageView)friendView.findViewById(R.id.friend_image);
-		imageView.setImageBitmap(FriendModel.getImage(friend.id, false));
+		imageView.setImageBitmap(FriendModel.getImage(friend.id));
 		
 		TextView nameView = (TextView)friendView.findViewById(R.id.friend_name);
 		nameView.setText(friend.firstName);

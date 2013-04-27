@@ -127,7 +127,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
         // show the app user
         if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
 	        ImageView imageView = (ImageView)m_appMenu.findViewById(R.id.app_menu_user_image);
-	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId(), false));
+	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId()));
 	        TextView textView = (TextView)m_appMenu.findViewById(R.id.app_menu_user_name);
 	        textView.setText(TheLifeConfiguration.getOwnerDS().getUser().getFullName());
         }		

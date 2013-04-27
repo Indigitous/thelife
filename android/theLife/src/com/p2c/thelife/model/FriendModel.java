@@ -152,21 +152,19 @@ public class FriendModel extends AbstractModel {
 	/**
 	 * Will attempt to load the image or use the placeholder.
 	 * @param id
-	 * @param useServer
 	 * @return
 	 */
-	public static Bitmap getImage(int id, boolean useServer) {
-		return BitmapCache.getBitmapFromSystem("friends", id, "image", useServer, TheLifeConfiguration.getGenericPersonImage());
+	public static Bitmap getImage(int id) {
+		return BitmapCache.getBitmapFromSystem("friends", id, "image", TheLifeConfiguration.getGenericPersonImage());
 	}
 	
 	/**
 	 * Will attempt to load the image or use the placeholder.
 	 * @param id
-	 * @param useServer
 	 * @return
 	 */
-	public static Bitmap getThumbnail(int id, boolean useServer) {
-		return BitmapCache.getBitmapFromSystem("friends", id, "thumbnail", useServer, TheLifeConfiguration.getGenericPersonThumbnail());
+	public static Bitmap getThumbnail(int id) {
+		return BitmapCache.getBitmapFromSystem("friends", id, "thumbnail", TheLifeConfiguration.getGenericPersonThumbnail());
 	}	
 	
 	@Override

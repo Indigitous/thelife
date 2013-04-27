@@ -44,7 +44,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		// Show the friend
 		if (m_friend != null) {
 			ImageView imageView = (ImageView)findViewById(R.id.activity_friend_image);
-			imageView.setImageBitmap(FriendModel.getImage(m_friend.id, false));
+			imageView.setImageBitmap(FriendModel.getImage(m_friend.id));
 			
 			TextView nameView = (TextView)findViewById(R.id.activity_friend_name);
 			nameView.setText(m_friend.getFullName());

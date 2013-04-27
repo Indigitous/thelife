@@ -98,16 +98,15 @@ public class BitmapCache {
 	}
 	
 	/**
-	 * If the bitmap is not in the local file cache, 
-	 * get the bitmap from the server if permitted (useServer == true) and if available. 
+	 * Get the bitmap from the local file cache, if available.
+	 * If not available, use the fallbackBitmap. 
 	 * @param dataType		dataType of bitmap: "friends", "users" or "activities"
 	 * @param id			model id
 	 * @param type			type of bitmap: "image" or "thumbnail"
-	 * @param useServer		can only be true if not on UI thread
 	 * @param fallbackBitmap
 	 * @return
 	 */
-	public static Bitmap getBitmapFromSystem(String dataType, int id, String type, boolean useServer, Bitmap fallbackBitmap) {
+	public static Bitmap getBitmapFromSystem(String dataType, int id, String type, Bitmap fallbackBitmap) {
 		type = "image"; // TODO only support image not thumbnail for now		
 		Bitmap bitmap = null;
 		
@@ -117,13 +116,6 @@ public class BitmapCache {
 			if (new File(fileName).exists()) {
 				bitmap = BitmapFactory.decodeFile(fileName);
 			}
-		
-			// if not in the disk cache and if permitted, get the bitmap from the server
-			// TODO: obfuscate the id in the URL?
-			if (bitmap == null && useServer) {
-				bitmap = BitmapCache.getBitmapAtURLSafe("image/" + dataType + "/" + String.valueOf(id), fileName);
-			}
-			
 		}
 		
 		// use fall back if no image is available

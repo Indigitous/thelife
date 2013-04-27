@@ -44,7 +44,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 		userView.setTag(user);
 		
 		ImageView imageView = (ImageView)userView.findViewById(R.id.user_image);
-		imageView.setImageBitmap((user != null) ? UserModel.getImage(user.id, false) : TheLifeConfiguration.getGenericPersonImage());
+		imageView.setImageBitmap((user != null) ? UserModel.getImage(user.id) : TheLifeConfiguration.getGenericPersonImage());
 		
 		TextView textView = (TextView)userView.findViewById(R.id.user_name);
 		textView.setText((user != null) ? user.getFullName() : "?");
