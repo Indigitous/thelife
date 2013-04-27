@@ -75,7 +75,8 @@ System.out.println("BitmapNotifierHandler got message " + message);
 		String temporaryCacheFileName = (String)message.obj;
 		File temporaryFile = new File(temporaryCacheFileName);
 		File cacheFile = new File(temporaryCacheFileName.substring(0, temporaryCacheFileName.length() - 1)); // just drop the last character in the name
-		temporaryFile.renameTo(cacheFile);
+		boolean wasRenamed = temporaryFile.renameTo(cacheFile);
+System.out.println(temporaryCacheFileName + " was renamed " + wasRenamed);
 		
 		// notify all the listeners
 		if (op == OP_USER) {

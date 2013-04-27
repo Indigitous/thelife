@@ -212,7 +212,7 @@ System.out.println("BitmapCacheHandler got message " + message);
 			
 			if (bitmap != null) {
 				// tell the UI about the new image cache file
-				Message displayerMessage = TheLifeConfiguration.getBitmapNotifier().obtainMessage(message.what, message.arg1, 0, cacheFileName);
+				Message displayerMessage = TheLifeConfiguration.getBitmapNotifier().obtainMessage(message.what, message.arg1, 0, temporaryCacheFileName);
 				TheLifeConfiguration.getBitmapNotifier().sendMessage(displayerMessage);
 			}
 		}
