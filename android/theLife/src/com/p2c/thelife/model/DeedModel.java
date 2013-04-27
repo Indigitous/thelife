@@ -34,7 +34,7 @@ public class DeedModel extends AbstractModel {
 	public int		category_id;	
 	
 	
-	public DeedModel(int deed_id, String title, String summary, String description, Bitmap image, Set<FriendModel.Threshold> thresholds, int priority, int category_id) {
+	public DeedModel(int deed_id, String title, String summary, String description, Set<FriendModel.Threshold> thresholds, int priority, int category_id) {
 		super(deed_id);
 		this.title = title;
 		this.summary = summary;
@@ -95,7 +95,6 @@ public class DeedModel extends AbstractModel {
 			json.getString("title"),
 			json.getString("summary"),
 			json.getString("full_description"),
-			getThumbnail(id, useServer),
 			thresholds,
 			json.getInt("priority"),
 			json.getInt("category_id")
