@@ -46,7 +46,7 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 		textViewDescription.setText(Html.fromHtml(description));
 		
 		ImageView imageView1 = (ImageView)requestView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap(UserModel.getThumbnail(request.user_id, false));
+		imageView1.setImageBitmap(UserModel.getThumbnail(request.user_id));
 		
 		requestView.setTag(request);		
 		
