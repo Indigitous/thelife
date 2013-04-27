@@ -197,7 +197,7 @@ System.out.println("BitmapCacheHandler got message " + message);
 				imageType = "image";
 				break;
 			default:
-				Log.e(TAG, "Bad message in ImagesRetriever " + message.what);
+				Log.e(TAG, "Bad message in BitmapCacheHandler " + message.what);
 				return;
 		}
 		int id = message.arg1;
@@ -207,7 +207,7 @@ System.out.println("BitmapCacheHandler got message " + message);
 		if (!new File(cacheFileName).exists()) {
 			
 			// since the cache file is missing, get the image from the server and store it in a temporary file
-			String temporaryCacheFileName = generateFullCacheFileName("_" + dataType, id, imageType);
+			String temporaryCacheFileName = generateFullCacheFileName(dataType, id, imageType) + "_";
 			Bitmap bitmap = BitmapCacheHandler.getBitmapAtURLSafe("image/" + dataType + "/" + String.valueOf(id), temporaryCacheFileName);
 			
 			if (bitmap != null) {
