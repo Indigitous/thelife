@@ -150,7 +150,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	private void updateImageOnServer(Bitmap bitmap) {
 		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
 		
-		BitmapCache.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);										
+		BitmapCacheHandler.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);										
 		Server server = new Server(this);
 		server.updateImage("users", TheLifeConfiguration.getOwnerDS().getUserId(), this, "updateImage");
 	}

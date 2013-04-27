@@ -11,7 +11,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.p2c.thelife.TheLifeConfiguration;
-import com.p2c.thelife.BitmapCache;
+import com.p2c.thelife.BitmapCacheHandler;
 
 
 // POJO - plain old java object
@@ -108,7 +108,7 @@ public class DeedModel extends AbstractModel {
 	 * @return
 	 */
 	public static Bitmap getThumbnail(int id) {
-		return BitmapCache.getBitmapFromSystem("activities", id, "thumbnail", TheLifeConfiguration.getGenericDeedImage());
+		return BitmapCacheHandler.getBitmapFromSystem("activities", id, "thumbnail", TheLifeConfiguration.getGenericDeedImage());
 	}
 	
 	

@@ -13,21 +13,41 @@ import java.net.URL;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 /**
  * Caching for bitmaps.
+ * 
+ * The Handler retrieves requested images from the server in a background thread, and if found, notifies the UI.
  * @author clarence
  *
  */
-public class BitmapCache {
+public class BitmapCacheHandler extends Handler {
 	
-	private static final String TAG = "BitmapCache";
+	private static final String TAG = "BitmapCacheHandler";
 	
-		
-	public static String generateFullCacheFileName(String dataType, int id, String type) {
-		type = "image"; // TODO only support image not thumbnail for now
-		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + type + ".jpg";
+	// Handler Message.what choices
+	public static final int OP_NULL = 0;
+	public static final int OP_GET_USER_IMAGE_FROM_SERVER = 1;
+	public static final int OP_GET_USER_THUMBNAIL_FROM_SERVER = 2;
+	public static final int OP_GET_FRIEND_IMAGE_FROM_SERVER = 3;
+	public static final int OP_GET_FRIEND_THUMBNAIL_FROM_SERVER = 4;
+	public static final int OP_GET_ACTIVITY_IMAGE_FROM_SERVER = 5;
+	public static final int OP_GET_ACTIVITY_THUMBNAIL_FROM_SERVER = 6;
+	
+	
+	/**
+	 * Generate the cache file name, including path, from the given values.
+	 * @param dataType  	either "images", "friends" or "activities"
+	 * @param id			model id
+	 * @param imageType		either "image" or "thumbnail"
+	 * @return
+	 */
+	public static String generateFullCacheFileName(String dataType, int id, String imageType) {
+		imageType = "image"; // TODO only support image not thumbnail for now
+		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + imageType + ".jpg";
 	}
 	
 	
@@ -37,7 +57,7 @@ public class BitmapCache {
 			OutputStream os = null;
 			try {
 				os = new BufferedOutputStream(new FileOutputStream(cacheFileName));
-				bitmap.compress(CompressFormat.JPEG, 50, os);
+				bitmap.compress(CompressFormat.JPEG, 90, os);
 			} catch (Exception e) {
 				Log.e(TAG, "saveBitmapToCache " + cacheFileName, e);
 			} finally {
@@ -102,20 +122,39 @@ public class BitmapCache {
 	 * If not available, use the fallbackBitmap. 
 	 * @param dataType		dataType of bitmap: "friends", "users" or "activities"
 	 * @param id			model id
-	 * @param type			type of bitmap: "image" or "thumbnail"
+	 * @param imageType			type of bitmap: "image" or "thumbnail"
 	 * @param fallbackBitmap
 	 * @return
 	 */
-	public static Bitmap getBitmapFromSystem(String dataType, int id, String type, Bitmap fallbackBitmap) {
-		type = "image"; // TODO only support image not thumbnail for now		
+	public static Bitmap getBitmapFromSystem(String dataType, int id, String imageType, Bitmap fallbackBitmap) {
+		imageType = "image"; // TODO only support image not thumbnail for now		
 		Bitmap bitmap = null;
 		
 		if (id != 0) {
 			// first try to find the bitmap in the disk cache
-			String fileName = generateFullCacheFileName(dataType, id, type);
+			String fileName = generateFullCacheFileName(dataType, id, imageType);
 			if (new File(fileName).exists()) {
 				bitmap = BitmapFactory.decodeFile(fileName);
+			} else {
+				// since the bitmap is not in the cache, ask the Handler to get the image from the server
+				int what = OP_NULL;
+				if (dataType.equals("users")) {
+					what = OP_GET_USER_IMAGE_FROM_SERVER;
+				} else if (dataType.equals("friends")) {
+					what = OP_GET_FRIEND_IMAGE_FROM_SERVER;
+				} else if (dataType.equals("activities")) {
+					what = OP_GET_ACTIVITY_IMAGE_FROM_SERVER;
+				} else {
+					Log.e(TAG, "BAD datatype in getBitmapFromSystem " + dataType);
+				}
+				
+				if (what != OP_NULL) {
+					BitmapCacheHandler handler = TheLifeConfiguration.getBitmapCacheHandler();					
+					Message message = handler.obtainMessage(what, id, 0);
+					handler.sendMessage(message);
+				}
 			}
+				
 		}
 		
 		// use fall back if no image is available
@@ -126,5 +165,57 @@ public class BitmapCache {
 		return bitmap;
 	}
 	
+	
+	
+	/**
+	 * Runs in the Handler's thread, not on the UI thread.
+	 * 		message.what = the operation to perform
+	 * 		message.arg1 = the model id
+	 */
+	@Override
+	public void handleMessage(Message message) {
+		
+System.out.println("BitmapCacheHandler got message " + message);
+		
+		// parse the message
+		String dataType = null;
+		String imageType = null;
+		switch (message.what) {
+			case OP_GET_USER_IMAGE_FROM_SERVER:
+			case OP_GET_USER_THUMBNAIL_FROM_SERVER:
+				dataType = "users";
+				imageType = "image";
+				break;
+			case OP_GET_FRIEND_IMAGE_FROM_SERVER:
+			case OP_GET_FRIEND_THUMBNAIL_FROM_SERVER:
+				dataType = "friends";
+				imageType = "image";
+				break;		
+			case OP_GET_ACTIVITY_IMAGE_FROM_SERVER:
+			case OP_GET_ACTIVITY_THUMBNAIL_FROM_SERVER:
+				dataType = "activities";
+				imageType = "image";
+				break;
+			default:
+				Log.e(TAG, "Bad message in ImagesRetriever " + message.what);
+				return;
+		}
+		int id = message.arg1;
+		
+		// see if the cache file is already there
+		String cacheFileName = generateFullCacheFileName(dataType, id, imageType);
+		if (!new File(cacheFileName).exists()) {
+			
+			// since the cache file is missing, get the image from the server and store it in a temporary file
+			String temporaryCacheFileName = generateFullCacheFileName("_" + dataType, id, imageType);
+			Bitmap bitmap = BitmapCacheHandler.getBitmapAtURLSafe("image/" + dataType + "/" + String.valueOf(id), temporaryCacheFileName);
+			
+			if (bitmap != null) {
+				// tell the UI about the new image cache file
+				Message displayerMessage = TheLifeConfiguration.getBitmapNotifier().obtainMessage(message.what, message.arg1, 0, cacheFileName);
+				TheLifeConfiguration.getBitmapNotifier().sendMessage(displayerMessage);
+			}
+		}
+	}	
 
 }

@@ -53,7 +53,6 @@ public class TheLifeConfiguration {
 	private static String m_serverURL = "http://75.157.251.192:3000/v1/"; // TODO debugging
 	//private static String m_serverURL = "http://srv1.thelifeapp.com:3000/v1/";
 	
-	
 	// stock images
 	private static Bitmap m_genericPersonImage;
 	private static Bitmap m_genericPersonThumbnail;
@@ -63,6 +62,12 @@ public class TheLifeConfiguration {
 	
 	// directory of local cache files
 	private static String m_cacheDirectory = null; 
+	
+	// background thread Handler to read bitmaps from the server into the cache
+	private static BitmapCacheHandler m_bitmapCacheHandler = null;
+	
+	// UI thread Handler to notify that a bitmap from the server has arrived
+	private static BitmapNotifierHandler m_bitmapNotifier = null;	
 	
 	// application wide polling
 	private static RequestsPoller m_requestsPoller = null;
@@ -206,6 +211,23 @@ public class TheLifeConfiguration {
 	public static void setMissingDataThumbnail(Bitmap missingDataThumbnail) {
 		m_missingDataThumbnail = missingDataThumbnail;
 	}
+	
+	public static BitmapCacheHandler getBitmapCacheHandler() {
+		return m_bitmapCacheHandler;
+	}
+	
+	public static void setBitmapCacheHandler(BitmapCacheHandler bitmapCacheHandler) {
+System.out.println("SET BITMAP CACHE HANDLER WITH " + bitmapCacheHandler);
+		m_bitmapCacheHandler = bitmapCacheHandler;
+	}	
+	
+	public static BitmapNotifierHandler getBitmapNotifier() {
+		return m_bitmapNotifier;
+	}
+	
+	public static void setBitmapNotifier(BitmapNotifierHandler bitmapNotifier) {
+		m_bitmapNotifier = bitmapNotifier;
+	}		
 	
 	
 	/********************** Application-wide polling ***********************/

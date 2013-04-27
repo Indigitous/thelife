@@ -48,9 +48,9 @@ public abstract class EventsAdapterAbstract extends ArrayAdapter<EventModel> imp
 		textViewTime.setText(Html.fromHtml(eventTime));		
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.event_image1);
-		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id, false));
+		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id));
 		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.event_image2);
-		imageView2.setImageBitmap(FriendModel.getThumbnail(event.friend_id, false));		
+		imageView2.setImageBitmap(FriendModel.getThumbnail(event.friend_id));		
 		
 		// only show the pledge view if the event requests it
 		ToggleButton pledgeView = (ToggleButton)eventView.findViewById(R.id.event_pledge);

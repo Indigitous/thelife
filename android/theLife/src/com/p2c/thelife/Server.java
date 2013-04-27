@@ -439,7 +439,7 @@ public class Server {
 			HttpPut httpRequest = new HttpPut(urlString);
 			
 			// only update the image, and the server will also update its thumbnail
-			File file = new File(BitmapCache.generateFullCacheFileName(urlPrefix, id, "image"));
+			File file = new File(BitmapCacheHandler.generateFullCacheFileName(urlPrefix, id, "image"));
 			
 			// multipart entity not supported in standard Android HttpClient library, so this uses a downloaded version of apache HttpClient instead.
 			org.apache.http.entity.mime.MultipartEntity entity = 

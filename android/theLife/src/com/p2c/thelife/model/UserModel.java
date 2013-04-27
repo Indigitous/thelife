@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.p2c.thelife.BitmapCache;
+import com.p2c.thelife.BitmapCacheHandler;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
@@ -47,7 +47,7 @@ public class UserModel extends AbstractModel {
 	 * @return
 	 */
 	public static Bitmap getImage(int id) {
-		return BitmapCache.getBitmapFromSystem("users", id, "image", TheLifeConfiguration.getGenericPersonImage());
+		return BitmapCacheHandler.getBitmapFromSystem("users", id, "image", TheLifeConfiguration.getGenericPersonImage());
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class UserModel extends AbstractModel {
 	 * @return
 	 */
 	public static Bitmap getThumbnail(int id) {
-		return BitmapCache.getBitmapFromSystem("users", id, "thumbnail", TheLifeConfiguration.getGenericPersonThumbnail());
+		return BitmapCacheHandler.getBitmapFromSystem("users", id, "thumbnail", TheLifeConfiguration.getGenericPersonThumbnail());
 	}		
 	
 	public static UserModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
