@@ -166,6 +166,16 @@ public class BitmapCacheHandler extends Handler {
 	}
 	
 	
+	/** 
+	 * Ensure that the owner image is in the file cache.
+	 */
+	public static void loadOwnerBitmap() {
+		BitmapCacheHandler handler = TheLifeConfiguration.getBitmapCacheHandler();					
+		Message message = handler.obtainMessage(OP_GET_USER_IMAGE_FROM_SERVER, TheLifeConfiguration.getOwnerDS().getUserId(), 0);
+		handler.sendMessage(message);
+	}
+	
+	
 	
 	/**
 	 * Runs in the Handler's thread, not on the UI thread.

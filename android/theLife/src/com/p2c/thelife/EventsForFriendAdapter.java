@@ -9,7 +9,7 @@ import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 
-public class EventsForFriendAdapter extends EventsAdapterAbstract implements AbstractDS.DSChangedListener {
+public class EventsForFriendAdapter extends EventsAdapterAbstract {
 	
 	private static final String TAG = "EventsForFriendAdapter"; 
 	
@@ -25,17 +25,7 @@ public class EventsForFriendAdapter extends EventsAdapterAbstract implements Abs
 	
 	
 	@Override
-	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
-		
-		// clear data and redo query
-		clear();		
-		query();
-		
-		// redisplay
-		notifyDataSetChanged();
-	}
-	
-	private void query() {
+	protected void query() {
 		// get all the Events for the current user
 		Collection<EventModel> events = TheLifeConfiguration.getEventsDS().findByFriend(m_friend.id);
 		for (EventModel m:events) {

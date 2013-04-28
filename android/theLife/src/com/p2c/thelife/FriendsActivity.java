@@ -52,8 +52,9 @@ public class FriendsActivity
 		friendsGrid.setOnItemLongClickListener(this);
 	}
 	
+	
 	/**
-	 * Activity in view, so start the data store refresh mechanism.
+	 * Activity in view, so start the listeners.
 	 */
 	@Override
 	protected void onResume() {
@@ -62,18 +63,21 @@ public class FriendsActivity
 		// load the database from the server in the background
 		TheLifeConfiguration.getFriendsDS().addDSChangedListener(m_adapter);  
 		TheLifeConfiguration.getFriendsDS().addDSRefreshedListener(this);				
-		TheLifeConfiguration.getFriendsDS().refresh(null);			
-	}		
+		TheLifeConfiguration.getFriendsDS().refresh(null);
+		TheLifeConfiguration.getBitmapNotifier().addFriendBitmapListener(m_adapter);
+	}
+	
 	
 	/**
-	 * Activity out of view, so stop the data store refresh mechanism.
+	 * Activity out of view, so stop the listeners.
 	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
 		
 		TheLifeConfiguration.getFriendsDS().removeDSChangedListener(m_adapter);
-		TheLifeConfiguration.getGroupsDS().removeDSRefreshedListener(this);						
+		TheLifeConfiguration.getGroupsDS().removeDSRefreshedListener(this);
+		TheLifeConfiguration.getBitmapNotifier().removeFriendBitmapListener(m_adapter);		
 	}
 		
 
@@ -163,6 +167,6 @@ public class FriendsActivity
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}				
-	}	
+	}
 
 }

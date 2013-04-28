@@ -1,14 +1,14 @@
 package com.p2c.thelife;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import android.content.Context;
 
-import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.EventModel;
 
-public class EventsForCommunityAdapter extends EventsAdapterAbstract implements AbstractDS.DSChangedListener {
+
+
+public class EventsForCommunityAdapter extends EventsAdapterAbstract {
 	
 	private static final String TAG = "EventsForCommunityAdapter"; 	
 		
@@ -19,18 +19,7 @@ public class EventsForCommunityAdapter extends EventsAdapterAbstract implements 
 	}
 	
 	
-	@Override
-	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
-		
-		// clear data and redo query
-		clear();		
-		query();
-		
-		// redisplay
-		notifyDataSetChanged();
-	}
-	
-	private void query() {
+	protected void query() {
 		
 		// get all the events
 		Collection<EventModel> events = TheLifeConfiguration.getEventsDS().findAll();

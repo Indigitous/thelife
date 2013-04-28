@@ -11,10 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.AbstractDS;
+import com.p2c.thelife.model.FriendModel;
 
-public class FriendsAdapter extends ArrayAdapter<FriendModel> implements AbstractDS.DSChangedListener {
+public class FriendsAdapter 
+	extends ArrayAdapter<FriendModel> 
+	implements AbstractDS.DSChangedListener, BitmapNotifierHandler.FriendBitmapListener {
 	
 	public FriendsAdapter(Context context, int mode) {
 		super(context, mode);
@@ -48,6 +50,7 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> implements Abstrac
 		return friendView;
 	}
 	
+	
 	@Override
 	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
 		
@@ -65,6 +68,13 @@ public class FriendsAdapter extends ArrayAdapter<FriendModel> implements Abstrac
 		for (FriendModel f:friends) {
 			add(f);
 		}
+	}
+
+	
+	@Override
+	public void notifyFriendBitmap(int friendId) {
+		// redisplay
+		notifyDataSetChanged();		
 	}		
 
 }

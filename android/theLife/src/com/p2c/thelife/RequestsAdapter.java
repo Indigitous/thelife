@@ -17,7 +17,7 @@ import com.p2c.thelife.model.RequestModel;
 import com.p2c.thelife.model.UserModel;
 
 
-public class RequestsAdapter extends ArrayAdapter<RequestModel> implements AbstractDS.DSChangedListener {
+public class RequestsAdapter extends ArrayAdapter<RequestModel> implements AbstractDS.DSChangedListener, BitmapNotifierHandler.UserBitmapListener {
 	
 	private static final String TAG = "RequestsAdapter"; 	
 	
@@ -72,6 +72,12 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 			add(m);
 		}				
 
+	}
+
+	@Override
+	public void notifyUserBitmap(int userId) {
+		// redisplay
+		notifyDataSetChanged();		
 	}			
 
 }

@@ -90,6 +90,8 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 			TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
 			TheLifeConfiguration.getEventsDS().refresh(null);  // TODO refreshAfter(null) ?
+			TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);			
+			TheLifeConfiguration.getBitmapNotifier().addFriendBitmapListener(m_adapter);
 		}
 		
 		// refresh the display every minute
@@ -120,6 +122,8 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 		m_listView.removeCallbacks(m_datastoreRefreshRunnable);
+		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);				
+		TheLifeConfiguration.getBitmapNotifier().removeFriendBitmapListener(m_adapter);		
 	}
 	
 

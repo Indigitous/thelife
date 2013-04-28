@@ -17,6 +17,12 @@ import com.p2c.thelife.model.UserModel;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+
+/**
+ * Show the users in the specified group.
+ * @author clarence
+ *
+ */
 public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, UserDeleteFromGroupDialog.Listener {
 	
 	private static final String TAG = "GroupActivity";
@@ -32,7 +38,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_group, SlidingMenuSupport.GROUPS_POSITION);
 		
-		// Get the group for this activity
+		// Get the group
 		int groupId = getIntent().getIntExtra("group_id", 0);
 		m_group = TheLifeConfiguration.getGroupsDS().findById(groupId);
 		
@@ -64,6 +70,9 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 			// load the database from the server in the background
 			m_groupUsersDS.addDSChangedListener(m_adapter);
 			m_groupUsersDS.refresh(null);
+			
+			// listen for user bitmaps
+			TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);
 		}
 	}		
 	
@@ -76,6 +85,9 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 		
 		if (m_group != null) {
 			m_groupUsersDS.removeDSChangedListener(m_adapter);
+			
+			// stop listening for user bitmaps
+			TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);			
 		}
 	}
 

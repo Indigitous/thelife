@@ -53,6 +53,9 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// set the data store listener
 		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_adapter);
+		
+		// set the bitmap listener
+		TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);
 	}		
 	
 	/**
@@ -64,6 +67,9 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// remove the data store listener
 		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_adapter);
+		
+		// remove the bitmap listener
+		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);		
 	}		
 	
 	

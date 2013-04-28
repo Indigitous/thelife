@@ -28,15 +28,15 @@ public class BitmapNotifierHandler extends Handler {
 	 *
 	 */
 	public interface UserBitmapListener {
-		public void notifyUserBitmap(int id);
+		public void notifyUserBitmap(int userId);
 	}
 	
 	public interface FriendBitmapListener {
-		public void notifyFriendBitmap(int id);
+		public void notifyFriendBitmap(int friendId);
 	}
 	
 	public interface ActivityBitmapListener {
-		public void notifyActivityBitmap(int id);
+		public void notifyActivityBitmap(int activityId);
 	}	
 	
 	

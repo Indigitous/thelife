@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -16,13 +18,21 @@ import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 
-public abstract class EventsAdapterAbstract extends ArrayAdapter<EventModel> implements AbstractDS.DSChangedListener {
+public abstract class EventsAdapterAbstract 
+	extends ArrayAdapter<EventModel> 
+	implements AbstractDS.DSChangedListener, BitmapNotifierHandler.UserBitmapListener, BitmapNotifierHandler.FriendBitmapListener {
 	
 	private static final String TAG = "EventsAdapterAbstract"; 	
 		
 	public EventsAdapterAbstract(Context context, int mode) {
 		super(context, mode);
-	}		
+	}
+	
+	
+	/**
+	 * Query the data store for the events.
+	 */
+	protected abstract void query();
 
 	
 	@Override
@@ -83,4 +93,29 @@ public abstract class EventsAdapterAbstract extends ArrayAdapter<EventModel> imp
 		
 		return eventView;
 	}
+	
+	
+	@Override
+	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
+		
+		// clear data and redo query
+		clear();		
+		query();
+		
+		// redisplay
+		notifyDataSetChanged();
+	}	
+	
+	
+	@Override
+	public void notifyUserBitmap(int userId) {
+		// redisplay
+		notifyDataSetChanged();
+	}
+	
+	@Override
+	public void notifyFriendBitmap(int friendId) {
+		// redisplay
+		notifyDataSetChanged();
+	}	
 }

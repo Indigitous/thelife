@@ -16,10 +16,12 @@ import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.GroupUsersDS;
 import com.p2c.thelife.model.UserModel;
 
-public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.DSChangedListener {
+public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.DSChangedListener, BitmapNotifierHandler.UserBitmapListener {
 	
 	private GroupModel m_group;
 	private GroupUsersDS m_groupUsersDS;
+	
+	
 	
 	public GroupAdapter(Context context, int mode, GroupModel group, GroupUsersDS groupUsersDS) {
 		super(context, mode);
@@ -29,6 +31,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 		
 		query();
 	}
+	
 	
 	// TODO: see ApiDemos List14.java for other (maybe better?) ways for this
 	@Override
@@ -67,6 +70,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 		notifyDataSetChanged();
 	}	
 	
+	
 	private void query() {
 		
 		// get all the users in the group
@@ -75,6 +79,13 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 		for (UserModel m:users) {
 			add(m);
 		}
+	}
+
+
+	@Override
+	public void notifyUserBitmap(int userId) {
+		// redisplay
+		notifyDataSetChanged(); // TODO could try to only update the one bitmap
 	}	
 
 }
