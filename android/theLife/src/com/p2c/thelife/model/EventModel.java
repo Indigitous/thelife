@@ -42,9 +42,6 @@ public class EventModel extends AbstractModel {
 		this.deed_id = deed_id;
 		this.targetEvent_id = targetEvent_id;
 		
-		// final description needs to have the template parameters replaced with the real values
-		this.finalDescription = getFinalDescription(description);
-		
 		this.timestamp = timestamp;
 		this.isPrayerRequested = isPrayerRequested;
 		this.pledgeCount = pledgeCount;
@@ -52,6 +49,9 @@ public class EventModel extends AbstractModel {
 		
 		// use the short string threshold name
 		this.thresholdString = getThresholdString(resources, threshold_id);
+		
+		// final description needs to have the template parameters replaced with the real values
+		this.finalDescription = getFinalDescription(description);		
 	}
 	
 	@Override
