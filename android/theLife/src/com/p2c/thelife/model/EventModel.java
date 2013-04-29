@@ -119,6 +119,7 @@ public class EventModel extends AbstractModel {
 		
 		Log.d(TAG, "IN EVENT MODEL from JSON");
 		
+		
 		// create the event
 		return new EventModel(
 			resources,
@@ -130,7 +131,7 @@ public class EventModel extends AbstractModel {
 			json.getInt("activity_id"),
 			json.optInt("event_id", 0),
 			json.getString("description"),
-			json.optLong("created_at", 1366950022126L),
+			json.optLong("created_at", 0L) * 1000, // convert seconds from server into millis
 			json.getBoolean("prayer_requested"),
 			json.optInt("pledges_count", 0),
 			json.optBoolean("has_pledged", false),
