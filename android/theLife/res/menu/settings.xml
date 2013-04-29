@@ -5,6 +5,13 @@
         android:orderInCategory="80"
         android:showAsAction="ifRoom"
         android:icon="@drawable/action_help"
-        android:title="@string/action_help"/>  
+        android:title="@string/action_help"/> 
+        
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/action_flynav"
+        android:title="@string/action_logout"/>      
 
 </menu>

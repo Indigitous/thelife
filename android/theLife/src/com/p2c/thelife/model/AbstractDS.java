@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -27,6 +28,7 @@ import com.p2c.thelife.Utilities;
 
 
 public abstract class AbstractDS<T extends AbstractModel> {
+	
 	
 	/**
 	 * Listener interface for DS data changed event.
@@ -580,5 +582,37 @@ Log.e(TAG, "readFromServer()", e);
 	public void clearAllDSRefreshedListeners() {
 		m_refreshedListener = null;
 	}	
+	
+
+	
+	/****************************************** Cleanup **********************************/
+	
+
+
+	/**
+	 * Remove all the JSON files in the cache.
+	 */
+	public static void removeAllJSONFiles() {
+		File cacheDirectory = new File(TheLifeConfiguration.getCacheDirectory());
+		
+		File cacheFiles[] = cacheDirectory.listFiles( new FilenameFilter() { 
+			
+			@Override
+			public boolean accept(File dir, String filename) {
+				// JSON files
+				return filename.endsWith(".json") || filename.endsWith(".jpeg_");
+			}
+			
+		});
+		
+		for (File f:cacheFiles) {
+			boolean wasDeleted = f.delete();
+			if (!wasDeleted) {
+				Log.e("removeAllJSONFiles", "Unable to delete cache file " + f.getName());
+			}
+		}
+
+	}
+	
 
 }

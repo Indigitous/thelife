@@ -2,7 +2,9 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -136,12 +138,33 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		}
 	}	
 	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
+		} else if (item.getItemId() == R.id.action_logout) {
+			
+			new AlertDialog.Builder(this)
+				.setMessage(getResources().getString(R.string.logout_prompt))
+				.setNegativeButton(R.string.cancel, null)
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+						// log out of app
+						TheLifeConfiguration.getOwnerDS().setUser(null);
+						
+						// go to main screen
+						Intent intent = new Intent("com.p2c.thelife.Initial");
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(intent);	
+						
+					}
+				}).show();
 		}
 		
 		return true;

@@ -44,7 +44,7 @@ public class TestActivity extends Activity implements OnEditorActionListener {
 			TheLifeConfiguration.getOwnerDS().setUser(null);
 			
 			// go to main screen
-			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
+			Intent intent = new Intent("com.p2c.thelife.Initial");
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);				
 		}

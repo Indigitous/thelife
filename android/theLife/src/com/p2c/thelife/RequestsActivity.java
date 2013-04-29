@@ -7,21 +7,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.RequestModel;
 
 
 /**
  * Requests are automatically polled by the RequestsPoller class.
  */
-public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestDialog.Listener {
+public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, DSRefreshedListener, RequestDialog.Listener {
 	
 	private static final String TAG = "RequestsActivity";
 	
 	private ListView m_listView = null;
-	private RequestsAdapter m_adapter = null;	
+	private RequestsAdapter m_adapter = null;
+	private TextView m_noRequestsView = null;	
 	private RequestModel m_request = null;
 	private ProgressDialog m_progressDialog = null;	
 	
@@ -34,6 +37,10 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		m_listView = (ListView)findViewById(R.id.activity_requests_list);
 		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
+		
+		// show a message if there are no requests
+		m_noRequestsView = (TextView)findViewById(R.id.requests_none);
+		m_noRequestsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);				
 	}
 
 	
@@ -84,6 +91,13 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	public RequestModel getSelectedRequest() {
 		return m_request;
 	}
+	
+	
+	@Override
+	public void notifyDSRefreshed(String indicator) {
+		m_noRequestsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);								
+	}	
+	
 
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {

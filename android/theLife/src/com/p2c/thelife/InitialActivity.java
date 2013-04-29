@@ -1,9 +1,11 @@
 package com.p2c.thelife;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+
+import com.p2c.thelife.model.AbstractDS;
 
 public class InitialActivity extends Activity {
 
@@ -18,7 +20,11 @@ public class InitialActivity extends Activity {
 			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
 			startActivity(intent);
 		} else {
-			// not authenticated user, so login or register
+			// not authenticated user, so first delete the cache files
+			BitmapCacheHandler.removeAllBitmaps();
+			AbstractDS.removeAllJSONFiles();
+			
+			// login or register
 			Intent intent = new Intent("com.p2c.thelife.Setup");
 			startActivity(intent);			
 		}

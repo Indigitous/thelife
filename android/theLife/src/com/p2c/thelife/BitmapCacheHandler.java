@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -47,7 +48,7 @@ public class BitmapCacheHandler extends Handler {
 	 */
 	public static String generateFullCacheFileName(String dataType, int id, String imageType) {
 		imageType = "image"; // TODO only support image not thumbnail for now
-		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + imageType + ".jpg";
+		return TheLifeConfiguration.getCacheDirectory() + dataType + String.valueOf(id) + imageType + ".jpeg";
 	}
 	
 	
@@ -173,6 +174,31 @@ public class BitmapCacheHandler extends Handler {
 		BitmapCacheHandler handler = TheLifeConfiguration.getBitmapCacheHandler();					
 		Message message = handler.obtainMessage(OP_GET_USER_IMAGE_FROM_SERVER, TheLifeConfiguration.getOwnerDS().getUserId(), 0);
 		handler.sendMessage(message);
+	}
+	
+	
+	/**
+	 * Remove all the bitmaps in the cache.
+	 */
+	public static void removeAllBitmaps() {
+		File cacheDirectory = new File(TheLifeConfiguration.getCacheDirectory());
+		
+		File cacheFiles[] = cacheDirectory.listFiles( new FilenameFilter() { 
+			
+			@Override
+			public boolean accept(File dir, String filename) {
+				// JPEG files and temporary JPEG files
+				return filename.endsWith(".jpeg") || filename.endsWith(".jpeg_");
+			}
+			
+		});
+		
+		for (File f:cacheFiles) {
+			boolean wasDeleted = f.delete();
+			if (!wasDeleted) {
+				Log.e(TAG, "Unable to delete cache file " + f.getName());		
+			}
+		}
 	}
 	
 	
