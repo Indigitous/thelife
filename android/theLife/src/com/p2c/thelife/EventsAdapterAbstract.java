@@ -73,6 +73,10 @@ public abstract class EventsAdapterAbstract
 			pledgeView.setChecked(event.hasPledged);
 			if (pledgeView.isChecked()) {
 				pledgeView.setClickable(false);
+				pledgeView.setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.pray_active), null, null, null);
+			} else {
+				pledgeView.setClickable(true);
+				pledgeView.setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.pray_normal), null, null, null);				
 			}
 			
 			peoplePrayedView.setVisibility(View.VISIBLE);
