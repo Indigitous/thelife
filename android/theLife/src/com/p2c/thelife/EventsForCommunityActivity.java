@@ -145,10 +145,17 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	
 	
 	/**
-	 * User has chosen to pledge prayer for the event.
+	 * Owner has pledged to pray for the event.
 	 */
 	public void pledgeToPray(View view) {
+		
+		// update the event immediately (optimistically expect the event will succeed at server)
 		EventModel event = (EventModel)view.getTag();
+		event.hasPledged = true;
+		event.pledgeCount++;
+		
+		// redisplay
+		m_adapter.notifyDataSetChanged();
 		
 		// send the pledge to the server
 		Server server = new Server(this);

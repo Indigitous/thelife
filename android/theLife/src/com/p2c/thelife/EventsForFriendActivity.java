@@ -1,25 +1,28 @@
 package com.p2c.thelife;
 
+import org.json.JSONObject;
+
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.FriendModel;
-import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.Server.ServerListener;
+import com.p2c.thelife.model.EventModel;
+import com.p2c.thelife.model.FriendModel;
+import com.p2c.thelife.model.EventsDS;
 
 /**
  * This activity uses polling to get new events into the data store and display while the activity is visible.
  * @author clarence
  *
  */
-public class EventsForFriendActivity extends SlidingMenuPollingActivity implements DSRefreshedListener {
+public class EventsForFriendActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener, ServerListener {
 	
 	private static final String TAG = "EventsForFriendActivity";
 	
@@ -155,6 +158,36 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		}
 		
 		return true;
-	}		
+	}
+	
+	
+	/**
+	 * Owner has pledged to pray for the event.
+	 */
+	public void pledgeToPray(View view) {
+		
+		// update the event immediately (optimistically expect the event will succeed at server)
+		EventModel event = (EventModel)view.getTag();
+		event.hasPledged = true;
+		event.pledgeCount++;
+		
+		// redisplay
+		m_adapter.notifyDataSetChanged();
+		
+		// send the pledge to the server
+		Server server = new Server(this);
+		server.pledgeToPray(event.id, this, "pledgeToPray");
+	}
+	
+	
+	@Override
+	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
+		
+		if (!Utilities.isSuccessfulHttpCode(httpCode)) {			
+			new AlertDialog.Builder(this)
+				.setMessage(getResources().getString(R.string.pledge_error_from_server))
+				.setNegativeButton(R.string.cancel, null).show(); 
+		}		
+	}	
 
 }

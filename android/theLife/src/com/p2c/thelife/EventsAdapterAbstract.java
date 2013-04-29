@@ -113,6 +113,7 @@ public abstract class EventsAdapterAbstract
 		notifyDataSetChanged();
 	}
 	
+	
 	@Override
 	public void notifyFriendBitmap(int friendId) {
 		// redisplay
