@@ -94,8 +94,8 @@ public class EventsDS extends AbstractDS<EventModel> {
 			Log.d(TAG, "ADD ANOTHER JSON OBJECT EVENT " + json);			
 
 			// look for a pledge count event in the event stream -- it has a nonzero target event_id
-			if (json.optInt("event_id", 0) != 0) {
-				int event_id = json.optInt("event_id");
+			if (json.optInt("target_event_id", 0) != 0) {
+				int event_id = json.optInt("target_event_id");
 				int pledge_count = json.optInt("pledge_count");
 				
 				// The pledge count object gives a new value for the pledge count.
