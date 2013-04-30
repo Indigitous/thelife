@@ -21,6 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/textView1"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="@drawable/round_gray"
         android:onClick="finishNewUserHelp"
         android:text="@string/done" />
 
