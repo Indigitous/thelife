@@ -217,7 +217,6 @@ public class TheLifeConfiguration {
 	}
 	
 	public static void setBitmapCacheHandler(BitmapCacheHandler bitmapCacheHandler) {
-System.out.println("SET BITMAP CACHE HANDLER WITH " + bitmapCacheHandler);
 		m_bitmapCacheHandler = bitmapCacheHandler;
 	}	
 	

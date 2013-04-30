@@ -1,5 +1,8 @@
 package com.p2c.thelife;
 import android.app.Application;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.p2c.thelife.model.CategoriesDS;
 import com.p2c.thelife.model.DeedsDS;
@@ -56,6 +59,31 @@ public class TheLifeApplication extends Application {
 			new RequestsPoller(TheLifeConfiguration.getRequestsDS(),
 							   TheLifeConfiguration.REFRESH_REQUESTS_FIRST_DELTA,
 							   TheLifeConfiguration.REFRESH_REQUESTS_DELTA));
+		
+		// start the bitmap notifier and remember it (which is for the UI thread)
+		BitmapNotifierHandler notifierHandler = new BitmapNotifierHandler();
+		TheLifeConfiguration.setBitmapNotifier(notifierHandler);
+
+		// start the bitmap cache handler (which is for the background thread)
+		BitmapCacheHandlerStarter starter = new BitmapCacheHandlerStarter("bitmapcachehandlerstarter");
+		starter.start();
+				
+		// make sure the handler is going, this call is supposed to block. 
+		starter.getLooper();
+		
+		// really make sure the handler is going
+		int i = 0;
+		while (starter.getBitmapCacheHandler() == null && i < 20) {
+			try { Thread.sleep(200); } catch (Exception e) { }
+		}
+		
+		// error message if the handler couldn't start
+		if (starter.getBitmapCacheHandler() == null) {
+			Utilities.showErrorToast(this, "Unable to initialize Bitmap Cache Handler", Toast.LENGTH_LONG);
+		}
+		
+		// remember the handler 
+		TheLifeConfiguration.setBitmapCacheHandler(starter.getBitmapCacheHandler());
 	}
 
 }
