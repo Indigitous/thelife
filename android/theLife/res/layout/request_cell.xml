@@ -11,7 +11,7 @@
        android:layout_width="60dp"
        android:layout_height="60dp"
        android:paddingLeft="0dp"        
-       android:paddingRight="0dp"
+       android:paddingRight="4dp"
        android:src="@drawable/ic_launcher" />
          
    <TextView
@@ -19,6 +19,8 @@
        android:layout_width="0dp"
        android:layout_height="wrap_content"
        android:layout_weight="1"
+       android:layout_gravity="center_vertical"
+       android:textAppearance="?android:attr/textAppearanceMedium"       
        android:text="Placeholder Text In Here" />
 			  
 

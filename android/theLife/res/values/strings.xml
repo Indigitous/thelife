@@ -7,6 +7,7 @@
     <string name="action_pledge">Prayers</string>
     <string name="action_search">Search</string>
     <string name="action_new">New</string>
+    <string name="action_logout">Log out</string>
     <string name="hello_world">Hello world!</string>
     <string name="threshold_unknown_short">Unknown</string>
     <string name="threshold_unknown_medium">Unknown</string>
@@ -74,8 +75,8 @@
     <string name="request_invite_prompt">Do you want to join this group?</string>
     <string name="joining_group">Joining group</string>
     <string name="adding_new_member">Adding new member to group</string>
-    <string name="membership_request_description"><b>%1$s</b> wants to join your group <b>%2$s</b>.</string>
-    <string name="invite_request_description"><b>%1$s</b> invites you to join group <b>%1$s</b>.</string>
+    <string name="membership_request_description">&lt;b>%1$s&lt;/b> wants to join your group &lt;b>%2$s&lt;/b>.</string>
+    <string name="invite_request_description">&lt;b>%1$s&lt;/b> invites you to join group &lt;b>%1$s&lt;/b>.</string>
     <string name="rejecting_request">Rejecting request</string>
     <string name="creating_new_event">Creating new event</string>
     <string name="first_name">First Name</string>
@@ -121,11 +122,13 @@
     <string name="processing_image">Processing image</string>
     <string name="friend_import_error">Error importing friend</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="logout_prompt">Do you want to log out?</string>
     
     <string name="no_community_events">There are no community events to show.</string>
     <string name="no_friend_events">There are no events to show for this friend.</string>
     <string name="no_groups">There are no groups to show.</string>
     <string name="no_friends">There are no friends to show.</string>
+    <string name="no_requests">There are no notifications to show.</string>
     
     <string name="null_category_name">Other</string>
     <string name="null_category_description">Other activities</string>

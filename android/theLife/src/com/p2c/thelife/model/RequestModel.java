@@ -76,7 +76,7 @@ public class RequestModel extends AbstractModel {
 			}
 		}
 		if (paramUserName == null) {
-			paramUserName = "";
+			paramUserName = "???";
 		}
 		
 		// friend name parameter

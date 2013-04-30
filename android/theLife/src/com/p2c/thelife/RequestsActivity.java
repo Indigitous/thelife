@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -11,14 +13,14 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.RequestModel;
+import com.p2c.thelife.model.RequestsDS;
 
 
 /**
  * Requests are automatically polled by the RequestsPoller class.
  */
-public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, DSRefreshedListener, RequestDialog.Listener {
+public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestsDS.DSChangedListener, RequestDialog.Listener {
 	
 	private static final String TAG = "RequestsActivity";
 	
@@ -60,6 +62,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// set the data store listener
 		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_adapter);
+		TheLifeConfiguration.getRequestsDS().addDSChangedListener(this);		
 		
 		// set the bitmap listener
 		TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);
@@ -74,6 +77,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// remove the data store listener
 		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_adapter);
+		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(this);		
 		
 		// remove the bitmap listener
 		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);		
@@ -94,7 +98,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	
 	
 	@Override
-	public void notifyDSRefreshed(String indicator) {
+	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
 		m_noRequestsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);								
 	}	
 	
