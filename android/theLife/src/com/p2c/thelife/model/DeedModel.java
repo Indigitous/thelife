@@ -23,8 +23,6 @@ public class DeedModel extends AbstractModel {
 	
 	private static final String TAG = "DeedModel";
 	
-	// this deed id is reserved for the change threshold deed
-	private static final int CHANGE_THRESHOLD_ID = 1;
 	
 	public String 	title;
 	public String	summary;
