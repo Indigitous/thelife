@@ -143,6 +143,15 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	}	
 	
 	
+	@Override
+	public void onBackPressed() {
+		// Because the previous activity, SetupActivity, has noHistory=true, 
+		// support the back arrow in code here.
+		Intent intent = new Intent("com.p2c.thelife.Setup");
+		startActivity(intent);
+	}
+	
+	
 	/**
 	 * Update the image on the server.
 	 * @param bitmap
@@ -165,7 +174,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		TheLifeConfiguration.getOwnerDS().setToken(token);
 		
 		// refresh data stores
-		fullRefresh();
+		fullRefresh(true);
 	}
 
 }

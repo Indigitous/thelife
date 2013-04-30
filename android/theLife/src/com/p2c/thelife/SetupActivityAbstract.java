@@ -17,6 +17,7 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 	private static final String TAG = "BaseSetupActivity";
 	
 	protected ProgressDialog m_progressDialog = null;
+	protected boolean m_isNewUser = false;
 
 	
 	protected void closeProgressBar() {
@@ -28,9 +29,12 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 	
 	
 	/**
-	 * Full refresh of the data stores.
+	 * Full refresh of the data stores and on to the help or main screen.
 	 */
-	protected void fullRefresh() {	
+	protected void fullRefresh(boolean isNewUser) {	
+		
+		m_isNewUser = isNewUser;
+		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}
@@ -47,6 +51,8 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 	/**
 	 * Chain together the data stores' refresh callbacks so that all data stores are refreshed sequentially.
 	 * Not pretty but it works.
+	 * 
+	 * Then move on to the help or main screen.
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
@@ -75,10 +81,11 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 			if (m_progressDialog != null) {
 				m_progressDialog.dismiss();
 				
-				// go to the main screen
-				Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
+				// first time user sees the introduction help
+				Intent intent = new Intent(m_isNewUser ? "com.p2c.thelife.NewUserHelp" : "com.p2c.thelife.EventsForCommunity");
+				
 				startActivity(intent);
-				finish(); // keep this activity off the back stack (out of history)		
+				finish(); // keep this activity off the back stack (out of history)				
 			}					
 		} else {
 			Log.wtf(TAG, "unknown refresh indicator " + indicator);

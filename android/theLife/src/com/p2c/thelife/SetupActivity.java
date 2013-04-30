@@ -74,7 +74,7 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 						TheLifeConfiguration.getOwnerDS().setToken(token);
 						
 						// refresh data stores							
-						fullRefresh();
+						fullRefresh(false);
 						return;
 					}
 				}

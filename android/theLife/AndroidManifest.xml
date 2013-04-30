@@ -25,21 +25,22 @@
         android:icon="@drawable/ic_launcher"
         android:label="theLife"
         android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
-        
         <activity
             android:name="com.p2c.thelife.InitialActivity"
             android:label="theLife"
-            android:screenOrientation="portrait"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.p2c.thelife.Initial" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>        
+        </activity>
         <activity
             android:name="com.p2c.thelife.EventsForCommunityActivity"
             android:label="@string/title_community"
@@ -171,8 +172,8 @@
         <activity
             android:name="com.p2c.thelife.SetupActivity"
             android:label="@string/title_setup"
-            android:screenOrientation="portrait"
-             >
+            android:noHistory="true"            
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Setup" />
 
@@ -182,8 +183,8 @@
         <activity
             android:name="com.p2c.thelife.SetupRegisterActivity"
             android:label="@string/title_register"
-            android:screenOrientation="portrait"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.SetupRegister" />
 
@@ -212,10 +213,20 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.TestActivity"
-            android:label="@string/title_activity_test"            
+            android:label="@string/title_activity_test"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Test" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.NewUserHelpActivity"
+            android:label="@string/title_new_user_help"            
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.NewUserHelp" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
