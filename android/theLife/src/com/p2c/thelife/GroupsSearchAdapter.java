@@ -100,7 +100,11 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnE
 					for (int i = 0; i < jsonArray.length(); i++) {
 						JSONObject json = jsonArray.getJSONObject(i);
 						GroupModel group = GroupModel.fromJSON(json, false);
-						add(group);
+						
+						// don't show the group if the owner already belongs to it
+						if (!TheLifeConfiguration.getGroupsDS().findAll().contains(group)) {
+							add(group);
+						}
 					}
 				} catch (Exception e) {
 					Log.wtf(TAG, "notifyServerResponseAvailable()", e);
