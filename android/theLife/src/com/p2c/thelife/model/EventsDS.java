@@ -64,8 +64,11 @@ public class EventsDS extends AbstractDS<EventModel> {
 	 */
 	public void refreshAfter(String indicator) {
 		
-		// newest event is at the start
-		EventModel newestEvent = m_data.get(0);
+		EventModel newestEvent = null;
+		if (m_data.size() > 0) {
+			// newest event is at the start			
+			newestEvent = m_data.get(0);
+		}
 		
 		// refresh after the newest event, if there is one
 		if (newestEvent != null) {
