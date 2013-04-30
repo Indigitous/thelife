@@ -38,7 +38,8 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 		}
 		
 		TheLifeConfiguration.getRequestsPoller().start();
-		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);		
+		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);
+		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_support);		
 	}
 	
 	
@@ -47,7 +48,8 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 		super.onPause();
 		
 		TheLifeConfiguration.getRequestsPoller().stop();
-		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);				
+		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);
+		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_support);		
 	}		
 
 }

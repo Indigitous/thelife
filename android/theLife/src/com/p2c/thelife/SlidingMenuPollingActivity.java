@@ -38,6 +38,7 @@ public class SlidingMenuPollingActivity extends SherlockActivity {
 		
 		TheLifeConfiguration.getRequestsPoller().start();
 		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);
+		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_support);
 	}
 	
 	
@@ -46,7 +47,8 @@ public class SlidingMenuPollingActivity extends SherlockActivity {
 		super.onPause();
 		
 		TheLifeConfiguration.getRequestsPoller().stop();
-		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);		
+		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);
+		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_support);		
 	}	
 
 }

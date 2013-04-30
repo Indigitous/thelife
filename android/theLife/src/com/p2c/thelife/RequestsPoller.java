@@ -87,9 +87,7 @@ public class RequestsPoller implements DSRefreshedListener {
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
-			
-// Log.e(TAG, "FINISHED REQUEST POLL!");
-			
+						
 		// poll again if the app is still on screen
 		if (m_isAppVisible) {
 			m_isPolling = true;

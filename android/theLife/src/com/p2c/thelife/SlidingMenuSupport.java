@@ -1,5 +1,7 @@
 package com.p2c.thelife;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
@@ -9,9 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.p2c.thelife.model.UserModel;
 import com.p2c.thelife.model.OwnerDS;
+import com.p2c.thelife.model.UserModel;
 import com.slidingmenu.lib.SlidingMenu;
+import com.p2c.thelife.model.RequestsDS;
 
 /**
  * Support for SlidingMenu. 
@@ -19,7 +22,7 @@ import com.slidingmenu.lib.SlidingMenu;
  * @author clarence
  *
  */ 
-public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
+public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS.DSChangedListener {
 	
 	protected Activity    m_activity;
 	protected SlidingMenu m_slidingMenu;
@@ -61,6 +64,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
 		});
         
         showOwner();
+        showNotificationNumber();
         
         // add the commands to the sliding menu using an adapter
         ListView commandsView = (ListView)m_appMenu.findViewById(R.id.app_menu_command_list);
@@ -120,7 +124,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
 	@Override
 	public void notifyOwnerDSChanged() {
 		showOwner();
-	}		
+	}
 	
 	
 	private void showOwner() {
@@ -132,4 +136,25 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener {
 	        textView.setText(TheLifeConfiguration.getOwnerDS().getUser().getFullName());
         }		
 	}
+	
+	
+	/**
+	 * Change in the Requests data store.
+	 */
+	@Override
+	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {
+		showNotificationNumber();
+	}	
+	
+	
+	private void showNotificationNumber() {
+        if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
+	        TextView textViewNum = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_number);
+	        textViewNum.setText(String.valueOf(TheLifeConfiguration.getRequestsDS().count()));
+	        TextView textViewLabel = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_label);
+	        textViewLabel.setText(TheLifeConfiguration.getRequestsDS().count() == 1 ? R.string.notification_singular : R.string.notification_plural);	        
+        }	
+	}
+
+
 }
