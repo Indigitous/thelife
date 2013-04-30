@@ -31,10 +31,12 @@ public class DeedModel extends AbstractModel {
 	public String 	description;
 	public Set<FriendModel.Threshold> thresholds;
 	public int 		priority;
-	public int		category_id;	
+	public int		category_id;
+	public boolean  hasThreshold;
 	
 	
-	public DeedModel(int deed_id, String title, String summary, String description, Set<FriendModel.Threshold> thresholds, int priority, int category_id) {
+	public DeedModel(int deed_id, String title, String summary, String description, 
+		Set<FriendModel.Threshold> thresholds, int priority, int category_id, boolean hasThreshold) {
 		super(deed_id);
 		this.title = title;
 		this.summary = summary;
@@ -42,6 +44,7 @@ public class DeedModel extends AbstractModel {
 		this.thresholds = thresholds;
 		this.priority = priority;
 		this.category_id = category_id;
+		this.hasThreshold = hasThreshold;
 	}	
 	
 
@@ -62,11 +65,6 @@ public class DeedModel extends AbstractModel {
 	 */
 	public boolean isGenerallyApplicable() {
 		return thresholds.size() == 0;
-	}
-	
-	
-	public boolean isThresholdChange() {
-		return id == CHANGE_THRESHOLD_ID;
 	}
 	
 	
@@ -97,7 +95,8 @@ public class DeedModel extends AbstractModel {
 			json.getString("full_description"),
 			thresholds,
 			json.getInt("priority"),
-			json.getInt("category_id")
+			json.getInt("category_id"),
+			json.optBoolean("has_threshold", false)
 		);
 	}
 	

@@ -37,7 +37,9 @@ public class RequestModel extends AbstractModel {
 		super(request_id);
 		
 		this.user_id = user_id;
+		this.userName = userName;
 		this.group_id = group_id;
+		this.groupName = groupName;
 		this.type = type;
 		this.email = email;		
 		this.sms = sms;

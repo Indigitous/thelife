@@ -30,7 +30,7 @@ public class EventCreateDialog extends ServerAccessDialogAbstract {
 		final View view = inflater.inflate(R.layout.dialog_change_threshold, null);
 		
 		// set the message and content of the alert
-		if (deed.isThresholdChange()) {
+		if (deed.hasThreshold) {
 			alertBuilder.setMessage(R.string.change_threshold);
 			alertBuilder.setView(view);			
 		} else {
@@ -70,7 +70,7 @@ public class EventCreateDialog extends ServerAccessDialogAbstract {
 		
 		FriendModel.Threshold threshold = null;
 		
-		if (deed.isThresholdChange()) {
+		if (deed.hasThreshold) {
 			Spinner thresholdField = (Spinner)view.findViewById(R.id.change_threshold);
 			int thresholdIndex = thresholdField.getSelectedItemPosition();
 			threshold = FriendModel.thresholdValues[thresholdIndex];
