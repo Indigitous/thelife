@@ -1,7 +1,5 @@
 package com.p2c.thelife;
 import android.app.Application;
-import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.p2c.thelife.model.CategoriesDS;
