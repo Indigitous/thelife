@@ -93,7 +93,7 @@ public class DeedModel extends AbstractModel {
 			json.getString("full_description"),
 			thresholds,
 			json.getInt("priority"),
-			json.getInt("category_id"),
+			json.optInt("category_id", 0),
 			json.optBoolean("has_threshold", false)
 		);
 	}

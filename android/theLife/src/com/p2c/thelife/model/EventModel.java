@@ -119,7 +119,6 @@ public class EventModel extends AbstractModel {
 		
 		Log.d(TAG, "IN EVENT MODEL from JSON");
 		
-		
 		// create the event
 		return new EventModel(
 			resources,
