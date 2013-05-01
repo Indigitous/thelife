@@ -95,7 +95,6 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 			Toast.makeText(this, "Groups Help", Toast.LENGTH_SHORT).show();
 		} else if (item.getItemId() == R.id.action_search) {
 			
-//			boolean proceeded = onSearchRequested(); // Android built-in search support: does nothing, don't know why
 			Intent intent = new Intent("com.p2c.thelife.GroupsSearch");
 			startActivity(intent);
 			
