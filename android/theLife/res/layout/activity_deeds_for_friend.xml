@@ -32,7 +32,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:drawSelectorOnTop="true"
-	    android:groupIndicator="@drawable/action_arrow_left"
+	    android:groupIndicator="@drawable/action_arrow_right"
 	    android:paddingTop="10dp" />
 
 </LinearLayout>
