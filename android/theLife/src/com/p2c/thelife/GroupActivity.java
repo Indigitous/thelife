@@ -101,7 +101,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			// place holder
+			// place holder TODO
 		} else if (item.getItemId() == R.id.action_new) {
 			if (m_group != null) {
 				UserInviteDialog dialog = new UserInviteDialog();
