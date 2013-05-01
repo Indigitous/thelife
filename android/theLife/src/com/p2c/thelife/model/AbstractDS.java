@@ -60,6 +60,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected String m_refreshSettingTimestampKey = null;
 	protected String m_refreshURLPath = null; 
 	protected long m_refreshDelta = 0;						// in seconds
+	protected int m_numRetries = 0;
 	
 	private boolean m_connectionTimeout = false;
 	
@@ -201,17 +202,8 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * @param refreshIndicator
 	 * @param max
 	 */
-	public void forceRefresh(String refreshIndicator, int max) {
-		
-		if (!m_isRefreshing) {
-			
-			// force a refresh by erasing the timestamp indicating previous refresh time
-			SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
-			system_settings_editor.putLong(m_refreshSettingTimestampKey, 0L);
-			system_settings_editor.commit();			
-			
-			refresh(refreshIndicator, max, null, MODE_REPLACE);
-		}
+	public void forceRefresh(String refreshIndicator, int max) {			
+		refresh(refreshIndicator, true, 2, max, null, MODE_REPLACE);
 	}
 		
 	
@@ -220,7 +212,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * @param refreshIndicator
 	 */
 	public void refresh(String refreshIndicator) {
-		refresh(refreshIndicator, 0, null, MODE_REPLACE);
+		refresh(refreshIndicator, false, 0, 0, null, MODE_REPLACE);
 	}
 	
 	
@@ -230,21 +222,32 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * @param max
 	 */
 	public void refresh(String refreshIndicator, int max) {
-		refresh(refreshIndicator, max, null, MODE_REPLACE);
+		refresh(refreshIndicator, false, 0, max, null, MODE_REPLACE);
 	}
 	
 	
 	/**
 	 * Refresh the model objects cache, reading in up to the maximum number of most recent records according to the given parameter.
-	 * @param 	params			in URL encoded form, example: "&after=12345"
-	 * @param	newDataMode 	either MODE_REPLACE, MODE_PREPEND or MODE_APPEND, what to do with the data that is read in, compared to any existing data
-	 * If a refresh was done recently, this call will do nothing.
+	 * @param	refreshIndicator	passed back to the caller
+	 * @param 	force				whether or not to force a refresh
+	 * @param 	numberRetries			number of times to try if encountering a connection timeout 
+	 * @param	max					the maximum number of records to read; 0 means read all 
+	 * @param 	params				in URL encoded form, example: "&after=12345"
+	 * @param	newDataMode 		either MODE_REPLACE, MODE_PREPEND or MODE_APPEND, what to do with the data that is read in, compared to any existing data
+	 * This method looks to see the last time a refresh occurred.
 	 */
-	public void refresh(String refreshIndicator, int max, String params, int newDataMode) {
+	protected void refresh(String refreshIndicator, boolean force, int numRetries, int max, String params, int newDataMode) {
+		
+		if (force) {
+			
+			// force a refresh by erasing the timestamp indicating previous refresh time
+			SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
+			system_settings_editor.putLong(m_refreshSettingTimestampKey, 0L);
+			system_settings_editor.commit();			
+		}				
 		
 		// find when the model objects were most recently refreshed
 		long lastRefresh = TheLifeConfiguration.getSystemSettings().getLong(m_refreshSettingTimestampKey, 0);
-		Log.d(TAG, "the last refresh was " + lastRefresh);
 		
 		// TODO: for debugging
 		lastRefresh = 0;
@@ -257,7 +260,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				try {
 					m_isRefreshing = true;
 					m_refreshIndicator = refreshIndicator;
-					Log.d(TAG, "WILL NOW RUN BACKGROUND MODELS REFRESH");
+					m_numRetries = numRetries;
 					String refreshURL = Utilities.makeServerUrlString(m_refreshURLPath);
 					
 					// add on optional parameters
@@ -271,6 +274,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					m_newDataMode = newDataMode;
 					
 					// run in background thread
+					Log.d(TAG, "WILL NOW RUN BACKGROUND MODELS REFRESH");					
 					new readFromServer().execute(new URL(refreshURL));
 				} catch (MalformedURLException e) {
 					Log.e(TAG, "refresh()", e);
@@ -442,51 +446,65 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			ArrayList<T> data2 = null;
 				
 			HttpURLConnection modelsConnection = null;
-			try {			
-				Log.d(TAG, "DS READFROMSERVER with " + urls[0]);	
-				URL modelsEP = urls[0];
-				modelsConnection = (HttpURLConnection)modelsEP.openConnection();
-				modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
-				modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
+			InputStreamReader isr = null;
+			
+			// try multiple retries for connection timeouts
+			m_connectionTimeout = true;
+			for (int i = 0; i < (m_numRetries + 1) && m_connectionTimeout; i++) {
+				m_connectionTimeout = false;
 				
-				Log.d(TAG, "DS HTTP RESPONSE CODE " + modelsConnection.getResponseCode());
-
-				String jsonString = null;
-				if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {							
-					jsonString = Utilities.readBufferedStream(new InputStreamReader(modelsConnection.getInputStream()));
-				}
-				
-				if (jsonString != null) {
-					JSONArray jsonArray = new JSONArray(jsonString);					
-				
-					// add the new data models to a separate list in case of an error
-					data2 = new ArrayList<T>();
-					addModels(jsonArray, true, data2);
+				try {			
+					Log.d(TAG, i + " DS READFROMSERVER with " + urls[0]);	
+					URL modelsEP = urls[0];
+					modelsConnection = (HttpURLConnection)modelsEP.openConnection();
+					modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
+					modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 					
-					// write the new data models to disk
-					boolean success = (m_newDataMode == MODE_REPLACE) ? replaceJSONCache(jsonString) : prependJSONCache(jsonString, m_data.size(), data2.size());
-					if (success) {
-						// remember the timestamp of this successful refresh
+					Log.d(TAG, i + " DS HTTP RESPONSE CODE " + modelsConnection.getResponseCode());
+	
+					String jsonString = null;
+					if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+						isr = new InputStreamReader(modelsConnection.getInputStream());
+						jsonString = Utilities.readBufferedStream(isr);
+					}
+					
+					if (jsonString != null) {
+						JSONArray jsonArray = new JSONArray(jsonString);					
+					
+						// add the new data models to a separate list in case of an error
+						data2 = new ArrayList<T>();
+						addModels(jsonArray, true, data2);
 						
-						SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
-						system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
-						system_settings_editor.commit();
-					}					
+						// write the new data models to disk
+						boolean success = (m_newDataMode == MODE_REPLACE) ? replaceJSONCache(jsonString) : prependJSONCache(jsonString, m_data.size(), data2.size());
+						if (success) {
+							// remember the timestamp of this successful refresh
+							
+							SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
+							system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
+							system_settings_editor.commit();
+						}					
+					}
+				} catch (JSONException e) {
+					Log.wtf(TAG, "readFromServer()", e);				
+				} catch (MalformedURLException e) {
+					Log.wtf(TAG, "readFromServer()", e);
+				} catch (java.net.SocketTimeoutException e) {
+					m_connectionTimeout = true;
+					Log.e(TAG, "readFromServer()", e);
+				} catch (IOException e) {
+					Log.e(TAG, "readFromServer()", e);				
+				} finally {
+					if (isr != null) {
+						try { isr.close(); } catch (Exception e) { }
+						isr = null;
+					}
+					if (modelsConnection != null) {
+						modelsConnection.disconnect();
+						modelsConnection = null;
+					}
 				}
-			} catch (JSONException e) {
-				Log.wtf(TAG, "readFromServer()", e);				
-			} catch (MalformedURLException e) {
-				Log.wtf(TAG, "readFromServer()", e);
-} catch (java.net.SocketTimeoutException e) {
-m_connectionTimeout = true;
-Log.e(TAG, "readFromServer()", e);
-			} catch (IOException e) {
-				Log.e(TAG, "readFromServer()", e);				
-			} finally {
-				if (modelsConnection != null) {
-					modelsConnection.disconnect();
-				}
-			}	
+			}
 			
 			return data2;
 		}
@@ -613,6 +631,5 @@ Log.e(TAG, "readFromServer()", e);
 		}
 
 	}
-	
 
 }
