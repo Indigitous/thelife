@@ -37,6 +37,7 @@ public class TheLifeConfiguration {
 	
 	public static final int HTTP_CONNECTION_TIMEOUT = 10000; // in millis
 	public static final int HTTP_READ_TIMEOUT = 15000;  // in millis
+	public static final int HTTP_SERVER_CONNECTION_TIMEOUT = 5000; // in millis
 	
 	// refresh deltas: time before a refresh
 	public static final long REFRESH_DEEDS_DELTA = 60 * 60 * 1000; // 1 hour in millis

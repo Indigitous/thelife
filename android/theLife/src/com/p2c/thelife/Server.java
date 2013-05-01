@@ -490,92 +490,98 @@ public class Server {
 			AndroidHttpClient httpClient = null;
 			HttpEntity httpEntity = null;
 			ByteArrayOutputStream outStream = null;
-			try {			
-				Log.d(TAG, "STARTING ServerCall " + m_httpRequest.getMethod() + " " + urls[0]);	
-								
-				httpClient = AndroidHttpClient.newInstance(m_indicator);
-				httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TheLifeConfiguration.HTTP_CONNECTION_TIMEOUT);
-				httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TheLifeConfiguration.HTTP_READ_TIMEOUT);
-				
-				HttpResponse httpResponse = httpClient.execute(m_httpRequest);
-				m_httpCode = httpResponse.getStatusLine().getStatusCode();
-				
-				System.out.println("HERE IS THE STATUS CODE " + m_httpCode);
-				
-				String jsonString = null;
-				httpEntity = httpResponse.getEntity();
-				
-				// make sure there is a response to read
-				if (httpEntity != null) {
-					outStream = new ByteArrayOutputStream();						
-					httpEntity.writeTo(outStream);		
-					jsonString = outStream.toString("UTF-8");
-				}
-				
-				Log.d(TAG, "GOT THE SERVER CALL RESPONSE STRING " + jsonString);					
-				
-				if (jsonString != null) {
-					jsonString = jsonString.trim();
+			
+			// try multiple retries for connection timeouts
+			m_connectionTimeout = true;
+			for (int i = 0; i < 4 && m_connectionTimeout; i++) {
+				m_connectionTimeout = false;
+				try {			
+					Log.d(TAG, i + " STARTING ServerCall " + m_httpRequest.getMethod() + " " + urls[0]);
+									
+					httpClient = AndroidHttpClient.newInstance(m_indicator);
+					httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
+					httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TheLifeConfiguration.HTTP_READ_TIMEOUT);
 					
-					// look for the JSON reply value
-					if (jsonString.length() > 0) {
-						// if the result is a JSONArray, wrap it inside a JSONObject called "a"
-						if (jsonString.charAt(0) == '[') {
-							JSONArray jsonArray = new JSONArray(jsonString);
-							jsonObject = new JSONObject();
-							jsonObject.put("a",  jsonArray);
-						} else {
-							jsonObject = new JSONObject(jsonString);
-							
-							// look for an error
-							JSONObject errorObject = jsonObject.optJSONObject("errors");
-							if (errorObject != null) {
-								// there is an error, so build a string from the JSON
-								JSONArray names = errorObject.names();
-								if (names.length() > 0) {
-									String errorKey = (String)names.get(0);
-									m_errorString = errorKey + " - ";
-									JSONArray jsonArrayErrors = errorObject.optJSONArray(errorKey);
-									jsonArrayErrors.get(0);
-									if (jsonArrayErrors.length() > 0) {
-										m_errorString += jsonArrayErrors.getString(0);
+					HttpResponse httpResponse = httpClient.execute(m_httpRequest);
+					m_httpCode = httpResponse.getStatusLine().getStatusCode();
+					
+					System.out.println("HERE IS THE STATUS CODE " + m_httpCode);
+					
+					String jsonString = null;
+					httpEntity = httpResponse.getEntity();
+					
+					// make sure there is a response to read
+					if (httpEntity != null) {
+						outStream = new ByteArrayOutputStream();						
+						httpEntity.writeTo(outStream);		
+						jsonString = outStream.toString("UTF-8");
+					}
+					
+					Log.d(TAG, "GOT THE SERVER CALL RESPONSE STRING " + jsonString);					
+					
+					if (jsonString != null) {
+						jsonString = jsonString.trim();
+						
+						// look for the JSON reply value
+						if (jsonString.length() > 0) {
+							// if the result is a JSONArray, wrap it inside a JSONObject called "a"
+							if (jsonString.charAt(0) == '[') {
+								JSONArray jsonArray = new JSONArray(jsonString);
+								jsonObject = new JSONObject();
+								jsonObject.put("a",  jsonArray);
+							} else {
+								jsonObject = new JSONObject(jsonString);
+								
+								// look for an error
+								JSONObject errorObject = jsonObject.optJSONObject("errors");
+								if (errorObject != null) {
+									// there is an error, so build a string from the JSON
+									JSONArray names = errorObject.names();
+									if (names.length() > 0) {
+										String errorKey = (String)names.get(0);
+										m_errorString = errorKey + " - ";
+										JSONArray jsonArrayErrors = errorObject.optJSONArray(errorKey);
+										jsonArrayErrors.get(0);
+										if (jsonArrayErrors.length() > 0) {
+											m_errorString += jsonArrayErrors.getString(0);
+										}
 									}
 								}
 							}
 						}
+						
+	
 					}
-					
-
+				} catch (JSONException e) {
+					Log.wtf(TAG, "ServerCall.doInBackground()", e);				
+				} catch (MalformedURLException e) {
+					Log.wtf(TAG, "ServerCall().doInBackground", e);
+				} catch (org.apache.http.conn.ConnectTimeoutException e) {
+					m_connectionTimeout = true;
+					Log.e(TAG, "ServerCall().doInBackground", e);
+				} catch (IOException e) {
+					Log.e(TAG, "ServerCall().doInBackground", e);
+				} catch (Exception e) {
+					Log.e(TAG, "ServerCall().doInBackground", e);
+				} finally {
+					if (outStream != null) {
+						try { outStream.close(); } catch (Exception e) { }
+						outStream = null;
+					}
+					if (httpEntity != null) {
+						try { httpEntity.consumeContent(); } catch (Exception e) { }
+						httpEntity = null;
+					}
+					if (httpClient != null) {
+						
+						// from the Apache doc; may help connection timeout problems?
+						httpClient.getConnectionManager().closeExpiredConnections();
+						
+						httpClient.close();
+						httpClient = null;
+					}				
 				}
-			} catch (JSONException e) {
-				Log.wtf(TAG, "ServerCall.doInBackground()", e);				
-			} catch (MalformedURLException e) {
-				Log.wtf(TAG, "ServerCall().doInBackground", e);
-			} catch (org.apache.http.conn.ConnectTimeoutException e) {
-				m_connectionTimeout = true;
-				Log.e(TAG, "ServerCall().doInBackground", e);
-			} catch (IOException e) {
-				Log.e(TAG, "ServerCall().doInBackground", e);
-			} catch (Exception e) {
-				Log.e(TAG, "ServerCall().doInBackground", e);
-			} finally {
-				if (outStream != null) {
-					try { outStream.close(); } catch (Exception e) { }
-					outStream = null;
-				}
-				if (httpEntity != null) {
-					try { httpEntity.consumeContent(); } catch (Exception e) { }
-					httpEntity = null;
-				}
-				if (httpClient != null) {
-					
-					// from the Apache doc; may help connection timeout problems?
-					httpClient.getConnectionManager().closeExpiredConnections();
-					
-					httpClient.close();
-					httpClient = null;
-				}				
-			}	
+			}
 			
 			return jsonObject;
 		}
