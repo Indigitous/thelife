@@ -39,19 +39,19 @@ public class TheLifeConfiguration {
 	public static final int HTTP_READ_TIMEOUT = 15000;  // in millis
 	
 	// refresh deltas: time before a refresh
-	public static final long REFRESH_DEEDS_DELTA = 24 * 60 * 60 * 1000; // 1 day in millis
+	public static final long REFRESH_DEEDS_DELTA = 60 * 60 * 1000; // 1 hour in millis
 	public static final long REFRESH_CATEGORIES_DELTA = REFRESH_DEEDS_DELTA;
-	public static final long REFRESH_EVENTS_DELTA = 1 * 60 * 1000; // 5 minutes in millis
+	public static final long REFRESH_EVENTS_DELTA = 2 * 60 * 1000; // 2 minutes in millis
 	public static final long REFRESH_FRIENDS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
-	public static final long REFRESH_GROUPS_DELTA = 30 * 1000; // 1 week in millis
+	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 1000; // 1 week in millis
 	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
 	public static final long REFRESH_REQUESTS_FIRST_DELTA = 4000; // 4 seconds before first Requests refresh
-	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000; // 5 minutes in millis
+	public static final long REFRESH_REQUESTS_DELTA = 2 * 60 * 1000; // 2 minutes in millis
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
-	private static String m_serverURL = "http://75.157.251.192:3000/v1/"; // TODO debugging
-	//private static String m_serverURL = "http://srv1.thelifeapp.com:3000/v1/";
+	//private static String m_serverURL = "http://75.157.251.192:3000/v1/"; // TODO debugging
+	private static String m_serverURL = "http://srv1.thelifeapp.com/v1/";
 	
 	// stock images
 	private static Bitmap m_genericPersonImage;
