@@ -85,13 +85,7 @@ public class EventModel extends AbstractModel {
 		// user name parameter
 		String paramUserName = this.userName;
 		if (paramUserName == null) {
-			UserModel user = TheLifeConfiguration.getUsersDS().findById(user_id);
-			if (user != null) {
-				paramUserName = user.firstName;
-			}
-		}
-		if (paramUserName == null) {
-			paramUserName = "";
+			paramUserName = "???";
 		}
 		
 		// friend name parameter
@@ -103,7 +97,7 @@ public class EventModel extends AbstractModel {
 			}
 		}
 		if (paramFriendName == null) {
-			paramFriendName = "";
+			paramFriendName = "???";
 		}
 		
 		finalDescription = description.replace("$u", paramUserName);

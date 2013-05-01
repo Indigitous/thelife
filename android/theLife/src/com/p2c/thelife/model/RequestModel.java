@@ -72,12 +72,6 @@ public class RequestModel extends AbstractModel {
 		// user name parameter
 		String paramUserName = this.userName;
 		if (paramUserName == null) {
-			UserModel user = TheLifeConfiguration.getUsersDS().findById(user_id);
-			if (user != null) {
-				paramUserName = user.getFullName();
-			}
-		}
-		if (paramUserName == null) {
 			paramUserName = "???";
 		}
 		
@@ -90,7 +84,7 @@ public class RequestModel extends AbstractModel {
 			}
 		}
 		if (paramGroupName == null) {
-			paramGroupName = "";
+			paramGroupName = "???";
 		}
 		
 		if (this.type.equals(INVITE)) {

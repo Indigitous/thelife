@@ -9,7 +9,6 @@ import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
 import com.p2c.thelife.model.OwnerDS;
 import com.p2c.thelife.model.RequestsDS;
-import com.p2c.thelife.model.UsersDS;
 
 
 /**
@@ -45,7 +44,6 @@ public class TheLifeApplication extends Application {
 		TheLifeConfiguration.setOwnerDS(new OwnerDS());				
 		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext()));				
 		TheLifeConfiguration.setDeedsDS(new DeedsDS(getApplicationContext()));
-		TheLifeConfiguration.setUsersDS(new UsersDS(getApplicationContext()));
 		TheLifeConfiguration.setGroupsDS(new GroupsDS(getApplicationContext()));
 		TheLifeConfiguration.setFriendsDS(new FriendsDS(getApplicationContext()));		
 		TheLifeConfiguration.setEventsDS(new EventsDS(getApplicationContext()));

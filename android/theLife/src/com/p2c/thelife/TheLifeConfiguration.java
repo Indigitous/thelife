@@ -10,7 +10,6 @@ import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
 import com.p2c.thelife.model.OwnerDS;
 import com.p2c.thelife.model.RequestsDS;
-import com.p2c.thelife.model.UsersDS;
 
 
 /**
@@ -29,7 +28,6 @@ public class TheLifeConfiguration {
 	private static DeedsDS m_deedsDS = null;
 	private static CategoriesDS m_categoriesDS = null;
 	private static FriendsDS m_friendsDS = null;
-	private static UsersDS m_usersDS = null;
 	private static GroupsDS m_groupsDS = null;
 	private static EventsDS m_eventsDS = null;
 	private static RequestsDS m_requestsDS = null;
@@ -120,14 +118,6 @@ public class TheLifeConfiguration {
 	
 	public static void setFriendsDS(FriendsDS friendsDS) {
 		m_friendsDS = friendsDS;
-	}	
-	
-	public static UsersDS getUsersDS() {
-		return m_usersDS;
-	}
-	
-	public static void setUsersDS(UsersDS usersDS) {
-		m_usersDS = usersDS;
 	}	
 	
 	public static GroupsDS getGroupsDS() {

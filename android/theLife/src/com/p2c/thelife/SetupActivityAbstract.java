@@ -62,10 +62,6 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 			TheLifeConfiguration.getDeedsDS().forceRefresh("deeds");
 		} else if (indicator.equals("deeds")) {
 			TheLifeConfiguration.getDeedsDS().removeDSRefreshedListener(this);			
-//			TheLifeConfiguration.getUsersDS().addDSRefreshedListener(this);			
-//			TheLifeConfiguration.getUsersDS().forceRefresh("users");
-//		} else if (indicator.equals("users")) {
-//			TheLifeConfiguration.getUsersDS().removeDSRefreshedListener(this);			
 			TheLifeConfiguration.getGroupsDS().addDSRefreshedListener(this);
 			TheLifeConfiguration.getGroupsDS().forceRefresh("groups");	
 		} else if (indicator.equals("groups")) {
