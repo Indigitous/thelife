@@ -560,6 +560,9 @@ public class Server {
 				} catch (org.apache.http.conn.ConnectTimeoutException e) {
 					m_connectionTimeout = true;
 					Log.e(TAG, "ServerCall().doInBackground", e);
+				} catch (java.net.SocketTimeoutException e) {
+					m_connectionTimeout = true;
+					Log.e(TAG, "ServerCall().doInBackground", e);					
 				} catch (IOException e) {
 					Log.e(TAG, "ServerCall().doInBackground", e);
 				} catch (Exception e) {
