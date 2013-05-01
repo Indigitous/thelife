@@ -110,8 +110,10 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		if (indicator.equals("reject")) {
 			dialogMessage = getResources().getString(R.string.rejecting_request);
 		} else if (m_request.isInvite()) {
+			// accept request
 			dialogMessage = getResources().getString(R.string.joining_group);
 		} else if (m_request.isMembershipRequest()) {
+			// accept request
 			dialogMessage = getResources().getString(R.string.adding_new_member);
 		}
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), dialogMessage, true, true);				
@@ -120,20 +122,17 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	@Override
 	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
 		
-		if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
-			int friendId = jsonObject.optInt("id", 0);
-			if (friendId != 0) {
+		if (Utilities.isSuccessfulHttpCode(httpCode)) {
 				
-				// successful
-				
-				// delete the request
-				TheLifeConfiguration.getRequestsDS().delete(m_request.id);
-				TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();
-				
-				// if the request was accepted, refresh my groups
-				if (indicator.equals("accept")) {							
-					TheLifeConfiguration.getGroupsDS().forceRefresh("postRequest");
-				}
+			// successful
+			
+			// delete the request
+			TheLifeConfiguration.getRequestsDS().delete(m_request.id);
+			TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();
+			
+			// if the request was accepted, refresh my groups
+			if (indicator.equals("accept")) {							
+				TheLifeConfiguration.getGroupsDS().forceRefresh("postRequest");
 			}
 		}
 		

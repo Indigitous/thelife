@@ -72,7 +72,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 		
 		// refresh after the newest event, if there is one
 		if (newestEvent != null) {
-			super.refresh(indicator, MAX_EVENTS, "&after=" + String.valueOf(newestEvent.id), MODE_PREPEND);
+			super.refresh(indicator, false, 0, MAX_EVENTS, "&after=" + String.valueOf(newestEvent.id), MODE_PREPEND);
 		} else {
 			super.refresh(indicator, MAX_EVENTS);
 		}
