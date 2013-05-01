@@ -18,6 +18,11 @@ import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.Server.ServerListener;
 import com.p2c.thelife.model.UserModel;
 
+/**
+ * Edit the Owner's profile.
+ * @author clarence
+ *
+ */
 public class SettingsActivity extends SlidingMenuPollingFragmentActivity implements ServerListener, ImageSelectSupport.Listener {
 	
 	private static final String TAG = "SettingsActivity";

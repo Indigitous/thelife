@@ -20,13 +20,15 @@
 	        android:id="@+id/activity_friend_image"
 	        android:layout_width="100dp"
 	        android:layout_height="100dp"
-	        android:src="@drawable/generic_avatar_image" />
+	        android:src="@drawable/generic_avatar_image"
+	        android:onClick="editFriend" />
     	
     	<LinearLayout
     		android:layout_width="match_parent"
     		android:layout_height="100dp"
     		android:paddingLeft="2dp"
-    		android:orientation="vertical">    
+    		android:orientation="vertical"
+	        android:onClick="editFriend" >    
     		
     	    <Button
     	        android:text="What's Next?"

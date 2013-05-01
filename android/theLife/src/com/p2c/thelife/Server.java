@@ -168,14 +168,15 @@ public class Server {
 	}	
 	
 	
-	public void updateFriend(int friendId, FriendModel.Threshold threshold, ServerListener listener, String indicator) {
+	public void updateFriend(int friendId, String firstName, String lastName, ServerListener listener, String indicator) {
 		// API endpoint
-		// returns HTTP 404 on an unknown friend, HTTP 201 on a success TODO check this
+		// returns HTTP 404 on an unknown friend, HTTP 204 on a success
 		
 		try {
 			String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId));
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId)));		
+			pairs.add(new BasicNameValuePair("first_name", firstName));
+			pairs.add(new BasicNameValuePair("last_name", lastName));					
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
 			
 			HttpPut httpRequest = new HttpPut(urlString);

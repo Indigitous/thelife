@@ -162,6 +162,19 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	
 	
 	/**
+	 * Owner wants to edit their friend
+	 * @param view
+	 */
+	public void editFriend(View view) {
+		if (m_friend != null) {
+			Intent intent = new Intent("com.p2c.thelife.FriendSettings");
+			intent.putExtra("friend_id", m_friend.id);			
+			startActivity(intent);
+		}		
+	}
+	
+	
+	/**
 	 * Owner has pledged to pray for the event.
 	 */
 	public void pledgeToPray(View view) {
