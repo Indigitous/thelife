@@ -91,7 +91,7 @@ public class FriendsActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			Toast.makeText(this, "Friends Help", Toast.LENGTH_SHORT).show();	
+			// place holder
 		} else if (item.getItemId() == R.id.action_new) {
 			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
 			startActivity(intent);

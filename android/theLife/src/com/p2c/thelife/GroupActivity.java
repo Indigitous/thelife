@@ -101,7 +101,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			Toast.makeText(this, "Group Help", Toast.LENGTH_SHORT).show();
+			// place holder
 		} else if (item.getItemId() == R.id.action_new) {
 			if (m_group != null) {
 				UserInviteDialog dialog = new UserInviteDialog();

@@ -92,7 +92,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			Toast.makeText(this, "Groups Help", Toast.LENGTH_SHORT).show();
+			// place holder TODO
 		} else if (item.getItemId() == R.id.action_search) {
 			
 			Intent intent = new Intent("com.p2c.thelife.GroupsSearch");
