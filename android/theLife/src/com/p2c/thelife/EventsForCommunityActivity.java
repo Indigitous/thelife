@@ -123,7 +123,10 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 		m_listView.removeCallbacks(m_datastoreRefreshRunnable);
 		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);				
-		TheLifeConfiguration.getBitmapNotifier().removeFriendBitmapListener(m_adapter);		
+		TheLifeConfiguration.getBitmapNotifier().removeFriendBitmapListener(m_adapter);
+		
+		// remove the display refresh
+		m_listView.removeCallbacks(m_displayRefreshRunnable);
 	}
 	
 

@@ -129,6 +129,9 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 		m_listView.removeCallbacks(m_datastoreRefreshRunnable);
+		
+		// remove the display refresh
+		m_listView.removeCallbacks(m_displayRefreshRunnable);		
 	}	
 	
 

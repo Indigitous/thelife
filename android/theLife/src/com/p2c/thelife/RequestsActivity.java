@@ -19,7 +19,8 @@ import com.p2c.thelife.model.RequestsDS;
 
 /**
  * Show the requests/notifications for the owner.
- * Requests are automatically polled by the RequestsPoller class.
+ * Requests are automatically polled by the separate RequestsPoller class.
+ * A local time refreshes the displayed timestamps every minute.
  */
 public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestsDS.DSChangedListener, RequestDialog.Listener {
 	
@@ -30,6 +31,9 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	private TextView m_noRequestsView = null;	
 	private RequestModel m_request = null;
 	private ProgressDialog m_progressDialog = null;	
+	
+	// refresh the requests list view
+	private Runnable m_displayRefreshRunnable = null;		
 	
 
 	@Override
@@ -43,7 +47,21 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// show a message if there are no requests
 		m_noRequestsView = (TextView)findViewById(R.id.requests_none);
-		m_noRequestsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);				
+		m_noRequestsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);
+		
+		// this will refresh the timestamps inside the list view's requests
+		// this is all local -- server is not involved
+		m_displayRefreshRunnable = new Runnable() {
+			@Override
+			public void run() {
+				if (m_adapter != null && m_listView != null) {
+					m_adapter.notifyDataSetChanged();
+					
+					// refresh the display again in one minute
+					m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);
+				}
+			}
+		};		
 	}
 
 	
@@ -67,6 +85,9 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// set the bitmap listener
 		TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);
+		
+		// refresh the display every minute
+		m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);		
 	}		
 	
 	/**
@@ -81,7 +102,10 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(this);		
 		
 		// remove the bitmap listener
-		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);		
+		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);
+		
+		// stop the display refreshes
+		m_listView.removeCallbacks(m_displayRefreshRunnable);
 	}		
 	
 	
