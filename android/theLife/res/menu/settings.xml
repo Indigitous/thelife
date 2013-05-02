@@ -11,7 +11,7 @@
         android:id="@+id/action_logout"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/action_flynav"
+        android:icon="@drawable/action_logout"
         android:title="@string/action_logout"/>      
 
 </menu>
