@@ -76,7 +76,7 @@
     <string name="joining_group">Joining group</string>
     <string name="adding_new_member">Adding new member to group</string>
     <string name="membership_request_description">&lt;b>%1$s&lt;/b> wants to join your group &lt;b>%2$s&lt;/b>.</string>
-    <string name="invite_request_description">&lt;b>%1$s&lt;/b> invites you to join group &lt;b>%1$s&lt;/b>.</string>
+    <string name="invite_request_description">&lt;b>%1$s&lt;/b> invites you to join group &lt;b>%2$s&lt;/b>.</string>
     <string name="rejecting_request">Rejecting request</string>
     <string name="creating_new_event">Creating new event</string>
     <string name="first_name">First Name</string>

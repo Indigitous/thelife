@@ -306,7 +306,7 @@ public class Server {
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("accepted", String.valueOf(hasAccepted)));			
+			pairs.add(new BasicNameValuePair("accept", String.valueOf(hasAccepted)));			
 			pairs.add(new BasicNameValuePair("user_id", String.valueOf(userId)));
 			pairs.add(new BasicNameValuePair("group_id", String.valueOf(groupId)));					
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
