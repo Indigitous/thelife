@@ -30,7 +30,7 @@ public class FriendsHelpActivity extends SlidingMenuPollingActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
-			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
+			Intent intent = new Intent("com.p2c.thelife.Friends");
 			startActivity(intent);
 		}
 		

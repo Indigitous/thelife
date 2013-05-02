@@ -92,7 +92,7 @@ public class FriendsActivity
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
 			Intent intent = new Intent("com.p2c.thelife.FriendsHelp");
-			startActivity(intent);			
+			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_new) {
 			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
 			startActivity(intent);
