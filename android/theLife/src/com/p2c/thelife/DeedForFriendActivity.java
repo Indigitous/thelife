@@ -30,7 +30,7 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 	
 	private FriendModel m_friend = null;
 	private DeedModel m_deed = null;
-	private ProgressDialog m_progressDialog = null;	
+	private ProgressDialog m_progressDialog = null;
 	
 
 	@Override
