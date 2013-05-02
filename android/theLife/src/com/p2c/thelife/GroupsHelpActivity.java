@@ -8,32 +8,33 @@ import com.actionbarsherlock.view.MenuItem;
 
 
 /**
- * Show help for the Friends Activity screen.
+ * Show help for Groups Activity page.
  * @author clarence
  *
  */
-public class FriendsHelpActivity extends SlidingMenuPollingActivity {
+public class GroupsHelpActivity extends SlidingMenuPollingActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_global_help, SlidingMenuSupport.FRIENDS_POSITION);		
+		super.onCreate(savedInstanceState, R.layout.activity_groups_help, SlidingMenuSupport.GROUPS_POSITION);		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getSupportMenuInflater().inflate(R.menu.friends_help, menu);
+		getSupportMenuInflater().inflate(R.menu.groups_help, menu);
 		return true;
 	}
+	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
-			Intent intent = new Intent("com.p2c.thelife.Friends");
+			Intent intent = new Intent("com.p2c.thelife.Groups");
 			startActivity(intent);
 		}
 		
 		return true;
-	}				
+	}	
 
 }

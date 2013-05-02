@@ -249,6 +249,15 @@
                 <action android:name="com.p2c.thelife.FriendsHelp" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.GroupsHelpActivity"
+            android:label="@string/title_groups_help" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.GroupsHelp" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>            
         </activity>
     </application>

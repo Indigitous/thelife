@@ -94,14 +94,12 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			// place holder TODO
+			Intent intent = new Intent("com.p2c.thelife.GroupsHelp");
+			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_search) {
-			
 			Intent intent = new Intent("com.p2c.thelife.GroupsSearch");
 			startActivity(intent);
-			
 		} else if (item.getItemId() == R.id.action_new) {
-			
 			GroupCreateDialog dialog = new GroupCreateDialog();
 			dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 		} else if (item.getItemId() == android.R.id.home) {

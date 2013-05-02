@@ -115,6 +115,8 @@
     <string name="title_friend_import">Import Friend</string>
     <string name="title_new_user_help">Introduction</string>
     <string name="title_friend_settings">My Friend</string>
+    <string name="title_friends_help">Help</string>
+    <string name="title_groups_help">Help</string>
     <string name="login_failed">Incorrect Login</string>
     <string name="registration_failed">Incorrect Registration</string>
     <string name="registration_successful">You are now registered.</string>
@@ -139,6 +141,5 @@ We’ll supply personalised resources, conversation ideas, and other tools which
 We at theLife understand that evangelism is hard. Without a like-minded community, it’s easy to lose our motivation to live missionally.\n\n
 To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.\n\n</string>
     <string name="done">Done</string>
-    <string name="title_friends_help">Help</string>
 
 </resources>
