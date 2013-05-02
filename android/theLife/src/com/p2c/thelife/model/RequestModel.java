@@ -35,9 +35,12 @@ public class RequestModel extends AbstractModel {
 	public String email;			// for INVITE: this is the invited person's email
 	public String sms;				// for INVITE: this is the invited person's SMS
 	public String finalDescription; // description with template place holders replaced with real values
+	public long    timestamp; 		// in milliseconds, android.text.format.Time
 	
 	
-	public RequestModel(Resources resources, int request_id, int user_id, String userName, int group_id, String groupName, String type, String email, String sms) {
+	
+	public RequestModel(Resources resources, int request_id, int user_id, String userName, int group_id, String groupName, 
+						String type, String email, String sms, long timestamp) {
 		super(request_id);
 		
 		this.user_id = user_id;
@@ -48,6 +51,7 @@ public class RequestModel extends AbstractModel {
 		this.email = email;		
 		this.sms = sms;
 		this.finalDescription = getFinalDescription(resources);
+		this.timestamp = timestamp;		
 	}
 	
 	public boolean isInvite() {
@@ -61,7 +65,7 @@ public class RequestModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return id + ", " + user_id + ", " + userName + "," + group_id + ", " + groupName + ", " + email + ", " + sms + "," + finalDescription;
+		return id + ", " + user_id + ", " + userName + "," + group_id + ", " + groupName + ", " + email + ", " + sms + "," + finalDescription + "," + timestamp;
 	}
 	
 	
@@ -117,7 +121,8 @@ public class RequestModel extends AbstractModel {
 			json.optString("group_name", null),		
 			json.getString("type"),
 			json.optString("email"),
-			json.optString("sms")
+			json.optString("sms"),
+			json.optLong("created_at", 0L) * 1000 // convert seconds from server into millis			
 		);
 		
 	}

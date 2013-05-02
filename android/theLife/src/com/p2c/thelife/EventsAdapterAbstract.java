@@ -61,7 +61,7 @@ public abstract class EventsAdapterAbstract
 		TextView textViewTime = (TextView)eventView.findViewById(R.id.event_time);
 		String eventTime = DateUtils.getRelativeDateTimeString(getContext(), event.timestamp, 
 			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
-		textViewTime.setText(Html.fromHtml(eventTime));		
+		textViewTime.setText(eventTime);		
 		
 		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.event_image1);
 		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id));

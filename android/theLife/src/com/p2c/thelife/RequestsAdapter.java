@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,11 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 		TextView textViewDescription = (TextView)requestView.findViewById(R.id.textViewDescription);
 		String description = request.finalDescription;
 		textViewDescription.setText(Html.fromHtml(description));
+		
+		TextView textViewTime = (TextView)requestView.findViewById(R.id.request_time);
+		String eventTime = DateUtils.getRelativeDateTimeString(getContext(), request.timestamp, 
+			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
+		textViewTime.setText(eventTime);				
 		
 		ImageView imageView1 = (ImageView)requestView.findViewById(R.id.imageView1);
 		imageView1.setImageBitmap(UserModel.getThumbnail(request.user_id));
