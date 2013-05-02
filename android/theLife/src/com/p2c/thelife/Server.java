@@ -554,19 +554,19 @@ public class Server {
 	
 					}
 				} catch (JSONException e) {
-					Log.wtf(TAG, "ServerCall.doInBackground()", e);				
+					Log.wtf(TAG, "ServerCall.doInBackground()1", e);				
 				} catch (MalformedURLException e) {
-					Log.wtf(TAG, "ServerCall().doInBackground", e);
+					Log.wtf(TAG, "ServerCall.doInBackground()2", e);
 				} catch (org.apache.http.conn.ConnectTimeoutException e) {
 					m_connectionTimeout = true;
-					Log.e(TAG, "ServerCall().doInBackground", e);
+					Log.e(TAG, "ServerCall.doInBackground()3", e);
 				} catch (java.net.SocketTimeoutException e) {
 					m_connectionTimeout = true;
-					Log.e(TAG, "ServerCall().doInBackground", e);					
+					Log.e(TAG, "ServerCall.doInBackground()4", e);					
 				} catch (IOException e) {
-					Log.e(TAG, "ServerCall().doInBackground", e);
+					Log.e(TAG, "ServerCall.doInBackground()5", e);
 				} catch (Exception e) {
-					Log.e(TAG, "ServerCall().doInBackground", e);
+					Log.e(TAG, "ServerCall.doInBackground()6", e);
 				} finally {
 					if (outStream != null) {
 						try { outStream.close(); } catch (Exception e) { }
