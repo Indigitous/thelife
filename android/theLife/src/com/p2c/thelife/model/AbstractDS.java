@@ -516,7 +516,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		@Override
 		protected void onPostExecute(ArrayList<T> data2) {
 			
-			if (m_connectionTimeout) {
+			if (m_connectionTimeout && m_numRetries > 0) {
 				Utilities.showErrorToast(m_context, TAG + " CONN TIMEOUT ", Toast.LENGTH_SHORT);	
 				m_connectionTimeout = false;
 			}
