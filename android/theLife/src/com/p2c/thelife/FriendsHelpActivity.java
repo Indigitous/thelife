@@ -16,7 +16,7 @@ public class FriendsHelpActivity extends SlidingMenuPollingActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_global_help, SlidingMenuSupport.FRIENDS_POSITION);		
+		super.onCreate(savedInstanceState, R.layout.activity_friends_help, SlidingMenuSupport.FRIENDS_POSITION);		
 	}
 
 	@Override
