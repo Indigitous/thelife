@@ -52,16 +52,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.p2c.thelife.CommunityHelpActivity"
-            android:label="@string/title_help"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.p2c.thelife.CommunityHelp" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.p2c.thelife.FriendsActivity"
             android:label="@string/title_friends"
             android:screenOrientation="portrait" >
@@ -144,7 +134,7 @@
             android:label="@string/title_group"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.p2c.thelife.GroupActivity" />
+                <action android:name="com.p2c.thelife.Group" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -242,24 +232,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.p2c.thelife.FriendsHelpActivity"
-            android:label="@string/title_friends_help"
-            android:screenOrientation="portrait" >
+            android:name="com.p2c.thelife.HelpActivity"
+            android:label="@string/title_help" >
             <intent-filter>
-                <action android:name="com.p2c.thelife.FriendsHelp" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.p2c.thelife.GroupsHelpActivity"
-            android:label="@string/title_groups_help" >
-            <intent-filter>
-                <action android:name="com.p2c.thelife.GroupsHelp" />
-
+                <action android:name="com.p2c.thelife.Help" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>            
-        </activity>
+        </activity>        
     </application>
 
 </manifest>

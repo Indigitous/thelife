@@ -170,7 +170,13 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 						
 					}
 				}).show();
-		}
+		} else if (item.getItemId() == R.id.action_help) {
+			Intent intent = new Intent("com.p2c.thelife.Help");
+			intent.putExtra("layout", R.layout.activity_settings_help);
+			intent.putExtra("position", SlidingMenuSupport.SETTINGS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.Settings");
+			startActivity(intent);
+		} 
 		
 		return true;
 	}

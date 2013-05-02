@@ -84,6 +84,14 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 			Intent intent = new Intent("com.p2c.thelife.DeedsForFriend");
 			intent.putExtra("friend_id", m_friend.id);			
 			startActivity(intent);
+		} else if (item.getItemId() == R.id.action_help) {
+			Intent intent = new Intent("com.p2c.thelife.Help");
+			intent.putExtra("layout", R.layout.activity_deed_for_friend_help);
+			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.DeedForFriend");
+			intent.putExtra("friend_id", m_friend.id);
+			intent.putExtra("deed_id", m_deed.id);
+			startActivity(intent);
 		}
 		
 		return true;

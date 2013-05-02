@@ -53,6 +53,12 @@ public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity imp
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.Groups");
 			startActivity(intent);			
+		} else if (item.getItemId() == R.id.action_help) {
+			Intent intent = new Intent("com.p2c.thelife.Help");
+			intent.putExtra("layout", R.layout.activity_groups_search_help);
+			intent.putExtra("position", SlidingMenuSupport.GROUPS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.GroupsSearch");
+			startActivity(intent);
 		}
 		
 		return true;

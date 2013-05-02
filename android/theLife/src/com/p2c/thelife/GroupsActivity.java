@@ -94,7 +94,10 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			Intent intent = new Intent("com.p2c.thelife.GroupsHelp");
+			Intent intent = new Intent("com.p2c.thelife.Help");
+			intent.putExtra("layout", R.layout.activity_groups_help);
+			intent.putExtra("position", SlidingMenuSupport.GROUPS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.Groups");
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_search) {
 			Intent intent = new Intent("com.p2c.thelife.GroupsSearch");
@@ -105,7 +108,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 		} else if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);			
+			startActivity(intent);
 		}
 		
 		return true;
@@ -163,7 +166,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 		// get the group associated with this view
 		GroupModel group = (GroupModel)arg1.getTag();
 		
-		Intent intent = new Intent("com.p2c.thelife.GroupActivity");
+		Intent intent = new Intent("com.p2c.thelife.Group");
 		intent.putExtra("group_id", group.id);
 		startActivity(intent);
 				

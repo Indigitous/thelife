@@ -91,7 +91,10 @@ public class FriendsActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			Intent intent = new Intent("com.p2c.thelife.FriendsHelp");
+			Intent intent = new Intent("com.p2c.thelife.Help");
+			intent.putExtra("layout", R.layout.activity_friends_help);
+			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.Friends");
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_new) {
 			Intent intent = new Intent("com.p2c.thelife.FriendsImport");

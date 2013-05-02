@@ -154,9 +154,16 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	
 	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {	
+	public boolean onOptionsItemSelected(MenuItem item) {		
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.Friends");
+			startActivity(intent);
+		} else if (item.getItemId() == R.id.action_help) {
+			Intent intent = new Intent("com.p2c.thelife.Help");
+			intent.putExtra("layout", R.layout.activity_events_for_friend_help);
+			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.EventsForFriend");
+			intent.putExtra("friend_id", m_friend.id);			
 			startActivity(intent);
 		}
 		
