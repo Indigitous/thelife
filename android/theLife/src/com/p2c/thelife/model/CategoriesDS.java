@@ -9,8 +9,7 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 /**
- * Categories data store. Each deed/activity belongs to 0 or 1 categories.
- * Categories provide a way to group deeds/activities.
+ * Categories data store. 
  * @author clarence
  *
  */
