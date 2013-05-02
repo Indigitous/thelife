@@ -91,7 +91,8 @@ public class FriendsActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			// place holder TODO
+			Intent intent = new Intent("com.p2c.thelife.FriendsHelp");
+			startActivity(intent);			
 		} else if (item.getItemId() == R.id.action_new) {
 			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
 			startActivity(intent);

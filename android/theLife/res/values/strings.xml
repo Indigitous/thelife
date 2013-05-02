@@ -133,13 +133,12 @@
     <string name="no_requests">There are no notifications to show.</string>
     <string name="null_category_name">Other</string>
     <string name="null_category_description">Other activities</string>
-    <string name="new_user_help">
-Welcome to theLife App, The Smart Evangelism Toolbox.\n\n
+    <string name="new_user_help">Welcome to theLife App, The Smart Evangelism Toolbox.\n\n
 Our goal is to help you walk with your friends on their journey towards Jesus.\n\n
 We’ll supply personalised resources, conversation ideas, and other tools which will help you connect the realities of their lives with God.\n\n
 We at theLife understand that evangelism is hard. Without a like-minded community, it’s easy to lose our motivation to live missionally.\n\n
-To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.\n\n
-    </string>
+To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.\n\n</string>
     <string name="done">Done</string>
+    <string name="title_friends_help">Help</string>
 
 </resources>
