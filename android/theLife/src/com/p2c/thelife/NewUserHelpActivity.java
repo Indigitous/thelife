@@ -6,6 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+
+/**
+ * Show a help screen for a new user.
+ * @author clarence
+ *
+ */
 public class NewUserHelpActivity extends Activity {
 
 	@Override

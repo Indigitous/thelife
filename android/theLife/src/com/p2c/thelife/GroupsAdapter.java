@@ -13,6 +13,12 @@ import android.widget.TextView;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.AbstractDS;
 
+
+/**
+ * Show the owner's groups in a list.
+ * @author clarence
+ *
+ */
 public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractDS.DSChangedListener {
 		
 	public GroupsAdapter(Context context, int mode) {
@@ -21,7 +27,6 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractD
 		query();
 	}
 	
-	// TODO see ApiDemos List14.java for other (maybe better?) ways for this
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		

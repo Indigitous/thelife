@@ -18,6 +18,12 @@ import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 
+
+/**
+ * Superclass for showing Event Cells in a list.
+ * @author clarence
+ *
+ */
 public abstract class EventsAdapterAbstract 
 	extends ArrayAdapter<EventModel> 
 	implements AbstractDS.DSChangedListener, BitmapNotifierHandler.UserBitmapListener, BitmapNotifierHandler.FriendBitmapListener {

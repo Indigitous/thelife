@@ -10,7 +10,9 @@ import android.util.Log;
 
 
 /**
- * 
+ * A Handler subclass that runs on the UI thread.
+ * It receives messages from BitmapCacheHandler indicating that a bitmap has been read from the server,
+ * prepares the file, and notifies any listeners.
  * @author clarence
  *
  */
@@ -48,7 +50,6 @@ public class BitmapNotifierHandler extends Handler {
 	
 	@Override
 	public void handleMessage(Message message) {
-System.out.println("BitmapNotifierHandler got message " + message);
 
 		// parse the message
 		int op = 0;
@@ -76,7 +77,6 @@ System.out.println("BitmapNotifierHandler got message " + message);
 		File temporaryFile = new File(temporaryCacheFileName);
 		File cacheFile = new File(temporaryCacheFileName.substring(0, temporaryCacheFileName.length() - 1)); // just drop the last character in the name
 		boolean wasRenamed = temporaryFile.renameTo(cacheFile);
-System.out.println(temporaryCacheFileName + " was renamed " + wasRenamed);
 		
 		// notify all the listeners
 		if (op == OP_USER) {

@@ -17,6 +17,11 @@ import com.p2c.thelife.model.RequestModel;
 import com.p2c.thelife.model.UserModel;
 
 
+/**
+ * Manage the list of requests/notifications for the RequestsActivity screen.
+ * @author clarence
+ *
+ */
 public class RequestsAdapter extends ArrayAdapter<RequestModel> implements AbstractDS.DSChangedListener, BitmapNotifierHandler.UserBitmapListener {
 	
 	private static final String TAG = "RequestsAdapter"; 	

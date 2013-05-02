@@ -9,7 +9,12 @@ import android.util.Log;
 
 
 
-// POJO - plain old java object
+/**
+ * Category model record. Each deed/activity belongs to 0 or 1 categories.
+ * Categories provide a way to group deeds/activities.
+ * @author clarence
+ *
+ */
 public class CategoryModel extends AbstractModel {
 	
 	private static final String TAG = "CategoryModel";

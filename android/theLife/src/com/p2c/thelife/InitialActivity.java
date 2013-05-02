@@ -7,6 +7,13 @@ import android.view.Menu;
 
 import com.p2c.thelife.model.AbstractDS;
 
+
+/**
+ * Starting Activity, handles whether or not the user has authenticated.
+ * This activity is necessary in part because of the way Android manages the back stack.
+ * @author clarence
+ *
+ */
 public class InitialActivity extends Activity {
 
 	@Override

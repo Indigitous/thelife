@@ -12,7 +12,7 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 /**
- * Deed Model datastore
+ * Deed/activities Model datastore
  * @author clarence
  *
  */

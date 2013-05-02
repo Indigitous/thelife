@@ -11,7 +11,11 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 
-// POJO - plain old java object
+/**
+ * Request/notification data model.
+ * @author clarence
+ *
+ */
 public class RequestModel extends AbstractModel {
 	
 	private static final String TAG = "RequestModel"; 	

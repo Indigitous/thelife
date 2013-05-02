@@ -15,6 +15,12 @@ import com.p2c.thelife.model.CategoryModel;
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
+
+/**
+ * Show the deeds/activities applicable to the given friend's threshold.
+ * @author clarence
+ *
+ */
 public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements AbstractDS.DSChangedListener {
 	
 	private static final String TAG = "DeedsForFriendAdapter"; 

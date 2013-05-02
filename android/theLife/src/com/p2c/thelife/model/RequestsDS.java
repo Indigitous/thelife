@@ -8,6 +8,11 @@ import android.content.Context;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
+/**
+ * Requests/notifications model data store.
+ * @author clarence
+ *
+ */
 public class RequestsDS extends AbstractDS<RequestModel> {
 	
 	public RequestsDS(Context context) {

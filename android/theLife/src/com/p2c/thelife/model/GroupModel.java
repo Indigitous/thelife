@@ -10,7 +10,11 @@ import android.util.Log;
 
 
 
-// POJO - plain old java object
+/**
+ * Group data model.
+ * @author clarence
+ *
+ */
 public class GroupModel extends AbstractModel {
 	
 	private static final String TAG = "GroupModel";

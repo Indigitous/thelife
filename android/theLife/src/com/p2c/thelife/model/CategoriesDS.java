@@ -8,6 +8,12 @@ import android.content.Context;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
+/**
+ * Categories data store. Each deed/activity belongs to 0 or 1 categories.
+ * Categories provide a way to group deeds/activities.
+ * @author clarence
+ *
+ */
 public class CategoriesDS extends AbstractDS<CategoryModel> {
 	
 	public CategoriesDS(Context context) {

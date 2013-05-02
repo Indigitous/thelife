@@ -13,6 +13,11 @@ import android.util.Log;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
+/**
+ * Data store of the owner's events.
+ * @author clarence
+ *
+ */
 public class EventsDS extends AbstractDS<EventModel> {
 	
 	private static final String TAG = "EventsDS";

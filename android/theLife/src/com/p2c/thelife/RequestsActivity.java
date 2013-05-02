@@ -18,6 +18,7 @@ import com.p2c.thelife.model.RequestsDS;
 
 
 /**
+ * Show the requests/notifications for the owner.
  * Requests are automatically polled by the RequestsPoller class.
  */
 public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestsDS.DSChangedListener, RequestDialog.Listener {

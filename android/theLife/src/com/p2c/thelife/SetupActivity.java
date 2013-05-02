@@ -12,6 +12,12 @@ import android.widget.Toast;
 
 import com.p2c.thelife.model.UserModel;
 
+
+/**
+ * Login or register a new user.
+ * @author clarence
+ *
+ */
 public class SetupActivity extends SetupActivityAbstract implements Server.ServerListener, ServerAccessDialogAbstract.Listener {
 	
 	private static final String TAG = "SetupActivity";

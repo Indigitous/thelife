@@ -9,7 +9,7 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 /**
- * The current user's groups.
+ * Data store of the current user's groups.
  * @author clarence
  *
  */

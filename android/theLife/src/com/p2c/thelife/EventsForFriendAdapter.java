@@ -1,14 +1,18 @@
 package com.p2c.thelife;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import android.content.Context;
 
-import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 
+
+/**
+ * Show the events for the given friend in a list.
+ * @author clarence
+ *
+ */
 public class EventsForFriendAdapter extends EventsAdapterAbstract {
 	
 	private static final String TAG = "EventsForFriendAdapter"; 

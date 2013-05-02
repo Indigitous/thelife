@@ -27,6 +27,12 @@ import com.p2c.thelife.Utilities;
 
 
 
+/**
+ * Superclass for data stores of model records. 
+ * Holds the information, provides access to the data, and refreshes the data from the server.
+ * @author clarence
+ *
+ */
 public abstract class AbstractDS<T extends AbstractModel> {
 	
 	

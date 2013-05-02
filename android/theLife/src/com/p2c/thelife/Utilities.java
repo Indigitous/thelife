@@ -18,6 +18,13 @@ import android.widget.Toast;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 
+
+/**
+ * General purpose routines.
+ * 
+ * @author clarence
+ *
+ */
 public class Utilities {
 	
 	private static final String TAG = "Utilities";

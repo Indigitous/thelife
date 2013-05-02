@@ -12,7 +12,11 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 
-// POJO - plain old java object
+/**
+ * Friend data model.
+ * @author clarence
+ *
+ */
 public class FriendModel extends AbstractModel {
 	
 	private static final String TAG = "FriendModel"; 	

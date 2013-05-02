@@ -4,7 +4,7 @@ package com.p2c.thelife.model;
 
 // POJO - plain old java object
 /**
- * Abstract model
+ * Abstract model. Superclass of model records, which are POJO records.
  *
  */
 public abstract class AbstractModel {

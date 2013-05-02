@@ -14,6 +14,12 @@ import android.widget.TextView;
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.FriendModel;
 
+
+/**
+ * Show the friends of the owner.
+ * @author clarence
+ *
+ */
 public class FriendsAdapter 
 	extends ArrayAdapter<FriendModel> 
 	implements AbstractDS.DSChangedListener, BitmapNotifierHandler.FriendBitmapListener {
@@ -24,7 +30,7 @@ public class FriendsAdapter
 		query();
 	}
 	
-	// see ApiDemos List14.java for other (maybe better?) ways for this
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		

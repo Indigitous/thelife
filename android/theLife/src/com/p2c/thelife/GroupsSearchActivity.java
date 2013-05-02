@@ -16,6 +16,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.GroupModel;
 
 
+
+/*
+ * Support querying for groups.
+ */
 public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, OnItemClickListener, GroupRequestJoinDialog.Listener {
 	
 	private static final String TAG = "GroupsSearchActivity";

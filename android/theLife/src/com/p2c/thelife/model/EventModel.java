@@ -10,8 +10,11 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 
-// POJO - plain old java object
-// TODO: not need activity_id?
+/**
+ * Event data model.
+ * @author clarence
+ *
+ */
 public class EventModel extends AbstractModel {
 	
 	private static final String TAG = "EventModel";

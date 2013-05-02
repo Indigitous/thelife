@@ -8,6 +8,11 @@ import android.content.Context;
 import com.p2c.thelife.TheLifeConfiguration;
 
 
+/**
+ * Friend model data store.
+ * @author clarence
+ *
+ */
 public class FriendsDS extends AbstractDS<FriendModel> {
 	
 	public FriendsDS(Context context) {

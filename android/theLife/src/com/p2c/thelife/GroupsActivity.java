@@ -23,6 +23,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 
 /**
+ * Show the owner's groups.
+ * 
  * This class does not poll the server for changes in the user's groups, 
  * because this data doesn't change unless the user initiates the add group/delete group.
  * So instead of polling, just refresh when an add/delete operation occurs.

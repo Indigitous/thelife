@@ -16,6 +16,12 @@ import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.GroupUsersDS;
 import com.p2c.thelife.model.UserModel;
 
+
+/**
+ * Show the users of the given group.
+ * @author clarence
+ *
+ */
 public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.DSChangedListener, BitmapNotifierHandler.UserBitmapListener {
 	
 	private GroupModel m_group;

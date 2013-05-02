@@ -19,6 +19,11 @@ import com.p2c.thelife.model.FriendModel;
 
 
 
+/**
+ * Show a selected deed/activity for the given friend, and support choosing that deed.
+ * @author clarence
+ *
+ */
 public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, EventCreateDialog.Listener {
 	
 	private static final String TAG = "DeedForFriendActivity"; 

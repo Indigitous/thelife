@@ -14,9 +14,8 @@ import com.p2c.thelife.TheLifeConfiguration;
 import com.p2c.thelife.BitmapCacheHandler;
 
 
-// POJO - plain old java object
 /**
- * Deed/activity model
+ * Deed/activity model. Deeds are defined by admins in the server. 
  *
  */
 public class DeedModel extends AbstractModel {

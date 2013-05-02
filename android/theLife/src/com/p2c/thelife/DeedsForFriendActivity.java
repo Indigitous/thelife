@@ -13,6 +13,11 @@ import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
 
 
+/**
+ * Show the deeds/activities applicable to the given friend's threshold.
+ * @author clarence
+ *
+ */
 public class DeedsForFriendActivity extends SlidingMenuPollingActivity implements DSRefreshedListener {
 	
 	private static final String TAG = "DeedsForFriendActivity";

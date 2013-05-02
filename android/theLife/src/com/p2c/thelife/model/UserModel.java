@@ -11,7 +11,11 @@ import com.p2c.thelife.TheLifeConfiguration;
 
 
 
-// POJO - plain old java object
+/**
+ * User data model.
+ * @author clarence
+ *
+ */
 public class UserModel extends AbstractModel {
 	
 	private static final String TAG = "UserModel";

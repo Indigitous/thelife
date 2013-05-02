@@ -7,6 +7,12 @@ import android.webkit.WebView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+
+/**
+ * Show the main app help screen.
+ * @author clarence
+ *
+ */
 public class GlobalHelpActivity extends SlidingMenuPollingActivity {
 
 	@Override

@@ -11,6 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
+
+/**
+ * Support changing the server URL.
+ * @author clarence
+ *
+ */
 public class TestActivity extends Activity implements OnEditorActionListener {
 
 	@Override

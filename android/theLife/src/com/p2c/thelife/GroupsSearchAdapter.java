@@ -18,6 +18,12 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.p2c.thelife.model.GroupModel;
 
+
+/**
+ * Show the groups in the system according to the given query string.
+ * @author clarence
+ *
+ */
 public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnEditorActionListener, Server.ServerListener {
 	
 	private static final String TAG = "GroupsSearchAdapter"; 

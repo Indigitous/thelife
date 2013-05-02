@@ -8,6 +8,11 @@ import com.p2c.thelife.model.EventModel;
 
 
 
+/**
+ * Show all events related to the owner.
+ * @author clarence
+ *
+ */
 public class EventsForCommunityAdapter extends EventsAdapterAbstract {
 	
 	private static final String TAG = "EventsForCommunityAdapter"; 	

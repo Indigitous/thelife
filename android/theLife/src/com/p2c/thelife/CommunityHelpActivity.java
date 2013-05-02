@@ -1,12 +1,17 @@
 package com.p2c.thelife;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+
+/**
+ * Community events help screen.
+ * @author clarence
+ *
+ */
 public class CommunityHelpActivity extends SlidingMenuPollingActivity {
 
 	@Override
