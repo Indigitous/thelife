@@ -41,7 +41,7 @@
     <string name="register_prompt">Please register for an account.</string>
 
     <!-- Note these threshold arrays must be in the same order as FriendModel.Threshold -->
-    <string-array name="thresholds_short">
+    <string-array name="thresholds_short_all">
         <item>New Contact</item>
         <item>Trusting</item>
         <item>Curious</item>
@@ -50,7 +50,7 @@
         <item>Entering</item>
         <item>Christian</item>
     </string-array>
-    <string-array name="thresholds_medium">
+    <string-array name="thresholds_medium_all">
         <item>New Contact</item>
         <item>Trusting a Christian</item>
         <item>Curious about Jesus</item>
@@ -59,6 +59,14 @@
         <item>Entering the Kingdom</item>
         <item>Follower of Jesus</item>
     </string-array>
+    <string-array name="thresholds_medium_change">
+        <item>Trusting a Christian</item>
+        <item>Curious about Jesus</item>
+        <item>Open to Change</item>
+        <item>Seeking God</item>
+        <item>Entering the Kingdom</item>
+        <item>Follower of Jesus</item>
+    </string-array>    
 
     <string name="delete_friend_prompt">Delete friend &lt;b>%1$s&lt;/b>?</string>
     <string name="friend">friend</string>

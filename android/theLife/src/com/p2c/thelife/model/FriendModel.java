@@ -90,7 +90,7 @@ public class FriendModel extends AbstractModel {
 	
 	public static String getThresholdShortString(Resources resources, Threshold threshold) {
 
-		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
+		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short_all);
 		
 		switch (threshold) {
 			case NewContact:
@@ -122,7 +122,7 @@ public class FriendModel extends AbstractModel {
 	
 	
 	public static String getThresholdMediumString(Resources resources, Threshold threshold) {
-		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_short);
+		String thresholdStrings[] = resources.getStringArray(R.array.thresholds_medium_all);
 		
 		switch (threshold) {
 			case NewContact:

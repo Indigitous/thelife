@@ -32,7 +32,7 @@ public class EventCreateDialog extends ServerAccessDialogAbstract {
 		// set the message and content of the alert
 		if (deed.hasThreshold) {
 			alertBuilder.setMessage(R.string.change_threshold_prompt);
-			alertBuilder.setView(view);			
+			alertBuilder.setView(view);
 		} else {
 			alertBuilder.setMessage(R.string.confirm_prayer_support);			
 		}

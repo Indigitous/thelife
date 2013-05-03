@@ -38,7 +38,7 @@
         android:id="@+id/import_friend_threshold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/thresholds_medium" />
+        android:entries="@array/thresholds_medium_all" />
 
     <Button
         android:id="@+id/button1"
