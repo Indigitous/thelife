@@ -14,7 +14,7 @@ import com.p2c.thelife.model.RequestModel;
  * @author clarence
  *
  */
-public class RequestDialog extends ServerAccessDialogAbstract {
+public class RequestAcceptOrRejectDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -24,14 +24,7 @@ public class RequestDialog extends ServerAccessDialogAbstract {
 		final RequestModel request = ((RequestsActivity)m_listener).getSelectedRequest();
 			
 		// set the message, content and buttons of the alert
-		Spanned message = null;
-		if (request.isInvite()) {
-			message = Html.fromHtml(request.finalDescription);					
-		} else if (request.isMembershipRequest()) {
-			message = Html.fromHtml(request.finalDescription);					
-		} else {
-			message = Html.fromHtml("?");
-		}
+		Spanned message = Html.fromHtml(request.finalDescription);	
 			
 		alertBuilder.setMessage(message);
 		alertBuilder.setNegativeButton(R.string.no_thanks, new DialogInterface.OnClickListener() {

@@ -295,6 +295,25 @@ public class Server {
 		}
 	}	
 	
+	
+	/**
+	 * Delete an existing request.
+	 */
+	public void deleteRequest(int requestId, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
+		String urlString = Utilities.makeServerUrlString("requests/" + String.valueOf(requestId));
+		
+		try {
+			HttpDelete httpRequest = new HttpDelete(urlString);
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "deleteRequest()", e);
+		}
+	}
+
+	
 	/**
 	 * Process a request to add a user to a group.
 	 */

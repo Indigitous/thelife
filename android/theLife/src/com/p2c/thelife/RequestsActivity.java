@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import com.p2c.thelife.model.RequestsDS;
  * Requests are automatically polled by the separate RequestsPoller class.
  * A local time refreshes the displayed timestamps every minute.
  */
-public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestsDS.DSChangedListener, RequestDialog.Listener {
+public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestsDS.DSChangedListener, ServerAccessDialogAbstract.Listener {
 	
 	private static final String TAG = "RequestsActivity";
 	
@@ -111,9 +112,19 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	
 	public void selectRequest(View view) {
 		m_request = (RequestModel)view.getTag();
-				
-		RequestDialog dialog = new RequestDialog();
-		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());	
+
+		ServerAccessDialogAbstract dialog = null;
+		if (m_request.isDelivered()) {
+			dialog = new RequestAcceptOrRejectDialog();
+		} else if (m_request.isAccepted() || m_request.isRejected()) {
+			dialog = new RequestFinishDialog();
+		}
+			
+		if (dialog != null) {
+			dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+		} else {
+			Log.e(TAG, "Can't show dialog for request " + m_request);
+		}	
 	}
 	
 	
@@ -134,12 +145,12 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		String dialogMessage = "";
 		if (indicator.equals("reject")) {
 			dialogMessage = getResources().getString(R.string.rejecting_request);
-		} else if (m_request.isInvite()) {
-			// accept request
+		} else if (indicator.equals("accept") && m_request.isInvite()) {
 			dialogMessage = getResources().getString(R.string.joining_group);
-		} else if (m_request.isMembershipRequest()) {
-			// accept request
+		} else if (indicator.equals("accept") && m_request.isMembershipRequest()) {
 			dialogMessage = getResources().getString(R.string.adding_new_member);
+		} else if (indicator.equals("finish")) {
+			dialogMessage = getResources().getString(R.string.deleting_notification);
 		}
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), dialogMessage, true, true);				
 	}
