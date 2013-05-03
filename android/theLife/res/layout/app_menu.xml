@@ -8,10 +8,10 @@
 	<LinearLayout
 	    android:id="@+id/app_menu_notification"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="42dp"
 		android:background="#23282A"
-		android:paddingTop="6dp"
-		android:paddingBottom="6dp"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
 		android:orientation="horizontal"
 		>        
 	    
@@ -21,7 +21,7 @@
 	       android:layout_height="wrap_content"
 	       android:layout_weight="0"
 	       android:gravity="center"      
-	       android:padding="2dp"
+	       android:padding="4dp"
 	       android:layout_marginLeft="4dp"
 	       android:textColor="#ffffff"	       
 	       android:textAppearance="?android:attr/textAppearanceSmall"	       
@@ -68,7 +68,7 @@
     
     <ListView
         android:id="@+id/app_menu_command_list"
-        android:paddingTop="10dp"
+        android:paddingTop="6dp"
     	android:paddingLeft="@dimen/activity_horizontal_margin"
     	android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
