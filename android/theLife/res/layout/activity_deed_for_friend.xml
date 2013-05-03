@@ -42,12 +42,24 @@
 	            
 	    <TextView
 	        android:id="@+id/deed_for_friend_title"
-	        android:layout_width="wrap_content"
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
 	        android:layout_height="wrap_content"
 	        android:paddingTop="10dp"
 	        android:text="Title"
-	        android:textSize="16sp"
+		    android:textAppearance="?android:attr/textAppearanceMedium" 	        	        
 	        />    
+	        
+	    <Button
+	        android:id="@+id/deed_for_friend_go"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="right"
+	        android:text="@string/go"
+		    android:textAppearance="?android:attr/textAppearanceSmall"
+		    android:background="@drawable/round_gray"        	        	        
+	        android:onClick="doDeed"        
+	        />            	    
 	        
 	</LinearLayout>        
         
@@ -59,15 +71,5 @@
         android:text="Description"
         android:textSize="12sp"
         />
-    
-    <Button
-        android:id="@+id/deed_for_friend_go"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/go"
-        android:textSize="12sp"
-        android:onClick="doDeed"        
-        />            
 
 </LinearLayout>
