@@ -164,7 +164,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 			m_progressDialog = null;
 		}		
 		
-		Intent intent = new Intent("com.p2c.thelife.FriendsImport");
+		Intent intent = new Intent("com.p2c.thelife.Friends");
 		startActivity(intent);
 	}
 
