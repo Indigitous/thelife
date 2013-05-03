@@ -18,10 +18,14 @@ import com.p2c.thelife.TheLifeConfiguration;
  */
 public class RequestModel extends AbstractModel {
 	
-	private static final String TAG = "RequestModel"; 	
+	private static final String TAG = "RequestModel"; 
 	
+	// type and status field values
 	public static final String REQUEST_MEMBERSHIP = "REQUEST_MEMBERSHIP";
 	public static final String INVITE = "INVITE";
+	public static final String DELIVERED = "DELIVERED";
+	public static final String ACCEPTED = "ACCEPTED";
+	public static final String REJECTED = "REJECTED";	
 		
 	// TODO decide on userName and groupName
 	public int    request_id;
@@ -35,12 +39,14 @@ public class RequestModel extends AbstractModel {
 	public String email;			// for INVITE: this is the invited person's email
 	public String sms;				// for INVITE: this is the invited person's SMS
 	public String finalDescription; // description with template place holders replaced with real values
-	public long    timestamp; 		// in milliseconds, android.text.format.Time
+	public long   timestamp; 		// in milliseconds, android.text.format.Time
+	public String status;			// either DELIVERED, ACCEPTED or REJECTED
+	
 	
 	
 	
 	public RequestModel(Resources resources, int request_id, int user_id, String userName, int group_id, String groupName, 
-						String type, String email, String sms, long timestamp) {
+						String type, String email, String sms, long timestamp, String status) {
 		super(request_id);
 		
 		this.user_id = user_id;
@@ -50,8 +56,10 @@ public class RequestModel extends AbstractModel {
 		this.type = type;
 		this.email = email;		
 		this.sms = sms;
+		this.timestamp = timestamp;
+		this.status = status;
+		
 		this.finalDescription = getFinalDescription(resources);
-		this.timestamp = timestamp;		
 	}
 	
 	public boolean isInvite() {
@@ -62,10 +70,23 @@ public class RequestModel extends AbstractModel {
 		return type.equals(REQUEST_MEMBERSHIP);
 	}
 	
+	public boolean isDelivered() {
+		return status.equals(DELIVERED);
+	}
+	
+	public boolean isAccepted() {
+		return status.equals(ACCEPTED);
+	}
+	
+	public boolean isRejected() {
+		return status.equals(REJECTED);
+	}
+	
 	
 	@Override
 	public String toString() {
-		return id + ", " + user_id + ", " + userName + "," + group_id + ", " + groupName + ", " + email + ", " + sms + "," + finalDescription + "," + timestamp;
+		return id + ", " + user_id + ", " + userName + "," + group_id + ", " + groupName + 
+				", " + email + ", " + sms + "," + finalDescription + "," + timestamp + "," + status;
 	}
 	
 	
@@ -95,12 +116,20 @@ public class RequestModel extends AbstractModel {
 			paramGroupName = "???";
 		}
 		
-		if (this.type.equals(INVITE)) {
+		if (isDelivered() && isInvite()) {
 			finalDescription = resources.getString(R.string.invite_request_description, paramUserName, paramGroupName);
-		} else if (this.type.equals(REQUEST_MEMBERSHIP)) {
+		} else if (isDelivered() && isMembershipRequest()) {
 			finalDescription = resources.getString(R.string.membership_request_description, paramUserName, paramGroupName);
+		} else if (isAccepted() && isInvite()) {
+			finalDescription = resources.getString(R.string.invite_request_accepted_description, paramUserName, paramGroupName);
+		} else if (isAccepted() && isMembershipRequest()) {
+			finalDescription = resources.getString(R.string.membership_request_accepted_description, paramGroupName);
+		} else if (isRejected() && isInvite()) {
+			finalDescription = resources.getString(R.string.invite_request_rejected_description, paramUserName, paramGroupName);
+		} else if (isRejected() && isMembershipRequest()) {
+			finalDescription = resources.getString(R.string.membership_request_rejected_description, paramGroupName);				
 		} else {
-			finalDescription = "<" + this.type + ">";
+			finalDescription = "<" + paramUserName + " " + this.type + " " + this.status + " " + paramGroupName + ">";
 		}
 		
 		return finalDescription;
@@ -122,7 +151,8 @@ public class RequestModel extends AbstractModel {
 			json.getString("type"),
 			json.optString("email"),
 			json.optString("sms"),
-			json.optLong("created_at", 0L) * 1000 // convert seconds from server into millis			
+			json.optLong("created_at", 0L) * 1000, // convert seconds from server into millis
+			json.optString("status", "DELIVERED")
 		);
 		
 	}
