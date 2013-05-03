@@ -31,7 +31,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_import_friend_manually, SlidingMenuSupport.FRIENDS_POSITION);
+		super.onCreate(savedInstanceState, R.layout.activity_friend_import_manually, SlidingMenuSupport.FRIENDS_POSITION);
 	}
 
 	
@@ -165,6 +165,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		}		
 		
 		Intent intent = new Intent("com.p2c.thelife.Friends");
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
 
