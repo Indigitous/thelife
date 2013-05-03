@@ -94,7 +94,7 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 	}
 	
 	/**
-	 * Friend has been selected.
+	 * Deed/activity has been selected.
 	 * @param view
 	 * @return
 	 */
@@ -110,6 +110,23 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 		
 		return true;
 	}
+	
+	
+	/**
+	 * Owner wants to change their friend's threshold.
+	 * @param view
+	 * @return
+	 */
+	public boolean changeThreshold(View view) {
+		
+		Intent intent = new Intent("com.p2c.thelife.DeedForFriend");
+		intent.putExtra("deed_id", m_adapter.getChangeThresholdId());
+		intent.putExtra("friend_id", m_friend.id);
+		startActivity(intent);		
+		
+		return true;
+	}
+	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	

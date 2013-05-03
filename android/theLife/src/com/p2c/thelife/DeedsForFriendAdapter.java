@@ -28,6 +28,8 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 	private Context m_context = null;
 	private FriendModel m_friend = null;
 	private ArrayList<CategoryModel> m_categories = null;
+	private int m_changeThresholdId = 0;
+	
 	
 	public DeedsForFriendAdapter(Context context, FriendModel friend) {
 		
@@ -68,10 +70,15 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 		// find all the deeds/activities applicable to the friend's threshold	
 		ArrayList<DeedModel> deeds = TheLifeConfiguration.getDeedsDS().findByThreshold(m_friend.threshold);
 		
-		// Add each deed to the categories list
+		// Add each deed (except Change Threshold) to the categories list
 		// Since only a few categories are likely to exist, this should not be too inefficient.
 		for (DeedModel deed:deeds) {
-			addDeedToCategories(deed);
+			if (!deed.isChangeThreshold()) {
+				addDeedToCategories(deed);
+			} else {
+				m_changeThresholdId = deed.id;
+			}
+				
 		}
 		
 		// Now see if the null category was needed after all.
@@ -112,6 +119,13 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 	}
 	
 	
+	/**
+	 * @return the id of the Change Threshold deed/activity
+	 */
+	public int getChangeThresholdId() {
+		return m_changeThresholdId;
+	}
+	
 	@Override
 	public boolean areAllItemsEnabled() {
 		return true;
@@ -147,7 +161,7 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 //		imageView.setImageBitmap(deed.image); // TODO when deed/activity images are supported
 		
 		TextView textView = (TextView)deedView.findViewById(R.id.deed_title);
-		textView.setText(deed.title); // TODO: templates for deed title?
+		textView.setText(deed.title);
 		
 		deedView.setTag(deed);
 		

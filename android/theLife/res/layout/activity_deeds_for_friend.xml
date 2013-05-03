@@ -9,23 +9,48 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".DeedsForFriendActivity" >
     
- 	<TextView 
-      	android:id="@+id/deeds_for_friend_name"  
-        android:text="Place Holder"
-		android:textAppearance="?android:attr/textAppearanceLarge"            
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"    	    	        
-        />    
+    <LinearLayout
+		android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal" >        
+    
+	    <LinearLayout 
+			android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	        android:layout_weight="1"	    	
+	    	android:orientation="vertical" >
+	    	
+		 	<TextView 
+		      	android:id="@+id/deeds_for_friend_name"  
+		        android:text="Place Holder"
+				android:textAppearance="?android:attr/textAppearanceLarge"            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"    	    	        
+		        />    
+		
+		    <TextView
+		        android:id="@+id/deeds_for_friend_threshold"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceMedium"            
+		        android:text="Threshold"
+		        android:textStyle="italic"
+		        android:onClick="selectDeed"
+		        />
+	    </LinearLayout>
 
-    <TextView
-        android:id="@+id/deeds_for_friend_threshold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"            
-        android:text="Threshold"
-        android:textStyle="italic"
-        android:onClick="selectDeed"
-        />
+	    <Button
+	        android:id="@+id/deeds_for_friend_change_threshold"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0"
+	        android:layout_gravity="right"
+	        android:background="@drawable/round_gray"
+	        android:textAppearance="?android:attr/textAppearanceSmall"            
+	        android:text="@string/change_threshold_label"
+	        android:onClick="changeThreshold" />
+    
+    </LinearLayout>
     
 	<ExpandableListView
 	    android:id="@+id/deeds_for_friend_list"

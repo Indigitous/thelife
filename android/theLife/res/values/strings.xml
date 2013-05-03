@@ -99,7 +99,7 @@
     <string name="invite_person_to_group">Invite person to group</string>
     <string name="inviting_person">Inviting person</string>
     <string name="pledge_error_from_server">Error sending prayer pledge to server.</string>
-    <string name="change_threshold">Change threshold</string>
+    <string name="change_threshold_prompt">Change threshold?</string>
     <string name="pray">Pray</string>
     <string name="prayed">Prayed</string>
     <string name="people_prayed_singular">1 Person prayed</string>
@@ -147,5 +147,6 @@ We at theLife understand that evangelism is hard. Without a like-minded communit
 To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.\n\n</string>
     <string name="done">Done</string>
     <string name="deleting_notification">Deleting notification</string>
+    <string name="change_threshold_label">Change\nThreshold</string>
 
 </resources>

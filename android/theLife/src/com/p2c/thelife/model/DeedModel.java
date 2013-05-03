@@ -65,6 +65,15 @@ public class DeedModel extends AbstractModel {
 	}
 	
 	
+	/**
+	 * Whether or not the deed/activity is ChangeThreshold. 
+	 * @return
+	 */
+	public boolean isChangeThreshold() {
+		return hasThreshold; // For now, a Change Threshold deed/activity is simply one with hasThreshold
+	}
+	
+	
 	public static DeedModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 				
 		// set up the thresholds
