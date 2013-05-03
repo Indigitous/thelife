@@ -35,7 +35,7 @@
 	       android:layout_height="wrap_content"
 	       android:layout_weight="1"
 	       android:layout_gravity="center_vertical"
-	       android:paddingLeft="2dp"
+	       android:paddingLeft="4dp"
 	       android:textColor="#ffffff"
 	       android:textAppearance="?android:attr/textAppearanceMedium"
 	       android:text="@string/notification_plural" />
