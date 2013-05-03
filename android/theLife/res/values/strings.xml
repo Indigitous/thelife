@@ -25,7 +25,7 @@
     <string name="import_by_phone">Mobile Phone</string>
     <string name="import_by_facebook">Facebook</string>
     <string name="import_manually">Manual Entry</string>
-    <string name="import_label">Import</string>
+    <string name="import_label">Add</string>
     <string name="add_friend">Add Friend</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
