@@ -90,6 +90,7 @@ public class EventModel extends AbstractModel {
 		if (paramUserName == null) {
 			paramUserName = "???";
 		}
+		paramUserName = "<b>" + paramUserName + "</b>";		
 		
 		// friend name parameter
 		String paramFriendName = this.friendName;
@@ -102,11 +103,12 @@ public class EventModel extends AbstractModel {
 		if (paramFriendName == null) {
 			paramFriendName = "???";
 		}
+		paramFriendName = "<b>" + paramFriendName + "</b>";
 		
 		finalDescription = description.replace("$u", paramUserName);
 		finalDescription = finalDescription.replace("$f", paramFriendName);
 		if (thresholdString != null) {
-			finalDescription = finalDescription.replace("$t", thresholdString);
+			finalDescription = finalDescription.replace("$t", "<b>" + thresholdString + "</b>");
 		}
 		
 		return finalDescription;
