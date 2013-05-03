@@ -97,7 +97,7 @@ public class FriendsActivity
 			intent.putExtra("home", "com.p2c.thelife.Friends");
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_new) {
-			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
+			Intent intent = new Intent("com.p2c.thelife.FriendImportManually");
 			startActivity(intent);
 		} else if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");

@@ -46,7 +46,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
-			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
+			Intent intent = new Intent("com.p2c.thelife.Friends");
 			startActivity(intent);
 		}
 		
