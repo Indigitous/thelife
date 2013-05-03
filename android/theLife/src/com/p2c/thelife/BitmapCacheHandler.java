@@ -210,9 +210,7 @@ public class BitmapCacheHandler extends Handler {
 	 */
 	@Override
 	public void handleMessage(Message message) {
-		
-System.out.println("BitmapCacheHandler got message " + message);
-		
+				
 		// parse the message
 		String dataType = null;
 		String imageType = null;

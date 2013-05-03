@@ -524,9 +524,7 @@ public class Server {
 					
 					HttpResponse httpResponse = httpClient.execute(m_httpRequest);
 					m_httpCode = httpResponse.getStatusLine().getStatusCode();
-					
-					System.out.println("HERE IS THE STATUS CODE " + m_httpCode);
-					
+										
 					String jsonString = null;
 					httpEntity = httpResponse.getEntity();
 					

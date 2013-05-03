@@ -101,7 +101,6 @@ public class ImageSelectSupport {
 				options.inJustDecodeBounds = true;
 				BitmapFactory.decodeStream(is, null, options);
 				is.close();
-				System.out.println("GOT AN EXTERNAL BITMAP SIZE HxW " + options.outHeight + "x" + options.outWidth);			
 				
 				// second pass: get the scaled down version of the image
 				is = m_context.getContentResolver().openInputStream(params[0]);

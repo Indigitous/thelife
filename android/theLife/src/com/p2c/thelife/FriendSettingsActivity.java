@@ -171,9 +171,7 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 	 * Update the image on the server.
 	 * @param bitmap
 	 */
-	private void updateImageOnServer(Bitmap bitmap) {
-		System.out.println("GOT A BITMAP SIZE hxw " + bitmap.getHeight() + "x" + bitmap.getWidth());
-		
+	private void updateImageOnServer(Bitmap bitmap) {		
 		BitmapCacheHandler.saveBitmapToCache("friends", m_friend.id, "image", bitmap);								
 		Server server = new Server(this);
 		server.updateImage("friends", m_friend.id, this, "updateImage");
