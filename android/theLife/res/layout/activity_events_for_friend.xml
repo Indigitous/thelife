@@ -34,7 +34,8 @@
     	        android:text="What's Next?"
     	        android:layout_gravity="right"    	        
     			android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"    
+    			android:layout_height="wrap_content"
+    			android:background="@drawable/round_dark_gray" 
     			android:onClick="presentActivities"	        
     	        />
     	    
