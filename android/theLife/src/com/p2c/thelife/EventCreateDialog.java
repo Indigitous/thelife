@@ -72,7 +72,7 @@ public class EventCreateDialog extends ServerAccessDialogAbstract {
 		
 		if (deed.hasThreshold) {
 			Spinner thresholdField = (Spinner)view.findViewById(R.id.change_threshold);
-			int thresholdIndex = thresholdField.getSelectedItemPosition();
+			int thresholdIndex = thresholdField.getSelectedItemPosition() + 1;  // add 1 because the first threshold, NewContact, is not shown
 			threshold = FriendModel.thresholdValues[thresholdIndex];
 		}
 		
