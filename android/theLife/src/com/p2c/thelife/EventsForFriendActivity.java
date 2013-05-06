@@ -157,6 +157,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	public boolean onOptionsItemSelected(MenuItem item) {		
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.Friends");
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_help) {
 			Intent intent = new Intent("com.p2c.thelife.Help");

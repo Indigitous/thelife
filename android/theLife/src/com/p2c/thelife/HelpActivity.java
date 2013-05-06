@@ -54,6 +54,7 @@ public class HelpActivity extends SlidingMenuPollingActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent(m_home);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
 			
 			// add the parameters to the intent
 			if (m_groupId != 0) {
@@ -64,9 +65,6 @@ public class HelpActivity extends SlidingMenuPollingActivity {
 			}
 			if (m_deedId != 0) {
 				intent.putExtra("deed_id", m_deedId);
-			}			
-			if (m_shouldClear) {
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			}
 			
 			// start the intent

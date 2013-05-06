@@ -124,6 +124,7 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.EventsForFriend");
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);						
 			intent.putExtra("friend_id", m_friend.id);			
 			startActivity(intent);
 		}

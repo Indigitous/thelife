@@ -52,6 +52,7 @@ public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity imp
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.Groups");
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
 			startActivity(intent);			
 		} else if (item.getItemId() == R.id.action_help) {
 			Intent intent = new Intent("com.p2c.thelife.Help");
