@@ -20,7 +20,9 @@ public class OwnerDS {
 	
 	// app user and authentication token
 	private UserModel m_user = null;
-	private String m_token = null;	
+	private String m_token = null;
+	private boolean m_hasAddedFriend = false;
+	
 	
 	public interface DSChangedListener {
 		public void notifyOwnerDSChanged();
@@ -40,7 +42,8 @@ public class OwnerDS {
 			m_user = new UserModel(userId, firstName, lastName, email, mobile);
 		}
 		
-		m_token = systemSettings.getString("token", "");		
+		m_token = systemSettings.getString("token", "");
+		m_hasAddedFriend = systemSettings.getBoolean("hasAddedFriend", false);
 	}
 	
 	
@@ -98,6 +101,26 @@ public class OwnerDS {
 		systemSettingsEditor.putString("token", m_token);
 		systemSettingsEditor.commit();				
 	}	
+	
+	
+	/**
+	 * @return whether or not the user has added a friend before now
+	 */
+	public boolean getHasAddedFriend() {
+		return m_hasAddedFriend;
+	}
+	
+	
+	/**
+	 * @param hasAddedFriend	whether or not the user has added a friend before now
+	 */
+	public void setHasAddedFriend(boolean hasAddedFriend) {
+		m_hasAddedFriend = hasAddedFriend;
+		
+		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
+		systemSettingsEditor.putBoolean("has_added_friend", m_hasAddedFriend);
+		systemSettingsEditor.commit();			
+	}
 		
 	
 	

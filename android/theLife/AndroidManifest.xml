@@ -141,7 +141,6 @@
         <activity
             android:name="com.p2c.thelife.FriendImportManuallyActivity"
             android:label="@string/title_friend_import"
-            android:noHistory="true"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.FriendImportManually" />
@@ -187,16 +186,6 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Settings" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.p2c.thelife.TestActivity"
-            android:label="@string/title_activity_test"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.p2c.thelife.Test" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

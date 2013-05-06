@@ -141,10 +141,9 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
 			Intent intent = new Intent("com.p2c.thelife.Help");
-			intent.putExtra("layout", R.layout.activity_community_help);
+			intent.putExtra("layout", R.layout.activity_events_for_community_help);
 			intent.putExtra("position", SlidingMenuSupport.COMMUNITY_POSITION);
 			intent.putExtra("home", "com.p2c.thelife.EventsForCommunity");
-			intent.putExtra("shouldClear", true);
 			startActivity(intent);
 		}
 		

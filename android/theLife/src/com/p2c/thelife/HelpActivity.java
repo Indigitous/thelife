@@ -2,6 +2,7 @@ package com.p2c.thelife;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -20,7 +21,6 @@ public class HelpActivity extends SlidingMenuPollingActivity {
 	private int m_friendId = 0;
 	private int m_deedId = 0;
 	private String m_home = null;
-	private boolean m_shouldClear = false;
 
 	
 	
@@ -30,15 +30,20 @@ public class HelpActivity extends SlidingMenuPollingActivity {
 		// read the setup values from the intent
 		int layout = getIntent().getIntExtra("layout", 0);
 		int position = getIntent().getIntExtra("position", 0);
-		
 		super.onCreate(savedInstanceState, layout, position);
+		
+		// look for any HTML data
+		String webViewData = getIntent().getStringExtra("webview_data");
+		if (webViewData != null) {
+			WebView webView = (WebView)findViewById(R.id.help_message_webview);
+			webView.loadData(webViewData, "text/html", null);
+		}
 		
 		// read the remaining values 
 		m_groupId = getIntent().getIntExtra("group_id", 0);
 		m_friendId = getIntent().getIntExtra("friend_id", 0);
 		m_deedId = getIntent().getIntExtra("deed_id", 0);
 		m_home = getIntent().getStringExtra("home");
-		m_shouldClear = getIntent().getBooleanExtra("shouldClear", false);
 	}
 
 	

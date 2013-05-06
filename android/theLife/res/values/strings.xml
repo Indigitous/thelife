@@ -158,5 +158,19 @@ To keep motivated and active, we recommend you either join or start a theLife Ap
     <string name="done">Done</string>
     <string name="deleting_notification">Deleting notification</string>
     <string name="change_threshold_label">Change\nThreshold</string>
+    
+    <string name="first_time_adding_friend_help">
+&lt;h2>Help for user adding a friend for the first time.&lt;/h2>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+</string>
 
 </resources>

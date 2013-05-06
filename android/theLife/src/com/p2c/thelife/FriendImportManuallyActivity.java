@@ -2,11 +2,14 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -32,6 +35,26 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_friend_import_manually, SlidingMenuSupport.FRIENDS_POSITION);
+		
+		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend()) {
+			showFirstTimeHelp();
+		}
+	}
+	
+	private void showFirstTimeHelp() {
+		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				
+		LayoutInflater inflater = LayoutInflater.from(this);
+		final View view = inflater.inflate(R.layout.dialog_first_time_adding_friend_help, null);
+		WebView webView = (WebView)view.findViewById(R.id.dialog_help_message);
+		webView.loadData(getResources().getString(R.string.first_time_adding_friend_help), "text/html", null);
+		alertBuilder.setView(view);
+
+		// set the buttons of the alert
+		alertBuilder.setNeutralButton(R.string.done, null);	
+				
+		// display it
+		alertBuilder.show();
 	}
 
 	
@@ -48,6 +71,13 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.Friends");
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);						
+			startActivity(intent);
+		}  else if (item.getItemId() == R.id.action_help) {
+			Intent intent = new Intent("com.p2c.thelife.Help");
+			intent.putExtra("layout", R.layout.activity_friend_import_manually_help);
+			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.FriendImportManually");
+			intent.putExtra("webview_data", getResources().getString(R.string.first_time_adding_friend_help));
 			startActivity(intent);
 		}
 		
