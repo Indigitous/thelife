@@ -98,7 +98,7 @@ public class BitmapCacheHandler extends Handler {
 			}
 			
 		} catch (Exception e) {
-			Log.e(TAG, "getBitmapAtURLSafe() ", e); //  + e.getMessage() + e.getCause());
+			Log.e(TAG, "getBitmapAtURLSafe() ", e);
 		} finally {
 			if (is != null) {
 				try { is.close(); } catch (IOException e) { }

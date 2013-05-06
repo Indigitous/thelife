@@ -497,7 +497,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					Log.wtf(TAG, "readFromServer()", e);
 				} catch (java.net.SocketTimeoutException e) {
 					m_connectionTimeout = true;
-					Log.e(TAG, "readFromServer()", e);
+					Log.e(TAG, "readFromServer() CONNECTION TIMEOUT " + e.getMessage());
 				} catch (IOException e) {
 					Log.e(TAG, "readFromServer()", e);				
 				} finally {
