@@ -51,17 +51,24 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	public void register(View view) {
 		EditText emailField = (EditText)findViewById(R.id.setup_register_email);
 		String email = emailField.getText().toString();
-		EditText passwordField = (EditText)findViewById(R.id.setup_register_password);
-		String password = passwordField.getText().toString();
 		EditText firstNameField = (EditText)findViewById(R.id.setup_register_first_name);
 		String firstName = firstNameField.getText().toString();
 		EditText lastNameField = (EditText)findViewById(R.id.setup_register_last_name);
 		String lastName = lastNameField.getText().toString();
-
-		// send the registration to the server
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);		
-		Server server = new Server(this);
-		server.register(email, password, firstName, lastName, this, "register");		
+		
+		EditText passwordField = (EditText)findViewById(R.id.setup_register_password);
+		String password = passwordField.getText().toString();
+		EditText passwordFieldConfirm = (EditText)findViewById(R.id.setup_register_password_confirm);
+		String passwordConfirm = passwordFieldConfirm.getText().toString();
+		
+		if (!password.equals(passwordConfirm)) {
+			Toast.makeText(this, R.string.different_passwords_error, Toast.LENGTH_SHORT).show();
+		} else {
+			// send the registration to the server
+			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);		
+			Server server = new Server(this);
+			server.register(email, password, firstName, lastName, this, "register");
+		}
 	}
 	
 	

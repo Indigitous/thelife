@@ -38,7 +38,9 @@
     <string name="login_prompt">Please login to your account.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="password_confirm">Password Confirm</string>    
     <string name="register_prompt">Please register for an account.</string>
+    <string name="different_passwords_error">Passwords must be the same</string>
 
     <!-- Note these threshold arrays must be in the same order as FriendModel.Threshold -->
     <string-array name="thresholds_short_all">
