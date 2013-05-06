@@ -73,7 +73,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
         for (String s: commandList) {
             commands.add(s);
         }
-        commands.add("TEST"); // TODO debugging
+//        commands.add("TEST"); // TODO debugging
         commandsView.setAdapter(commands);
         
         // listen for a sliding menu selection
@@ -112,9 +112,9 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	        				break;
 	        				
 	        			// debugging
-	        			case TEST_POSITION: 
-	        				m_activity.startActivity(new Intent("com.p2c.thelife.Test"));
-	        				break;  	        				
+//	        			case TEST_POSITION: 
+//	        				m_activity.startActivity(new Intent("com.p2c.thelife.Test"));
+//	        				break;  	        				
 	        		}
         		}
 			}
