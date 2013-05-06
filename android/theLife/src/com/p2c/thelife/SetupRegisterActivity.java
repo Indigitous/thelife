@@ -56,11 +56,11 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		EditText lastNameField = (EditText)findViewById(R.id.setup_register_last_name);
 		String lastName = lastNameField.getText().toString();
 		
+		// make sure the passwords agree
 		EditText passwordField = (EditText)findViewById(R.id.setup_register_password);
 		String password = passwordField.getText().toString();
 		EditText passwordFieldConfirm = (EditText)findViewById(R.id.setup_register_password_confirm);
 		String passwordConfirm = passwordFieldConfirm.getText().toString();
-		
 		if (!password.equals(passwordConfirm)) {
 			Toast.makeText(this, R.string.different_passwords_error, Toast.LENGTH_SHORT).show();
 		} else {
