@@ -56,7 +56,7 @@
         <item>Nouveau contact</item>
         <item>Faire confiance à un chrétien</item>
         <item>Devenir curieux</item>
-        <item>S'ouvrir au changement</item>
+        <item>S\'ouvrir au changement</item>
         <item>Devenir chercheur</item>
         <item>Entrer dans le Royaume</item>
         <item>Chrétien</item>
@@ -64,7 +64,7 @@
     <string-array name="thresholds_medium_change">
         <item>Faire confiance à un chrétien</item>
         <item>Devenir curieux</item>
-        <item>S'ouvrir au changement</item>
+        <item>S\'ouvrir au changement</item>
         <item>Devenir chercheur</item>
         <item>Entrer dans le Royaume</item>
         <item>Chrétien</item>
@@ -76,8 +76,8 @@
     <string name="request_join_group_prompt">Voulez-vous vous joindre à %1$s?</string>
     <string name="waiting">attente&#8230;"</string>
     <string name="creating_new_group">Création du groupe"</string>
-    <string name="deleting_friend">Suppression d'ami"</string>
-    <string name="adding_friend">Rajout d'ami"</string>
+    <string name="deleting_friend">Suppression d\'ami"</string>
+    <string name="adding_friend">Rajout d\'ami"</string>
     <string name="requesting_to_join_group">"Envoie de demande"</string>
     <string name="retrieving_account">"Téléchargement du compte"</string>
     <string name="creating_account">"Création du compte"</string>
@@ -93,7 +93,7 @@
     <string name="invite_request_accepted_description">&lt;b>%1$s&lt;/b> a accepté votre invitation au groupe &lt;b>%2$s&lt;/b>.</string>
     <string name="invite_request_rejected_description">&lt;b>%1$s&lt;/b> a rejeté votre invitation au groupe &lt;b>%2$s&lt;/b>.</string>
     <string name="rejecting_request">Rejection de la demande</string>
-    <string name="creating_new_event">Création de l'événement</string>
+    <string name="creating_new_event">Création de l\'événement</string>
     <string name="first_name">Prénom</string>
     <string name="last_name">Nom</string>
     <string name="email">Adresse e-mail</string>
@@ -102,13 +102,13 @@
     <string name="storing_friend_account">"Enregistrement du compte"</string>
     <string name="delete_group_prompt">Supprimer le groupe &lt;b>%1$s&lt;/b>?</string>
     <string name="deleting_group">Suppression du groupe"</string>
-    <string name="cannot_delete_group">Vous ne pouvez pas supprimer le groupe &lt;b>%1$s&lt;/b>. Vous n'êtes pas le leader du groupe.</string>
-    <string name="deleting_user">Désabonnement de l'utilisateur du groupe."</string>
-    <string name="delete_user_from_group_prompt">Désabonner l'utilisateur &lt;b>%1$s&lt;/b> du groupe &lt;b>%2$s&lt;/b>?</string>
-    <string name="cannot_delete_user_from_group">Vous ne pouvez pas désabonner  &lt;b>%1$s&lt;/b> du groupe &lt;b>%2$s&lt;/b>. Vous n'êtes pas le leader du groupe.</string>
-    <string name="invite_person_to_group">Inviter quelqu'un au groupe</string>
-    <string name="inviting_person">Envoi de l'invitation</string>
-    <string name="pledge_error_from_server">Erreur : incapable d'enregistrer la prière.</string>
+    <string name="cannot_delete_group">Vous ne pouvez pas supprimer le groupe &lt;b>%1$s&lt;/b>. Vous n\'êtes pas le leader du groupe.</string>
+    <string name="deleting_user">Désabonnement de l\'utilisateur du groupe."</string>
+    <string name="delete_user_from_group_prompt">Désabonner l\'utilisateur &lt;b>%1$s&lt;/b> du groupe &lt;b>%2$s&lt;/b>?</string>
+    <string name="cannot_delete_user_from_group">Vous ne pouvez pas désabonner  &lt;b>%1$s&lt;/b> du groupe &lt;b>%2$s&lt;/b>. Vous n\'êtes pas le leader du groupe.</string>
+    <string name="invite_person_to_group">Inviter quelqu\'un au groupe</string>
+    <string name="inviting_person">Envoi de l\'invitation</string>
+    <string name="pledge_error_from_server">Erreur : incapable d\'enregistrer la prière.</string>
     <string name="change_threshold_prompt">Changer le seuil</string>
     <string name="pray">Prier</string>
     <string name="prayed">Prié</string>
@@ -129,25 +129,25 @@
     <string name="title_register">Vous enregistrer</string>
     <string name="title_friend_import">Nouveau ami</string>
     <string name="title_new_user_help">Introduction</string>
-    <string name="title_friend_settings">Modification d'ami</string>
+    <string name="title_friend_settings">Modification d\'ami</string>
     <string name="title_friends_help">Aide</string>
     <string name="title_groups_help">Aide</string>
-    <string name="login_failed">Mauvais nom d'utilisateur ou mot de passe</string>
-    <string name="registration_failed">Erreur d'inscription</string>
+    <string name="login_failed">Mauvais nom d\'utilisateur ou mot de passe</string>
+    <string name="registration_failed">Erreur d\'inscription</string>
     <string name="registration_successful">Inscription terminé</string>
     <string name="querying">En recherche</string>
     <string name="confirm_update_image">Changer votre photo?</string>
     <string name="get_camera_photo">De la caméra"</string>
     <string name="get_gallery_photo">De la galerie</string>
-    <string name="processing_image">Traitement de l'image</string>
-    <string name="friend_import_error">Erreur d'importation d'ami</string>
+    <string name="processing_image">Traitement de l\'image</string>
+    <string name="friend_import_error">Erreur d\'importation d\'ami</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="logout_prompt">Voulez-vous vous déconnecter?</string>
-    <string name="no_community_events">Il n'y a pas encore d'événement dans votre flux communautaire.</string>
-    <string name="no_friend_events">Il n'y a pas encore d'événement pour cet ami.</string>
-    <string name="no_groups">Vous n'êtes pas encore membre d'aucun groupe.</string>
-    <string name="no_friends">Vous n'avez pas encore d'ami.</string>
-    <string name="no_requests">Il n'y a pas de notifications.</string>
+    <string name="no_community_events">Il n\'y a pas encore d\'événement dans votre flux communautaire.</string>
+    <string name="no_friend_events">Il n\'y a pas encore d\'événement pour cet ami.</string>
+    <string name="no_groups">Vous n\'êtes pas encore membre d\'aucun groupe.</string>
+    <string name="no_friends">Vous n\'avez pas encore d\'ami.</string>
+    <string name="no_requests">Il n\'y a pas de notifications.</string>
     <string name="null_category_name">Autres</string>
     <string name="null_category_description">Autres activités</string>
     <string name="done">Ok</string>
