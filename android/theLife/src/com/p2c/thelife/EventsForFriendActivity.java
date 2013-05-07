@@ -103,13 +103,30 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 	 */
 	private void showFirstTimeUsingThresholdHelp(FriendModel.Threshold threshold) {
 		
+		// set the view
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);			
 		LayoutInflater inflater = LayoutInflater.from(this);
 		final View view = inflater.inflate(R.layout.dialog_first_time_using_threshold_help, null);
-		WebView webView = (WebView)view.findViewById(R.id.dialog_using_threshold_help_message);
+		WebView webView = (WebView)view.findViewById(R.id.dialog_using_threshold_help_message);		
+		webView.loadData(getThresholdHelp(threshold), "text/html", null);
+		alertBuilder.setView(view);
+
+		// set the buttons of the alert
+		alertBuilder.setNeutralButton(R.string.done, null);	
+				
+		// display it
+		alertBuilder.show();			
+	}
+	
+	
+	
+	private String getThresholdHelp(FriendModel.Threshold threshold) {
 		
 		int resourceId = -1;
 		switch (threshold) {
+			case NewContact:
+				resourceId = R.string.using_new_contact_threshold_help;
+				break;		
 			case Trusting:
 				resourceId = R.string.first_time_using_trusting_threshold_help;
 				break;
@@ -131,16 +148,8 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 			default:
 				Log.e(TAG, "Can't give first time threshold help for threshold " + threshold);
 		}
-		if (resourceId != -1) {
-			webView.loadData(getResources().getString(resourceId), "text/html", null);
-		}
-		alertBuilder.setView(view);
-
-		// set the buttons of the alert
-		alertBuilder.setNeutralButton(R.string.done, null);	
-				
-		// display it
-		alertBuilder.show();			
+		
+		return (resourceId != -1) ? getResources().getString(resourceId) : "";
 	}
 	
 	
@@ -219,6 +228,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 			Intent intent = new Intent("com.p2c.thelife.Help");
 			intent.putExtra("layout", R.layout.activity_events_for_friend_help);
 			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
+			intent.putExtra("webview_data", getThresholdHelp(m_friend.threshold));
 			intent.putExtra("home", "com.p2c.thelife.EventsForFriend");
 			intent.putExtra("friend_id", m_friend.id);			
 			startActivity(intent);

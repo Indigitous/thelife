@@ -32,4 +32,9 @@ To keep motivated and active, we recommend you either join or start a theLife Ap
 &lt;h3>Help for using threshold &lt;i>Follower of Jesus&lt;/i>&lt;/h3>
 </string>
 
+	<!-- added May 7, 2013 -->
+	<string name="using_new_contact_threshold_help">
+&lt;h3>Help for using threshold &lt;i>New Contact&lt;/i>&lt;/h3>
+</string>	
+
 </resources>
