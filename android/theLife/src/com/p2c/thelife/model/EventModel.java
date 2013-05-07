@@ -49,7 +49,7 @@ public class EventModel extends AbstractModel {
 		this.pledgeCount = pledgeCount;
 		this.hasPledged = hasPledged;
 		
-		// set the threshold and threshold short string if the threshold is part of the event
+		// set the threshold if the threshold is part of the event
 		this.threshold = null;
 		if (threshold_id != 0) {
 			this.threshold = FriendModel.thresholdId2Threshold(threshold_id);
