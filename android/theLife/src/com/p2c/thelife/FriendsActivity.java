@@ -54,7 +54,9 @@ public class FriendsActivity
 		friendsGrid.setOnItemLongClickListener(this);
 		
 		// show help if owner just added a friend for the first time
-		if (getIntent().getBooleanExtra("added_friend_first_time", false)) {
+		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend() && 
+			TheLifeConfiguration.getFriendsDS().count() > 0) {
+			TheLifeConfiguration.getOwnerDS().setHasAddedFriend();
 			showFirstTimeAddingFriendHelp();
 		}
 	}

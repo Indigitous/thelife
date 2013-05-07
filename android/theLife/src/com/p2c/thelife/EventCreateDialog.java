@@ -20,7 +20,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class EventCreateDialog extends ServerAccessDialogAbstract implements OnItemSelectedListener {
+public class EventCreateDialog extends ServerAccessDialogAbstract {
 	
 	private static final String TAG = "EventCreateDialog";
 	
@@ -34,8 +34,6 @@ public class EventCreateDialog extends ServerAccessDialogAbstract implements OnI
 				
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		final View view = inflater.inflate(R.layout.dialog_change_threshold, null);
-		Spinner spinner = (Spinner)view.findViewById(R.id.change_threshold);
-		spinner.setOnItemSelectedListener(this);
 		
 		// set the message and content of the alert
 		if (deed.hasThreshold) {
@@ -69,65 +67,6 @@ public class EventCreateDialog extends ServerAccessDialogAbstract implements OnI
 		
 		return alertBuilder.create();				
 	}
-	
-	
-	/**
-	 * Listen for a selected threshold -- to show help if the threshold has not been used before.
-	 */
-	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		FriendModel.Threshold threshold = getThreshold((Spinner)arg0);	
-		
-		if (!TheLifeConfiguration.getOwnerDS().getHasUsedThreshold(threshold))
-		{
-			// show help for this threshold, since it has not been used before now
-			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());			
-			LayoutInflater inflater = LayoutInflater.from(getActivity());
-			final View view = inflater.inflate(R.layout.dialog_first_time_using_threshold_help, null);
-			WebView webView = (WebView)view.findViewById(R.id.dialog_using_threshold_help_message);
-			
-			int resourceId = -1;
-			switch (threshold) {
-				case Trusting:
-					resourceId = R.string.first_time_using_trusting_threshold_help;
-					break;
-				case Curious:
-					resourceId = R.string.first_time_using_curious_threshold_help;					
-					break;
-				case Open:
-					resourceId = R.string.first_time_using_open_threshold_help;					
-					break;
-				case Seeking:
-					resourceId = R.string.first_time_using_seeking_threshold_help;					
-					break;
-				case Entering:
-					resourceId = R.string.first_time_using_entering_threshold_help;
-					break;
-				case Christian:
-					resourceId = R.string.first_time_using_christian_threshold_help;					
-					break;
-				default:
-					Log.e(TAG, "Can't give first time threshold help for threshold " + threshold);
-			}
-			if (resourceId != -1) {
-				webView.loadData(getResources().getString(resourceId), "text/html", null);
-			}
-			alertBuilder.setView(view);
-
-			// set the buttons of the alert
-			alertBuilder.setNeutralButton(R.string.done, null);	
-					
-			// display it
-			alertBuilder.show();			
-		}
-	}
-
-	
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 		
 	
 	/**
@@ -139,15 +78,10 @@ public class EventCreateDialog extends ServerAccessDialogAbstract implements OnI
 		
 		if (deed.hasThreshold) {
 			Spinner thresholdField = (Spinner)view.findViewById(R.id.change_threshold);
-			return getThreshold(thresholdField);
+			return FriendModel.thresholdValues[thresholdField.getSelectedItemPosition() + 1];  // add 1 because the first threshold, NewContact, is not shown
 		}
 		
 		return threshold;
-	}
-	
-	
-	private FriendModel.Threshold getThreshold(Spinner view) {
-		return FriendModel.thresholdValues[view.getSelectedItemPosition() + 1];  // add 1 because the first threshold, NewContact, is not shown
 	}
 
 }

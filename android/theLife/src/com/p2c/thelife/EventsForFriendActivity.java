@@ -5,7 +5,10 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,8 +17,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.Server.ServerListener;
 import com.p2c.thelife.model.EventModel;
-import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.EventsDS;
+import com.p2c.thelife.model.FriendModel;
 
 /**
  * This activity uses polling to get new events into the data store and display while the activity is visible.
@@ -85,8 +88,61 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 					m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);
 				}
 			}
-		};		
+		};
+		
+		// show help if owner just used a threshold for the first time
+		if (!TheLifeConfiguration.getOwnerDS().getHasUsedThreshold(m_friend.threshold)) {
+			TheLifeConfiguration.getOwnerDS().setHasUsedThreshold(m_friend.threshold);
+			showFirstTimeUsingThresholdHelp(m_friend.threshold);
+		}		
 	}
+	
+	
+	/**
+	 * Show help for this threshold, since it has not been used before now
+	 */
+	private void showFirstTimeUsingThresholdHelp(FriendModel.Threshold threshold) {
+		
+		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);			
+		LayoutInflater inflater = LayoutInflater.from(this);
+		final View view = inflater.inflate(R.layout.dialog_first_time_using_threshold_help, null);
+		WebView webView = (WebView)view.findViewById(R.id.dialog_using_threshold_help_message);
+		
+		int resourceId = -1;
+		switch (threshold) {
+			case Trusting:
+				resourceId = R.string.first_time_using_trusting_threshold_help;
+				break;
+			case Curious:
+				resourceId = R.string.first_time_using_curious_threshold_help;					
+				break;
+			case Open:
+				resourceId = R.string.first_time_using_open_threshold_help;					
+				break;
+			case Seeking:
+				resourceId = R.string.first_time_using_seeking_threshold_help;					
+				break;
+			case Entering:
+				resourceId = R.string.first_time_using_entering_threshold_help;
+				break;
+			case Christian:
+				resourceId = R.string.first_time_using_christian_threshold_help;					
+				break;
+			default:
+				Log.e(TAG, "Can't give first time threshold help for threshold " + threshold);
+		}
+		if (resourceId != -1) {
+			webView.loadData(getResources().getString(resourceId), "text/html", null);
+		}
+		alertBuilder.setView(view);
+
+		// set the buttons of the alert
+		alertBuilder.setNeutralButton(R.string.done, null);	
+				
+		// display it
+		alertBuilder.show();			
+	}
+	
 	
 	
 	/**

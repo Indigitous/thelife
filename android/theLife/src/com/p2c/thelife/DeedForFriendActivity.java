@@ -130,9 +130,9 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 					TheLifeConfiguration.getEventsDS().add(event);
 					TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
 					
-					// remember if a threshold was used
-					if (event.threshold != null && !TheLifeConfiguration.getOwnerDS().getHasUsedThreshold(event.threshold)) {
-						TheLifeConfiguration.getOwnerDS().setHasUsedThreshold(event.threshold);
+					// set the friend's threshold if necessary
+					if (event.threshold != null) {
+						m_friend.threshold = event.threshold;
 					}
 				} catch (Exception e) {
 					Log.e(TAG, "notifyServerResponseAvailable()", e);
@@ -140,7 +140,8 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 				TheLifeConfiguration.getEventsDS().forceRefresh(null);
 								
 				// back to the friends screen
-				Intent intent = new Intent("com.p2c.thelife.Friends");
+				Intent intent = new Intent("com.p2c.thelife.EventsForFriend");
+				intent.putExtra("friend_id", m_friend.id);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);							
 			}

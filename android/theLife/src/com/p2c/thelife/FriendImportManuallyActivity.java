@@ -180,13 +180,6 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		
 		Intent intent = new Intent("com.p2c.thelife.Friends");
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		
-		// flag to the destination that the owner has added a friend for the first time
-		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend()) {
-			TheLifeConfiguration.getOwnerDS().setHasAddedFriend();
-			intent.putExtra("added_friend_first_time", true);		
-		}
-		
 		startActivity(intent);
 	}
 
