@@ -8,9 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HelpActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <WebView
+        android:id="@+id/help_message_webview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Events For Friend Help in here" />
+        android:text="Events For Friend Help in here"
+        />
 
 </RelativeLayout>
