@@ -193,7 +193,12 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 			m_progressDialog = null;
-		}		
+		}
+		
+		// remember that the user has added a friend (to avoid first time help)
+		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend()) {
+			TheLifeConfiguration.getOwnerDS().setHasAddedFriend(true);
+		}
 		
 		Intent intent = new Intent("com.p2c.thelife.Friends");
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
