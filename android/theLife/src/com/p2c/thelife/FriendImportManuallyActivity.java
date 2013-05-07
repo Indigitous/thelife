@@ -35,26 +35,6 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_friend_import_manually, SlidingMenuSupport.FRIENDS_POSITION);
-		
-		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend()) {
-			showFirstTimeHelp();
-		}
-	}
-	
-	private void showFirstTimeHelp() {
-		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-				
-		LayoutInflater inflater = LayoutInflater.from(this);
-		final View view = inflater.inflate(R.layout.dialog_first_time_adding_friend_help, null);
-		WebView webView = (WebView)view.findViewById(R.id.dialog_adding_friend_help_message);
-		webView.loadData(getResources().getString(R.string.first_time_adding_friend_help), "text/html", null);
-		alertBuilder.setView(view);
-
-		// set the buttons of the alert
-		alertBuilder.setNeutralButton(R.string.done, null);	
-				
-		// display it
-		alertBuilder.show();
 	}
 
 	
@@ -189,19 +169,24 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	}	
 	
 	
+	/**
+	 * Have just added a friend.
+	 */
 	private void finishImport() {
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 			m_progressDialog = null;
 		}
 		
-		// remember that the user has added a friend (to avoid first time help)
-		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend()) {
-			TheLifeConfiguration.getOwnerDS().setHasAddedFriend();
-		}
-		
 		Intent intent = new Intent("com.p2c.thelife.Friends");
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		
+		// flag to the destination that the owner has added a friend for the first time
+		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend()) {
+			TheLifeConfiguration.getOwnerDS().setHasAddedFriend();
+			intent.putExtra("added_friend_first_time", true);		
+		}
+		
 		startActivity(intent);
 	}
 
