@@ -579,7 +579,7 @@ public class Server {
 					Log.e(TAG, "ServerCall.doInBackground()3", e);
 				} catch (java.net.SocketTimeoutException e) {
 					m_connectionTimeout = true;
-					Log.e(TAG, "ServerCall.doInBackground()4", e);					
+					Log.e(TAG, "ServerCall.doInBackground()4 " + e.getMessage());					
 				} catch (IOException e) {
 					Log.e(TAG, "ServerCall.doInBackground()5", e);
 				} catch (Exception e) {

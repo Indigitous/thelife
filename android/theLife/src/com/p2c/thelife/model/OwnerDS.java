@@ -114,13 +114,31 @@ public class OwnerDS {
 	/**
 	 * @param hasAddedFriend	whether or not the user has added a friend before now
 	 */
-	public void setHasAddedFriend(boolean hasAddedFriend) {
-		m_hasAddedFriend = hasAddedFriend;
+	public void setHasAddedFriend() {
+		m_hasAddedFriend = true;
 		
 		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
 		systemSettingsEditor.putBoolean("has_added_friend", m_hasAddedFriend);
 		systemSettingsEditor.commit();			
 	}
+	
+	
+	/**
+	 * @return whether or not the user has used the given threshold level before now
+	 */
+	public boolean getHasUsedThreshold(FriendModel.Threshold threshold) {
+		return TheLifeConfiguration.getSystemSettings().getBoolean("has_used_threshold" + threshold.serverId, false);
+	}	
+	
+	
+	/**
+	 * @param hasAddedFriend	whether or not the user has used the given threshold level before now
+	 */
+	public void setHasUsedThreshold(FriendModel.Threshold threshold) {
+		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
+		systemSettingsEditor.putBoolean("has_used_threshold" + threshold.serverId, true);
+		systemSettingsEditor.commit();			
+	}	
 		
 	
 	

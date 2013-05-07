@@ -9,7 +9,7 @@
     android:orientation="vertical" >
 
     <WebView
-        android:id="@+id/dialog_adding_friend_help_message"
+        android:id="@+id/dialog_using_threshold_help_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/first_time_adding_friend_help"

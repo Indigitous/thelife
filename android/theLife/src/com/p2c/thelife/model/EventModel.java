@@ -30,8 +30,7 @@ public class EventModel extends AbstractModel {
 	public boolean isPrayerRequested;   
 	public int     pledgeCount;
 	public boolean hasPledged;		// whether or not the app owner has already pledged for this event
-	public String  thresholdString; // threshold in short string form
-	
+	public FriendModel.Threshold threshold;		
 	
 	
 	public EventModel(Resources resources, int event_id, int user_id, String userName, int friend_id, String friendName, int deed_id, int targetEvent_id, 
@@ -50,30 +49,22 @@ public class EventModel extends AbstractModel {
 		this.pledgeCount = pledgeCount;
 		this.hasPledged = hasPledged;
 		
-		// use the short string threshold name
-		this.thresholdString = getThresholdString(resources, threshold_id);
+		// set the threshold and threshold short string if the threshold is part of the event
+		this.threshold = null;
+		if (threshold_id != 0) {
+			this.threshold = FriendModel.thresholdId2Threshold(threshold_id);
+		}
 		
 		// final description needs to have the template parameters replaced with the real values
-		this.finalDescription = getFinalDescription(description);		
+		this.finalDescription = getFinalDescription(resources, description);		
 	}
 	
 	@Override
 	public String toString() {
 		return id + ", " + user_id + ", " + userName + ", " + friend_id + ", " + friendName + "," + deed_id + ", " + targetEvent_id + ", " + 
-			finalDescription + ", " + timestamp + ", " + isPrayerRequested + ", " + pledgeCount + ", " + hasPledged + ", " + thresholdString;
+			finalDescription + ", " + timestamp + ", " + isPrayerRequested + ", " + pledgeCount + ", " + hasPledged + ", " + threshold;
 	}
-	
-	
-	private String getThresholdString(Resources resources, int thresholdId) {
-		String thresholdString = null;
-		
-		if (thresholdId != 0) {
-			FriendModel.Threshold threshold = FriendModel.thresholdId2Threshold(thresholdId);
-			thresholdString = FriendModel.getThresholdShortString(resources, threshold);
-		}
-		
-		return thresholdString;
-	}
+
 	
 	/**
 	 * Replace the template place holders in the description with the real values.
@@ -82,7 +73,7 @@ public class EventModel extends AbstractModel {
 	 * 		$t = threshold short string
 	 * @return
 	 */
-	private String getFinalDescription(String description) {
+	private String getFinalDescription(Resources resources, String description) {
 		String finalDescription = null;
 		
 		// user name parameter
@@ -107,7 +98,8 @@ public class EventModel extends AbstractModel {
 		
 		finalDescription = description.replace("$u", paramUserName);
 		finalDescription = finalDescription.replace("$f", paramFriendName);
-		if (thresholdString != null) {
+		if (threshold != null) {
+			String thresholdString = FriendModel.getThresholdShortString(resources, threshold);
 			finalDescription = finalDescription.replace("$t", "<b>" + thresholdString + "</b>");
 		}
 		

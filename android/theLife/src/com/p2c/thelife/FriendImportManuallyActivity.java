@@ -46,7 +46,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 				
 		LayoutInflater inflater = LayoutInflater.from(this);
 		final View view = inflater.inflate(R.layout.dialog_first_time_adding_friend_help, null);
-		WebView webView = (WebView)view.findViewById(R.id.dialog_help_message);
+		WebView webView = (WebView)view.findViewById(R.id.dialog_adding_friend_help_message);
 		webView.loadData(getResources().getString(R.string.first_time_adding_friend_help), "text/html", null);
 		alertBuilder.setView(view);
 
@@ -197,7 +197,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		
 		// remember that the user has added a friend (to avoid first time help)
 		if (!TheLifeConfiguration.getOwnerDS().getHasAddedFriend()) {
-			TheLifeConfiguration.getOwnerDS().setHasAddedFriend(true);
+			TheLifeConfiguration.getOwnerDS().setHasAddedFriend();
 		}
 		
 		Intent intent = new Intent("com.p2c.thelife.Friends");

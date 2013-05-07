@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -130,11 +129,16 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 					EventModel event = EventModel.fromJSON(getResources(), jsonObject, false);
 					TheLifeConfiguration.getEventsDS().add(event);
 					TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+					
+					// remember if a threshold was used
+					if (event.threshold != null && !TheLifeConfiguration.getOwnerDS().getHasUsedThreshold(event.threshold)) {
+						TheLifeConfiguration.getOwnerDS().setHasUsedThreshold(event.threshold);
+					}
 				} catch (Exception e) {
 					Log.e(TAG, "notifyServerResponseAvailable()", e);
 				}
 				TheLifeConfiguration.getEventsDS().forceRefresh(null);
-				
+								
 				// back to the friends screen
 				Intent intent = new Intent("com.p2c.thelife.Friends");
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
