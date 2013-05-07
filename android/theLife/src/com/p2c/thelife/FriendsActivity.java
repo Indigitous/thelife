@@ -55,7 +55,7 @@ public class FriendsActivity
 		
 		// show help if owner just added a friend for the first time
 		if (getIntent().getBooleanExtra("added_friend_first_time", false)) {
-			showFirstTimeHelp();
+			showFirstTimeAddingFriendHelp();
 		}
 	}
 	
