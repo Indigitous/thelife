@@ -3,6 +3,7 @@ package com.p2c.thelife.test;
 import android.test.AndroidTestCase;
 
 import com.p2c.thelife.Utilities;
+import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 
@@ -23,26 +24,14 @@ public class UtilitiesTest extends AndroidTestCase {
 	}
 	
 	public void testFillTemplateString() {
-		
-		String templateString1 = "This is a test for first name: $f in here.";
-		String templateString2 = "This is a test for first name: $f and $u in here.";
 
-		// test with good data
-		FriendModel friend1 = new FriendModel(1, "FFirst", "FLast", null, FriendModel.Threshold.Open);
-		UserModel user1 = new UserModel(1, "UFirst", "ULast", null, "test@example.com", "555-5555");
-		String answer1 = Utilities.fillTemplateString(getContext().getResources(), friend1, templateString1);
-		assertEquals("This is a test for first name: FFirst in here.", answer1);
-		String answer2 = Utilities.fillTemplateString(getContext().getResources(), user1, friend1, templateString2);
-		assertEquals("This is a test for first name: FFirst and UFirst in here.", answer2);				
+		// test with good data part one
+		EventModel event1 = new EventModel(getContext().getResources(), 1, 1, "UName", 1, "FName", 1, 0, "$u shared with $f", 0, false, 0, false, 0);
+		assertEquals("<b>UName</b> shared with <b>FName</b>", event1.finalDescription);
 		
-		// test with missing data
-		FriendModel friend2 = new FriendModel(2, null, null, null, FriendModel.Threshold.Open);
-		UserModel user2 = new UserModel(2, null, null, null, "test@example.com", "555-5555");		
-		String answer3 = Utilities.fillTemplateString(getContext().getResources(), friend2, templateString1);
-		assertEquals("This is a test for first name: friend in here.", answer3);
-		String answer4 = Utilities.fillTemplateString(getContext().getResources(), user2, friend2, templateString2);
-		assertEquals("This is a test for first name: friend and user in here.", answer4);		
-
+		// test with good data part two
+		EventModel event2 = new EventModel(getContext().getResources(), 2, 2, "UName", 2, "FName", 2, 0, "$u moved $f to $t", 0, false, 0, false, 2);
+		assertEquals("<b>UName</b> moved <b>FName</b> to <b>Trusting</b>", event2.finalDescription);	
 	}
 
 }
