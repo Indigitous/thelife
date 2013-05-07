@@ -59,6 +59,7 @@ public class FriendsActivity
 		}
 	}
 	
+	
 	private void showFirstTimeAddingFriendHelp() {
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 				
