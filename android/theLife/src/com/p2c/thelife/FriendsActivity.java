@@ -2,16 +2,18 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -50,7 +52,28 @@ public class FriendsActivity
 		
 		friendsGrid.setOnItemClickListener(this);
 		friendsGrid.setOnItemLongClickListener(this);
+		
+		// show help if owner just added a friend for the first time
+		if (getIntent().getBooleanExtra("added_friend_first_time", false)) {
+			showFirstTimeAddingFriendHelp();
+		}
 	}
+	
+	private void showFirstTimeAddingFriendHelp() {
+		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				
+		LayoutInflater inflater = LayoutInflater.from(this);
+		final View view = inflater.inflate(R.layout.dialog_first_time_adding_friend_help, null);
+		WebView webView = (WebView)view.findViewById(R.id.dialog_adding_friend_help_message);
+		webView.loadData(getResources().getString(R.string.first_time_adding_friend_help), "text/html", null);
+		alertBuilder.setView(view);
+
+		// set the buttons of the alert
+		alertBuilder.setNeutralButton(R.string.done, null);	
+				
+		// display it
+		alertBuilder.show();
+	}		
 	
 	
 	/**
