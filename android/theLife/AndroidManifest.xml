@@ -159,10 +159,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- SetupRegisterActivity must have history for image selection from camera/gallery -->
         <activity
             android:name="com.p2c.thelife.SetupRegisterActivity"
             android:label="@string/title_register"
-            android:noHistory="true"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.SetupRegister" />
