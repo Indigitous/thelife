@@ -150,39 +150,9 @@
     <string name="no_requests">Il n'y a pas de notifications.</string>
     <string name="null_category_name">Autres</string>
     <string name="null_category_description">Autres activités</string>
-    <string name="new_user_help">Welcome to theLife App, The Smart Evangelism Toolbox.\n\n
-Our goal is to help you walk with your friends on their journey towards Jesus.\n\n
-We’ll supply personalised resources, conversation ideas, and other tools which will help you connect the realities of their lives with God.\n\n
-We at theLife understand that evangelism is hard. Without a like-minded community, it’s easy to lose our motivation to live missionally.\n\n
-To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.\n\n</string>
     <string name="done">Ok</string>
     <string name="deleting_notification">Suppression de la notification</string>
     <string name="change_threshold_label">Changer\nle seuil</string>
     
-    <string name="first_time_adding_friend_help">
-&lt;h3>Help for user adding a friend for the first time.&lt;/h3>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-</string>
-	<string name="first_time_using_trusting_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Trusting a Christian&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_curious_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Curious About Jesus&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_open_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Open To Change&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_seeking_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Seeking God&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_entering_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Entering the Kingdom&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_christian_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Follower of Jesus&lt;/i>&lt;/h3>
-</string>
 
 </resources>
