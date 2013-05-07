@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="app_menu_commands">
+	    <item name="community">Flux communautaire</item>  
+	    <item name="friends">Amis</item>    
+	    <item name="groups_menu">Groupes</item> 
+	    <item name="help_menu">Aide</item>    
+	    <item name="settings_menu">Paramètres</item>
+    </string-array>
+    <string name="notification_singular">Notification</string>
+    <string name="notification_plural">Notifications</string>
+    
+</resources>
