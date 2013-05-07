@@ -93,13 +93,17 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 					TextView firstNameView = (TextView)findViewById(R.id.friend_settings_first_name);
 					firstNameView.setText(m_updatedFriend.firstName);
 					TextView lastNameView = (TextView)findViewById(R.id.friend_settings_last_name);
-					lastNameView.setText(m_updatedFriend.lastName);				
+					lastNameView.setText(m_updatedFriend.lastName);	
+					
+					// update the FriendModel
+					m_friend.firstName = m_updatedFriend.firstName;
+					m_friend.lastName = m_updatedFriend.lastName;
 	
 					// have updated the friend profile, so now update the friend image if necessary
 					if (m_updatedBitmap != null) {
 						updateImageOnServer(m_updatedBitmap);
 					} else {
-						closeProgressBar();
+						finishEditingFriend();
 					}
 				} else {
 					closeProgressBar();
@@ -108,8 +112,8 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 			} else if (indicator.equals("updateImage")) {
 				
 				if (Utilities.isSuccessfulHttpCode(httpCode)) {
-					TheLifeConfiguration.getOwnerDS().notifyDSChangedListeners();
 					m_updatedBitmap = null;
+					finishEditingFriend();
 				}
 				closeProgressBar();			
 			}
@@ -117,7 +121,7 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 		catch (Exception e) {
 			Log.e(TAG, "notifyServerResponseAvailable() " + indicator, e);
 		}
-	}	
+	}
 	
 	
 	@Override
@@ -186,4 +190,20 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 		}	
 	}
 	
+	
+	/**
+	 * Owner is done editing their friend, so back the Friend events page.
+	 */
+	private void finishEditingFriend() {
+		closeProgressBar();
+		
+		// back to the Friend events page
+		Intent intent = new Intent("com.p2c.thelife.EventsForFriend");
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);						
+		intent.putExtra("friend_id", m_friend.id);			
+		startActivity(intent);
+		
+		finish();
+	}
+
 }
