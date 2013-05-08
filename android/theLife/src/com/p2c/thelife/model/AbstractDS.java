@@ -12,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -451,7 +453,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		protected ArrayList<T> doInBackground(URL... urls) {
 			ArrayList<T> data2 = null;
 				
-			HttpURLConnection modelsConnection = null;
+			HttpsURLConnection modelsConnection = null;
 			InputStreamReader isr = null;
 			
 			// try multiple retries for connection timeouts
@@ -462,7 +464,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				try {			
 					Log.d(TAG, i + " DS READFROMSERVER with " + urls[0]);	
 					URL modelsEP = urls[0];
-					modelsConnection = (HttpURLConnection)modelsEP.openConnection();
+					modelsConnection = (HttpsURLConnection)modelsEP.openConnection();
 					modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
 					modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 					
