@@ -156,5 +156,6 @@
     
 	<!-- added May 7, 2013 -->    
     <string name="user_profile_updated">Settings updated</string>
+    <string name="get_started_by_adding_friend">Get started by adding a friend!</string>
     
 </resources>

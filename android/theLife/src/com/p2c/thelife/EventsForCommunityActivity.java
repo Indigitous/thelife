@@ -29,7 +29,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	
 	private ListView m_listView = null;
 	private EventsForCommunityAdapter m_adapter = null;
-	private TextView m_noEventsView = null;
+	private View m_noEventsView = null;
 	
 	// refresh the data store and display
 	private Runnable m_datastoreRefreshRunnable = null;
@@ -50,7 +50,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		m_listView.setAdapter(m_adapter);
 		
 		// show a message if there are no events
-		m_noEventsView = (TextView)findViewById(R.id.events_for_community_none);
+		m_noEventsView = findViewById(R.id.events_for_community_none);
 		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);		
 		
 		// events data store refresh runnable
@@ -97,6 +97,16 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		// refresh the display every minute
 		m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);
 	}	
+	
+	
+	/**
+	 * Owner has decided to add a friend (from getting started).
+	 * @param view
+	 */
+	public void addFriend(View view) {
+		Intent intent = new Intent("com.p2c.thelife.FriendImportManually");
+		startActivity(intent);
+	}
 	
 	
 	/**
