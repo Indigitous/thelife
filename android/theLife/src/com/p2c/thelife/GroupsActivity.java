@@ -69,7 +69,7 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 		// load the database from the server in the background
 		TheLifeConfiguration.getGroupsDS().addDSChangedListener(m_adapter);
 		TheLifeConfiguration.getGroupsDS().addDSRefreshedListener(this);		
-		TheLifeConfiguration.getGroupsDS().refresh(null);				
+		TheLifeConfiguration.getGroupsDS().forceRefresh(null);				
 	}		
 	
 	/**

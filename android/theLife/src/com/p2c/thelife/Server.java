@@ -536,7 +536,7 @@ public class Server {
 						jsonString = outStream.toString("UTF-8");
 					}
 					
-					Log.d(TAG, "GOT THE SERVER CALL RESPONSE STRING " + jsonString);					
+					Log.d(TAG, "GOT THE SERVER CALL RESPONSE " + m_httpCode + " " + jsonString);					
 					
 					if (jsonString != null) {
 						jsonString = jsonString.trim();
