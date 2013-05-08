@@ -154,4 +154,7 @@
     <string name="deleting_notification">Deleting notification</string>
     <string name="change_threshold_label">Change\nThreshold</string>
     
+	<!-- added May 7, 2013 -->    
+    <string name="user_profile_updated">Settings updated</string>
+    
 </resources>

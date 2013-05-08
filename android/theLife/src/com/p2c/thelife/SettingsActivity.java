@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -124,6 +125,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 						updateImageOnServer(m_updatedBitmap);
 					} else {
 						closeProgressBar();
+						Toast.makeText(this, R.string.user_profile_updated, Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					closeProgressBar();
@@ -134,6 +136,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				if (Utilities.isSuccessfulHttpCode(httpCode)) {
 					TheLifeConfiguration.getOwnerDS().notifyDSChangedListeners();
 					m_updatedBitmap = null;
+					Toast.makeText(this, R.string.user_profile_updated, Toast.LENGTH_SHORT).show();					
 				}
 				closeProgressBar();			
 			}
