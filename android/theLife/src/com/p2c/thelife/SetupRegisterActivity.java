@@ -1,12 +1,13 @@
 package com.p2c.thelife;
 
+import java.util.Locale;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.UserModel;
 
 /**
@@ -67,7 +67,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 			// send the registration to the server
 			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);		
 			Server server = new Server(this);
-			server.register(email, password, firstName, lastName, this, "register");
+			server.register(email, password, firstName, lastName, Locale.getDefault().getLanguage(), this, "register");
 		}
 	}
 	

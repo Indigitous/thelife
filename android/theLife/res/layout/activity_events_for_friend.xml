@@ -31,7 +31,7 @@
 	        android:onClick="editFriend" >    
     		
     	    <Button
-    	        android:text="What's Next?"
+    	        android:text="@string/activity_friend_whats_next"
     	        android:layout_gravity="right"    	        
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"

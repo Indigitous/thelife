@@ -99,7 +99,7 @@ public class Server {
 	/**
 	 * Register for an account in theLife. The email must not already be taken.
 	 */
-	public void register(String username, String password, String firstName, String lastName, ServerListener listener, String indicator) {
+	public void register(String username, String password, String firstName, String lastName, String locale, ServerListener listener, String indicator) {
 		
 		// API endpoint
 		// returns HTTP 422 on a already taken (or missing) email, HTTP 201 on a success
@@ -112,6 +112,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
 			pairs.add(new BasicNameValuePair("mobile", ""));
+			pairs.add(new BasicNameValuePair("locale", locale));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
 			
 			HttpPost httpRequest = new HttpPost(urlString);
