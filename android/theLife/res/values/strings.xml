@@ -159,5 +159,6 @@
     <string name="get_started_by_adding_friend">Get started by adding a friend!</string>
     <string name="activity_friend_whats_next">What\'s Next?</string>
     <string name="error_prefix">Error:</string>
+    <string name="error_bad_connection">Bad Connection</string>    
     
 </resources>

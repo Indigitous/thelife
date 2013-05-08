@@ -489,6 +489,7 @@ public class Server {
 		private int m_httpCode = -1;
 		private boolean m_connectionTimeout = false;
 		private String m_errorString = null;
+		private boolean m_isBadConnection = false;
 		
 		public ServerCall(HttpUriRequest httpRequest, ServerListener listener, String indicator) {
 			m_httpRequest = httpRequest;
@@ -579,11 +580,17 @@ public class Server {
 					Log.e(TAG, "ServerCall.doInBackground()3", e);
 				} catch (java.net.SocketTimeoutException e) {
 					m_connectionTimeout = true;
-					Log.e(TAG, "ServerCall.doInBackground()4 " + e.getMessage());					
+					Log.e(TAG, "ServerCall.doInBackground()4 " + e.getMessage());
+				} catch (org.apache.http.conn.HttpHostConnectException e) {
+					m_isBadConnection = true;
+					Log.e(TAG, "ServerCall.doInBackground()5" + e.getMessage());
+				} catch (java.net.UnknownHostException e) {
+					m_isBadConnection = true;
+					Log.e(TAG, "ServerCall.doInBackground()5" + e.getMessage());					
 				} catch (IOException e) {
-					Log.e(TAG, "ServerCall.doInBackground()5", e);
-				} catch (Exception e) {
 					Log.e(TAG, "ServerCall.doInBackground()6", e);
+				} catch (Exception e) {
+					Log.e(TAG, "ServerCall.doInBackground()7", e);
 				} finally {
 					if (outStream != null) {
 						try { outStream.close(); } catch (Exception e) { }
@@ -616,8 +623,12 @@ public class Server {
 			}
 			if (m_errorString != null) {
 				Utilities.showErrorToast(m_context, m_context.getResources().getString(R.string.error_prefix) + " " + m_errorString, Toast.LENGTH_SHORT);
-				m_connectionTimeout = false;
-			}			
+			} else if (m_isBadConnection) {
+				Utilities.showErrorToast(m_context, 
+										 m_context.getResources().getString(R.string.error_prefix) + " " + 
+										 m_context.getResources().getString(R.string.error_bad_connection), Toast.LENGTH_SHORT);
+				m_isBadConnection = false;				
+			}
 
 			m_context = null;
 			
