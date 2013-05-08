@@ -558,11 +558,10 @@ public class Server {
 									JSONArray names = errorObject.names();
 									if (names.length() > 0) {
 										String errorKey = (String)names.get(0);
-										m_errorString = errorKey + " - ";
 										JSONArray jsonArrayErrors = errorObject.optJSONArray(errorKey);
 										jsonArrayErrors.get(0);
 										if (jsonArrayErrors.length() > 0) {
-											m_errorString += jsonArrayErrors.getString(0);
+											m_errorString = jsonArrayErrors.getString(0);
 										}
 									}
 								}
@@ -616,7 +615,7 @@ public class Server {
 				m_connectionTimeout = false;
 			}
 			if (m_errorString != null) {
-				Utilities.showErrorToast(m_context, m_errorString, Toast.LENGTH_SHORT);
+				Utilities.showErrorToast(m_context, m_context.getResources().getString(R.string.error_prefix) + " " + m_errorString, Toast.LENGTH_SHORT);
 				m_connectionTimeout = false;
 			}			
 

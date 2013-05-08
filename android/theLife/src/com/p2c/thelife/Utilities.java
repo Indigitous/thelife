@@ -113,7 +113,7 @@ public class Utilities {
 		Toast toast = new Toast(context);
 		TextView textView = new TextView(context);
 		textView.setText(text);
-		textView.setBackgroundColor(Color.BLUE);
+		textView.setBackgroundColor(Color.RED);
 		textView.setTextColor(Color.WHITE);
 		toast.setView(textView);
 		toast.show();
