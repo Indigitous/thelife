@@ -6,8 +6,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -51,7 +51,13 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		
 		// show a message if there are no events
 		m_noEventsView = findViewById(R.id.events_for_community_none);
-		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);		
+		if (m_adapter.getCount() == 0) {
+			m_noEventsView.setVisibility(View.VISIBLE);
+			Button button = (Button)m_noEventsView.findViewById(R.id.events_for_community_none_button);
+			button.setVisibility(TheLifeConfiguration.getFriendsDS().count() == 0 ? View.VISIBLE : View.GONE);
+		} else {
+			m_noEventsView.setVisibility(View.GONE);	
+		}
 		
 		// events data store refresh runnable
 		// this will refresh the data store from the server.
@@ -115,8 +121,16 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
-		// keep polling the events in the background
-		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);						
+		// show a message if there are no events		
+		if (m_adapter.getCount() == 0) {
+			m_noEventsView.setVisibility(View.VISIBLE);
+			Button button = (Button)m_noEventsView.findViewById(R.id.events_for_community_none_button);
+			button.setVisibility(TheLifeConfiguration.getFriendsDS().count() == 0 ? View.VISIBLE : View.GONE);
+		} else {
+			m_noEventsView.setVisibility(View.GONE);	
+		}		
+		
+		// keep polling the events in the background		
 		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
 	
