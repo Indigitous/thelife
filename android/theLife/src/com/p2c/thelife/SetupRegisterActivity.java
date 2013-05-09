@@ -149,11 +149,16 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		imageView.setImageBitmap(m_bitmap);		
 	}	
 	
-//	public void editImage(View view) {
-//		
+//	public void rotateImage(View view) {
+//System.out.println("rotateImage");
 //		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
-//		imageView.setImageBitmap(m_bitmap);
-//		imageView.setRotation(90.0f);
+//	
+//		Matrix matrix = new Matrix();
+//		m_rotate += 90.0f;
+//		matrix.setRotate(m_rotate);
+//		imageView.setImageMatrix(matrix);
+//		
+//		m_bitmap = Utilities.getBitmapFromDrawable(imageView.getDrawable());
 //		
 //	}
 	
