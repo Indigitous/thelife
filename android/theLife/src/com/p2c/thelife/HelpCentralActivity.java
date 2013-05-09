@@ -14,6 +14,8 @@ import com.actionbarsherlock.view.MenuItem;
  *
  */
 public class HelpCentralActivity extends SlidingMenuPollingActivity {
+	
+	private static final String TAG = "HelpCentralActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

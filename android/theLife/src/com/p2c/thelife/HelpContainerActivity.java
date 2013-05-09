@@ -13,9 +13,9 @@ import com.actionbarsherlock.view.MenuItem;
  * @author clarence
  *
  */
-public class HelpActivity extends SlidingMenuPollingActivity {
+public class HelpContainerActivity extends SlidingMenuPollingActivity {
 	
-	private static final String TAG = "HelpActivity";
+	private static final String TAG = "HelpContainerActivity";
 	
 	private int m_groupId = 0;
 	private int m_friendId = 0;

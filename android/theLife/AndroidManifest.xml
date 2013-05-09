@@ -211,7 +211,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.p2c.thelife.HelpActivity"
+            android:name="com.p2c.thelife.HelpContainerActivity"
             android:label="@string/title_help" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Help" />
