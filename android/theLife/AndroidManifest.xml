@@ -214,7 +214,7 @@
             android:name="com.p2c.thelife.HelpContainerActivity"
             android:label="@string/title_help" >
             <intent-filter>
-                <action android:name="com.p2c.thelife.Help" />
+                <action android:name="com.p2c.thelife.HelpContainer" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>            
         </activity>        
