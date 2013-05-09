@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.webkit.WebView;
 
 
 /**
@@ -18,13 +19,16 @@ public class HelpNewUserActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_help_new_user);
+		
+		WebView webView = (WebView)findViewById(R.id.activity_help_new_user_webview);
+		webView.loadData(getResources().getString(R.string.new_user_help), "text/html", null);		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.help_new_user, menu);
-		return true;
+		return true;		
 	}
 	
 	/**

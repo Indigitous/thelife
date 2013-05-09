@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="new_user_help">&lt;h3>Welcome to theLife App, The Smart Evangelism Toolbox&lt;h3
+    <string name="new_user_help">&lt;h3>Welcome to theLife App, The Smart Evangelism Toolbox&lt;/h3>
 &lt;p>Our goal is to help you walk with your friends on their journey towards Jesus.&lt;/p>
-&lt;p>We’ll supply personalised resources, conversation ideas, and other tools which will help you connect the realities of their lives with God.&lt;/p>
-&lt;p>We at theLife understand that evangelism is hard. Without a like-minded community, it’s easy to lose our motivation to live missionally.&lt;/p>
+&lt;p>We\'ll supply personalised resources, conversation ideas, and other tools which will help you connect the realities of their lives with God.&lt;/p>
+&lt;p>We at theLife understand that evangelism is hard. Without a like-minded community, it\'s easy to lose our motivation to live missionally.&lt;/p>
 &lt;p>To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.&lt;/p></string>
     <string name="first_time_adding_friend_help">
 &lt;h3>Help for user adding a friend for the first time.&lt;/h3>
