@@ -104,7 +104,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	        				break;	        				
 	        				
 	        			case HELP_POSITION: 
-	        				m_activity.startActivity(new Intent("com.p2c.thelife.GlobalHelp"));
+	        				m_activity.startActivity(new Intent("com.p2c.thelife.HelpCentral"));
 	        				break; 
 	        				
 	        			case SETTINGS_POSITION: 
