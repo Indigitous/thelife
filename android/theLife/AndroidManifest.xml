@@ -191,7 +191,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.p2c.thelife.NewUserHelpActivity"
+            android:name="com.p2c.thelife.HelpNewUserActivity"
             android:label="@string/title_new_user_help"
             android:screenOrientation="portrait" >
             <intent-filter>
