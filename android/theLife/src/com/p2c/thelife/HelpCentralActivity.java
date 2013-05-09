@@ -9,19 +9,18 @@ import com.actionbarsherlock.view.MenuItem;
 
 
 /**
- * Show the main app help screen.
+ * Show the global help for the whole app.
  * @author clarence
  *
  */
-public class GlobalHelpActivity extends SlidingMenuPollingActivity {
+public class HelpCentralActivity extends SlidingMenuPollingActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_global_help, SlidingMenuSupport.HELP_POSITION);
+		super.onCreate(savedInstanceState, R.layout.activity_help_central, SlidingMenuSupport.HELP_POSITION);
 				
 		WebView webView = (WebView)findViewById(R.id.global_help_webview);
 		
-		// TODO check for a network connection
 		// TODO version and language specific page
 		webView.loadUrl("http://p2c.com");
 	}
