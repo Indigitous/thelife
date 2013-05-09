@@ -9,7 +9,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 
 /**
- * General help screen.
+ * Help screen which is populated by parameters from the intent.
  * @author clarence
  *
  */
