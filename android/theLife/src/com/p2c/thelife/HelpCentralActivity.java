@@ -21,10 +21,20 @@ public class HelpCentralActivity extends SlidingMenuPollingActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_help_central, SlidingMenuSupport.HELP_POSITION);
 				
-		WebView webView = (WebView)findViewById(R.id.global_help_webview);
+		WebView webView = (WebView)findViewById(R.id.help_central_webview);
 		
-		// TODO version and language specific page
-		webView.loadUrl("http://p2c.com");
+		// get help
+		String help = getResources().getString(R.string.new_user_help);
+		help += getResources().getString(R.string.first_time_adding_friend_help);
+		help += getResources().getString(R.string.using_new_contact_threshold_help);
+		help += getResources().getString(R.string.first_time_using_trusting_threshold_help);
+		help += getResources().getString(R.string.first_time_using_curious_threshold_help);		
+		help += getResources().getString(R.string.first_time_using_open_threshold_help);		
+		help += getResources().getString(R.string.first_time_using_seeking_threshold_help);		
+		help += getResources().getString(R.string.first_time_using_entering_threshold_help);
+		
+		// show help
+		webView.loadData(help, "text/html", null);		
 	}
 
 	@Override

@@ -9,7 +9,7 @@
     tools:context=".HelpCentralActivity" >
 
     <WebView
-        android:id="@+id/global_help_webview"
+        android:id="@+id/help_central_webview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
