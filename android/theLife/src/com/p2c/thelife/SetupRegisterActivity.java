@@ -144,10 +144,18 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	@Override
 	public void notifyImageSelected(Bitmap bitmap) {
 		m_bitmap = bitmap;
-		
+
 		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
 		imageView.setImageBitmap(m_bitmap);		
 	}	
+	
+//	public void editImage(View view) {
+//		
+//		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
+//		imageView.setImageBitmap(m_bitmap);
+//		imageView.setRotation(90.0f);
+//		
+//	}
 	
 	
 	@Override
@@ -164,9 +172,9 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	 * @param bitmap
 	 */
 	private void updateImageOnServer(Bitmap bitmap) {		
-		BitmapCacheHandler.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);										
+		BitmapCacheHandler.saveBitmapToCache("users", m_user.id, "image", bitmap);										
 		Server server = new Server(this);
-		server.updateImage("users", TheLifeConfiguration.getOwnerDS().getUserId(), this, "updateImage");
+		server.updateImage("users", m_user.id, this, "updateImage");
 	}
 	
 	
