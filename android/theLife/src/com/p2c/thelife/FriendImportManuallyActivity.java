@@ -53,7 +53,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);						
 			startActivity(intent);
 		}  else if (item.getItemId() == R.id.action_help) {
-			Intent intent = new Intent("com.p2c.thelife.Help");
+			Intent intent = new Intent("com.p2c.thelife.HelpContainer");
 			intent.putExtra("layout", R.layout.activity_friend_import_manually_help);
 			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
 			intent.putExtra("home", "com.p2c.thelife.FriendImportManually");

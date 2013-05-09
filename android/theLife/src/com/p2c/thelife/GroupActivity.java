@@ -101,7 +101,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == R.id.action_help) {
-			Intent intent = new Intent("com.p2c.thelife.Help");
+			Intent intent = new Intent("com.p2c.thelife.HelpContainer");
 			intent.putExtra("layout", R.layout.activity_group_help);
 			intent.putExtra("position", SlidingMenuSupport.GROUPS_POSITION);
 			intent.putExtra("home", "com.p2c.thelife.Group");

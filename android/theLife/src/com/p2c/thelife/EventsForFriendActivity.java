@@ -225,7 +225,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_help) {
-			Intent intent = new Intent("com.p2c.thelife.Help");
+			Intent intent = new Intent("com.p2c.thelife.HelpContainer");
 			intent.putExtra("layout", R.layout.activity_events_for_friend_help);
 			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
 			intent.putExtra("webview_data", getThresholdHelp(m_friend.threshold));
