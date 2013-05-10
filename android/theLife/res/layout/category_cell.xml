@@ -24,6 +24,7 @@
     	android:layout_gravity="left" 	
     	android:layout_weight="1"
 		android:textAppearance="?android:attr/textAppearanceSmall"    
-        android:text="Placeholder Text In Here" />     
+        android:text="Placeholder Text In Here"
+        android:visibility="gone" />     
 
 </LinearLayout>

@@ -17,7 +17,7 @@ import com.p2c.thelife.model.FriendModel;
 
 
 /**
- * Show the deeds/activities applicable to the given friend's threshold.
+ * Show the deeds/activities applicable to the given friend's threshold, grouped by their categories.
  * @author clarence
  *
  */
@@ -29,6 +29,9 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 	private FriendModel m_friend = null;
 	private ArrayList<CategoryModel> m_categories = null;
 	private int m_changeThresholdId = 0;
+	
+	// whether or not each category is expanded
+	private ArrayList<Boolean> m_isCategoryExpandeds = null;
 	
 	
 	public DeedsForFriendAdapter(Context context, FriendModel friend) {
@@ -89,6 +92,12 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 		} else {
 			m_categories.remove(0);
 		}
+		
+		// start with all categories not expanded
+		m_isCategoryExpandeds = new ArrayList<Boolean>(m_categories.size());
+		for (int i = 0; i < m_categories.size(); i++) {
+			m_isCategoryExpandeds.add(false);
+		}		
 	}
 	
 	/**
@@ -125,6 +134,7 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 	public int getChangeThresholdId() {
 		return m_changeThresholdId;
 	}
+
 	
 	@Override
 	public boolean areAllItemsEnabled() {
@@ -202,13 +212,14 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 			LayoutInflater inflator = LayoutInflater.from(m_context);
 			categoryView = inflator.inflate(R.layout.category_cell, null);
 		}
-		
+				
 		CategoryModel category = m_categories.get(groupPosition);
 			
 		TextView nameView = (TextView)categoryView.findViewById(R.id.category_title);
 		nameView.setText(category.name);
 		TextView descriptionView = (TextView)categoryView.findViewById(R.id.category_description);
-		descriptionView.setText(category.description);		
+		descriptionView.setText(category.description);
+		descriptionView.setVisibility(m_isCategoryExpandeds.get(groupPosition) ? View.VISIBLE : View.GONE);
 		
 		categoryView.setTag(category);		
 							
@@ -225,6 +236,22 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
-	}				
+	}
+	
+	
+	@Override
+	public void onGroupExpanded(int groupPosition) {
+		super.onGroupExpanded(groupPosition);
+
+		m_isCategoryExpandeds.set(groupPosition, true);
+	}
+	
+	
+	@Override
+	public void onGroupCollapsed(int groupPosition) {
+		super.onGroupCollapsed(groupPosition);
+		
+		m_isCategoryExpandeds.set(groupPosition, false);
+	}
 	
 }
