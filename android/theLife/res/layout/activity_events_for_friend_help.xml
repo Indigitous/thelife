@@ -8,11 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HelpContainerActivity" >
 
+    <!-- threshold help here -->
     <WebView
         android:id="@+id/help_message_webview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Events For Friend Help in here"
+        android:text="" 
         />
 
 </RelativeLayout>

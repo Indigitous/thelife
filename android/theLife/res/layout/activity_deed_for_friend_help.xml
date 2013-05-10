@@ -11,6 +11,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Activity For Friend Help in here" />
+        android:text="@string/activity_deed_for_friend_help" />
 
 </RelativeLayout>

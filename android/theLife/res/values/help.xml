@@ -37,4 +37,14 @@
 &lt;h3>Help for using threshold &lt;i>New Contact&lt;/i>&lt;/h3>
 </string>	
 
+	<!--  added May 9, 2013 context sensitive help screens -->
+	<string name="activity_deed_for_friend_help">Activity For Friend Help in here</string>
+	<string name="activity_deeds_for_friend_help">Activities For Friend Help in here</string>
+	<string name="activity_events_for_community_help">Events For Community Help in here</string>		
+	<string name="activity_friends_help">Friends Help in here</string>
+	<string name="activity_group_help">Group Help in here</string>
+	<string name="activity_groups_help">Groups Help in here</string>
+	<string name="activity_groups_search_help">Groups Search Help in here</string>
+	<string name="activity_settings_help">Settings Help in here</string>
+		
 </resources>
