@@ -160,7 +160,16 @@
     <string name="activity_friend_whats_next">What\'s Next?</string>
     <string name="error_prefix">Error:</string>
     <string name="error_bad_connection">Bad Connection</string>
-    <string name="license">&lt;h4>Copyright (c) 2013 by Power To Change Canada. All rights reserved.&lt;/h4></string>
+    <string name="license">&lt;h4>Copyright (c) 2013 by Power To Change Canada. All rights reserved.&lt;/h4>
+&lt;br />
+&lt;p>Apache HttpComponents Client&lt;br />
+Copyright 1999-2012 The Apache Software Foundation
+&lt;/p>
+&lt;p>
+This product includes software developed at&lt;br />
+The Apache Software Foundation (http://www.apache.org/).
+&lt;/p>
+</string>
     <string name="title_license">License</string>
     
 </resources>
