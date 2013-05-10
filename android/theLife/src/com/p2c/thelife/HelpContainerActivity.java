@@ -39,6 +39,11 @@ public class HelpContainerActivity extends SlidingMenuPollingActivity {
 			webView.loadData(webViewData, "text/html", null);
 		}
 		
+		String title = getIntent().getStringExtra("title");
+		if (title != null) {
+			setTitle(title);
+		}
+		
 		// read the remaining values 
 		m_groupId = getIntent().getIntExtra("group_id", 0);
 		m_friendId = getIntent().getIntExtra("friend_id", 0);

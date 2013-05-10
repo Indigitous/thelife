@@ -159,6 +159,8 @@
     <string name="get_started_by_adding_friend">Get started by adding a friend!</string>
     <string name="activity_friend_whats_next">What\'s Next?</string>
     <string name="error_prefix">Error:</string>
-    <string name="error_bad_connection">Bad Connection</string>    
+    <string name="error_bad_connection">Bad Connection</string>
+    <string name="license">&lt;h4>Copyright (c) 2013 by Power To Change Canada. All rights reserved.&lt;/h4></string>
+    <string name="title_license">License</string>
     
 </resources>
