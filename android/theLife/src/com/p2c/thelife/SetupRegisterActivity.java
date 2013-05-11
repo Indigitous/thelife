@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -145,22 +146,9 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	public void notifyImageSelected(Bitmap bitmap) {
 		m_bitmap = bitmap;
 
-		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
+		ImageView imageView = (ImageView)findViewById(R.id.setup_register_image);
 		imageView.setImageBitmap(m_bitmap);		
 	}	
-	
-//	public void rotateImage(View view) {
-//System.out.println("rotateImage");
-//		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
-//	
-//		Matrix matrix = new Matrix();
-//		m_rotate += 90.0f;
-//		matrix.setRotate(m_rotate);
-//		imageView.setImageMatrix(matrix);
-//		
-//		m_bitmap = Utilities.getBitmapFromDrawable(imageView.getDrawable());
-//		
-//	}
 	
 	
 	@Override
@@ -193,6 +181,30 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		
 		// refresh data stores
 		fullRefresh(true);
+	}
+	
+	
+	public void rotateImageCW(View view) {
+		rotateImage(90.0f);
+	}
+	
+	
+	public void rotateImageCCW(View view) {
+		rotateImage(-90.0f);
+	}	
+	
+	
+	private void rotateImage(float angle) {
+		if (m_bitmap != null) {
+			// rotate image in memory
+			Matrix matrix = new Matrix();
+			matrix.setRotate(angle);
+			m_bitmap = Bitmap.createBitmap(m_bitmap, 0, 0, m_bitmap.getWidth(), m_bitmap.getHeight(), matrix, true);
+			
+			// save new image bitmap
+			ImageView imageView = (ImageView)findViewById(R.id.setup_register_image);		
+			imageView.setImageBitmap(m_bitmap);	
+		}
 	}
 
 }
