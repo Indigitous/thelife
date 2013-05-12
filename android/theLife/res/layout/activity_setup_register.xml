@@ -26,31 +26,29 @@
 	        android:layout_height="100dp"
 	        android:src="@drawable/generic_avatar_image" 
 	        android:layout_gravity="left"
-	        android:scaleType="matrix"
 	        android:onClick="selectImage" />
 	    
-	    <!--
 	    <LinearLayout 
 	    	android:layout_width="wrap_content"
     		android:layout_height="match_parent"
     		android:orientation="vertical" >
 	    
 		    <Button
-		        android:id="@+id/setup_register_rotate_cw"
+		        android:id="@+id/image_rotate_cw"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:onClick="rotateImageCW"
+		        android:enabled="false"
 		        android:text="CW" /> 
 		        
 		    <Button
-		        android:id="@+id/setup_register_rotate_ccw"
+		        android:id="@+id/image_rotate_ccw"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:onClick="rotateImageCCW"
-		        android:text="CCW" /> 	
-	        
+		        android:enabled="false"
+		        android:text="CCW" />	        
 		</LinearLayout>	    
-		-->
         
     </LinearLayout>
    

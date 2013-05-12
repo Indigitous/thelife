@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -167,8 +168,9 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 	public void notifyImageSelected(Bitmap bitmap) {
 		m_updatedBitmap = bitmap;
 		
+		// set the image
 		ImageView imageView = (ImageView)findViewById(R.id.friend_settings_image);
-		imageView.setImageBitmap(m_updatedBitmap);		
+		imageView.setImageBitmap(m_updatedBitmap);
 	}	
 	
 	
@@ -205,5 +207,32 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 		
 		finish();
 	}
+	
+	
+	public void rotateImageCW(View view) {
+		rotateImage(90.0f);
+	}
+	
+	
+	public void rotateImageCCW(View view) {
+		rotateImage(-90.0f);
+	}	
+	
+	
+	private void rotateImage(float angle) {
+		ImageView imageView = (ImageView)findViewById(R.id.friend_settings_image);	
+		
+		if (m_updatedBitmap == null) {
+			m_updatedBitmap = Utilities.getBitmapFromDrawable(imageView.getDrawable());
+		}
+		
+		// rotate image in memory
+		Matrix matrix = new Matrix();
+		matrix.setRotate(angle);
+		m_updatedBitmap = Bitmap.createBitmap(m_updatedBitmap, 0, 0, m_updatedBitmap.getWidth(), m_updatedBitmap.getHeight(), matrix, true);
+		
+		// save new image bitmap
+		imageView.setImageBitmap(m_updatedBitmap);
+	}		
 
 }

@@ -9,12 +9,38 @@
     android:orientation="vertical"
     tools:context=".SettingsActivity" >
     
-    <ImageView
-        android:id="@+id/friend_settings_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/generic_avatar_image"
-        android:onClick="selectImage" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+	    <ImageView
+	        android:id="@+id/friend_settings_image"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
+	        android:src="@drawable/generic_avatar_image"
+	        android:onClick="selectImage" />
+    
+   	    <LinearLayout 
+	    	android:layout_width="wrap_content"
+    		android:layout_height="match_parent"
+    		android:orientation="vertical" >
+    
+		    <Button
+		        android:id="@+id/image_rotate_cw"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:onClick="rotateImageCW"
+		        android:text="CW" /> 
+		        
+		    <Button
+		        android:id="@+id/image_rotate_ccw"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:onClick="rotateImageCCW"
+		        android:text="CCW" />	        
+		</LinearLayout>	
+	</LinearLayout>    
 
     <EditText
         android:id="@+id/friend_settings_first_name"

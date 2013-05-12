@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -146,8 +147,15 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	public void notifyImageSelected(Bitmap bitmap) {
 		m_bitmap = bitmap;
 
+		// set the image
 		ImageView imageView = (ImageView)findViewById(R.id.setup_register_image);
-		imageView.setImageBitmap(m_bitmap);		
+		imageView.setImageBitmap(m_bitmap);
+		
+		// enable rotate buttons
+		Button button = (Button)findViewById(R.id.image_rotate_cw);
+		button.setEnabled(true);
+		button = (Button)findViewById(R.id.image_rotate_ccw);
+		button.setEnabled(true);
 	}	
 	
 	

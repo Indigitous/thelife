@@ -2,14 +2,13 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -20,13 +19,13 @@ import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.FriendModel;
 
 /**
- * Register the user, allowing for an image from the Android system.
+ * Add a friend, allowing for an image from the Android system.
  * @author clarence
  *
  */
 public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, ImageSelectSupport.Listener {
 	
-	private static final String TAG = "SetupRegisterActivity";
+	private static final String TAG = "FriendImportManuallyActivity";
 
 	private ProgressDialog m_progressDialog = null;
 	private Bitmap m_bitmap = null;
@@ -164,8 +163,15 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	public void notifyImageSelected(Bitmap bitmap) {
 		m_bitmap = bitmap;
 		
+		// set the image
 		ImageView imageView = (ImageView)findViewById(R.id.friend_image);
-		imageView.setImageBitmap(m_bitmap);		
+		imageView.setImageBitmap(m_bitmap);
+		
+		// enable rotate buttons
+		Button button = (Button)findViewById(R.id.image_rotate_cw);
+		button.setEnabled(true);
+		button = (Button)findViewById(R.id.image_rotate_ccw);
+		button.setEnabled(true);		
 	}	
 	
 	
@@ -182,5 +188,29 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
+	
+	
+	public void rotateImageCW(View view) {
+		rotateImage(90.0f);
+	}
+	
+	
+	public void rotateImageCCW(View view) {
+		rotateImage(-90.0f);
+	}	
+	
+	
+	private void rotateImage(float angle) {
+		if (m_bitmap != null) {
+			// rotate image in memory
+			Matrix matrix = new Matrix();
+			matrix.setRotate(angle);
+			m_bitmap = Bitmap.createBitmap(m_bitmap, 0, 0, m_bitmap.getWidth(), m_bitmap.getHeight(), matrix, true);
+			
+			// save new image bitmap
+			ImageView imageView = (ImageView)findViewById(R.id.friend_image);		
+			imageView.setImageBitmap(m_bitmap);	
+		}
+	}	
 
 }

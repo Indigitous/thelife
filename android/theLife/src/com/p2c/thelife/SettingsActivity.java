@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -223,7 +224,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 	public void notifyImageSelected(Bitmap bitmap) {
 		m_updatedBitmap = bitmap;
 		
-		
+		// set the image
 		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
 		imageView.setImageBitmap(m_updatedBitmap);		
 	}	
@@ -246,5 +247,32 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 			m_progressDialog = null;
 		}	
 	}
+	
+	
+	public void rotateImageCW(View view) {
+		rotateImage(90.0f);
+	}
+	
+	
+	public void rotateImageCCW(View view) {
+		rotateImage(-90.0f);
+	}	
+	
+	
+	private void rotateImage(float angle) {
+		ImageView imageView = (ImageView)findViewById(R.id.settings_image);	
+		
+		if (m_updatedBitmap == null) {
+			m_updatedBitmap = Utilities.getBitmapFromDrawable(imageView.getDrawable());
+		}
+		
+		// rotate image in memory
+		Matrix matrix = new Matrix();
+		matrix.setRotate(angle);
+		m_updatedBitmap = Bitmap.createBitmap(m_updatedBitmap, 0, 0, m_updatedBitmap.getWidth(), m_updatedBitmap.getHeight(), matrix, true);
+		
+		// save new image bitmap
+		imageView.setImageBitmap(m_updatedBitmap);
+	}	
 	
 }

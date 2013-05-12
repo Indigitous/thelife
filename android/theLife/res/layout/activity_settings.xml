@@ -23,6 +23,26 @@
 	        android:layout_height="100dp"
 	        android:src="@drawable/generic_avatar_image" />
 	    
+	    <LinearLayout 
+	    	android:layout_width="wrap_content"
+    		android:layout_height="match_parent"
+    		android:orientation="vertical" >
+	    
+		    <Button
+		        android:id="@+id/image_rotate_cw"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:onClick="rotateImageCW"
+		        android:text="CW" /> 
+		        
+		    <Button
+		        android:id="@+id/image_rotate_ccw"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:onClick="rotateImageCCW"
+		        android:text="CCW" />	        
+		</LinearLayout>	    	    
+	    
 	    <TextView
 	        android:id="@+id/settings_name_by_image"
 	        android:layout_marginLeft="10dp"
