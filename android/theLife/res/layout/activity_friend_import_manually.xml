@@ -23,6 +23,7 @@
     	<LinearLayout 
 	    	android:layout_width="wrap_content"
     		android:layout_height="match_parent"
+    		android:gravity="bottom"
     		android:orientation="vertical" >
 		    <Button
 		        android:id="@+id/image_rotate_cw"
@@ -30,7 +31,8 @@
 		        android:layout_height="wrap_content"
 		        android:onClick="rotateImageCW"
 		        android:enabled="false"
-		        android:text="CW" /> 
+		        android:drawableLeft="@drawable/images_rotate_right"
+		        /> 
 		        
 		    <Button
 		        android:id="@+id/image_rotate_ccw"
@@ -38,7 +40,8 @@
 		        android:layout_height="wrap_content"
 		        android:onClick="rotateImageCCW"
 		        android:enabled="false"
-		        android:text="CCW" />	        
+		        android:drawableLeft="@drawable/images_rotate_left"
+		        />	        
 		</LinearLayout>
 	</LinearLayout>
 

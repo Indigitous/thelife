@@ -31,14 +31,14 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:onClick="rotateImageCW"
-		        android:text="CW" /> 
+		        android:drawableLeft="@drawable/images_rotate_right" /> 
 		        
 		    <Button
 		        android:id="@+id/image_rotate_ccw"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:onClick="rotateImageCCW"
-		        android:text="CCW" />	        
+		        android:drawableLeft="@drawable/images_rotate_left" />	        
 		</LinearLayout>	
 	</LinearLayout>    
 
