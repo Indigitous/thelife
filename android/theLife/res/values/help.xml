@@ -1,40 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="new_user_help">&lt;h3>Welcome to theLife App, The Smart Evangelism Toolbox&lt;/h3>
+    <string name="new_user_help">&lt;h3>Welcome to theLife Smart Evangelism Toolbox&lt;/h3>
+&lt;p>You want to help your friends discover Jesus, but every person, and every journey, is different.&lt;/p>
 &lt;p>Our goal is to help you walk with your friends on their journey towards Jesus.&lt;/p>
-&lt;p>We\'ll supply personalised resources, conversation ideas, and other tools which will help you connect the realities of their lives with God.&lt;/p>
-&lt;p>We at theLife understand that evangelism is hard. Without a like-minded community, it\'s easy to lose our motivation to live missionally.&lt;/p>
-&lt;p>To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.&lt;/p></string>
+&lt;p>At each step of the journey, we\'ll supply personalised resources, conversation ideas, and other tools which will help you connect your friends to God in meaningful ways.&lt;/p>
+&lt;p>We understand that evangelism is hard. Without a like-minded community, it\'s easy to lose our motivation to live missionally.&lt;/p>
+&lt;p>To keep motivated and active, we recommend you use theLife Smart Evangelism Toolbox with a group of like-minded Christians so you can encourage and pray for one another on the journey.&lt;/p>
+</string>
     <string name="first_time_adding_friend_help">
-&lt;h3>Help for user adding a friend for the first time.&lt;/h3>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+&lt;h3>The Process&lt;/h3>
+&lt;p> theLife sees evangelism as a process: on the journey towards Jesus, most people move through a few different stages.&lt;/p>
+&lt;p> To understand the journey, we us an approach from the book &lt;a href="http://www.ivpress.com/cgi-ivpress/book.pl/code=3608" >"I Once Was Lost: What Postmodern Skeptics Taught Us About Their Path to Jesus.&lt;/a>&lt;/p>
+&lt;p> I Once Was Lost describes five thresholds, or turning points, that people confront:&lt;/p>
+&lt;ol>
+    &lt;li>Knowing and trusting a Christian&lt;/li>
+    &lt;li>Becomingu curious about Jesus&lt;/li>
+    &lt;li>Opening up to change&lt;/li>
+    &lt;li>Seeking God&lt;/li>
+    &lt;li>Entering the Kingdom&lt;/li>
+&lt;/ol>
+&lt;p> These five steps aren\'t a magic formula, and they don\'t always happen in order, but they help us understand our friends\'s journeys.&lt;/p>
+&lt;p> As you use theLife App, we\'ll explain what each threshold means, how to recognise them, and how to help friends take the next step.&lt;/p>
 </string>
+
 	<string name="first_time_using_trusting_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Trusting a Christian&lt;/i>&lt;/h3>
+&lt;h3>Knowing and trusting a Christian &lt;/h3>
+&lt;p> The first step is to develop trust with your friend.&lt;/p>
+&lt;p> In our society, many people distrust Christians -- either because of their prejudices, or often because of our own actions.&lt;/p>
+&lt;p> When faced with different beliefs, we often get defensive, act offended, argue, or even judge people. These reactions kill trust.&lt;/p>
+&lt;p> That\'s not to say that these differences aren\'t important -- just that our reactions to them are important too.&lt;/p>
+&lt;p> At each threshold, we\'ll suggest activities to help your friend take the next step.&lt;/p>
+&lt;p> Reading the category descriptions can also help you understand what your friend\'s needs are at a given threshold.&lt;/p>
 </string>
+
 	<string name="first_time_using_curious_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Curious About Jesus&lt;/i>&lt;/h3>
+&lt;h3>Becoming curious about Jesus&lt;/h3>
+&lt;p> In a postmodern or post-Christian society, many people are indifferent to Jesus.&lt;/p>
+&lt;p> They\'ve heard just enough to be convinced he has nothing to offer them, or they think he\'s no different than any religious leader.&lt;/p>
+&lt;p> Now\'s the time to break their preconceptions about Jesus, and to show them he\'s the most compelling person in history.&lt;/p>
+&lt;p> As much by words as by actions, we want to show that Jesus\' message is like no other.&lt;/p>
+&lt;p> The unexpected ways he spoke and lived blew people away, and the astonishing ways he leads us to live, really pique peoples\' curiosity.&lt;/p>
+&lt;p> Stories, parables, acts of service, and profound questions are some great tools to spark curiosity.&lt;/p>
+&lt;p> But be careful: it\'s easy to drwon curiosity. If we start answering unasked questions or preaching, we may lose our friend\'s interest, and their trust.&lt;/p>
+&lt;p> &lt;/p>
 </string>
-	<string name="first_time_using_open_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Open To Change&lt;/i>&lt;/h3>
+<string name="first_time_using_open_threshold_help">
+    &lt;h3>Opening up to change&lt;/h3>
+    &lt;p> The third threshold, opening up to change, is the hardest. Imagine realising that a different way of living may be better than your own.&lt;/p>
+    &lt;p> It means questionning your whole vision of the world, and facing your deepest dissatisfactions and disappointments in life.&lt;/p>
+    &lt;p> It\'s a personal revolution.&lt;/p>
+    &lt;p> And it can be as hard for us to walk through it with a friend as it is for them.&lt;/p>
+    &lt;p> To help, we can model openness ourselves, and look together at life\'s disappointments. At the right moment, a clear challenge to openness can be key.&lt;/p>
+    &lt;p> Don\'t forget, patience is essential. Persevere in friendship and love, regardless of your friend\'s decision. And keep praying.&lt;/p>
 </string>
-	<string name="first_time_using_seeking_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Seeking God&lt;/i>&lt;/h3>
+
+<string name="first_time_using_seeking_threshold_help">
+    &lt;h3>Seeking God&lt;/h3>
+    &lt;p> The next step is to start intentionally seeking God: to transition frm a passive receptivity to an active examination of Jesus.&lt;/p>
+    &lt;p> Someone who\'s open to change may already feel like he\'s seeking. But being open to whatever may come isn\'t going to bring a conclusion.&lt;/p>
+    &lt;p> To help her start seeking, authentically live your relationship with God in front of her. Invite her in, and show her how He changes you.&lt;/p>
+    &lt;p> Share your struggles, your joys, your times of prayer. Study the scriptures together.&lt;/p>
+    &lt;p> Let her feel that it\'s ok to explore. Keep the emphasis on helping her learn for herself, not on receiving content.&lt;/p>
+    &lt;p> Some of these things may feel weird or uncomfortable to you, but they\'ll do a world of good.&lt;/p>
+    &lt;p> Your friend is going way beyond her comfort zone already, so she\'ll be encouraged to see you do the same.&lt;/p>
 </string>
-	<string name="first_time_using_entering_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Entering the Kingdom&lt;/i>&lt;/h3>
+
+<string name="first_time_using_entering_threshold_help">
+    &lt;h3>Entering the Kingdom&lt;/h3>
+    &lt;p> Jesus said, "Seek and ye shal find." In His ministry, he regularly called people to make a decision about Him -- to find Him.&lt;/p>
+    &lt;p> If we don\'t help a friend move beyond seeking, he may grow weary and give up. This creates an urgencey at threshold five.&lt;/p>
+    &lt;p> A clear call to decide is the culmination of the journey. As much as thresholds two and three require patience, here, clarity is key.&lt;/p>
+    &lt;p> Your friend may not respond right away to a call, but this provides a great chance to address roadblocks together.&lt;/p>
+    &lt;p> As you talk it through, keep the focus on Jesus rather than on secondary issues.&lt;/p>
+    &lt;p> Finally, be prepared for spiritual warfare. As souls approach the Kingdom, Satan will fight to keep them out.&lt;/p>
+    &lt;p>Persever in prayer and the power of the Holy Spirit. And get ready to party.&lt;/p>
 </string>
-	<string name="first_time_using_christian_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Follower of Jesus&lt;/i>&lt;/h3>
+
+<string name="first_time_using_christian_threshold_help">
+    &lt;h3>Beyond threshold 5&lt;/h3>
+    &lt;p> For a new believer, getting established in their new faith is integral.&lt;/p>
+    &lt;p> The resources here are intended to build the foundations of their new relationship with God.&lt;/p>
+    &lt;p> But perhaps the most important thing you can do for a new believer is to get them connected to a local church.&lt;/p>
+    &lt;p> Walk through one of these studies together, and maybe even invite another friend to join you!&lt;/p>
 </string>
 
 	<!-- added May 7, 2013 -->
 	<string name="using_new_contact_threshold_help">
-&lt;h3>Help for using threshold &lt;i>New Contact&lt;/i>&lt;/h3>
+&lt;h3>Getting Started&lt;/h3>
+    &lt;p>Now that you\'ve added a friend, we need to assign them to a threshold.&lt;/p>
+    &lt;p>Click the "What\'s Next" button at any threshold for suggested next actions. &lt;/p>
+    &lt;p>Here, you\'ll only have the option to change the threshold, or to read about how to identify thresholds.&lt;/p>
+    &lt;p>Go ahead and do this.&lt;/p>
 </string>	
 
 	<!--  added May 9, 2013 context sensitive help screens -->
