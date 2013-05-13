@@ -20,7 +20,5 @@
         android:showAsAction="ifRoom"
         android:icon="@drawable/action_logout"
         android:title="@string/action_logout"/>
-    
- 
 
 </menu>
