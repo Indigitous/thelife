@@ -11,18 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.p2c.thelife.model.OwnerDS;
+import com.p2c.thelife.model.RequestsDS;
 import com.p2c.thelife.model.UserModel;
 import com.slidingmenu.lib.SlidingMenu;
-import com.p2c.thelife.model.RequestsDS;
 
 /**
  * Support for SlidingMenu. 
- * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license TODO license notice
+ * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license
  * @author clarence
  *
  */ 
-public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS.DSChangedListener {
+public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS.DSChangedListener, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 	
 	protected Activity    m_activity;
 	protected SlidingMenu m_slidingMenu;
@@ -53,6 +55,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
         // 250 pixels on Samsung Galaxy Q 320x480 180ppi, 400 pixels on Nexus 4 1280x768 320ppi
         m_slidingMenu.setBehindWidth((int)(250 * m_activity.getResources().getDisplayMetrics().density));
         
+        // set the layout and listeners for the application menu
         m_slidingMenu.setMenu(R.layout.app_menu);
         m_appMenu = m_slidingMenu.getMenu();
         LinearLayout appMenuNotificationNumber = (LinearLayout)m_appMenu.findViewById(R.id.app_menu_notification);
@@ -62,6 +65,8 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 				m_activity.startActivity(new Intent("com.p2c.thelife.Requests"));
 			}
 		});
+        m_slidingMenu.setOnOpenListener(this);
+        m_slidingMenu.setOnCloseListener(this);
         
         showOwner();
         showNotificationNumber();
@@ -155,6 +160,41 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	        textViewLabel.setText(TheLifeConfiguration.getRequestsDS().count() == 1 ? R.string.notification_singular : R.string.notification_plural);	        
         }	
 	}
+	
+	
+	/**
+	 * Show the sliding menu.
+	 */
+	public void slideOpen() {
+		m_slidingMenu.showMenu();
+	}
+	
 
+	/**
+	 * The sliding menu is being closed.
+	 */
+	@Override
+	public void onClose() {
+		// nasty code because of the interaction of third party libs
+		if (m_activity instanceof SherlockActivity) {
+			((SherlockActivity)m_activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		} else if (m_activity instanceof SherlockFragmentActivity) {
+			((SherlockFragmentActivity)m_activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+	}
+	
+	
+	/**
+	 * The sliding menu is being opened.
+	 */
+	@Override
+	public void onOpen() {
+		// nasty code because of the interaction of third party libs
+		if (m_activity instanceof SherlockActivity) {
+			((SherlockActivity)m_activity).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		} else if (m_activity instanceof SherlockFragmentActivity) {
+			((SherlockFragmentActivity)m_activity).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		}		
+	}
 
 }

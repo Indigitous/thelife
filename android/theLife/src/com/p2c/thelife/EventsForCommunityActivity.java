@@ -40,10 +40,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_events_for_community, SlidingMenuSupport.COMMUNITY_POSITION);
-		
-		// no up arrow for home activity
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);	
-			
+					
 		// attach the event list view
 		m_listView = (ListView)findViewById(R.id.events_for_community_list);
 		m_adapter = new EventsForCommunityAdapter(this, android.R.layout.simple_list_item_1);
@@ -169,6 +166,8 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 			intent.putExtra("position", SlidingMenuSupport.COMMUNITY_POSITION);
 			intent.putExtra("home", "com.p2c.thelife.EventsForCommunity");
 			startActivity(intent);
+		} else if (item.getItemId() == android.R.id.home) {
+			m_support.slideOpen();
 		}
 		
 		return true;

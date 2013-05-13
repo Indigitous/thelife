@@ -7,7 +7,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 /**
  * Superclass of all FragmentActivities that use the sliding menu. 
- * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license TODO license notice
+ * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license
  * 
  * Uses support library for Androids < 3.0.
  * @author clarence
