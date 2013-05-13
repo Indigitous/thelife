@@ -173,7 +173,7 @@ public class BitmapCacheHandler extends Handler {
 	 */
 	public static void loadOwnerBitmap() {
 		BitmapCacheHandler handler = TheLifeConfiguration.getBitmapCacheHandler();					
-		Message message = handler.obtainMessage(OP_GET_USER_IMAGE_FROM_SERVER, TheLifeConfiguration.getOwnerDS().getUserId(), 0);
+		Message message = handler.obtainMessage(OP_GET_USER_IMAGE_FROM_SERVER, TheLifeConfiguration.getOwnerDS().getId(), 0);
 		handler.sendMessage(message);
 	}
 	

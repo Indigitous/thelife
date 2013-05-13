@@ -139,8 +139,8 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 					
 					// add the group to the list of known groups
 					ArrayList<Integer> memberIds = new ArrayList<Integer>();
-					memberIds.add(TheLifeConfiguration.getOwnerDS().getUserId());
-					GroupModel group = new GroupModel(groupId, name, description, TheLifeConfiguration.getOwnerDS().getUserId(), memberIds);
+					memberIds.add(TheLifeConfiguration.getOwnerDS().getId());
+					GroupModel group = new GroupModel(groupId, name, description, TheLifeConfiguration.getOwnerDS().getId(), memberIds);
 					TheLifeConfiguration.getGroupsDS().add(group);
 					TheLifeConfiguration.getGroupsDS().notifyDSChangedListeners();
 				}

@@ -22,7 +22,7 @@ public class InitialActivity extends Activity {
 		setContentView(R.layout.activity_initial);
 		
 		// Check to see if the user has authenticated
-		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
+		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			// authenticated user, so main screen
 			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
 			startActivity(intent);
