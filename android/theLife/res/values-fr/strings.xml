@@ -74,7 +74,7 @@
     <string name="friend">ami</string>
     <string name="user">utilisateur</string>
     <string name="request_join_group_prompt">Voulez-vous vous joindre à %1$s?</string>
-    <string name="waiting">attente&#8230;"</string>
+    <string name="waiting">Veuillez attendre&#8230;"</string>
     <string name="creating_new_group">Création du groupe"</string>
     <string name="deleting_friend">Suppression d\'ami"</string>
     <string name="adding_friend">Rajout d\'ami"</string>
@@ -153,6 +153,25 @@
     <string name="done">Ok</string>
     <string name="deleting_notification">Suppression de la notification</string>
     <string name="change_threshold_label">Changer\nle seuil</string>
+
+    <!-- added May 7+, 2013 -->
+    <string name="user_profile_updated">Paramètres enregistrés</string>
+    <string name="get_started_by_adding_friend">Commencer en ajoutant un ami!</string>
+    <string name="activity_friend_whats_next">Prochain pas</string>
+    <string name="error_prefix">Erreur : </string>
+    <string name="error_bad_connection">Impossible de rejoindre le serveur</string>
+    <string name="license">&lt;h4>Copyright (c) 2013, Pouvoir de Changer, Canada. Tous droits réservés.&lt;/h4>
+&lt;br />
+&lt;p>Apache HttpComponents Client&lt;br />
+Copyright 1999-2012 The Apache Software Foundation
+&lt;/p>
+&lt;p>
+This product includes software developed at&lt;br />
+The Apache Software Foundation (http://www.apache.org/).
+&lt;/p>
+</string>
+    <string name="title_license">License</string>
+
     
 
 </resources>
