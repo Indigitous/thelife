@@ -45,27 +45,27 @@
     <!-- Note these threshold arrays must be in the same order as FriendModel.Threshold -->
     <string-array name="thresholds_short_all">
         <item>New Contact</item>
-        <item>Trusting</item>
-        <item>Curious</item>
-        <item>Open</item>
-        <item>Seeking</item>
+        <item>Build Trust</item>
+        <item>Becoming Curious</item>
+        <item>Opening to Change</item>
+        <item>Start Seeking</item>
         <item>Entering</item>
         <item>Christian</item>
     </string-array>
     <string-array name="thresholds_medium_all">
         <item>New Contact</item>
-        <item>Trusting a Christian</item>
-        <item>Curious about Jesus</item>
-        <item>Open to Change</item>
-        <item>Seeking God</item>
+        <item>Building Trust</item>
+        <item>Becoming Curious about Jesus</item>
+        <item>Opening up to Change</item>
+        <item>Start Seeking God</item>
         <item>Entering the Kingdom</item>
         <item>Follower of Jesus</item>
     </string-array>
     <string-array name="thresholds_medium_change">
         <item>Trusting a Christian</item>
-        <item>Curious about Jesus</item>
-        <item>Open to Change</item>
-        <item>Seeking God</item>
+        <item>Becoming Curious about Jesus</item>
+        <item>Opening up to Change</item>
+        <item>Start Seeking God</item>
         <item>Entering the Kingdom</item>
         <item>Follower of Jesus</item>
     </string-array>    
