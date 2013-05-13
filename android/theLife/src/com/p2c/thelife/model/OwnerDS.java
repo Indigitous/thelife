@@ -86,7 +86,7 @@ public class OwnerDS {
 			systemSettingsEditor.putString(KEY_MOBILE, m_owner.mobile);		
 			systemSettingsEditor.commit();		
 		} else {
-			systemSettingsEditor.putInt(KEY_ID, 0); // marks a not-valid user
+			systemSettingsEditor.putInt(KEY_ID, 0); // marks a not-valid owner
 		}
 		
 		// tell all the listeners about the change
@@ -116,7 +116,7 @@ public class OwnerDS {
 	
 	
 	/**
-	 * @return whether or not the user has added a friend before now
+	 * @return whether or not the owner has added a friend before now
 	 */
 	public boolean getHasAddedFriend() {
 		return m_hasAddedFriend;
@@ -124,7 +124,7 @@ public class OwnerDS {
 	
 	
 	/**
-	 * @param hasAddedFriend	whether or not the user has added a friend before now
+	 * @param hasAddedFriend	whether or not the owner has added a friend before now
 	 */
 	public void setHasAddedFriend() {
 		m_hasAddedFriend = true;
@@ -136,7 +136,7 @@ public class OwnerDS {
 	
 	
 	/**
-	 * @return whether or not the user has used the given threshold level before now
+	 * @return whether or not the owner has used the given threshold level before now
 	 */
 	public boolean getHasUsedThreshold(FriendModel.Threshold threshold) {
 		return TheLifeConfiguration.getSystemSettings().getBoolean(KEY_HAS_USED_THRESHOLD + threshold.serverId, false);
@@ -144,7 +144,7 @@ public class OwnerDS {
 	
 	
 	/**
-	 * @param hasAddedFriend	whether or not the user has used the given threshold level before now
+	 * @param hasAddedFriend	whether or not the owner has used the given threshold level before now
 	 */
 	public void setHasUsedThreshold(FriendModel.Threshold threshold) {
 		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
