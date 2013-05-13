@@ -90,29 +90,42 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
    					m_slidingMenu.showContent();
         		} else {
 
+        			Intent intent = null;
 	        		switch (position) {
 	        		
-	    				case COMMUNITY_POSITION: 
-	    					m_activity.startActivity(new Intent("com.p2c.thelife.EventsForCommunity"));
+	    				case COMMUNITY_POSITION:
+	    					intent = new Intent("com.p2c.thelife.EventsForCommunity");
+	    					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	    					m_activity.startActivity(intent);
 	    					break;
 	    					
-	        			case FRIENDS_POSITION: 
-	        				m_activity.startActivity(new Intent("com.p2c.thelife.Friends"));
+	        			case FRIENDS_POSITION:
+	    					intent = new Intent("com.p2c.thelife.Friends");	        				
+	        				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        				m_activity.startActivity(intent);
 	        				break;
 	        				
-	        			case GROUPS_POSITION: 
-	        				m_activity.startActivity(new Intent("com.p2c.thelife.Groups"));
+	        			case GROUPS_POSITION:
+	    					intent = new Intent("com.p2c.thelife.Groups");	        				
+	        				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        				m_activity.startActivity(intent);
 	        				break;
 	        				
-	        			case REQUESTS_POSITION: 
-	        				m_activity.startActivity(new Intent("com.p2c.thelife.Requests"));
+	        			case REQUESTS_POSITION:
+	    					intent = new Intent("com.p2c.thelife.Requests");	        				
+	        				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        				m_activity.startActivity(intent);
 	        				break;	        				
 	        				
-	        			case HELP_POSITION: 
-	        				m_activity.startActivity(new Intent("com.p2c.thelife.HelpCentral"));
+	        			case HELP_POSITION:
+	    					intent = new Intent("com.p2c.thelife.HelpCentral");	        				
+	        				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        				m_activity.startActivity(intent);
 	        				break; 
 	        				
-	        			case SETTINGS_POSITION: 
+	        			case SETTINGS_POSITION:
+	    					intent = new Intent("com.p2c.thelife.Settings");	        				
+	        				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        				m_activity.startActivity(new Intent("com.p2c.thelife.Settings"));
 	        				break;
 	        				

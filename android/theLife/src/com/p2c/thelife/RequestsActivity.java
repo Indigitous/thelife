@@ -181,9 +181,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
-			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);			
+			m_support.slideOpen();		
 		}
 		
 		return true;
