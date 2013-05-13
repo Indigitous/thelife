@@ -1,35 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="new_user_help">Welcome to theLife App, The Smart Evangelism Toolbox.\n\n
-Our goal is to help you walk with your friends on their journey towards Jesus.\n\n
-We’ll supply personalised resources, conversation ideas, and other tools which will help you connect the realities of their lives with God.\n\n
-We at theLife understand that evangelism is hard. Without a like-minded community, it’s easy to lose our motivation to live missionally.\n\n
-To keep motivated and active, we recommend you either join or start a theLife App group to work together as a team.\n\n</string>
-    <string name="first_time_adding_friend_help">
-&lt;h3>Help for user adding a friend for the first time.&lt;/h3>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
-&lt;ul>&lt;li>First&lt;/li>&lt;li>Second&lt;/li>&lt;/ul>
+<string name="new_user_help">
+    &lt;h3>Binevenue à laVie Mobile, l\'atelier intelligent pour l\'évangélisation.&lt;/h3>
+    &lt;p>Vous voulez aider vos amis à découvrir Jésus, mais chaque personnne, et chaque cheminement, sont différents.&lt;/p>
+    &lt;p>Notre but est de vous aider à accompagner vos amis dans leur cheminement vers Jésus.&lt;/p>
+    &lt;p>À chaque étape, nous vous forunirons des ressources, des idées de conversation, et d\'autres outis qui vous aideront à connecter vos amis à Dieu de façon significative.&lt;/p>
+    &lt;p>En même temps, nous savons que l\'évangélisation est difficile. Sans une communauté qui partage un esprit de mission, nous perdons la motivation.&lt;/p>
+    &lt;p>Pour garder cette motivation, et pour rester actif, nous vous suggérons d\'utiliser laVie Moible avec un groupe d\'autres chrétiens motivés, pour s\'entre enourager en chemin.&lt;/p>
 </string>
-	<string name="first_time_using_trusting_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Trusting a Christian&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_curious_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Curious About Jesus&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_open_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Open To Change&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_seeking_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Seeking God&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_entering_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Entering the Kingdom&lt;/i>&lt;/h3>
-</string>
-	<string name="first_time_using_christian_threshold_help">
-&lt;h3>Help for using threshold &lt;i>Follower of Jesus&lt;/i>&lt;/h3>
+<string name="first_time_adding_friend_help">
+    &lt;h3>Le processus&lt;/h3>
+    &lt;p> laVie Mobile voit l\'évangélisation comme un processus ; en chemin vers Jésus, la majorité des gens passent par quelques différentes étapes.&lt;/p>
+    &lt;p> Pour comprendre ce cheminement, laVie Mobile tire son approche du livre &amp;laquo; &lt;a href="http://www.ivpress.com/cgi-ivpress/book.pl/code=3608" >I Once Was Lost&lt;/a> &amp;raquo;, qui décrit une série de cinq seuils auxquelles les gens font face :&lt;/p>
+    &lt;ol>
+        &lt;li>Faire confiance à un chrétien&lt;/li>
+        &lt;li>Devenir curieux à propos de Jésus&lt;/li>
+        &lt;li>S\'ouvir au changement dans sa vie&lt;/li>
+        &lt;li>Chercher Dieu&lt;/li>
+        &lt;li>Entrer dans le Royaume&lt;/li>
+    &lt;/ol>
+    &lt;p> Ces cinq étapes ne sont pas une formule magique, et ils n\'arrive pas toujours dans le même ordre, mais ils nous aident à comprendre le cheminement de nos amis.&lt;/p>
+    &lt;p> En utilisant laVie Mobile, nous vous expliquerons ce qui cignifie chaque seuil, comment reconnaître les seuils dans la vie d\'un ami, et comment l\'aider a prendre le prochain pas.&lt;/p>
 </string>
 
+<string name="first_time_using_trusting_threshold_help">
+    &lt;h3>Connaître et faire confiance à un chrétien&lt;/h3>
+    &lt;p> Le premier pas est de développer la confiance avec ton ami.&lt;/p>
+    &lt;p> Souvent, les gens de notre société sont méfiants de nous, en tant que chrétiens -- peut-être à cause des préjugées, peut-être à cause de nos propres actions.&lt;/p>
+    &lt;p>Nous avons souvent l\'habitude de se mettre sur la défensive, d\'être offensés, ou d\'argumenter face aux différentes croyances. Ces choses muisent à la confiance.&lt;/p>
+    &lt;p>Ce n\'est pas à dire que les différences ne sont pas importantes, mais simplement que nos reactions aux différences le sont aussi.&lt;/p>
+    &lt;p>À chaque seuil, nous allons présenter quelques activités pour aider vos amis à cheminer, divisées selon des catégories.&lt;/p>
+    &lt;p>Lises les descriptions des catégories pour mieux omprendre les besons de ton ami à chaque seuil.&lt;/p>
+</string>
+
+	<string name="first_time_using_curious_threshold_help">
+    &lt;h3>Devenir curieux à propos de Jésus&lt;/h3>
+    &lt;p> Dans une société post-moderne ou post-chrétien, les gens sont indifférents à Jésus. Souvent ils se sont inoculés par le peu du christianisme qui reste dans la culture, ou ils croient que Jésus est pareil aux autres fondateurs religieux et qu\'il n\'a rien à leur dire. &lt;/p>
+    &lt;p>C\'est ici le moment pour casser les idées préconçues à son sujet -- de montrer que Jésus est le personnage le plus intéressante de l\'histoire. &lt;/p>
+    &lt;p>Autant par les paroles que par les actions, nous voulons montrer que le message de Jésus est du jamais vu ailleurs.  &lt;/p>
+    &lt;p>Ses façons surprenantes de vivre et de parler, et les habitudes étonnants qu\'il inculque dans nos vie piquent vraiment la curiosité.&lt;/p>
+    &lt;p>Les histoires, les paraboles, les actes de service, et les questions profondes sont des outils qui servent à ce but.&lt;/p>
+    &lt;p>Un petit mise en garde: <b>il est facile de noyer la curiosité</b>. Si nous donnons trop d\'information, répondons à des questions non posées, ou commençons à prêcher, nous risquons perdre l\'intérêt, et la confiance, de nos amis.&lt;/p>
+</string>
+
+<string name="first_time_using_open_threshold_help">
+    &lt;h3>S\'ouvrir au changement dans sa vie&lt;/h3>
+    &lt;p>Le 3e seuil, s\'ouvrir au changement, est le plus difficile. Il implique la réalisation qu\'une autre façon de vire pourrait être meilleure que la sienne. &lt;/p>
+    &lt;p>Cet étape exige que nos amis mettent en question toute leur vision du monde pour examiner celle de Jésus. Ils vont faire face aux insatisfactions dans la vie, et à  ses déceptions les plus profondes. &lt;/p>
+    &lt;p>C\'est un processus de révolution personnelle. &lt;/p>
+    &lt;p>Mais autant que c\'est difficile pour nos amis, c\'est aussi difficile pour nous. &lt;/p>
+    &lt;p>Il nous faut de la patience et de la persévérance pour guider notre ami à travers ce seuil. Notre désir sera de pousser, mais ceci n\'est pas le moment pour mettre de la pression. &lt;/p>
+    &lt;p>Les meilleures choses que nous pouvons faire en ce moment sont de modeler l\'ouverture, regarder ensemble les insatisfactions de la vie, et, au bon moment, lancer un défi à changer. &lt;/p>
+    &lt;p>N\'oubliez pas, la patience est essentielle. Persévérez dans l\'amitié et l\'amour, peu importe la décision de ton ami. Et priez sans relâche. &lt;/p>
+</string>
+
+<string name="first_time_using_seeking_threshold_help">
+    &lt;h3>Chercher Dieu&lt;/h3>
+    &lt;p> Le seuil 4 mène à une vrai quête spirituelle, où les chercheurs désirent une résolution finale des questions, des conclusions concrètes, et une finalité.&lt;/p>
+    &lt;p> Alors comment aider quelqu\'un à commencer une recherche active? La transparence et l\'authenticité sont nos meilleurs outils.&lt;/p>
+    &lt;p> Pour aider ton amie à commencer à chercher, vivre votre relation avec Dieu devant elle. Montre-lui, en tout transparance, comment Dieu te transforme.&lt;/p>
+    &lt;p> Partagez vos luttes, vos moments de joie, vos temps de prière. Étudiez les écritures ensemble.&lt;/p>
+    &lt;p>Laissez-la savoir qu\'explorer, c\'est correct. Gardez l\'emphase sur apprendre pour elle-même, non pas la transmission de contenu.&lt;/p>
+    &lt;p> Même si cette authenticité n\'est pas facile pour vous, ça peut faire énormément du bien pour votre amie.&lt;/p>
+    &lt;p> Ell est déjà en dehors de son zone de confort, alors elle sera encouragée de vous voir prendre le même risque pour elle.&lt;/p>
+</string>
+
+<string name="first_time_using_entering_threshold_help">
+    &lt;h3>Entrer dans le Royaume&lt;/h3>
+    &lt;p>Jésus a dit, “Cherchez et vous trouverez.” Souvent dans son ministère, Jésus a appelé des gens à prendre une décision à son égard -- à le trouver.&lt;/p>
+    &lt;p> Si nous n\'aidons pas un ami à continuer au delà de la recherche, il pourra s\'en fatiguer et lâcher le chemin.&lt;/p>
+    &lt;p> Un appel clair à choisir est la culmination du cheminement. Autant que la patience est importante aux seuils deux et trois, ici, la clarté est clée.&lt;/p>
+    &lt;p> Si votre ami ne répond pas tout de suite, vous aurez l\'occasion de discuter ensemble les barrières qui l\'empêchent.&lt;/p>   
+    &lt;p>En en parlant, garder l\'accent sur Jésus au lieu des questions secondaires.&lt;/p>
+    &lt;p>Finalement, soyez prêts pour le combat spirituel. Lorsque les âmes se rapprochent au Royaume, Satan va à la guerre pour les arrêter.&lt;/p>
+    &lt;p>Persévérez dans la prière, et dans le pouvoir du Saint-Esprit. Et préparez-vous pour un party.&lt;/p>
+</string>
+
+<string name="first_time_using_christian_threshold_help">
+    &lt;h3>Au delà du seuil 5&lt;/h3>
+    &lt;p> Pour un nouveau croyant, se faire établir dans sa nouvelle foi est essentiel.&lt;/p>
+    &lt;p> Les ressources ici vous aideront à construire ensemble les fondations de sa nouvelle relation avec Dieu.&lt;/p>
+    &lt;p> Mais la chose qui est peut-être la plus importante pour un nouveau chrétien est de le connecter avec une église locale.&lt;/p>
+</string>
+	<!-- added May 7, 2013 -->
+	<string name="using_new_contact_threshold_help">
+&lt;h3>Le premier pas&lt;/h3>
+&lt;p>Après avoir rajouté un ami, il faut lui assigner à un seuil.&lt;/p>
+&lt;p>À chaque seuil, le touche &amp;laquo; Prochain pas &amp;raquo; vous donnera des suggestions d\'activités à faire avec votre ami.&lt;/p>
+&lt;p>Ici, vos seules options seront de changer son seuil, ou de lire un peu plus sur comment identifier les seuils.&lt;/p>
+
+</string>	
+
+	<!--  added May 9, 2013 context sensitive help screens -->
+	<string name="activity_deed_for_friend_help">Activity For Friend Help in here</string>
+	<string name="activity_deeds_for_friend_help">Activities For Friend Help in here</string>
+	<string name="activity_events_for_community_help">Events For Community Help in here</string>		
+	<string name="activity_friends_help">Friends Help in here</string>
+	<string name="activity_group_help">Group Help in here</string>
+	<string name="activity_groups_help">Groups Help in here</string>
+	<string name="activity_groups_search_help">Groups Search Help in here</string>
+	<string name="activity_settings_help">Settings Help in here</string>
+		
 </resources>

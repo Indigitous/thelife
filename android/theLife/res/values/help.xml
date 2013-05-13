@@ -31,7 +31,7 @@
 &lt;p> When faced with different beliefs, we often get defensive, act offended, argue, or even judge people. These reactions kill trust.&lt;/p>
 &lt;p> That\'s not to say that these differences aren\'t important -- just that our reactions to them are important too.&lt;/p>
 &lt;p> At each threshold, we\'ll suggest activities to help your friend take the next step.&lt;/p>
-&lt;p> Reading the category descriptions can also help you understand what your friend\'s needs are at a given threshold..&lt;/p>
+&lt;p> Reading the category descriptions can also help you understand what your friend\'s needs are at a given threshold.&lt;/p>
 </string>
 
 	<string name="first_time_using_curious_threshold_help">
@@ -63,18 +63,18 @@
     &lt;p> Share your struggles, your joys, your times of prayer. Study the scriptures together.&lt;/p>
     &lt;p> Let her feel that it\'s ok to explore. Keep the emphasis on helping her learn for herself, not on receiving content.&lt;/p>
     &lt;p> Some of these things may feel weird or uncomfortable to you, but they\'ll do a world of good.&lt;/p>
-    &lt;p> Your friend is going way beyond her comfort zone already, so she\'ll be encouraged to see you do the same..&lt;/p>
+    &lt;p> Your friend is going way beyond her comfort zone already, so she\'ll be encouraged to see you do the same.&lt;/p>
 </string>
 
 <string name="first_time_using_entering_threshold_help">
     &lt;h3>Entering the Kingdom&lt;/h3>
-    &lt;p> Jesus said, "Seek and ye shal find." In His ministry, he regularly called people to make a decisiona bout Him -- to find Him.&lt;/p>
+    &lt;p> Jesus said, "Seek and ye shal find." In His ministry, he regularly called people to make a decision about Him -- to find Him.&lt;/p>
     &lt;p> If we don\'t help a friend move beyond seeking, he may grow weary and give up. This creates an urgencey at threshold five.&lt;/p>
     &lt;p> A clear call to decide is the culmination of the journey. As much as thresholds two and three require patience, here, clarity is key.&lt;/p>
     &lt;p> Your friend may not respond right away to a call, but this provides a great chance to address roadblocks together.&lt;/p>
     &lt;p> As you talk it through, keep the focus on Jesus rather than on secondary issues.&lt;/p>
     &lt;p> Finally, be prepared for spiritual warfare. As souls approach the Kingdom, Satan will fight to keep them out.&lt;/p>
-    &lt;p>Persever in prayer and the power of the Holy Spirit. And get ready to party..&lt;/p>
+    &lt;p>Persever in prayer and the power of the Holy Spirit. And get ready to party.&lt;/p>
 </string>
 
 <string name="first_time_using_christian_threshold_help">
@@ -87,7 +87,11 @@
 
 	<!-- added May 7, 2013 -->
 	<string name="using_new_contact_threshold_help">
-&lt;h3>Help for using threshold &lt;i>New Contact&lt;/i>&lt;/h3>
+&lt;h3>Getting Started&lt;/h3>
+    &lt;p>Now that you\'ve added a friend, we need to assign them to a threshold.&lt;/p>
+    &lt;p>Click the "What\'s Next" button at any threshold for suggested next actions. &lt;/p>
+    &lt;p>Here, you\'ll only have the option to change the threshold, or to read about how to identify thresholds.&lt;/p>
+    &lt;p>Go ahead and do this.&lt;/p>
 </string>	
 
 	<!--  added May 9, 2013 context sensitive help screens -->
