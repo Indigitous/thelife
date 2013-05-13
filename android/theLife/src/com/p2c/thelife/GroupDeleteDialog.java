@@ -23,7 +23,7 @@ public class GroupDeleteDialog extends ServerAccessDialogAbstract {
 		final GroupModel group = ((GroupsActivity)m_listener).getSelectedGroup();
 		
 		// Make sure the user is the group leader, and therefore allowed to delete the group
-		if (group.leader_id == TheLifeConfiguration.getOwnerDS().getUserId()) {
+		if (group.leader_id == TheLifeConfiguration.getOwnerDS().getId()) {
 			
 			// set the message, content and buttons of the alert
 			String message = getResources().getString(R.string.delete_group_prompt, group.name);

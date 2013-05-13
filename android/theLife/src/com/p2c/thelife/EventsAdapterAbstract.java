@@ -74,7 +74,7 @@ public abstract class EventsAdapterAbstract
 		if (event.isPrayerRequested) {
 			
 			// only show the pledge icon if not the event is not from the owner
-			pledgeView.setVisibility((event.user_id == TheLifeConfiguration.getOwnerDS().getUserId()) ? View.GONE : View.VISIBLE);
+			pledgeView.setVisibility((event.user_id == TheLifeConfiguration.getOwnerDS().getId()) ? View.GONE : View.VISIBLE);
 			
 			pledgeView.setChecked(event.hasPledged);
 			if (pledgeView.isChecked()) {

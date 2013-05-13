@@ -151,11 +151,10 @@ public class RequestModel extends AbstractModel {
 			json.getString("type"),
 			json.optString("email"),
 			json.optString("sms"),
-			json.optLong("created_at", 0L) * 1000, // convert seconds from server into millis
+			json.optLong("updated_at", 0L) * 1000, // convert seconds from server into millis
 			json.optString("status", "DELIVERED")
 		);
-		
-	}
-		
+	
+	}	
 
 }

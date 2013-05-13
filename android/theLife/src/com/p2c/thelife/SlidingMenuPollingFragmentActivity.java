@@ -31,7 +31,7 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 		super.onResume();
 		
 		// guard against an not-valid user
-		if (!TheLifeConfiguration.getOwnerDS().isValidUser()) {
+		if (!TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			Intent intent = new Intent("com.p2c.thelife.Setup");
 			startActivity(intent);
 			finish();

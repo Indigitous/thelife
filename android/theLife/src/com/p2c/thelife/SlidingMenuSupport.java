@@ -129,11 +129,11 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	
 	private void showOwner() {
         // show the app user
-        if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
+        if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 	        ImageView imageView = (ImageView)m_appMenu.findViewById(R.id.app_menu_user_image);
-	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId()));
+	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getId()));
 	        TextView textView = (TextView)m_appMenu.findViewById(R.id.app_menu_user_name);
-	        textView.setText(TheLifeConfiguration.getOwnerDS().getUser().getFullName());
+	        textView.setText(TheLifeConfiguration.getOwnerDS().getOwner().getFullName());
         }		
 	}
 	
@@ -148,7 +148,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	
 	
 	private void showNotificationNumber() {
-        if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
+        if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 	        TextView textViewNum = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_number);
 	        textViewNum.setText(String.valueOf(TheLifeConfiguration.getRequestsDS().count()));
 	        TextView textViewLabel = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_label);

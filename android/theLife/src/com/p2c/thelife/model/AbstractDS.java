@@ -101,7 +101,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		
 		// load model objects from the JSON cache file on this device.
 		// TODO: is this too slow for the main thread?
-		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
+		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			
 			FileReader fileReader = null;
 			try {

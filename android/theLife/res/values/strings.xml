@@ -171,5 +171,6 @@ The Apache Software Foundation (http://www.apache.org/).
 &lt;/p>
 </string>
     <string name="title_license">License</string>
+    <string name="action_license">License</string>
     
 </resources>

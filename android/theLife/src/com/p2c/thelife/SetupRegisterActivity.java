@@ -184,7 +184,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		closeProgressBar();
 				
 		// store the user configuration result
-		TheLifeConfiguration.getOwnerDS().setUser(user);
+		TheLifeConfiguration.getOwnerDS().setOwner(user);
 		TheLifeConfiguration.getOwnerDS().setToken(token);
 		
 		// refresh data stores

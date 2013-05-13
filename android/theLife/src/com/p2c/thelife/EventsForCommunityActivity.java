@@ -92,7 +92,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		super.onResume();
 		
 		// load the data store from the server in the background
-		if (TheLifeConfiguration.getOwnerDS().isValidUser()) {
+		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
 			TheLifeConfiguration.getEventsDS().refresh(null);  // TODO refreshAfter(null) ?

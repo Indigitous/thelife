@@ -41,7 +41,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		// show the progress dialog while getting the user profile
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 		Server server = new Server(this);
-		server.queryUserProfile(TheLifeConfiguration.getOwnerDS().getUserId(), this, "queryUserProfile");		
+		server.queryUserProfile(TheLifeConfiguration.getOwnerDS().getId(), this, "queryUserProfile");		
 	}
 
 	@Override
@@ -66,12 +66,12 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		String email = textView.getText().toString();
 		textView = (TextView)findViewById(R.id.settings_phone);
 		String phone = textView.getText().toString();
-		m_updatedUser = new UserModel(TheLifeConfiguration.getOwnerDS().getUserId(), firstName, lastName, email, phone);
+		m_updatedUser = new UserModel(TheLifeConfiguration.getOwnerDS().getId(), firstName, lastName, email, phone);
 		
 		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_account), true, true);
 		Server server = new Server(this);
-		server.updateUserProfile(TheLifeConfiguration.getOwnerDS().getUserId(), firstName, lastName, email, phone, this, "updateUserProfile");		
+		server.updateUserProfile(TheLifeConfiguration.getOwnerDS().getId(), firstName, lastName, email, phone, this, "updateUserProfile");		
 		return true;
 	}
 
@@ -86,12 +86,12 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				// But if the query failed, use the local information.
 
 				// use the existing app user record
-				UserModel user = TheLifeConfiguration.getOwnerDS().getUser();
+				UserModel user = TheLifeConfiguration.getOwnerDS().getOwner();
 				
 				// update app user record with latest from server 
 				if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {	
 					user.setFromPartialJSON(jsonObject);				
-					TheLifeConfiguration.getOwnerDS().setUser(user);
+					TheLifeConfiguration.getOwnerDS().setOwner(user);
 				}
 					
 				// update the UI
@@ -106,7 +106,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				textView.setText(user.email);
 				textView = (TextView)findViewById(R.id.settings_phone);
 				textView.setText(user.mobile);
-				Bitmap bitmap = UserModel.getImage(TheLifeConfiguration.getOwnerDS().getUserId());
+				Bitmap bitmap = UserModel.getImage(TheLifeConfiguration.getOwnerDS().getId());
 				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
 				imageView.setImageBitmap(bitmap);
 			
@@ -119,7 +119,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 					// update the UI and app user
 					TextView textView = (TextView)findViewById(R.id.settings_name_by_image);				
 					textView.setText(m_updatedUser.getFullName());
-					TheLifeConfiguration.getOwnerDS().setUser(m_updatedUser);					
+					TheLifeConfiguration.getOwnerDS().setOwner(m_updatedUser);					
 	
 					// have updated the user profile, so now update the user profile image if necessary
 					if (m_updatedBitmap != null) {
@@ -165,7 +165,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 					public void onClick(DialogInterface dialog, int which) {
 						
 						// log out of app
-						TheLifeConfiguration.getOwnerDS().setUser(null);
+						TheLifeConfiguration.getOwnerDS().setOwner(null);
 						
 						// go to main screen
 						Intent intent = new Intent("com.p2c.thelife.Initial");
@@ -235,9 +235,9 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 	 * @param bitmap
 	 */
 	private void updateImageOnServer(Bitmap bitmap) {		
-		BitmapCacheHandler.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getUserId(), "image", bitmap);								
+		BitmapCacheHandler.saveBitmapToCache("users", TheLifeConfiguration.getOwnerDS().getId(), "image", bitmap);								
 		Server server = new Server(this);
-		server.updateImage("users", TheLifeConfiguration.getOwnerDS().getUserId(), this, "updateImage");
+		server.updateImage("users", TheLifeConfiguration.getOwnerDS().getId(), this, "updateImage");
 	}
 	
 	

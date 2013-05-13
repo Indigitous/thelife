@@ -36,7 +36,7 @@ public class RequestAcceptOrRejectDialog extends ServerAccessDialogAbstract {
 
 				// tell the server to reject the request
 				Server server = new Server(getActivity());
-				int userId = request.isInvite() ? TheLifeConfiguration.getOwnerDS().getUserId() : request.user_id;
+				int userId = request.isInvite() ? TheLifeConfiguration.getOwnerDS().getId() : request.user_id;
 				server.processGroupMembershipRequest(request.id, false, userId, request.group_id, (Server.ServerListener)m_listener, "processGroupMembershipRequest");				
 			}
 		});
@@ -49,7 +49,7 @@ public class RequestAcceptOrRejectDialog extends ServerAccessDialogAbstract {
 
 				// tell the server to accept the request -- to add the user to the group
 				Server server = new Server(getActivity());
-				int userId = request.isInvite() ? TheLifeConfiguration.getOwnerDS().getUserId() : request.user_id;
+				int userId = request.isInvite() ? TheLifeConfiguration.getOwnerDS().getId() : request.user_id;
 				server.processGroupMembershipRequest(request.id, true, userId, request.group_id, (Server.ServerListener)m_listener, "processGroupMembershipRequest");						
 			}
 		});		

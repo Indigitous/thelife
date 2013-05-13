@@ -8,17 +8,17 @@
         android:title="@string/action_help"/> 
         
     <item
-        android:id="@+id/action_logout"
+        android:id="@+id/action_license"
         android:orderInCategory="90"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/notification"
+        android:title="@string/action_license"/>             
+        
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:icon="@drawable/action_logout"
         android:title="@string/action_logout"/>
-    
-    <item
-        android:id="@+id/action_license"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/notification"
-        android:title="@string/action_logout"/>          
 
 </menu>
