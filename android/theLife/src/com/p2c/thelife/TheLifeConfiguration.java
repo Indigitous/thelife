@@ -41,9 +41,9 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_DEEDS_DELTA = 60 * 60 * 1000; // 1 hour in millis
 	public static final long REFRESH_CATEGORIES_DELTA = REFRESH_DEEDS_DELTA;
 	public static final long REFRESH_EVENTS_DELTA = 2 * 60 * 1000; // 2 minutes in millis
-	public static final long REFRESH_FRIENDS_DELTA = 7 * 24 * 60 * 60 * 1000; // 1 week in millis
-	public static final long REFRESH_GROUPS_DELTA = 7 * 24 * 60 * 1000; // 1 week in millis
-	public static final long REFRESH_USERS_DELTA = 1 * 60 * 60 * 1000; // 1 hour in millis
+	public static final long REFRESH_FRIENDS_DELTA = 60 * 60 * 1000; // 1 hour in millis
+	public static final long REFRESH_GROUPS_DELTA = 60 * 60 * 1000; // 1 hour in millis
+	public static final long REFRESH_USERS_DELTA = 60 * 60 * 1000; // 1 hour in millis
 	public static final long REFRESH_REQUESTS_FIRST_DELTA = 4000; // 4 seconds before first Requests refresh
 	public static final long REFRESH_REQUESTS_DELTA = 90 * 1000; // 90 seconds in millis
 	

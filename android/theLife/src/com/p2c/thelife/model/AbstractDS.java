@@ -257,7 +257,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		long lastRefresh = TheLifeConfiguration.getSystemSettings().getLong(m_refreshSettingTimestampKey, 0);
 		
 		// TODO: for debugging
-		lastRefresh = 0;
+		//lastRefresh = 0;
 		
 		// if the model objects were not refreshed recently
 		if (System.currentTimeMillis() - lastRefresh > m_refreshDelta) {

@@ -69,7 +69,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 		if (m_group != null) {
 			// load the database from the server in the background
 			m_groupUsersDS.addDSChangedListener(m_adapter);
-			m_groupUsersDS.refresh(null);
+			m_groupUsersDS.forceRefresh(null);
 			
 			// listen for user bitmaps
 			TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);
@@ -156,6 +156,8 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 		
 		// deleteUser does not return the deleted id
+		
+		m_groupUsersDS.forceRefresh(null);		
 		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
