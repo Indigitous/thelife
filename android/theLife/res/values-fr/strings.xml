@@ -77,7 +77,7 @@
     <string name="waiting">Veuillez attendre&#8230;"</string>
     <string name="creating_new_group">Création du groupe"</string>
     <string name="deleting_friend">Suppression d\'ami"</string>
-    <string name="adding_friend">Rajout d\'ami"</string>
+    <string name="adding_friend">Création d\'ami"</string>
     <string name="requesting_to_join_group">"Envoie de demande"</string>
     <string name="retrieving_account">"Téléchargement du compte"</string>
     <string name="creating_account">"Création du compte"</string>
