@@ -34,7 +34,7 @@ public class HelpCentralActivity extends SlidingMenuPollingActivity {
 		help += getResources().getString(R.string.first_time_using_entering_threshold_help);
 		
 		// show help
-		webView.loadData(help, "text/html", null);		
+		webView.loadDataWithBaseURL(null, help, "text/html", "utf-8", null);		
 	}
 
 	@Override

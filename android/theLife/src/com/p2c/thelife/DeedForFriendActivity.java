@@ -66,7 +66,7 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 			
 			// description
 			WebView description = (WebView)findViewById(R.id.deed_for_friend_description);
-			description.loadData(m_deed.description, "text/html", null);
+			description.loadDataWithBaseURL(null, m_deed.description, "text/html", "utf-8", null);
 		}
 	}
 

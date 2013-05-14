@@ -108,7 +108,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 		LayoutInflater inflater = LayoutInflater.from(this);
 		final View view = inflater.inflate(R.layout.dialog_first_time_using_threshold_help, null);
 		WebView webView = (WebView)view.findViewById(R.id.dialog_using_threshold_help_message);		
-		webView.loadData(getThresholdHelp(threshold), "text/html", null);
+		webView.loadDataWithBaseURL(null, getThresholdHelp(threshold), "text/html", "utf-8", null);
 		alertBuilder.setView(view);
 
 		// set the buttons of the alert

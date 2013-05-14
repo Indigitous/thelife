@@ -21,7 +21,7 @@ public class HelpNewUserActivity extends Activity {
 		setContentView(R.layout.activity_help_new_user);
 		
 		WebView webView = (WebView)findViewById(R.id.activity_help_new_user_webview);
-		webView.loadData(getResources().getString(R.string.new_user_help), "text/html", null);		
+		webView.loadDataWithBaseURL(null, getResources().getString(R.string.new_user_help), "text/html", "utf-8", null);		
 	}
 
 	@Override
