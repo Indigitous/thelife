@@ -167,10 +167,15 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	
 	private void showNotificationNumber() {
         if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+    		int numNotifications = TheLifeConfiguration.getRequestsDS().count();
+    		
 	        TextView textViewNum = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_number);
 	        textViewNum.setText(String.valueOf(TheLifeConfiguration.getRequestsDS().count()));
+	        textViewNum.setBackgroundDrawable(numNotifications > 0 ? 
+	        								  	m_activity.getResources().getDrawable(R.drawable.round_red) : 
+	        								  	m_activity.getResources().getDrawable(R.drawable.round_black));
 	        TextView textViewLabel = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_label);
-	        textViewLabel.setText(TheLifeConfiguration.getRequestsDS().count() == 1 ? R.string.notification_singular : R.string.notification_plural);	        
+	        textViewLabel.setText(numNotifications == 1 ? R.string.notification_singular : R.string.notification_plural);
         }	
 	}
 	
