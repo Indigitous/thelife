@@ -86,7 +86,7 @@
 	<!-- added May 7, 2013 -->
 	<string name="using_new_contact_threshold_help">
 &lt;h3>Le premier pas&lt;/h3>
-&lt;p>Après avoir rajouté un ami, il faut lui assigner à un seuil.&lt;/p>
+&lt;p>Après avoir rajouté un ami, il faut l'assigner un seuil.&lt;/p>
 &lt;p>À chaque seuil, le touche &amp;laquo; Prochain pas &amp;raquo; vous donnera des suggestions d\'activités à faire avec votre ami.&lt;/p>
 &lt;p>Ici, vos seules options seront de changer son seuil, ou de lire un peu plus sur comment identifier les seuils.&lt;/p>
 
