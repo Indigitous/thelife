@@ -85,7 +85,7 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("email", username));
 			pairs.add(new BasicNameValuePair("password", password));
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPost httpRequest = new HttpPost(urlString);
 			httpRequest.setEntity(formEntity);
@@ -113,7 +113,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("last_name", lastName));
 			pairs.add(new BasicNameValuePair("mobile", ""));
 			pairs.add(new BasicNameValuePair("locale", locale));
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPost httpRequest = new HttpPost(urlString);
 			httpRequest.setEntity(formEntity);			
@@ -139,7 +139,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
 			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId)));		
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPost httpRequest = new HttpPost(urlString);
 			httpRequest.setEntity(formEntity);			
@@ -178,7 +178,7 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));					
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPut httpRequest = new HttpPut(urlString);
 			httpRequest.setEntity(formEntity);			
@@ -203,7 +203,7 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("name", name));
 			pairs.add(new BasicNameValuePair("description", description));
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPost httpRequest = new HttpPost(urlString);
 			httpRequest.setEntity(formEntity);				
@@ -285,7 +285,7 @@ public class Server {
 			if (sms != null) {
 				pairs.add(new BasicNameValuePair("sms", sms));
 			}			
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPost httpRequest = new HttpPost(urlString);
 			httpRequest.setEntity(formEntity);				
@@ -376,7 +376,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("last_name", String.valueOf(lastName)));
 			pairs.add(new BasicNameValuePair("email", String.valueOf(email)));
 			pairs.add(new BasicNameValuePair("mobile", String.valueOf(mobile)));
-			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs);
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			httpRequest.setEntity(entity);
 						
