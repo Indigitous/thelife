@@ -25,7 +25,7 @@
     <string name="import_by_phone">Cellulaire</string>
     <string name="import_by_facebook">Facebook</string>
     <string name="import_manually">Entrée mauelle</string>
-    <string name="import_label">Nouveau</string>
+    <string name="import_label">Créer</string>
     <string name="add_friend">Ajouter un ami</string>
     <string name="first_name">Prénom</string>
     <string name="last_name">Nom</string>
@@ -109,7 +109,7 @@
     <string name="invite_person_to_group">Inviter quelqu\'un au groupe</string>
     <string name="inviting_person">Envoi de l\'invitation</string>
     <string name="pledge_error_from_server">Erreur : incapable d\'enregistrer la prière.</string>
-    <string name="change_threshold_prompt">Changer le seuil</string>
+    <string name="change_threshold_prompt">Changement de seuil</string>
     <string name="pray">Prier</string>
     <string name="prayed">Prié</string>
     <string name="people_prayed_singular">1 personne a prié</string>
