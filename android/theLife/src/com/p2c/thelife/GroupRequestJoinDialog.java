@@ -26,7 +26,7 @@ public class GroupRequestJoinDialog extends ServerAccessDialogAbstract {
 		String message = getResources().getString(R.string.request_join_group_prompt, group.name);				
 		alertBuilder.setMessage(message);
 		alertBuilder.setNegativeButton(R.string.cancel, null); 
-		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+		alertBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
 				
 				// enable a progress bar

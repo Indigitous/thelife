@@ -120,10 +120,12 @@ public class RequestModel extends AbstractModel {
 		} else if (isDelivered() && isMembershipRequest()) {
 			finalDescription = resources.getString(R.string.membership_request_description, paramUserName, paramGroupName);
 		} else if (isAccepted() && isInvite()) {
+			paramUserName = resources.getString(R.string.user); // TODO get around server bug
 			finalDescription = resources.getString(R.string.invite_request_accepted_description, paramUserName, paramGroupName);
 		} else if (isAccepted() && isMembershipRequest()) {
 			finalDescription = resources.getString(R.string.membership_request_accepted_description, paramGroupName);
 		} else if (isRejected() && isInvite()) {
+			paramUserName = resources.getString(R.string.user);	// TODO get around server bug	
 			finalDescription = resources.getString(R.string.invite_request_rejected_description, paramUserName, paramGroupName);
 		} else if (isRejected() && isMembershipRequest()) {
 			finalDescription = resources.getString(R.string.membership_request_rejected_description, paramGroupName);				

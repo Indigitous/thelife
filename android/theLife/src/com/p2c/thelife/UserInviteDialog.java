@@ -42,7 +42,7 @@ public class UserInviteDialog extends ServerAccessDialogAbstract {
 				EditText emailField = (EditText)view.findViewById(R.id.invite_user_email);
 				String email = emailField.getText().toString();
 				EditText phoneField = (EditText)view.findViewById(R.id.invite_user_phone);
-				String phone = phoneField.getText().toString();				
+				String phone = phoneField.getText().toString();			
 				
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createRequest");
