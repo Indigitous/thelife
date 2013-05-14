@@ -27,7 +27,6 @@ public class RequestModel extends AbstractModel {
 	public static final String ACCEPTED = "ACCEPTED";
 	public static final String REJECTED = "REJECTED";	
 		
-	// TODO decide on userName and groupName
 	public int    request_id;
 	public int    user_id;			// user making the request
 	public String userName;			// the name of the user making the request

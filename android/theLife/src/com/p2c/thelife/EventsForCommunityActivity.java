@@ -92,7 +92,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);
-			TheLifeConfiguration.getEventsDS().refresh(null);  // TODO refreshAfter(null) ?
+			TheLifeConfiguration.getEventsDS().refresh(null);
 			TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);			
 			TheLifeConfiguration.getBitmapNotifier().addFriendBitmapListener(m_adapter);
 		}

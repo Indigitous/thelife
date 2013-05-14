@@ -34,7 +34,7 @@ import com.p2c.thelife.model.FriendModel;
 /**
  * Call the Server using REST calls.
  * Uses a downloaded version of Apache HttpClient, httpcomponents-client-4.2.5, 
- * because standard Android HttpClient does not support multipart forms. TODO license
+ * because standard Android HttpClient does not support multipart forms.
  * The downloaded JARs are:
  * 		commons-codec-1.6.jar
  * 		commons-logging-1.1.1.jar
@@ -138,7 +138,7 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
-			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId))); // TODO: need a better server API here			
+			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId)));		
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs);
 			
 			HttpPost httpRequest = new HttpPost(urlString);
@@ -157,7 +157,7 @@ public class Server {
 	public void deleteFriend(int friendId, ServerListener listener, String indicator) {
 		
 		// API endpoint
-		// returns HTTP 404 on an unknown friend, HTTP 201 on a success TODO check this
+		// returns HTTP 404 on an unknown friend, HTTP 201 on a success
 		String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId));
 		
 		try {
@@ -394,7 +394,7 @@ public class Server {
 
 		try {
 			// API endpoint
-			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
+			// returns HTTP 404 on an unknown group, HTTP 201 on a success
 			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId));		
 			
 			HttpDelete httpRequest = new HttpDelete(urlString);
@@ -412,7 +412,7 @@ public class Server {
 
 		try {
 			// API endpoint
-			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
+			// returns HTTP 404 on an unknown group, HTTP 201 on a success
 			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId) + "/users/" + String.valueOf(userId));		
 			
 			HttpDelete httpRequest = new HttpDelete(urlString);
@@ -430,7 +430,7 @@ public class Server {
 		
 		try {
 			// API endpoint
-			// returns HTTP 404 on an unknown group, HTTP 201 on a success TODO check this
+			// returns HTTP 404 on an unknown group, HTTP 201 on a success
 			// returns "errors" error string if already pledged to pray for this event
 			String urlString = Utilities.makeServerUrlString("events/" + String.valueOf(eventId) + "/pledge");		
 			

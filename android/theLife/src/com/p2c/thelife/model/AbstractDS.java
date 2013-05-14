@@ -170,7 +170,6 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 */
 	public void delete(int id) {
 		
-		// TODO check this!
 		int index = 0;
 		for (T m:m_data) {
 			if (m.id == id) {

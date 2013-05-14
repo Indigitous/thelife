@@ -23,7 +23,7 @@ public class GroupUsersDS extends AbstractDS<UserModel> {
 				"GroupUsersDS-" + String.valueOf(groupId),
 				"groupUsers-" + String.valueOf(groupId) + ".json",
 				"refresh_users_timestamp_key-" + String.valueOf(groupId),
-				"groups/" + String.valueOf(groupId) + "/users", // TODO should be my_groups
+				"groups/" + String.valueOf(groupId) + "/users",
 				"refresh_users_delta_key",
 				TheLifeConfiguration.REFRESH_USERS_DELTA
 			);		
