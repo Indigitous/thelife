@@ -31,7 +31,7 @@ public class UtilitiesTest extends AndroidTestCase {
 		
 		// test with good data part two
 		EventModel event2 = new EventModel(getContext().getResources(), 2, 2, "UName", 2, "FName", 2, 0, "$u moved $f to $t", 0, false, 0, false, 2);
-		assertEquals("<b>UName</b> moved <b>FName</b> to <b>Trusting</b>", event2.finalDescription);	
+		assertEquals("<b>UName</b> moved <b>FName</b> to <b>Build Trust</b>", event2.finalDescription);	
 	}
 
 }
