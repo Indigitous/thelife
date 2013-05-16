@@ -111,7 +111,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("password", password));
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
-			pairs.add(new BasicNameValuePair("mobile", ""));
+			pairs.add(new BasicNameValuePair("mobile", null));
 			pairs.add(new BasicNameValuePair("locale", locale));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
