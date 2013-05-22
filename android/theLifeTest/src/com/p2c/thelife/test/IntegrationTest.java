@@ -79,6 +79,7 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 	private static GroupsDS m_ownerGroupsDS = null;
 	private static GroupUsersDS m_ownerGroupUsersDS = null;
 	private static EventsDS m_ownerEventsDS = null;
+	private static EventsDS m_user2EventsDS = null;	
 	private static RequestsDS m_ownerRequestsDS = null;
 	private static RequestsDS m_user2RequestsDS = null;
 	
@@ -96,6 +97,20 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 	}
 	
 	
+	/**
+	 * Testing as follows:
+	 * 		owner: register and login
+	 * 		owner: create and update friend
+	 * 		owner: create an event with friend
+	 * 		owner: create group
+	 * 		user2: register
+	 * 		user2: look for group
+	 * 		user2: REQUEST_MEMBERSHIP for group to group leader, owner
+	 * 		owner: accepts request
+	 * 		user2: receives acceptance, is now member of the group
+	 * 		user2: pledges to pray for event between owner and owner's friend
+	 * 		owner2: delete friend, remove user2 from group, delete group
+	 */
 	synchronized public void test1() {
 		
 		Server server = null;
@@ -150,19 +165,9 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 		waitForServerResponse();
 		server = null;
 		
-		// test EventsDS
-		m_ownerEventsDS.forceRefresh("events1");
-		waitForServerResponse();
-		
-		// test deleteFriend
-		server = new Server(getContext(), m_ownerToken);
-		server.deleteFriend(m_friend1.id, this, "deleteFriend1");
-		waitForServerResponse();
-		server = null;
-		
-		// test FriendsDS
-		m_ownerFriendsDS.forceRefresh("friends3");
-		waitForServerResponse();			
+		// test EventsDS, should find the event
+		m_ownerEventsDS.forceRefresh("ownerEvents1");
+		waitForServerResponse();		
 		
 		// test createGroup
 		server = new Server(getContext(), m_ownerToken);
@@ -170,7 +175,7 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 		waitForServerResponse();
 		server = null;
 		
-		// test GroupsDS
+		// test GroupsDS, should find the group
 		m_ownerGroupsDS.forceRefresh("groups1");
 		waitForServerResponse();
 		
@@ -180,7 +185,7 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 		waitForServerResponse();
 		server = null;
 		
-		// test queryGroups
+		// test queryGroups, should find the group
 		server = new Server(getContext(), m_user2Token);
 		server.queryGroups(GROUP1_NAME, this, "queryGroups1");
 		waitForServerResponse();
@@ -236,6 +241,30 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 		m_ownerGroupUsersDS.forceRefresh("groupUsers1");
 		waitForServerResponse();
 		
+		// set up the user2 events data store
+		m_user2EventsDS = new EventsDS(getContext(), m_user2Token);		
+		m_user2EventsDS.addDSRefreshedListener(this);			
+		
+		// ensure user2 can see the event between the owner and the owner's friend
+		m_user2EventsDS.forceRefresh("user2Events1");
+		waitForServerResponse();		
+		
+		// test pledgeToPray
+		server = new Server(getContext(), m_user2Token);
+		server.pledgeToPray(m_event1.id, this, "pledgeToPray1");
+		waitForServerResponse();
+		server = null;		
+		
+		// test deleteFriend, should delete owner's friend
+		server = new Server(getContext(), m_ownerToken);
+		server.deleteFriend(m_friend1.id, this, "deleteFriend1");
+		waitForServerResponse();
+		server = null;
+		
+		// test FriendsDS, should not find any friends
+		m_ownerFriendsDS.forceRefresh("friends3");
+		waitForServerResponse();		
+		
 		// remove user2 from the group
 		server = new Server(getContext(), m_ownerToken);
 		server.deleteUserFromGroup(m_group1.id, m_user2.id, this, "deleteUserFromGroup1");
@@ -252,7 +281,7 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 		waitForServerResponse();
 		server = null;
 		
-		// test GroupsDS
+		// test GroupsDS, should not find any groups
 		m_ownerGroupsDS.forceRefresh("groups2");
 		waitForServerResponse();		
 	}
@@ -263,6 +292,8 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 	 */
 	@Override
 	synchronized public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
+		
+		System.out.println("NOTIFY SERVER RESPONSE " + indicator);		
 		try {
 			if (indicator.equals("register1")) {
 				assertServerSuccess(indicator, httpCode, errorString);
@@ -367,7 +398,14 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
 				
 			} else if (indicator.equals("deleteRequest1")) {
-				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204				
+				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
+				
+			} else if (indicator.equals("pledgeToPray1")) {
+				assertServerSuccess(indicator, httpCode, errorString);
+				
+				assertEquals(m_user2.id, jsonObject.getInt("user_id"));
+				assertEquals(m_event1.id, jsonObject.getInt("event_id"));
+				assertEquals(1, jsonObject.getInt("event_pledges_count"));			
 								
 			} else {
 				assertTrue("Don't know server response indicator " + indicator, false);
@@ -401,6 +439,7 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 	@Override
 	synchronized public void notifyDSRefreshed(String indicator) {
 		
+		System.out.println("NOTIFY DS REFRESHED " + indicator);
 		if (indicator.equals("friends1")) {
 			assertEquals(1, m_ownerFriendsDS.count());
 			FriendModel friend = m_ownerFriendsDS.findById(m_friend1.id);
@@ -426,7 +465,7 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 		} else if (indicator.equals("groups2")) {
 			assertEquals(0, m_ownerGroupsDS.count());
 			
-		} else if (indicator.equals("events1")) {
+		} else if (indicator.equals("ownerEvents1")) {
 			assertEquals(1, m_ownerEventsDS.count());
 			EventModel myEvent = m_ownerEventsDS.findById(m_event1.id);			
 			assertEquals(DEED_ID, myEvent.deed_id);
@@ -440,6 +479,21 @@ public class IntegrationTest extends AndroidTestCase implements ServerListener, 
 				FriendModel.getThresholdShortString(getContext().getResources(), FRIEND1_THRESHOLD2) + "</b>", myEvent.finalDescription);
 			assertEquals(false, myEvent.hasPledged);
 			assertEquals(0, myEvent.targetEvent_id);
+			
+		} else if (indicator.equals("user2Events1")) {
+			assertEquals(1, m_user2EventsDS.count());
+			EventModel myEvent = m_user2EventsDS.findById(m_event1.id);			
+			assertEquals(DEED_ID, myEvent.deed_id);
+			assertEquals(m_friend1.id, myEvent.friend_id);
+			assertEquals(m_owner.id, myEvent.user_id);
+			assertEquals(true, myEvent.isPrayerRequested);
+			assertEquals(FRIEND1_THRESHOLD2, myEvent.threshold);
+			assertEquals(m_owner.firstName, myEvent.userName);
+			assertEquals(FRIEND1_FIRST_NAME2, myEvent.friendName);
+			assertEquals("<b>" + myEvent.userName + "</b> has moved <b>" + myEvent.friendName + "</b> to <b>" + 
+				FriendModel.getThresholdShortString(getContext().getResources(), FRIEND1_THRESHOLD2) + "</b>", myEvent.finalDescription);
+			assertEquals(false, myEvent.hasPledged);
+			assertEquals(0, myEvent.targetEvent_id);			
 			
 		} else if (indicator.equals("user2Requests1")) {
 			assertEquals(0, m_user2RequestsDS.count());
