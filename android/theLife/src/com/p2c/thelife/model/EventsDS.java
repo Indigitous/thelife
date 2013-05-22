@@ -25,10 +25,11 @@ public class EventsDS extends AbstractDS<EventModel> {
 	// maximum number of events on a full refresh
 	public static final int MAX_EVENTS = 100;
 		
-	public EventsDS(Context context) {
+	public EventsDS(Context context, String token) {
 		
 		super(
-				context, 
+				context,
+				token,
 				"EventsDS", 
 				"events.json",
 				"refresh_events_timestamp_key",

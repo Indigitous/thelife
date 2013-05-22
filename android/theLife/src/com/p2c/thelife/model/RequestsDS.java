@@ -15,10 +15,11 @@ import com.p2c.thelife.TheLifeConfiguration;
  */
 public class RequestsDS extends AbstractDS<RequestModel> {
 	
-	public RequestsDS(Context context) {
+	public RequestsDS(Context context, String token) {
 		
 		super(
-				context, 
+				context,
+				token,
 				"RequestsDS", 
 				"requests.json",
 				"refresh_requests_timestamp_key",

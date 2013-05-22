@@ -2,10 +2,7 @@ package com.p2c.thelife.test;
 
 import android.test.AndroidTestCase;
 
-import com.p2c.thelife.Utilities;
 import com.p2c.thelife.model.EventModel;
-import com.p2c.thelife.model.FriendModel;
-import com.p2c.thelife.model.UserModel;
 
 public class UtilitiesTest extends AndroidTestCase {
 	

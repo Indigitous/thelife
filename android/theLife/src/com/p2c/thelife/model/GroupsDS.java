@@ -15,10 +15,11 @@ import com.p2c.thelife.TheLifeConfiguration;
  */
 public class GroupsDS extends AbstractDS<GroupModel> {
 	
-	public GroupsDS(Context context) {
+	public GroupsDS(Context context, String token) {
 		
 		super(
-				context, 
+				context,
+				token,
 				"GroupsDS", 
 				"groups.json",
 				"refresh_groups_timestamp_key",

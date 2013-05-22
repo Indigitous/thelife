@@ -50,7 +50,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 			textView.setText(m_group.description);
 			
 			// data store of users in this group
-			m_groupUsersDS = new GroupUsersDS(this, m_group.id);			
+			m_groupUsersDS = new GroupUsersDS(this, null, m_group.id);			
 			
 			// attach the users-in-group view
 			GridView usersView = (GridView)findViewById(R.id.activity_group_users);

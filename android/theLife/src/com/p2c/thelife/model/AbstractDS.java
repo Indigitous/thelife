@@ -61,6 +61,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected ArrayList<Integer> m_newModelIds = new ArrayList<Integer>(); // model ids after a refresh
 	
 	protected Context m_context = null;
+	protected String m_token = null;
 	protected String TAG = null;							// for logging
 	protected String m_cacheFileName = null; 				// must be set in subclass
 	protected boolean m_isRefreshing = false; 				// lock to prevent more than one thread refresh at any time
@@ -82,17 +83,19 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	/**
 	 * Create a generic data store.
 	 * @param context
-	 * @param tag				for logging
+	 * @param token							authentication token for testing and debugging
+	 * @param tag							for logging
 	 * @param cache_file_name
-	 * @param refreshSettingTimestampKey system preferences key
+	 * @param refreshSettingTimestampKey 	system preferences key
 	 * @param refreshURL
 	 * @param 
 	 */
-	public AbstractDS(Context context, String tag, String cacheFileName, 
+	public AbstractDS(Context context, String token, String tag, String cacheFileName, 
 					  String refreshSettingTimestampKey, String refreshURLPath, String refreshSettingDeltaKey, long refreshDeltaDefault) {
 		
 		// initialize instance vars
 		m_context = context;
+		m_token = token;
 		TAG = tag;
 		m_cacheFileName = TheLifeConfiguration.getCacheDirectory() + cacheFileName;
 		m_refreshSettingTimestampKey = refreshSettingTimestampKey;
@@ -100,8 +103,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		m_refreshDelta = TheLifeConfiguration.getSystemSettings().getLong(refreshSettingDeltaKey, refreshDeltaDefault);
 		
 		// load model objects from the JSON cache file on this device.
-		// TODO: is this too slow for the main thread?
-		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+		if (m_token == null && TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			
 			FileReader fileReader = null;
 			try {
@@ -268,7 +270,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 					m_isRefreshing = true;
 					m_refreshIndicator = refreshIndicator;
 					m_numRetries = numRetries;
-					String refreshURL = Utilities.makeServerUrlString(m_refreshURLPath);
+					String refreshURL = Utilities.makeServerUrlString(m_refreshURLPath, m_token);
 					
 					// add on optional parameters
 					if (max != 0) {

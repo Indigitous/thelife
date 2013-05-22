@@ -16,10 +16,11 @@ import com.p2c.thelife.TheLifeConfiguration;
  */
 public class GroupUsersDS extends AbstractDS<UserModel> {
 	
-	public GroupUsersDS(Context context, int groupId) {
+	public GroupUsersDS(Context context, String token, int groupId) {
 		
 		super(
-				context, 
+				context,
+				token, 
 				"GroupUsersDS-" + String.valueOf(groupId),
 				"groupUsers-" + String.valueOf(groupId) + ".json",
 				"refresh_users_timestamp_key-" + String.valueOf(groupId),

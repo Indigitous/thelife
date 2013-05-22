@@ -51,6 +51,9 @@ public class Server {
 	private static final String TAG = "Server";
 	
 	private Context m_context = null;
+	private String m_token = null;
+	
+	
 	
 	/**
 	 * To receive the server's response, implement this callback.
@@ -71,6 +74,16 @@ public class Server {
 	public Server(Context context) {
 		m_context = context;
 	}
+	
+	
+	/**
+	 * Specify the authentication token (used mostly for testing and debugging).
+	 */
+	public Server(Context context, String token) {
+		this(context);
+		m_token = token;
+	}
+	
 	
 	/**
 	 * Log into theLife. This means the user already has an account.
@@ -132,7 +145,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a bad threshold), HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("friends");
+		String urlString = Utilities.makeServerUrlString("friends", m_token);
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -158,7 +171,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 404 on an unknown friend, HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId));
+		String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId), m_token);
 		
 		try {
 			HttpDelete httpRequest = new HttpDelete(urlString);
@@ -174,7 +187,7 @@ public class Server {
 		// returns HTTP 404 on an unknown friend, HTTP 204 on a success
 		
 		try {
-			String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId));
+			String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId), m_token);
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));					
@@ -197,7 +210,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("groups");
+		String urlString = Utilities.makeServerUrlString("groups", m_token);
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -223,7 +236,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("events");
+		String urlString = Utilities.makeServerUrlString("events", m_token);
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -255,7 +268,7 @@ public class Server {
 		try {
 			// API end point
 			// returns HTTP 201 on a success, HTTP 401 on a fail
-			String urlString = Utilities.makeServerUrlString("groups") + "&query=" + URLEncoder.encode(queryString, "UTF-8");	
+			String urlString = Utilities.makeServerUrlString("groups", m_token) + "&query=" + URLEncoder.encode(queryString, "UTF-8");	
 			
 			HttpGet httpRequest = new HttpGet(urlString);
 						
@@ -273,7 +286,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("requests");
+		String urlString = Utilities.makeServerUrlString("requests", m_token);
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -304,7 +317,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("requests/" + String.valueOf(requestId));
+		String urlString = Utilities.makeServerUrlString("requests/" + String.valueOf(requestId), m_token);
 		
 		try {
 			HttpDelete httpRequest = new HttpDelete(urlString);
@@ -322,7 +335,7 @@ public class Server {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-		String urlString = Utilities.makeServerUrlString("requests/" + String.valueOf(requestId) + "/process");
+		String urlString = Utilities.makeServerUrlString("requests/" + String.valueOf(requestId) + "/process", m_token);
 		
 		try {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -349,7 +362,7 @@ public class Server {
 		try {
 			// API endpoint
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-			String urlString = Utilities.makeServerUrlString("my_users/" + String.valueOf(userId));
+			String urlString = Utilities.makeServerUrlString("my_users/" + String.valueOf(userId), m_token);
 			
 			HttpGet httpRequest = new HttpGet(urlString);
 						
@@ -367,7 +380,7 @@ public class Server {
 		try {
 			// API endpoint
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-			String urlString = Utilities.makeServerUrlString("users/" + String.valueOf(userId));
+			String urlString = Utilities.makeServerUrlString("users/" + String.valueOf(userId), m_token);
 			
 			HttpPut httpRequest = new HttpPut(urlString);	
 			
@@ -395,7 +408,7 @@ public class Server {
 		try {
 			// API endpoint
 			// returns HTTP 404 on an unknown group, HTTP 201 on a success
-			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId));		
+			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId), m_token);		
 			
 			HttpDelete httpRequest = new HttpDelete(urlString);
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
@@ -413,7 +426,7 @@ public class Server {
 		try {
 			// API endpoint
 			// returns HTTP 404 on an unknown group, HTTP 201 on a success
-			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId) + "/users/" + String.valueOf(userId));		
+			String urlString = Utilities.makeServerUrlString("groups/" + String.valueOf(groupId) + "/users/" + String.valueOf(userId), m_token);		
 			
 			HttpDelete httpRequest = new HttpDelete(urlString);
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
@@ -432,7 +445,7 @@ public class Server {
 			// API endpoint
 			// returns HTTP 404 on an unknown group, HTTP 201 on a success
 			// returns "errors" error string if already pledged to pray for this event
-			String urlString = Utilities.makeServerUrlString("events/" + String.valueOf(eventId) + "/pledge");		
+			String urlString = Utilities.makeServerUrlString("events/" + String.valueOf(eventId) + "/pledge", m_token);		
 			
 			HttpPost httpRequest = new HttpPost(urlString);
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);					
@@ -455,7 +468,7 @@ public class Server {
 		try {
 			// API endpoint
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
-			String urlString = Utilities.makeServerUrlString(urlPrefix + "/" + String.valueOf(id));
+			String urlString = Utilities.makeServerUrlString(urlPrefix + "/" + String.valueOf(id), m_token);
 
 			HttpPut httpRequest = new HttpPut(urlString);
 			

@@ -15,10 +15,11 @@ import com.p2c.thelife.TheLifeConfiguration;
  */
 public class FriendsDS extends AbstractDS<FriendModel> {
 	
-	public FriendsDS(Context context) {
+	public FriendsDS(Context context, String token) {
 		
 		super(
-				context, 
+				context,
+				token,
 				"FriendsDS", 
 				"friends.json",
 				"refresh_friends_timestamp_key",

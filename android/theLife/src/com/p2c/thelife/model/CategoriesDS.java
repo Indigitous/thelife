@@ -15,10 +15,11 @@ import com.p2c.thelife.TheLifeConfiguration;
  */
 public class CategoriesDS extends AbstractDS<CategoryModel> {
 	
-	public CategoriesDS(Context context) {
+	public CategoriesDS(Context context, String token) {
 		
 		super(
-				context, 
+				context,
+				token,
 				"CategoriesDS", 
 				"categories.json",
 				"refresh_categories_timestamp_key",

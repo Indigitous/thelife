@@ -84,8 +84,15 @@ public class Utilities {
 	}
 	
 	public static String makeServerUrlString(String urlPath) {
-		return TheLifeConfiguration.getServerUrl() + urlPath + "?authentication_token=" + TheLifeConfiguration.getOwnerDS().getToken();
+		return Utilities.makeServerUrlString(urlPath, TheLifeConfiguration.getOwnerDS().getToken());
 	}
+	
+	public static String makeServerUrlString(String urlPath, String token) {
+		if (token == null) {
+			token = TheLifeConfiguration.getOwnerDS().getToken();
+		}
+		return TheLifeConfiguration.getServerUrl() + urlPath + "?authentication_token=" + token;
+	}	
 	
 	public static String makeServerUrlStringNoToken(String urlPath) {
 		return TheLifeConfiguration.getServerUrl() + urlPath;

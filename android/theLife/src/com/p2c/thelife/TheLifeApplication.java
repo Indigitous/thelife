@@ -42,12 +42,12 @@ public class TheLifeApplication extends Application {
 				
 		// initialize the data stores, reading from cache if available
 		TheLifeConfiguration.setOwnerDS(new OwnerDS());				
-		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext()));				
-		TheLifeConfiguration.setDeedsDS(new DeedsDS(getApplicationContext()));
-		TheLifeConfiguration.setGroupsDS(new GroupsDS(getApplicationContext()));
-		TheLifeConfiguration.setFriendsDS(new FriendsDS(getApplicationContext()));		
-		TheLifeConfiguration.setEventsDS(new EventsDS(getApplicationContext()));
-		TheLifeConfiguration.setRequestsDS(new RequestsDS(getApplicationContext()));
+		TheLifeConfiguration.setCategoriesDS(new CategoriesDS(getApplicationContext(), null));				
+		TheLifeConfiguration.setDeedsDS(new DeedsDS(getApplicationContext(), null));
+		TheLifeConfiguration.setGroupsDS(new GroupsDS(getApplicationContext(), null));
+		TheLifeConfiguration.setFriendsDS(new FriendsDS(getApplicationContext(), null));		
+		TheLifeConfiguration.setEventsDS(new EventsDS(getApplicationContext(), null));
+		TheLifeConfiguration.setRequestsDS(new RequestsDS(getApplicationContext(), null));
 		
 		// initialize the application wide polling and its notification listener
 //		TheLifeConfiguration.getRequestsDS().addDSChangedListener(new RequestsDSChangedListener(this)); // seems annoying?

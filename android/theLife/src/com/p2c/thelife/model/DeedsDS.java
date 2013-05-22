@@ -22,10 +22,11 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	 * Deeds (Activity Objects) Data Store.
 	 * @param context
 	 */
-	public DeedsDS(Context context) {
+	public DeedsDS(Context context, String token) {
 		
 		super(
-			context, 
+			context,
+			token,
 			"DeedsDS", 
 			"deeds.json",
 			"refresh_deeds_timestamp_key",
