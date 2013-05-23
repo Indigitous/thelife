@@ -66,13 +66,17 @@ public class UserModel extends AbstractModel {
 	public static UserModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 							
 		// create the deed
-		int id = json.getInt("id");		
+		int id = json.getInt("id");
+		String mobile = json.optString("mobile", null);
+		if (mobile == "null") {
+			mobile = null;
+		}
 		return new UserModel(
 			id,
 			json.getString("first_name"),
 			json.getString("last_name"),	
 			json.optString("email", ""),
-			json.optString("mobile", "")
+			mobile
 		);
 	}	
 	
@@ -87,7 +91,9 @@ public class UserModel extends AbstractModel {
 			this.email = newEmail; 
 		}
 		String newMobile = json.optString("mobile", null);
-		if (newMobile != null) {
+		if (newMobile == "null") {
+			this.mobile = null;
+		} else if (newMobile != null) {
 			this.mobile = newMobile;
 		}
 		String newFirstName = json.optString("first_name", null);
