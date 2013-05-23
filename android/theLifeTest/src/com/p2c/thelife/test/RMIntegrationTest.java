@@ -52,7 +52,7 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 	private static final String OWNER_FIRST_NAME = "ITFIRST1";
 	private static final String OWNER_LAST_NAME = "ITLAST1";
 	private static final String OWNER_LOCALE = "en";
-	private static final String OWNER_MOBILE = ""; // TODO should be null
+	private static final String OWNER_MOBILE = null;
 	
 	// User2 test values
 	private static final String USER2_EMAIL = "itemail2@ballistiq.com";
@@ -60,7 +60,7 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 	private static final String USER2_FIRST_NAME = "ITFIRST2";
 	private static final String USER2_LAST_NAME = "ITLAST2";
 	private static final String USER2_LOCALE = "en";
-	private static final String USER2_MOBILE = ""; // TODO should be null	
+	private static final String USER2_MOBILE = null;	
 	
 	// other test values
 	private static final String FRIEND1_FIRST_NAME = "ITFFIRST1";

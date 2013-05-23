@@ -37,7 +37,7 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 	private static final String OWNER_FIRST_NAME = "ITFIRST5";
 	private static final String OWNER_LAST_NAME = "ITLAST5";
 	private static final String OWNER_LOCALE = "en";
-	private static final String OWNER_MOBILE = "555-5555"; // TODO should be null
+	private static final String OWNER_MOBILE = "555-5555";
 	private static final String CHANGE_SUFFIX = "-1";
 	
 	// authentication token for the owner and user2
@@ -125,7 +125,7 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 				assertEquals(OWNER_EMAIL, m_owner.email);
 				assertEquals(OWNER_FIRST_NAME, m_owner.firstName);
 				assertEquals(OWNER_LAST_NAME, m_owner.lastName);
-				assertEquals("", m_owner.mobile);
+				assertEquals(null, m_owner.mobile);
 				
 				m_ownerToken = jsonObject.getString("authentication_token");
 				assertNotNull(m_ownerToken);
@@ -137,7 +137,7 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 				assertEquals(OWNER_EMAIL, user.email);
 				assertEquals(OWNER_FIRST_NAME, user.firstName);
 				assertEquals(OWNER_LAST_NAME, user.lastName);
-				assertEquals("", user.mobile);
+				assertEquals(null, user.mobile);
 				
 				assertEquals(m_owner.id, user.id);
 				String token = jsonObject.getString("authentication_token");
@@ -146,10 +146,11 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 			} else if (indicator.equals("queryUserProfile1")) {
 				assertServerSuccess(indicator, httpCode, errorString);
 				
-				assertEquals(OWNER_EMAIL, jsonObject.getString("email"));
-				assertEquals(OWNER_FIRST_NAME, jsonObject.getString("first_name"));
-				assertEquals(OWNER_LAST_NAME, jsonObject.getString("last_name"));
-				assertEquals("", jsonObject.getString("mobile"));
+				m_owner.setFromPartialJSON(jsonObject);
+				assertEquals(OWNER_EMAIL, m_owner.email);
+				assertEquals(OWNER_FIRST_NAME, m_owner.firstName);
+				assertEquals(OWNER_LAST_NAME, m_owner.lastName);
+				assertEquals(null, m_owner.mobile);
 				
 			} else if (indicator.equals("updateUserProfile1")) {
 				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204		
