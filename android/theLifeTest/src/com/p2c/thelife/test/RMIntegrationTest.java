@@ -27,7 +27,7 @@ import com.p2c.thelife.model.UserModel;
  * This integration test covers both server calls and data store refreshes.
  * 
  * Testing as follows:
- * 		owner: register and login
+ * 		owner: register
  * 		owner: create and update friend
  * 		owner: create an event with friend
  * 		owner: create group
@@ -118,12 +118,6 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 		// test register the owner
 		server = new Server(getContext());
 		server.register(OWNER_EMAIL, OWNER_PASSWORD, OWNER_FIRST_NAME, OWNER_LAST_NAME, OWNER_LOCALE, this, "register1");
-		waitForServerResponse();
-		server = null;
-		
-		// test login
-		server = new Server(getContext());
-		server.login(OWNER_EMAIL, OWNER_PASSWORD, this, "login1");
 		waitForServerResponse();
 		server = null;
 		
@@ -329,19 +323,6 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 				assertEquals(m_group1.name, group.name);			
 				assertEquals(m_group1.description, group.description);
 				assertEquals(m_owner.id, group.leader_id);
-				
-			} else if (indicator.equals("login1")) {
-				assertServerSuccess(indicator, httpCode, errorString);
-				
-				UserModel user = UserModel.fromJSON(jsonObject, false);
-				assertEquals(OWNER_EMAIL, user.email);
-				assertEquals(OWNER_FIRST_NAME, user.firstName);
-				assertEquals(OWNER_LAST_NAME, user.lastName);
-				assertEquals(OWNER_MOBILE, user.mobile);
-				
-				assertEquals(m_owner.id, user.id);
-				String token = jsonObject.getString("authentication_token");
-				assertEquals(token, m_ownerToken);
 				
 			} else if (indicator.equals("createFriend1")) {
 				assertServerSuccess(indicator, httpCode, errorString);
