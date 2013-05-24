@@ -99,13 +99,37 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 		super();
 	}
 	
+	
 	@Override
 	public void setUp() {
+		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "setUp()", e); }
+
+		m_ownerToken = null;
+		m_user2Token = null;
 	}
+	
 	
 	@Override
 	public void tearDown() {
+		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "tearDown()", e); }
+
+		// delete test owner
+		if (m_ownerToken != null) {
+			Server server = null;
+			server = new Server(getContext(), m_ownerToken);
+			server.deleteUser(this, "deleteUser");
+			waitForServerResponse();			
+		}
+
+		// delete test user
+		if (m_user2Token != null) {
+			Server server = null;
+			server = new Server(getContext(), m_user2Token);
+			server.deleteUser(this, "deleteUser");
+			waitForServerResponse();			
+		}		
 	}
+	
 	
 	/**
 	 * the test
@@ -386,7 +410,10 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 				
 				assertEquals(m_user2.id, jsonObject.getInt("user_id"));
 				assertEquals(m_event1.id, jsonObject.getInt("event_id"));
-				assertEquals(1, jsonObject.getInt("event_pledges_count"));			
+				assertEquals(1, jsonObject.getInt("event_pledges_count"));
+				
+			}  else if (indicator.equals("deleteUser")) {
+				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204						
 								
 			} else {
 				assertTrue("Don't know server response indicator " + indicator, false);

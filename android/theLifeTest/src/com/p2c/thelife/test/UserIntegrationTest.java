@@ -32,7 +32,7 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 	private static final String TAG = "UserIntegrationTest";
 	
 	// Owner test values
-	private static final String OWNER_EMAIL = "itemail5@ballistiq.com";
+	private static final String OWNER_EMAIL = "itest----email5@ballistiq.com";
 	private static final String OWNER_PASSWORD = "123456";
 	private static final String OWNER_FIRST_NAME = "ITFIRST5";
 	private static final String OWNER_LAST_NAME = "ITLAST5";
@@ -51,12 +51,26 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 		super();
 	}
 	
+	
 	@Override
 	public void setUp() {
+		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "setUp()", e); }
+
+		m_ownerToken = null;
 	}
+	
 	
 	@Override
 	public void tearDown() {
+		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "tearDown()", e); }
+
+		// delete test user
+		if (m_ownerToken != null) {
+			Server server = null;
+			server = new Server(getContext(), m_ownerToken);
+			server.deleteUser(this, "deleteUser");
+			waitForServerResponse();			
+		}
 	}
 	
 	/**
@@ -138,7 +152,6 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 				assertEquals(OWNER_FIRST_NAME, user.firstName);
 				assertEquals(OWNER_LAST_NAME, user.lastName);
 				assertEquals(null, user.mobile);
-				
 				assertEquals(m_owner.id, user.id);
 				String token = jsonObject.getString("authentication_token");
 				assertEquals(token, m_ownerToken);	
@@ -165,6 +178,9 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 								
 			}  else if (indicator.equals("updateImage")) {
 				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
+				
+			}  else if (indicator.equals("deleteUser")) {
+				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204				
 								
 			} else {
 				assertTrue("Don't know server response indicator " + indicator, false);

@@ -81,10 +81,31 @@ public class InviteIntegrationTest extends AndroidTestCase implements ServerList
 	
 	@Override
 	public void setUp() {
+		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "setUp()", e); }
+
+		m_ownerToken = null;
+		m_user2Token = null;
 	}
 	
 	@Override
 	public void tearDown() {
+		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "tearDown()", e); }
+
+		// delete test owner
+		if (m_ownerToken != null) {
+			Server server = null;
+			server = new Server(getContext(), m_ownerToken);
+			server.deleteUser(this, "deleteUser");
+			waitForServerResponse();			
+		}
+
+		// delete test user
+		if (m_user2Token != null) {
+			Server server = null;
+			server = new Server(getContext(), m_user2Token);
+			server.deleteUser(this, "deleteUser");
+			waitForServerResponse();			
+		}		
 	}
 	
 	/**
@@ -254,7 +275,10 @@ public class InviteIntegrationTest extends AndroidTestCase implements ServerList
 				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
 				
 			} else if (indicator.equals("deleteRequest1")) {
-				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204		
+				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
+				
+			}  else if (indicator.equals("deleteUser")) {
+				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204						
 								
 			} else {
 				assertTrue("Don't know server response indicator " + indicator, false);
