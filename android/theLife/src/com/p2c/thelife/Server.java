@@ -139,6 +139,24 @@ public class Server {
 	
 	
 	/**
+	 * Delete an existing user with the authentication token.
+	 */
+	public void deleteUser(ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns an error string on an incorrect authentication code, HTTP 204 on a success
+		String urlString = Utilities.makeServerUrlString("users", m_token);
+		
+		try {
+			HttpDelete httpRequest = new HttpDelete(urlString);
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "deleteUser()", e);
+		}
+	}	
+	
+	
+	/**
 	 * Create a new friend for the current user.
 	 */
 	public void createFriend(String firstName, String lastName, FriendModel.Threshold threshold, ServerListener listener, String indicator) {
