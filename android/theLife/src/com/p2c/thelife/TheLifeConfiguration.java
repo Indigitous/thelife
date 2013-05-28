@@ -49,9 +49,12 @@ public class TheLifeConfiguration {
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
-	//private static String m_serverURL = "http://75.157.251.192:3000/v1/"; // TODO debugging
-	private static String m_serverURL = "https://srv1.thelifeapp.com/v1/"; // production
-	//private static String m_serverURL = "https://thelifeapp.ballistiq.com/v1/"; // staging
+	//private static String m_serverURL = "http://75.157.251.192:3000"; // TODO debugging
+	//private static String m_serverURL = "https://srv1.thelifeapp.com"; // production
+	private static String m_serverURL = "https://thelifeapp.ballistiq.com"; // staging
+	
+	// Version number of the server
+	private static String m_serverVersion = "/v1/";
 	
 	// stock images
 	private static Bitmap m_genericPersonImage;
@@ -94,6 +97,9 @@ public class TheLifeConfiguration {
 		m_serverURL = serverURL;
 	}
 	
+	public static String getServerVersion() {
+		return m_serverVersion;
+	}
 	
 	/*************************** Data Stores *****************************/
 	

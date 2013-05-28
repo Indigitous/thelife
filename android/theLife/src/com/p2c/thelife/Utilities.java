@@ -91,11 +91,11 @@ public class Utilities {
 		if (token == null) {
 			token = TheLifeConfiguration.getOwnerDS().getToken();
 		}
-		return TheLifeConfiguration.getServerUrl() + urlPath + "?authentication_token=" + token;
+		return makeServerUrlStringNoToken(urlPath) + "?authentication_token=" + token;
 	}	
 	
 	public static String makeServerUrlStringNoToken(String urlPath) {
-		return TheLifeConfiguration.getServerUrl() + urlPath;
+		return TheLifeConfiguration.getServerUrl() + TheLifeConfiguration.getServerVersion() + urlPath;
 	}	
 	
 	
