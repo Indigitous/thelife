@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/group_name"
-        android:inputType="textPersonName" >
+        android:inputType="textCapWords" >
 
         <requestFocus />
     </EditText>
