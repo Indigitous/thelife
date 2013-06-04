@@ -6,16 +6,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.p2c.thelife.model.GroupModel;
-import com.p2c.thelife.model.GroupUsersDS;
-import com.p2c.thelife.model.UserModel;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.model.GroupModel;
+import com.p2c.thelife.model.GroupUsersDS;
+import com.p2c.thelife.model.UserModel;
 
 
 /**
@@ -23,7 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
  * @author clarence
  *
  */
-public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, UserDeleteFromGroupDialog.Listener {
+public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, UserDeleteFromGroupDialog.Listener, OnItemLongClickListener {
 	
 	private static final String TAG = "GroupActivity";
 	
@@ -56,6 +56,8 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 			GridView usersView = (GridView)findViewById(R.id.activity_group_users);
 			m_adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group, m_groupUsersDS);
 			usersView.setAdapter(m_adapter);
+			
+			usersView.setOnItemLongClickListener(this);
 		}
 	}
 	
@@ -124,6 +126,19 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	}		
 	
 	
+	/**
+	 * User has been selected for deletion.
+	 */
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		m_user = (UserModel)arg1.getTag();
+		UserDeleteFromGroupDialog dialog = new UserDeleteFromGroupDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+		
+		return true;
+	}
+
+
 	public void selectUser(View view) {
 		m_user = (UserModel)view.getTag();
 		
@@ -162,7 +177,6 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}				
-	}		
-	
+	}
 
 }
