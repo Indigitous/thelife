@@ -73,6 +73,10 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		String firstName = firstNameField.getText().toString();
 		EditText lastNameField = (EditText)findViewById(R.id.import_friend_last_name);
 		String lastName = lastNameField.getText().toString();
+		EditText emailField = (EditText)findViewById(R.id.import_friend_email);
+		String email = emailField.getText().toString();
+		EditText phoneField = (EditText)findViewById(R.id.import_friend_phone);
+		String phone = phoneField.getText().toString();		
 		Spinner thresholdField = (Spinner)findViewById(R.id.import_friend_threshold);
 		int thresholdIndex = thresholdField.getSelectedItemPosition();
 		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex];					
@@ -80,7 +84,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.adding_friend), true, true);		
 
 		Server server = new Server(this);
-		server.createFriend(firstName, lastName, threshold, this, "createFriend");						
+		server.createFriend(firstName, lastName, email, phone, threshold, this, "createFriend");						
 	}
 	
 	
@@ -96,11 +100,14 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 									
 					String firstName = jsonObject.optString("first_name", "");
 					String lastName = jsonObject.optString("last_name", "");
+					String email = jsonObject.optString("email", "");
+					String phone = jsonObject.optString("phone", "");
+					
 					int thresholdIndex = FriendModel.thresholdId2Index(jsonObject.optInt("threshold_id"));
 					
 					// add the friend to the list of known friends
 					FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex]; 
-					FriendModel friend = new FriendModel(friendId, firstName, lastName, threshold, "", "");
+					FriendModel friend = new FriendModel(friendId, firstName, lastName, threshold, email, phone);
 					TheLifeConfiguration.getFriendsDS().add(friend);
 					TheLifeConfiguration.getFriendsDS().notifyDSChangedListeners();
 					TheLifeConfiguration.getFriendsDS().forceRefresh(null);

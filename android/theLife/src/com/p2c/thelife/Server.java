@@ -159,7 +159,7 @@ public class Server {
 	/**
 	 * Create a new friend for the current user.
 	 */
-	public void createFriend(String firstName, String lastName, FriendModel.Threshold threshold, ServerListener listener, String indicator) {
+	public void createFriend(String firstName, String lastName, String email, String mobile, FriendModel.Threshold threshold, ServerListener listener, String indicator) {
 		
 		// API endpoint
 		// returns HTTP 422 on an incorrect form (such as a bad threshold), HTTP 201 on a success
@@ -169,7 +169,9 @@ public class Server {
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
-			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId)));		
+			pairs.add(new BasicNameValuePair("email", email));
+			pairs.add(new BasicNameValuePair("mobile", mobile));			
+			pairs.add(new BasicNameValuePair("threshold_id", String.valueOf(threshold.serverId)));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPost httpRequest = new HttpPost(urlString);
@@ -200,7 +202,7 @@ public class Server {
 	}	
 	
 	
-	public void updateFriend(int friendId, String firstName, String lastName, ServerListener listener, String indicator) {
+	public void updateFriend(int friendId, String firstName, String lastName, String email, String mobile, ServerListener listener, String indicator) {
 		// API endpoint
 		// returns HTTP 404 on an unknown friend, HTTP 204 on a success
 		
@@ -208,7 +210,9 @@ public class Server {
 			String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId), m_token);
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("first_name", firstName));
-			pairs.add(new BasicNameValuePair("last_name", lastName));					
+			pairs.add(new BasicNameValuePair("last_name", lastName));
+			pairs.add(new BasicNameValuePair("email", email));
+			pairs.add(new BasicNameValuePair("mobile", mobile));			
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			HttpPut httpRequest = new HttpPut(urlString);

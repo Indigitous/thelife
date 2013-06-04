@@ -50,6 +50,12 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 			
 			TextView lastNameView = (TextView)findViewById(R.id.friend_settings_last_name);
 			lastNameView.setText(m_friend.lastName);
+			
+			TextView emailView = (TextView)findViewById(R.id.friend_settings_email);
+			emailView.setText(m_friend.email);
+			
+			TextView phoneView = (TextView)findViewById(R.id.friend_settings_phone);
+			phoneView.setText(m_friend.mobile);			
 		}		
 	}
 
@@ -72,12 +78,16 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 		String firstName = textView.getText().toString();		
 		textView = (TextView)findViewById(R.id.friend_settings_last_name);
 		String lastName = textView.getText().toString();
-		m_updatedFriend = new FriendModel(m_friend.id, firstName, lastName, FriendModel.Threshold.NewContact, null, null);
+		textView = (TextView)findViewById(R.id.friend_settings_email);
+		String email = textView.getText().toString();
+		textView = (TextView)findViewById(R.id.friend_settings_phone);
+		String phone = textView.getText().toString();		
+		m_updatedFriend = new FriendModel(m_friend.id, firstName, lastName, FriendModel.Threshold.NewContact, email, phone);
 		
 		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_friend_account), true, true);
 		Server server = new Server(this);
-		server.updateFriend(m_friend.id, firstName, lastName, this, "updateFriend");		
+		server.updateFriend(m_friend.id, firstName, lastName, email, phone, this, "updateFriend");		
 		return true;
 	}
 
@@ -90,15 +100,21 @@ public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity i
 				
 				if (Utilities.isSuccessfulHttpCode(httpCode)) {
 					
-					// update the UI and friend model
+					// update the UI
 					TextView firstNameView = (TextView)findViewById(R.id.friend_settings_first_name);
 					firstNameView.setText(m_updatedFriend.firstName);
 					TextView lastNameView = (TextView)findViewById(R.id.friend_settings_last_name);
-					lastNameView.setText(m_updatedFriend.lastName);	
+					lastNameView.setText(m_updatedFriend.lastName);
+					TextView emailView = (TextView)findViewById(R.id.friend_settings_email);
+					emailView.setText(m_updatedFriend.email);
+					TextView phoneView = (TextView)findViewById(R.id.friend_settings_phone);
+					phoneView.setText(m_updatedFriend.mobile);						
 					
 					// update the FriendModel
 					m_friend.firstName = m_updatedFriend.firstName;
 					m_friend.lastName = m_updatedFriend.lastName;
+					m_friend.email = m_updatedFriend.email;
+					m_friend.mobile = m_updatedFriend.mobile;
 	
 					// have updated the friend profile, so now update the friend image if necessary
 					if (m_updatedBitmap != null) {
