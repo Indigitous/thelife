@@ -65,9 +65,13 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 	// other test values
 	private static final String FRIEND1_FIRST_NAME = "ITFFIRST1";
 	private static final String FRIEND1_LAST_NAME = "ITFLAST1";
+	private static final String FRIEND1_EMAIL = "ITFFIRST1@ballistiq.com";
+	private static final String FRIEND1_PHONE = "1234567890";    	
 	private static final FriendModel.Threshold FRIEND1_THRESHOLD = FriendModel.Threshold.Curious;
 	private static final String FRIEND1_FIRST_NAME2 = "ITFFIRST1-2";
 	private static final String FRIEND1_LAST_NAME2 = "ITFLAST1-2";
+	private static final String FRIEND1_EMAIL2 = "ITFFIRST2@ballistiq.com";
+	private static final String FRIEND1_PHONE2 = "1234567892";   	
 	private static final FriendModel.Threshold FRIEND1_THRESHOLD2 = FriendModel.Threshold.Trusting;	
 	private static final int	DEED_ID = 1; // Change Threshold deed/activity
 	private static final String GROUP1_NAME = "INTEGRATGROUP1";
@@ -157,7 +161,7 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 				
 		// test createFriend
 		server = new Server(getContext(), m_ownerToken);
-		server.createFriend(FRIEND1_FIRST_NAME, FRIEND1_LAST_NAME, FRIEND1_THRESHOLD, this, "createFriend1");
+		server.createFriend(FRIEND1_FIRST_NAME, FRIEND1_LAST_NAME, FRIEND1_EMAIL, FRIEND1_PHONE, FRIEND1_THRESHOLD, this, "createFriend1");
 		waitForServerResponse();
 		server = null;
 		
@@ -167,7 +171,7 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 		
 		// test updateFriend
 		server = new Server(getContext(), m_ownerToken);
-		server.updateFriend(m_friend1.id, FRIEND1_FIRST_NAME2, FRIEND1_LAST_NAME2, this, "updateFriend1");
+		server.updateFriend(m_friend1.id, FRIEND1_FIRST_NAME2, FRIEND1_LAST_NAME2, FRIEND1_EMAIL2, FRIEND1_PHONE2, this, "updateFriend1");
 		waitForServerResponse();
 		server = null;
 		
@@ -354,6 +358,8 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 				m_friend1 = FriendModel.fromJSON(jsonObject, false);
 				assertEquals(FRIEND1_FIRST_NAME, m_friend1.firstName);
 				assertEquals(FRIEND1_LAST_NAME, m_friend1.lastName);
+				assertEquals(FRIEND1_EMAIL, m_friend1.email);
+				assertEquals(FRIEND1_PHONE, m_friend1.mobile);
 				assertEquals(FRIEND1_THRESHOLD, m_friend1.threshold);
 				
 			} else if (indicator.equals("updateFriend1")) {
