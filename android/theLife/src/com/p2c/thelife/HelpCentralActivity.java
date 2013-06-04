@@ -24,8 +24,7 @@ public class HelpCentralActivity extends SlidingMenuPollingActivity {
 		WebView webView = (WebView)findViewById(R.id.help_central_webview);
 		
 		// get help
-		String help = getResources().getString(R.string.new_user_help);
-		help += getResources().getString(R.string.first_time_adding_friend_help);
+		String help = getResources().getString(R.string.first_time_adding_friend_help);
 		help += getResources().getString(R.string.using_new_contact_threshold_help);
 		help += getResources().getString(R.string.first_time_using_trusting_threshold_help);
 		help += getResources().getString(R.string.first_time_using_curious_threshold_help);		

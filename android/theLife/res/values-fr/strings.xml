@@ -94,8 +94,6 @@
     <string name="invite_request_rejected_description">&lt;b>%1$s&lt;/b> a rejeté votre invitation au groupe &lt;b>%2$s&lt;/b>.</string>
     <string name="rejecting_request">Rejection de la demande</string>
     <string name="creating_new_event">Création de l\'événement</string>
-    <string name="first_name">Prénom</string>
-    <string name="last_name">Nom</string>
     <string name="email">Adresse e-mail</string>
     <string name="phone">Numéro de téléphone mobile</string>
     <string name="storing_account">"Enregistrement du compte"</string>
