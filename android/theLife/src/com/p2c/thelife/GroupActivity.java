@@ -97,6 +97,13 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getSupportMenuInflater().inflate(R.menu.group, menu);
+		
+		// if the user is not the group leader then don't let the user add to the group
+		if (m_group != null && m_group.leader_id != TheLifeConfiguration.getOwnerDS().getId()) {
+			MenuItem menuItem = menu.findItem(R.id.action_new);
+			menuItem.setVisible(false);
+		}
+		
 		return true;
 	}
 	
