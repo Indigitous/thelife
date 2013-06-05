@@ -174,7 +174,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	 */
 	private void updateImageOnServer(Bitmap bitmap) {		
 		BitmapCacheHandler.saveBitmapToCache("users", m_user.id, "image", bitmap);										
-		Server server = new Server(this);
+		Server server = new Server(this, m_token); // use the new token, which has not yet been registered in the device
 		server.updateImage("users", m_user.id, this, "updateImage");
 	}
 	
