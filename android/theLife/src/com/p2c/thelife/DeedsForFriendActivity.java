@@ -1,7 +1,11 @@
 package com.p2c.thelife;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -10,6 +14,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 import com.p2c.thelife.model.DeedModel;
+import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 
 
@@ -18,12 +23,15 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class DeedsForFriendActivity extends SlidingMenuPollingActivity implements DSRefreshedListener {
+public class DeedsForFriendActivity extends SlidingMenuPollingFragmentActivity implements DSRefreshedListener, Server.ServerListener, EventCreateDialog.Listener {
 	
 	private static final String TAG = "DeedsForFriendActivity";
 	
 	private FriendModel m_friend = null;
 	private DeedsForFriendAdapter m_adapter = null;
+	private DeedModel m_deed = null;
+	private ProgressDialog m_progressDialog = null;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,23 +119,7 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 		return true;
 	}
 	
-	
-	/**
-	 * Owner wants to change their friend's threshold.
-	 * @param view
-	 * @return
-	 */
-	public boolean changeThreshold(View view) {
-		
-		Intent intent = new Intent("com.p2c.thelife.DeedForFriend");
-		intent.putExtra("deed_id", m_adapter.getChangeThresholdId());
-		intent.putExtra("friend_id", m_friend.id);
-		startActivity(intent);		
-		
-		return true;
-	}
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {	
 		if (item.getItemId() == android.R.id.home) {
@@ -145,6 +137,72 @@ public class DeedsForFriendActivity extends SlidingMenuPollingActivity implement
 		}
 		
 		return true;
-	}					
+	}
+	
+	
+	/**
+	 * Owner wants to change their friend's threshold.
+	 * @param view
+	 * @return
+	 */
+	public boolean changeThreshold(View view) {
+		
+		m_deed = TheLifeConfiguration.getDeedsDS().findById(m_adapter.getChangeThresholdId());
+		ChangeThresholdDialog dialog = new ChangeThresholdDialog();
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+		
+		return true;
+	}	
+	
+	
+	public FriendModel getSelectedFriend() {
+		return m_friend;
+	}
+	
+	public DeedModel getSelectedDeed() {
+		return m_deed;
+	}
+
+	@Override
+	public void notifyAttemptingServerAccess(String indicator) {
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_new_event), true, true);					
+	}
+
+	@Override
+	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
+		
+		if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
+			int eventId = jsonObject.optInt("id", 0);
+			if (eventId != 0) {
+				
+				// successful "createEvent"
+								
+				try {
+					// add the new event to the data store
+					EventModel event = EventModel.fromJSON(getResources(), jsonObject, false);
+					TheLifeConfiguration.getEventsDS().add(event);
+					TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+					
+					// set the friend's threshold if necessary
+					if (event.threshold != null) {
+						m_friend.threshold = event.threshold;
+					}
+				} catch (Exception e) {
+					Log.e(TAG, "notifyServerResponseAvailable()", e);
+				}
+				TheLifeConfiguration.getEventsDS().forceRefresh(null);
+								
+				// back to the friends screen
+				Intent intent = new Intent("com.p2c.thelife.EventsForFriend");
+				intent.putExtra("friend_id", m_friend.id);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);							
+			}
+		}
+		
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+		}		
+	}			
 
 }
