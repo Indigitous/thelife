@@ -68,7 +68,10 @@ public class FriendsActivity
 		LayoutInflater inflater = LayoutInflater.from(this);
 		final View view = inflater.inflate(R.layout.dialog_first_time_adding_friend_help, null);
 		WebView webView = (WebView)view.findViewById(R.id.dialog_adding_friend_help_message);
-		webView.loadDataWithBaseURL(null, getResources().getString(R.string.first_time_adding_friend_help), "text/html", "utf-8", null);
+		
+		String help = getResources().getString(R.string.style_sheet_help);
+		help += getResources().getString(R.string.first_time_adding_friend_help);
+		webView.loadDataWithBaseURL(null, help, "text/html", "utf-8", null);	
 		alertBuilder.setView(view);
 
 		// set the buttons of the alert

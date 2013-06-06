@@ -36,7 +36,8 @@ public class HelpContainerActivity extends SlidingMenuPollingActivity {
 		String webViewData = getIntent().getStringExtra("webview_data");
 		if (webViewData != null) {
 			WebView webView = (WebView)findViewById(R.id.help_message_webview);
-			webView.loadDataWithBaseURL(null, webViewData, "text/html", "utf-8", null);
+			String help = getResources().getString(R.string.style_sheet_help) + webViewData;
+			webView.loadDataWithBaseURL(null, help, "text/html", "utf-8", null);		
 		}
 		
 		String title = getIntent().getStringExtra("title");

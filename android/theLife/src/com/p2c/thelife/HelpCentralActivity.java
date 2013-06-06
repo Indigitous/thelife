@@ -1,6 +1,5 @@
 package com.p2c.thelife;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 
@@ -23,8 +22,12 @@ public class HelpCentralActivity extends SlidingMenuPollingActivity {
 				
 		WebView webView = (WebView)findViewById(R.id.help_central_webview);
 		
+		// Javascript support
+		webView.getSettings().setJavaScriptEnabled(true);
+		
 		// get help
-		String help = getResources().getString(R.string.first_time_adding_friend_help);
+		String help = getResources().getString(R.string.style_sheet_help);
+		help += getResources().getString(R.string.first_time_adding_friend_help);
 		help += getResources().getString(R.string.using_new_contact_threshold_help);
 		help += getResources().getString(R.string.first_time_using_trusting_threshold_help);
 		help += getResources().getString(R.string.first_time_using_curious_threshold_help);		
