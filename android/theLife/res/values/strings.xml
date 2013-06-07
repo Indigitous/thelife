@@ -171,4 +171,5 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="title_license">License</string>
     <string name="action_license">License</string>
     
+    <string name="confirm_activity">Do you want to do this activity?</string>
 </resources>

@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckBox;
 
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.FriendModel;
@@ -26,26 +29,23 @@ public class EventCreateDialog extends ServerAccessDialogAbstract {
 		final FriendModel friend = ((DeedForFriendActivity)m_listener).getSelectedFriend();		
 		final DeedModel deed = ((DeedForFriendActivity)m_listener).getSelectedDeed();
 		
+		LayoutInflater inflater = LayoutInflater.from(getActivity());
+		final View view = inflater.inflate(R.layout.dialog_ask_for_prayer_support, null);
+		
 		// set the message and content of the alert
-		alertBuilder.setMessage(R.string.confirm_prayer_support);			
+		alertBuilder.setMessage(R.string.confirm_activity);
+		alertBuilder.setView(view);	
 
 		// set the buttons of the alert
-		alertBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+		alertBuilder.setNegativeButton(R.string.cancel, null);
+		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createEvent");
 				
 				Server server = new Server(getActivity());
-				server.createEvent(deed.id, friend.id, false, null, (Server.ServerListener)m_listener, "createEvent");		
-			}
-		});				
-		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface di, int which) {
-				// enable a progress bar
-				((Listener)m_listener).notifyAttemptingServerAccess("createEvent");
-
-				Server server = new Server(getActivity());
-				server.createEvent(deed.id, friend.id, true, null, (Server.ServerListener)m_listener, "createEvent");						
+				CheckBox prayerSupportCheckBox = (CheckBox)view.findViewById(R.id.ask_for_prayer_support);								
+				server.createEvent(deed.id, friend.id, prayerSupportCheckBox.isChecked(), null, (Server.ServerListener)m_listener, "createEvent");						
 			}
 		});		
 		
