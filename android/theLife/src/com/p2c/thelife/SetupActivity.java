@@ -2,8 +2,10 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,10 +24,16 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 	
 	private static final String TAG = "SetupActivity";
 	
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup);
+		
+		// hide the action bar; can only be done with later versions of Android
+		if (Build.VERSION.SDK_INT >= 11) {
+			getActionBar().hide();
+		}
 	}
 
 	@Override
