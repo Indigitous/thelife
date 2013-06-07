@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 	android:padding="8dp" 
-	android:background="@drawable/round_white"   
+	android:background="@drawable/round_white_shadow"   
     android:orientation="vertical" >
 
     <!--  this works for 800x480:, 60dp/12sp/10sp -->
