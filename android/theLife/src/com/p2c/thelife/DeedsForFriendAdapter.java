@@ -3,6 +3,7 @@ package com.p2c.thelife;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -218,7 +219,7 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 		TextView nameView = (TextView)categoryView.findViewById(R.id.category_title);
 		nameView.setText(category.name);
 		TextView descriptionView = (TextView)categoryView.findViewById(R.id.category_description);
-		descriptionView.setText(category.description);
+		descriptionView.setText(Html.fromHtml(category.description));
 		descriptionView.setVisibility(m_isCategoryExpandeds.get(groupPosition) ? View.VISIBLE : View.GONE);
 		
 		categoryView.setTag(category);		
