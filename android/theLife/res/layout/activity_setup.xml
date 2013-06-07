@@ -18,6 +18,10 @@
         android:gravity="center"        
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
+        android:shadowColor="#000000"
+        android:shadowDx="3.5"
+        android:shadowDy="3.5"
+        android:shadowRadius="3.14"
         android:text="@string/setup_prompt" />
     
     <LinearLayout
