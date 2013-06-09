@@ -3,13 +3,13 @@ package com.p2c.thelife;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -28,10 +28,17 @@ public abstract class EventsAdapterAbstract
 	extends ArrayAdapter<EventModel> 
 	implements AbstractDS.DSChangedListener, BitmapNotifierHandler.UserBitmapListener, BitmapNotifierHandler.FriendBitmapListener {
 	
-	private static final String TAG = "EventsAdapterAbstract"; 	
+	private static final String TAG = "EventsAdapterAbstract";
+	
+	private Bitmap m_deedTalkBitmap = null;
+	private Bitmap m_deedMoveBitmap = null;
+	
 		
 	public EventsAdapterAbstract(Context context, int mode) {
 		super(context, mode);
+		
+		m_deedTalkBitmap = Utilities.getBitmapFromDrawable(context.getResources().getDrawable(R.drawable.activity_talk));
+		m_deedMoveBitmap = Utilities.getBitmapFromDrawable(context.getResources().getDrawable(R.drawable.activity_move));		
 	}
 	
 	
@@ -63,10 +70,10 @@ public abstract class EventsAdapterAbstract
 			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
 		textViewTime.setText(eventTime);		
 		
-		ImageView imageView1 = (ImageView)eventView.findViewById(R.id.event_image1);
-		imageView1.setImageBitmap(UserModel.getThumbnail(event.user_id));
-		ImageView imageView2 = (ImageView)eventView.findViewById(R.id.event_image2);
-		imageView2.setImageBitmap(FriendModel.getThumbnail(event.friend_id));		
+		EventUserFriendView eventUserFriendView = (EventUserFriendView)eventView.findViewById(R.id.event_image1);
+		eventUserFriendView.setBitmaps(UserModel.getThumbnail(event.user_id), 
+			(event.threshold != null) ? m_deedMoveBitmap : m_deedTalkBitmap, 
+			FriendModel.getThumbnail(event.friend_id));
 		
 		// only show the pledge view if the event requests it
 		ToggleButton pledgeView = (ToggleButton)eventView.findViewById(R.id.event_pledge);
