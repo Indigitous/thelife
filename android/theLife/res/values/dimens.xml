@@ -3,5 +3,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="event_radius">8dp</dimen>
+    <dimen name="thumbnail_side">60dp</dimen>
+    <dimen name="event_gap_between_bitmaps">4dp</dimen>
+    <dimen name="event_bitmaps_length">124dp</dimen> <!--  thumbnail_side * 2 + event_padding_between_bitmaps -->
 
 </resources>

@@ -3,14 +3,14 @@
 
 	<item>
 	    <shape android:shape="rectangle" >
-	  		<corners android:radius="8dp"/>
+	  		<corners android:radius="@dimen/event_radius"/>
 	  		<solid android:color="#a7a7a7"/>
 	  	</shape>
 	</item>
 	<item android:bottom="2dp">
 	    <shape android:shape="rectangle" >
-	  		<corners android:radius="8dp"/>
-	  		<solid android:color="#ffffff"/>
+	  		<corners android:radius="@dimen/event_radius"/>
+	  		<solid android:color="@color/event_background"/>
 	  	</shape>
 	</item>	
 
