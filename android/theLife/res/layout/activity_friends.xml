@@ -22,6 +22,7 @@
         android:id="@+id/grid_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
 	    android:verticalSpacing="20dp"    
         android:columnWidth="100dp"
         android:numColumns="auto_fit" >

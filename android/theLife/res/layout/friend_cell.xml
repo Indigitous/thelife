@@ -7,7 +7,7 @@
    <ImageView
         android:id="@+id/friend_image"
         android:layout_height="100dp"
-        android:layout_width="80dp"        
+        android:layout_width="100dp"        
         android:paddingLeft="0dp"        
         android:paddingRight="0dp"   
         android:layout_gravity="center"        
