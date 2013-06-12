@@ -74,10 +74,10 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 		// find all the deeds/activities applicable to the friend's threshold	
 		ArrayList<DeedModel> deeds = TheLifeConfiguration.getDeedsDS().findByThreshold(m_friend.threshold);
 		
-		// Add each deed (except Change Threshold) to the categories list
+		// Add each deed (with data in the owner's language) (but not Change Threshold) to the categories list
 		// Since only a few categories are likely to exist, this should not be too inefficient.
 		for (DeedModel deed:deeds) {
-			if (!deed.isChangeThreshold()) {
+			if (Utilities.hasData(deed.title) && !deed.isChangeThreshold()) {
 				addDeedToCategories(deed);
 			} else {
 				m_changeThresholdId = deed.id;
@@ -127,6 +127,9 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 			Log.e(TAG, "addDeedToCategories(): category missing for deed " + deed);
 		}
 	}
+	
+	
+	/********************** ExpandableListAdapter routines ***************************/
 	
 	
 	/**
