@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -28,13 +26,16 @@ public class EventUserFriendView extends View {
 	private static Paint m_paint = null;
 	private static Rect m_userDestRect = null;
 	private static Rect m_friendDestRect = null;
-	private static float m_radia[] = { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
-	private static RoundRectShape m_roundRectShape = null;
-	private static ShapeDrawable m_roundCornersShape = null;
 	private static float m_bitmapSide = 0f;
 	private static float m_bitmapsLength = 0f;
+	private static Bitmap m_roundRectBitmap = null;
 	
 	
+	/**
+	 * Custom view constructor.
+	 * @param context
+	 * @param attrs
+	 */
 	public EventUserFriendView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 			
@@ -44,6 +45,7 @@ public class EventUserFriendView extends View {
 			// paint
 			m_paint = new Paint();
 			m_paint.setColor(context.getResources().getColor(R.color.event_background));
+			m_paint.setAntiAlias(true);
 			
 			// bitmap rectangles
 			m_bitmapSide = (int)context.getResources().getDimension(R.dimen.thumbnail_side);
@@ -51,18 +53,46 @@ public class EventUserFriendView extends View {
 			m_bitmapsLength = (int)context.getResources().getDimension(R.dimen.event_bitmaps_length);
 			m_userDestRect = new Rect(0, 0, (int)m_bitmapSide, (int)m_bitmapSide);
 			m_friendDestRect = new Rect((int)m_bitmapSide + gap,  0, (int)m_bitmapsLength, (int)m_bitmapSide);
+					
+			// create a bitmap that will round the corners of the user and friend bitmaps
 			
-			// rounded corners
-			for (int i = 0; i < m_radia.length; i++) {
-				m_radia[i] = context.getResources().getDimension(R.dimen.event_radius);
+			// create the bitmap with the same size as the user and friend bitmaps, and make it the background color
+			int sidePixels = (int)m_bitmapSide;
+			m_roundRectBitmap = Bitmap.createBitmap(sidePixels, sidePixels, Bitmap.Config.ARGB_8888);
+			for (int x = 0; x < sidePixels; x++) {
+				for (int y = 0; y < sidePixels; y++) {
+					m_roundRectBitmap.setPixel(x, y, context.getResources().getColor(R.color.event_background));
+				}
 			}
-			m_roundRectShape = new RoundRectShape(m_radia, null, null);
-			m_roundCornersShape = new ShapeDrawable(m_roundRectShape);
-			m_roundCornersShape.setColorFilter(context.getResources().getColor(R.color.event_background), Mode.XOR);			
+			
+			// draw the rounded edges onto the bitmap
+			Paint roundedEdgePaint = new Paint();
+			int tempColor = 0xFF808080;
+			roundedEdgePaint.setColor(0xFF808080); // any solid color that is not the event_background
+			Canvas canvas = new Canvas(m_roundRectBitmap);
+			RectF rect = new RectF(0f, 0f, (float)sidePixels, (float)sidePixels);
+			float eventRadius = context.getResources().getDimension(R.dimen.event_radius);
+			canvas.drawRoundRect(rect, eventRadius, eventRadius, roundedEdgePaint);
+			
+			// and make the inside of the bitmap transparent
+			for (int x = 0; x < sidePixels; x++) {
+				for (int y = 0; y < sidePixels; y++) {
+					if (m_roundRectBitmap.getPixel(x, y) == tempColor) {
+						m_roundRectBitmap.setPixel(x, y, 0); // transparent color
+					}
+				}
+			}			
+			
 		}		
 	}
 	
 	
+	/**
+	 * Remember the bitmaps of this custom view.
+	 * @param userBitmap
+	 * @param actionBitmap
+	 * @param friendBitmap
+	 */
 	public void setBitmaps(Bitmap userBitmap, Bitmap actionBitmap, Bitmap friendBitmap) {
 		m_userBitmap = userBitmap;
 		m_actionBitmap = actionBitmap;
@@ -90,10 +120,8 @@ public class EventUserFriendView extends View {
 		canvas.drawBitmap(m_friendBitmap, null, m_friendDestRect, m_paint);
 		
 		// round the bitmap corners
-		m_roundCornersShape.setBounds(m_userDestRect);
-		m_roundCornersShape.draw(canvas);
-		m_roundCornersShape.setBounds(m_friendDestRect);		
-		m_roundCornersShape.draw(canvas);		
+		canvas.drawBitmap(m_roundRectBitmap, null, m_userDestRect, m_paint);
+		canvas.drawBitmap(m_roundRectBitmap, null, m_friendDestRect, m_paint);		
 		
 		// draw the action icon between the user and the friend
 		canvas.drawCircle(m_bitmapsLength / 2, m_bitmapSide / 2, m_actionBitmapWidth, m_paint);		
