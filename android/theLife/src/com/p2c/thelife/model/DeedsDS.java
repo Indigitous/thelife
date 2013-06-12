@@ -69,6 +69,20 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	
 	
 	/**
+	 * @return the DeedModel which reports that a friend has been added
+	 */
+	public DeedModel findAddFriend() {
+		for (DeedModel m:m_data) {
+			if (m.isAddFriend) {
+				return m;
+			}		
+		}
+		
+		return null;		
+	}
+	
+	
+	/**
 	 * Needed by the abstract superclass.
 	 */
 	protected DeedModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {

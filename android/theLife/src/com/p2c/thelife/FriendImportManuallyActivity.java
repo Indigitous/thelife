@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.model.DeedModel;
+import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 
 /**
@@ -29,6 +32,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 
 	private ProgressDialog m_progressDialog = null;
 	private Bitmap m_bitmap = null;
+	private int m_friendId = 0;
 
 	
 	@Override
@@ -93,8 +97,8 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 
 		if (indicator.equals("createFriend")) {
 			if (Utilities.isSuccessfulHttpCode(httpCode) && jsonObject != null) {
-				int friendId = jsonObject.optInt("id", 0);
-				if (friendId != 0) {
+				m_friendId = jsonObject.optInt("id", 0);
+				if (m_friendId != 0) {
 					
 					// successful
 									
@@ -107,7 +111,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 					
 					// add the friend to the list of known friends
 					FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex]; 
-					FriendModel friend = new FriendModel(friendId, firstName, lastName, threshold, email, phone);
+					FriendModel friend = new FriendModel(m_friendId, firstName, lastName, threshold, email, phone);
 					TheLifeConfiguration.getFriendsDS().add(friend);
 					TheLifeConfiguration.getFriendsDS().notifyDSChangedListeners();
 					TheLifeConfiguration.getFriendsDS().forceRefresh(null);
@@ -118,18 +122,33 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 						Server server = new Server(this);
 						server.updateImage("friends", friend.id, this, "updateImage");
 					} else {
-						finishImport();
+						createAddFriendEvent();
 					}
-					
 					return;
 				}
 			}
 				
 		} else if (indicator.equals("updateImage")) {
-			finishImport();
-			
+			createAddFriendEvent();
 			return;
-		} 
+			
+		} else if (indicator.equals("createEvent")) {
+			
+			// successful "createEvent"
+			try {
+				// add the new event to the data store
+				EventModel event = EventModel.fromJSON(getResources(), jsonObject, false);
+				TheLifeConfiguration.getEventsDS().add(event);
+				TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+			} catch (Exception e) {
+				Log.e(TAG, "notifyServerResponseAvailable()", e);
+			}
+			TheLifeConfiguration.getEventsDS().forceRefresh(null);
+			
+			// finish adding the friend
+			finishImport();
+			return;
+		}
 		
 		Toast.makeText(this, getResources().getString(R.string.friend_import_error), Toast.LENGTH_LONG).show();
 		if (m_progressDialog != null) {
@@ -179,7 +198,18 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		button.setEnabled(true);
 		button = (Button)findViewById(R.id.image_rotate_ccw);
 		button.setEnabled(true);		
-	}	
+	}
+	
+	
+	private void createAddFriendEvent() {
+		DeedModel addFriendDeed = TheLifeConfiguration.getDeedsDS().findAddFriend();
+		if (addFriendDeed != null) {
+			Server server = new Server(this);
+			server.createEvent(addFriendDeed.id, m_friendId, false, null, this, "createEvent");
+		} else {
+			finishImport();
+		}
+	}
 	
 	
 	/**

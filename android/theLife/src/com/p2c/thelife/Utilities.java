@@ -126,4 +126,9 @@ public class Utilities {
 		toast.show();
 		toast = null;
 	}
+	
+	
+	public static boolean hasData(String string) {
+		return string != null && !string.isEmpty() && !string.trim().isEmpty(); 
+	}
 }

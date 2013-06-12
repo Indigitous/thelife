@@ -30,10 +30,11 @@ public class DeedModel extends AbstractModel {
 	public int 		priority;
 	public int		category_id;
 	public boolean  hasThreshold;
+	public boolean  isAddFriend;
 	
 	
 	public DeedModel(int deed_id, String title, String summary, String description, 
-		Set<FriendModel.Threshold> thresholds, int priority, int category_id, boolean hasThreshold) {
+		Set<FriendModel.Threshold> thresholds, int priority, int category_id, boolean hasThreshold, boolean isAddFriend) {
 		super(deed_id);
 		this.title = title;
 		this.summary = summary;
@@ -42,6 +43,7 @@ public class DeedModel extends AbstractModel {
 		this.priority = priority;
 		this.category_id = category_id;
 		this.hasThreshold = hasThreshold;
+		this.isAddFriend = isAddFriend;
 	}	
 	
 
@@ -102,7 +104,8 @@ public class DeedModel extends AbstractModel {
 			thresholds,
 			json.getInt("priority"),
 			json.optInt("category_id", 0),
-			json.optBoolean("has_threshold", false)
+			json.optBoolean("has_threshold", false),
+			json.optBoolean("is_add_friend", false)
 		);
 	}
 	
