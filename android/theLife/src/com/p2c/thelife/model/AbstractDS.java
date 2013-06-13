@@ -37,6 +37,8 @@ import com.p2c.thelife.Utilities;
  */
 public abstract class AbstractDS<T extends AbstractModel> {
 	
+	private static final int NUM_RETRIES = 2;
+	
 	
 	/**
 	 * Listener interface for DS data changed event.
@@ -212,7 +214,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * @param max
 	 */
 	public void forceRefresh(String refreshIndicator, int max) {			
-		refresh(refreshIndicator, true, 2, max, null, MODE_REPLACE);
+		refresh(refreshIndicator, true, NUM_RETRIES, max, null, MODE_REPLACE);
 	}
 		
 	
@@ -239,7 +241,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * Refresh the model objects cache, reading in up to the maximum number of most recent records according to the given parameter.
 	 * @param	refreshIndicator	passed back to the caller
 	 * @param 	force				whether or not to force a refresh
-	 * @param 	numberRetries			number of times to try if encountering a connection timeout 
+	 * @param 	numberRetries		number of times to try again if encountering a connection timeout 
 	 * @param	max					the maximum number of records to read; 0 means read all 
 	 * @param 	params				in URL encoded form, example: "&after=12345"
 	 * @param	newDataMode 		either MODE_REPLACE, MODE_PREPEND or MODE_APPEND, what to do with the data that is read in, compared to any existing data

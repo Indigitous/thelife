@@ -550,7 +550,7 @@ public class Server {
 			
 			// try multiple retries for connection timeouts
 			m_connectionTimeout = true;
-			for (int i = 0; i < 4 && m_connectionTimeout; i++) {
+			for (int i = 0; i < TheLifeConfiguration.HTTP_SERVER_NUM_RETRIES && m_connectionTimeout; i++) {
 				m_connectionTimeout = false;
 				try {			
 					Log.d(TAG, i + " STARTING ServerCall " + m_httpRequest.getMethod() + " " + urls[0]);
