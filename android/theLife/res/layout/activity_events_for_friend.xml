@@ -8,7 +8,7 @@
 
     <LinearLayout 
     	android:layout_width="match_parent"
-    	android:layout_height="128dp"
+    	android:layout_height="148dp"
     	android:paddingTop="12dp"         
     	android:paddingLeft="12dp"
     	android:paddingRight="12dp"        
@@ -19,8 +19,8 @@
         
     	<ImageView
 	        android:id="@+id/activity_friend_image"
-	        android:layout_width="100dp"
-	        android:layout_height="100dp"
+	        android:layout_width="120dp"
+	        android:layout_height="120dp"
 	        android:src="@drawable/generic_avatar_image"
 	        android:scaleType="centerCrop"
 	        android:padding="2dp"
@@ -29,7 +29,7 @@
     	
     	<LinearLayout
     		android:layout_width="match_parent"
-    		android:layout_height="100dp"
+    		android:layout_height="match_parent"
     		android:paddingLeft="12dp"
     		android:orientation="vertical"
 	        android:onClick="editFriend" > 
@@ -65,10 +65,11 @@
     		
     	    <Button
     	        android:layout_width="match_parent"
-    	        android:layout_height="38dp"
+    	        android:layout_height="wrap_content"
     	        android:layout_marginLeft="16dp"
     	        android:layout_marginRight="16dp"
     	        android:layout_marginTop="12dp"
+    	        android:layout_gravity="bottom"
     	        android:background="@drawable/round_green"
     	        android:gravity="center"
     	        android:includeFontPadding="false"
