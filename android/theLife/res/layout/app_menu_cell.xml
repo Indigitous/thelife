@@ -10,19 +10,20 @@
        android:id="@+id/app_menu_image"
        android:layout_width="42dp"
        android:layout_height="42dp"
+       android:layout_gravity="center_vertical"
        android:paddingLeft="0dp"        
        android:paddingRight="0dp"
-       android:src="@drawable/ic_launcher" />
+       android:src="@drawable/action_settings" />
          
    <TextView
        android:id="@+id/app_menu_title"
        android:layout_width="0dp"
-       android:layout_height="wrap_content"
+       android:layout_height="48dp"
        android:layout_weight="1"
-       android:layout_gravity="center_vertical"
+       android:gravity="center_vertical"
        android:textColor="#ffffff"
-       android:textAppearance="?android:attr/textAppearanceMedium"
-       android:text="Placeholder Text In Here" />
+       android:textSize="22sp"
+       android:text="Settings" />
 			  
 
 </LinearLayout>

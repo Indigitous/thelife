@@ -8,7 +8,7 @@
 	<LinearLayout
 	    android:id="@+id/app_menu_notification"
 	    android:layout_width="match_parent"
-	    android:layout_height="42dp"
+	    android:layout_height="wrap_content"
 		android:background="#23282A"
 		android:paddingTop="8dp"
 		android:paddingBottom="8dp"
@@ -20,11 +20,14 @@
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content"
 	       android:layout_weight="0"
-	       android:layout_gravity="center" 
-	       android:padding="0dp"
-	       android:layout_marginLeft="6dp"
+	       android:layout_gravity="center"
+	       android:paddingTop="4dp"
+	       android:paddingBottom="4dp"
+	       android:paddingLeft="8dp"
+	       android:paddingRight="8dp"
+	       android:layout_marginLeft="@dimen/activity_horizontal_margin"
 	       android:textColor="#ffffff"	       
-	       android:textAppearance="?android:attr/textAppearanceMedium"	       
+	       android:textSize="22sp"	       
 	       android:background="@drawable/round_black"
 	       android:text="0"
 	       />
@@ -37,7 +40,7 @@
 	       android:layout_gravity="center_vertical"
 	       android:paddingLeft="4dp"
 	       android:textColor="#ffffff"
-	       android:textAppearance="?android:attr/textAppearanceMedium"
+	       android:textSize="22sp"
 	       android:text="@string/notification_plural" />
 	</LinearLayout>    
 
