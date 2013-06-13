@@ -60,7 +60,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 		
 		// show the group leader in bold and italics
 		Typeface typeface = textView.getTypeface();
-		textView.setTypeface(typeface, (user != null && m_group.leader_id == user.id) ? 3 : 0);
+		textView.setTypeface(typeface, (user != null && m_group.leader_id == user.id) ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 	
 		return userView;
 	}
