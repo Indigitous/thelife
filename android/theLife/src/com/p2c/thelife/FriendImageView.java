@@ -29,6 +29,8 @@ public class FriendImageView extends View {
 	private static float m_nameY = 0f;
 	private static float m_thresholdY = 0f;
 	private static RectF m_bitmapRect;
+	private static float m_nameTextSize = 0f;
+	private static float m_thresholdTextSize = 0f;
 	
 	
 	/**
@@ -53,11 +55,15 @@ public class FriendImageView extends View {
 			m_gap = getContext().getResources().getDimension(R.dimen.friend_cell_gap);
 			m_bitmapSide = (screenWidth - 3 * m_gap) / 2; // half of the width after the left, center and right gaps
 			m_textPadLeft = getContext().getResources().getDimension(R.dimen.friend_cell_text_padleft);
+			
+			// text specific values
 			float m_namePadBottom = getContext().getResources().getDimension(R.dimen.friend_cell_name_padbottom);
 			float m_thresholdPadBottom = getContext().getResources().getDimension(R.dimen.friend_cell_threshold_padbottom);
 			m_nameY = m_bitmapSide - m_thresholdPadBottom - m_namePadBottom;
 			m_thresholdY = m_bitmapSide - m_thresholdPadBottom;
 			m_bitmapRect = new RectF(0f, 0f, m_bitmapSide, m_bitmapSide);
+			m_nameTextSize = getContext().getResources().getDimension(R.dimen.friend_cell_name_textsize);
+			m_thresholdTextSize = getContext().getResources().getDimension(R.dimen.friend_cell_threshold_textsize);
 		}		
 	}
 	
@@ -92,9 +98,9 @@ public class FriendImageView extends View {
 //		System.out.println("THE FRIEND VIEW BITMAP IS " + m_bitmap);
 		
 		canvas.drawBitmap(m_bitmap, null, m_bitmapRect, m_paint);
-		m_paint.setTextSize(36f);		
+		m_paint.setTextSize(m_nameTextSize);
 		canvas.drawText(m_name, m_textPadLeft, m_nameY, m_paint);
-		m_paint.setTextSize(24f);
+		m_paint.setTextSize(m_thresholdTextSize);
 		canvas.drawText(m_threshold, m_textPadLeft, m_thresholdY, m_paint);		
 	}
 

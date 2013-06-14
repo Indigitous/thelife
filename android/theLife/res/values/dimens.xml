@@ -13,5 +13,7 @@
     <dimen name="friend_cell_text_padleft">4dp</dimen>
     <dimen name="friend_cell_name_padbottom">16dp</dimen>
     <dimen name="friend_cell_threshold_padbottom">8dp</dimen>
+    <dimen name="friend_cell_name_textsize">16sp</dimen>
+    <dimen name="friend_cell_threshold_textsize">10sp</dimen>    
 
 </resources>
