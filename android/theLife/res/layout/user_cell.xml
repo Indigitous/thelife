@@ -4,21 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-   <ImageView
+    <!-- placeholder view size below; real size is calculated -->
+    <com.p2c.thelife.UserImageView
         android:id="@+id/user_image"
-        android:layout_height="100dp"
-        android:layout_width="100dp"        
-        android:paddingLeft="0dp"        
-        android:paddingRight="0dp"   
-        android:layout_gravity="center"        
-        android:src="@drawable/ic_launcher" />    
-
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-    	android:layout_gravity="center"        
-        android:textSize="12sp" 		        
-        android:text="Clarence" />    
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:padding="@dimen/user_cell_border"
+        android:background="#a7a7a7"
+		android:src="@drawable/generic_avatar_image"        
+        android:contentDescription="@string/user" />
 
 </LinearLayout>

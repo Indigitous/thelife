@@ -109,7 +109,7 @@ public class DeedModel extends AbstractModel {
 		// create the deed
 		int id = json.getInt("id");
 		String special = json.optString("special", null);
-		if (special.equals("null")) {
+		if (special != null && special.equals("null")) {
 			special = null;
 		}		
 		return new DeedModel(

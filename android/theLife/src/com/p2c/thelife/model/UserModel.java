@@ -68,7 +68,7 @@ public class UserModel extends AbstractModel {
 		// create the deed
 		int id = json.getInt("id");
 		String mobile = json.optString("mobile", null);
-		if (mobile.equals("null")) {
+		if (mobile != null && mobile.equals("null")) {
 			mobile = null;
 		}
 		return new UserModel(
@@ -91,7 +91,7 @@ public class UserModel extends AbstractModel {
 			this.email = newEmail; 
 		}
 		String newMobile = json.optString("mobile", null);
-		if (newMobile.equals("null")) {
+		if (newMobile != null && newMobile.equals("null")) {
 			this.mobile = null;
 		} else if (newMobile != null) {
 			this.mobile = newMobile;

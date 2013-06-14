@@ -3,13 +3,10 @@ package com.p2c.thelife;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.GroupModel;
@@ -52,15 +49,13 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 		UserModel user = getItem(position);
 		userView.setTag(user);
 		
-		ImageView imageView = (ImageView)userView.findViewById(R.id.user_image);
-		imageView.setImageBitmap((user != null) ? UserModel.getImage(user.id) : TheLifeConfiguration.getGenericPersonImage());
-		
-		TextView textView = (TextView)userView.findViewById(R.id.user_name);
-		textView.setText((user != null) ? user.getFullName() : "?");
-		
-		// show the group leader in bold and italics
-		Typeface typeface = textView.getTypeface();
-		textView.setTypeface(typeface, (user != null && m_group.leader_id == user.id) ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+		// user image and name
+		UserImageView userImageView = (UserImageView)userView.findViewById(R.id.user_image);
+		if (user != null) {
+			userImageView.setData(UserModel.getImage(user.id), user.getFullName(), m_group.leader_id == user.id);
+		} else {
+			userImageView.setData(TheLifeConfiguration.getGenericPersonImage(), "?", false);
+		}
 	
 		return userView;
 	}

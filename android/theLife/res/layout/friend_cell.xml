@@ -12,6 +12,6 @@
         android:padding="@dimen/friend_cell_border"
         android:background="#a7a7a7"
 		android:src="@drawable/generic_avatar_image"        
-        android:contentDescription="@string/user" />
+        android:contentDescription="@string/friend" />
 
 </LinearLayout>

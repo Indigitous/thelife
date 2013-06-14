@@ -5,21 +5,20 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.p2c.thelife.model.FriendModel;
-
 
 /**
- * Custom view to show a friend bitmap, with name and threshold on top.
+ * Custom view to show a user bitmap, with name on top.
  */
-public class FriendImageView extends View {
+public class UserImageView extends View {
 	
-	// per instance data; data for the friend
+	// per instance data; data for the user
 	private Bitmap m_bitmap = null;
 	private String m_name = null;
-	private String m_threshold = null;
+	private boolean m_isLeader = false;
 	
 	// this data does not change per instance
 	private static Paint m_paint = null;
@@ -28,10 +27,10 @@ public class FriendImageView extends View {
 	private static float m_border = 0f;
 	private static float m_textPadLeft = 0f;
 	private static float m_nameY = 0f;
-	private static float m_thresholdY = 0f;
 	private static RectF m_bitmapRect;
 	private static float m_nameTextSize = 0f;
-	private static float m_thresholdTextSize = 0f;
+	private static Typeface m_leaderTypeface = null;
+	private static Typeface m_memberTypeface = null;
 	
 	
 	/**
@@ -39,7 +38,7 @@ public class FriendImageView extends View {
 	 * @param context
 	 * @param attrs
 	 */
-	public FriendImageView(Context context, AttributeSet attrs) {
+	public UserImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 			
 		// initialize statics before use
@@ -53,19 +52,19 @@ public class FriendImageView extends View {
 			
 			// precalculate device specific values
 			int screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
-			m_gap = getContext().getResources().getDimension(R.dimen.friend_cell_gap);
+			m_gap = getContext().getResources().getDimension(R.dimen.user_cell_gap);
 			m_bitmapSide = (screenWidth - 3 * m_gap) / 2; // half of the width after the left, center and right gaps
-			m_textPadLeft = getContext().getResources().getDimension(R.dimen.friend_cell_text_padleft);
-			m_border = getContext().getResources().getDimension(R.dimen.friend_cell_border);
+			m_textPadLeft = getContext().getResources().getDimension(R.dimen.user_cell_text_padleft);
+			m_border = getContext().getResources().getDimension(R.dimen.user_cell_border);
 			
 			// text specific values
-			float m_namePadBottom = getContext().getResources().getDimension(R.dimen.friend_cell_name_padbottom);
-			float m_thresholdPadBottom = getContext().getResources().getDimension(R.dimen.friend_cell_threshold_padbottom);
-			m_nameY = m_bitmapSide - m_thresholdPadBottom - m_namePadBottom;
-			m_thresholdY = m_bitmapSide - m_thresholdPadBottom;
+			float m_namePadBottom = getContext().getResources().getDimension(R.dimen.user_cell_name_padbottom);
+			m_nameY = m_bitmapSide - m_namePadBottom;
 			m_bitmapRect = new RectF(m_border, m_border, m_bitmapSide - m_border, m_bitmapSide - m_border);
-			m_nameTextSize = getContext().getResources().getDimension(R.dimen.friend_cell_name_textsize);
-			m_thresholdTextSize = getContext().getResources().getDimension(R.dimen.friend_cell_threshold_textsize);
+			m_nameTextSize = getContext().getResources().getDimension(R.dimen.user_cell_name_textsize);
+			
+			m_leaderTypeface = Typeface.defaultFromStyle(Typeface.BOLD_ITALIC);
+			m_memberTypeface = Typeface.defaultFromStyle(Typeface.NORMAL);
 		}		
 	}
 	
@@ -83,15 +82,15 @@ public class FriendImageView extends View {
 	
 	
 	/**
-	 * Remember the friend information of this custom view.
+	 * Remember the user information of this custom view.
 	 * @param bitmap
 	 * @param name
 	 * @param threshold
 	 */
-	public void setData(Bitmap bitmap, String name, String threshold) {
+	public void setData(Bitmap bitmap, String name, boolean isLeader) {
 		m_bitmap = bitmap;
 		m_name = name;
-		m_threshold = threshold;
+		m_isLeader = isLeader;
 	}
 	
 	
@@ -102,16 +101,14 @@ public class FriendImageView extends View {
 		if (m_bitmap == null) {
 			m_bitmap = Utilities.getBitmapFromDrawable(getContext().getResources().getDrawable(R.drawable.generic_avatar_thumbnail));
 			m_name = "Friendly Jacksonay";
-			m_threshold = FriendModel.getThresholdMediumString(getContext().getResources(), FriendModel.Threshold.Open);
 		}
 				
-		// TODO nonsquare friend bitmaps are stretched to be square
+		// TODO nonsquare user bitmaps are stretched to be square
 		
 		canvas.drawBitmap(m_bitmap, null, m_bitmapRect, m_paint);
 		m_paint.setTextSize(m_nameTextSize);
+		m_paint.setTypeface(m_isLeader ? m_leaderTypeface : m_memberTypeface);
 		canvas.drawText(m_name, m_textPadLeft, m_nameY, m_paint);
-		m_paint.setTextSize(m_thresholdTextSize);
-		canvas.drawText(m_threshold, m_textPadLeft, m_thresholdY, m_paint);		
 	}
 
 }
