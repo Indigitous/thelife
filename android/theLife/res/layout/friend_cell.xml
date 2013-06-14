@@ -4,30 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-   <ImageView
+    <com.p2c.thelife.FriendImageView
         android:id="@+id/friend_image"
-        android:layout_height="100dp"
-        android:layout_width="100dp"        
-        android:paddingLeft="0dp"        
-        android:paddingRight="0dp"   
-        android:layout_gravity="center"        
-        android:src="@drawable/ic_launcher" />    
-
-    <TextView
-        android:id="@+id/friend_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-    	android:layout_gravity="center"        
-        android:textSize="12sp" 		        
-        android:text="Clarence" />    
-        
-    <TextView
-        android:id="@+id/friend_threshold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-    	android:layout_gravity="center"                
-        android:textSize="12sp"
-        android:textStyle="italic"
-        android:text="Build Trust" /> 
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:padding="0dp"
+		android:src="@drawable/generic_avatar_image"        
+        android:contentDescription="@string/user" />
 
 </LinearLayout>

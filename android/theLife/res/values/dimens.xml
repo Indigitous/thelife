@@ -8,5 +8,10 @@
     <dimen name="thumbnail_side">60dp</dimen>
     <dimen name="event_gap_between_bitmaps">4dp</dimen>
     <dimen name="event_bitmaps_length">124dp</dimen> <!--  thumbnail_side * 2 + event_padding_between_bitmaps -->
+    
+    <dimen name="friend_cell_gap">8dp</dimen>
+    <dimen name="friend_cell_text_padleft">4dp</dimen>
+    <dimen name="friend_cell_name_padbottom">16dp</dimen>
+    <dimen name="friend_cell_threshold_padbottom">8dp</dimen>
 
 </resources>

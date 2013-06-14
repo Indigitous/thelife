@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.FriendModel;
@@ -40,16 +38,10 @@ public class FriendsAdapter
 			friendView = inflator.inflate(R.layout.friend_cell, null);
 		}
 		
+		// set up the view for the friend
 		FriendModel friend = getItem(position);
-		
-		ImageView imageView = (ImageView)friendView.findViewById(R.id.friend_image);
-		imageView.setImageBitmap(FriendModel.getImage(friend.id));
-		
-		TextView nameView = (TextView)friendView.findViewById(R.id.friend_name);
-		nameView.setText(friend.firstName);
-		
-		TextView thresholdView = (TextView)friendView.findViewById(R.id.friend_threshold);
-		thresholdView.setText(friend.getThresholdShortString(getContext().getResources()));
+		FriendImageView friendImageView = (FriendImageView)friendView.findViewById(R.id.friend_image);
+		friendImageView.setData(FriendModel.getImage(friend.id), friend.getFullName(), friend.getThresholdMediumString(getContext().getResources()));
 		
 		friendView.setTag(friend);
 			
