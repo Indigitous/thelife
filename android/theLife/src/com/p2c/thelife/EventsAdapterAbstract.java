@@ -70,7 +70,7 @@ public abstract class EventsAdapterAbstract
 			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
 		textViewTime.setText(eventTime);		
 		
-		EventUserFriendView eventUserFriendView = (EventUserFriendView)eventView.findViewById(R.id.event_image1);
+		EventUserFriendView eventUserFriendView = (EventUserFriendView)eventView.findViewById(R.id.event_images);
 		eventUserFriendView.setBitmaps(UserModel.getThumbnail(event.user_id), 
 			(event.threshold != null) ? m_deedMoveBitmap : m_deedTalkBitmap, 
 			FriendModel.getThumbnail(event.friend_id));

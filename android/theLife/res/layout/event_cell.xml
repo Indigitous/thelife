@@ -14,7 +14,7 @@
 	    android:orientation="horizontal" >
         
 	    <com.p2c.thelife.EventUserFriendView
-	        android:id="@+id/event_image1"
+	        android:id="@+id/event_images"
 	        android:layout_width="@dimen/event_bitmaps_length"
 	        android:layout_height="@dimen/thumbnail_side"
 	        android:padding="0dp"
