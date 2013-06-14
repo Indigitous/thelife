@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.p2c.thelife.TheLifeConfiguration;
 import com.p2c.thelife.BitmapCacheHandler;
+import com.p2c.thelife.Utilities;
 
 
 /**
@@ -22,6 +23,10 @@ public class DeedModel extends AbstractModel {
 	
 	private static final String TAG = "DeedModel";
 	
+	// values for special field
+	public static String SPECIAL_CHANGE_THRESHOLD = "change_threshold";
+	public static String SPECIAL_ADD_FRIEND = "add_friend";
+	
 	
 	public String 	title;
 	public String	summary;
@@ -29,12 +34,12 @@ public class DeedModel extends AbstractModel {
 	public Set<FriendModel.Threshold> thresholds;
 	public int 		priority;
 	public int		category_id;
-	public boolean  hasThreshold;
-	public boolean  isAddFriend;
+	public boolean 	hasThreshold;
+	public String  	special;
 	
 	
 	public DeedModel(int deed_id, String title, String summary, String description, 
-		Set<FriendModel.Threshold> thresholds, int priority, int category_id, boolean hasThreshold, boolean isAddFriend) {
+		Set<FriendModel.Threshold> thresholds, int priority, int category_id, boolean hasThreshold, String special) {
 		super(deed_id);
 		this.title = title;
 		this.summary = summary;
@@ -43,7 +48,7 @@ public class DeedModel extends AbstractModel {
 		this.priority = priority;
 		this.category_id = category_id;
 		this.hasThreshold = hasThreshold;
-		this.isAddFriend = isAddFriend;
+		this.special = special;
 	}	
 	
 
@@ -68,11 +73,18 @@ public class DeedModel extends AbstractModel {
 	
 	
 	/**
-	 * Whether or not the deed/activity is ChangeThreshold. 
-	 * @return
+	 * @return Whether or not the deed/activity is ChangeThreshold. 
 	 */
 	public boolean isChangeThreshold() {
-		return hasThreshold; // For now, a Change Threshold deed/activity is simply one with hasThreshold
+		return special != null && special.equals(SPECIAL_CHANGE_THRESHOLD);
+	}
+	
+	
+	/**
+	 * @return Whether or not the deed/activity operates in a special way.
+	 */
+	public boolean isSpecial() {
+		return Utilities.hasData(special);
 	}
 	
 	
@@ -96,6 +108,10 @@ public class DeedModel extends AbstractModel {
 			
 		// create the deed
 		int id = json.getInt("id");
+		String special = json.optString("special", null);
+		if (special.equals("null")) {
+			special = null;
+		}		
 		return new DeedModel(
 			id,
 			json.getString("title"),
@@ -105,7 +121,7 @@ public class DeedModel extends AbstractModel {
 			json.getInt("priority"),
 			json.optInt("category_id", 0),
 			json.optBoolean("has_threshold", false),
-			json.optBoolean("is_add_friend", false)
+			special
 		);
 	}
 	
@@ -122,7 +138,7 @@ public class DeedModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return id + ", " + title + ", " + summary + ", " + description + ", " + thresholds + ", " + priority + ", " + category_id;
+		return id + ", " + title + ", " + summary + ", " + description + ", " + thresholds + ", " + priority + ", " + category_id + ", " + special;
 	}
 
 }

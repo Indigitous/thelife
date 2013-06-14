@@ -202,7 +202,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 	
 	
 	private void createAddFriendEvent() {
-		DeedModel addFriendDeed = TheLifeConfiguration.getDeedsDS().findAddFriend();
+		DeedModel addFriendDeed = TheLifeConfiguration.getDeedsDS().findSpecial(DeedModel.SPECIAL_ADD_FRIEND);
 		if (addFriendDeed != null) {
 			Server server = new Server(this);
 			server.createEvent(addFriendDeed.id, m_friendId, false, null, this, "createEvent");

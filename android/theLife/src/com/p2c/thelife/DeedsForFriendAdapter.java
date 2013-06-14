@@ -77,7 +77,7 @@ public class DeedsForFriendAdapter extends BaseExpandableListAdapter implements 
 		// Add each deed (that has data in the owner's language) (but not special deeds) to the categories list
 		// Since only a few categories are likely to exist, this should not be too inefficient.
 		for (DeedModel deed:deeds) {
-			if (Utilities.hasData(deed.title) && !deed.isChangeThreshold() && !deed.isAddFriend) {
+			if (Utilities.hasData(deed.title) && !deed.isSpecial()) {
 				addDeedToCategories(deed);
 			} else if (deed.isChangeThreshold()){
 				m_changeThresholdId = deed.id;

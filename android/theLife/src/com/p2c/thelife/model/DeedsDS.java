@@ -69,11 +69,11 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	
 	
 	/**
-	 * @return the DeedModel which reports that a friend has been added
+	 * @return the DeedModel with the given special field
 	 */
-	public DeedModel findAddFriend() {
+	public DeedModel findSpecial(String special) {
 		for (DeedModel m:m_data) {
-			if (m.isAddFriend) {
+			if (m.special.equals(special)) {
 				return m;
 			}		
 		}
