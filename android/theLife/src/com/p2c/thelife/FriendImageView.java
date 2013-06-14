@@ -25,6 +25,7 @@ public class FriendImageView extends View {
 	private static Paint m_paint = null;
 	private static float m_bitmapSide = 0f;
 	private static float m_gap = 0f;
+	private static float m_border = 0f;
 	private static float m_textPadLeft = 0f;
 	private static float m_nameY = 0f;
 	private static float m_thresholdY = 0f;
@@ -55,16 +56,32 @@ public class FriendImageView extends View {
 			m_gap = getContext().getResources().getDimension(R.dimen.friend_cell_gap);
 			m_bitmapSide = (screenWidth - 3 * m_gap) / 2; // half of the width after the left, center and right gaps
 			m_textPadLeft = getContext().getResources().getDimension(R.dimen.friend_cell_text_padleft);
+			m_border = getContext().getResources().getDimension(R.dimen.friend_cell_border);
 			
 			// text specific values
 			float m_namePadBottom = getContext().getResources().getDimension(R.dimen.friend_cell_name_padbottom);
 			float m_thresholdPadBottom = getContext().getResources().getDimension(R.dimen.friend_cell_threshold_padbottom);
 			m_nameY = m_bitmapSide - m_thresholdPadBottom - m_namePadBottom;
 			m_thresholdY = m_bitmapSide - m_thresholdPadBottom;
-			m_bitmapRect = new RectF(0f, 0f, m_bitmapSide, m_bitmapSide);
+			m_bitmapRect = new RectF(m_border, m_border, m_bitmapSide - m_border, m_bitmapSide - m_border);
 			m_nameTextSize = getContext().getResources().getDimension(R.dimen.friend_cell_name_textsize);
 			m_thresholdTextSize = getContext().getResources().getDimension(R.dimen.friend_cell_threshold_textsize);
+			
+			this.setMinimumWidth((int)m_bitmapSide);			
+			this.setMinimumHeight((int)m_bitmapSide);
 		}		
+	}
+	
+	
+	/**
+	 * The size of this view is set with fixed values in the XML, but that is only a placeholder.
+	 * This routine sets the real size of the view.
+	 */
+	@Override
+	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		int childWidthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)m_bitmapSide, MeasureSpec.EXACTLY);
+		int childHeightMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)m_bitmapSide, MeasureSpec.EXACTLY);
+		setMeasuredDimension(childWidthMeasureSpec, childHeightMeasureSpec);
 	}
 	
 	
@@ -92,10 +109,6 @@ public class FriendImageView extends View {
 		}
 				
 		// TODO nonsquare friend bitmaps are stretched to be square
-//		System.out.println("THE CANVAS SIZE IS " + canvas.getWidth() + "," + canvas.getHeight());
-//		System.out.println("The DISPLAY WIDTH IS " + getContext().getResources().getDisplayMetrics().widthPixels);
-//		System.out.println("THE FRIEND VIEW SIZE IS CALCULATED " + m_bitmapSide);
-//		System.out.println("THE FRIEND VIEW BITMAP IS " + m_bitmap);
 		
 		canvas.drawBitmap(m_bitmap, null, m_bitmapRect, m_paint);
 		m_paint.setTextSize(m_nameTextSize);

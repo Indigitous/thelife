@@ -4,11 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <!-- placeholder view size below; real size is calculated -->
     <com.p2c.thelife.FriendImageView
         android:id="@+id/friend_image"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:padding="0dp"
+        android:padding="@dimen/friend_cell_border"
+        android:background="#a7a7a7"
 		android:src="@drawable/generic_avatar_image"        
         android:contentDescription="@string/user" />
 
