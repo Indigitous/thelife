@@ -73,7 +73,7 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 	 */
 	public DeedModel findSpecial(String special) {
 		for (DeedModel m:m_data) {
-			if (m.special.equals(special)) {
+			if (m.special != null && m.special.equals(special)) {
 				return m;
 			}		
 		}
