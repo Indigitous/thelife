@@ -19,8 +19,8 @@
     
 	    <ImageView
 	        android:id="@+id/settings_image"
-	        android:layout_width="100dp"
-	        android:layout_height="100dp"
+	        android:layout_width="120dp"
+	        android:layout_height="120dp"
 	        android:src="@drawable/generic_avatar_image" />
 	    
 	    <LinearLayout 
@@ -30,15 +30,17 @@
 	    
 		    <Button
 		        android:id="@+id/image_rotate_cw"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
+		        android:layout_width="54dp"
+		        android:layout_height="54dp"
+		        android:gravity="center"
 		        android:onClick="rotateImageCW"
 		        android:drawableLeft="@drawable/images_rotate_right" /> 
 		        
 		    <Button
 		        android:id="@+id/image_rotate_ccw"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
+		        android:layout_width="54dp"
+		        android:layout_height="54dp"
+		        android:gravity="center"		        
 		        android:onClick="rotateImageCCW"
 		        android:drawableLeft="@drawable/images_rotate_left" />	        
 		</LinearLayout>	    	    
@@ -98,5 +100,14 @@
         android:layout_gravity="right"
         android:text="@string/ok" 
         android:onClick="setUserProfile"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="right"
+        android:text="Show License Information"
+        android:textSize="12sp"        
+        android:onClick="showLicense" />
 
 </LinearLayout>

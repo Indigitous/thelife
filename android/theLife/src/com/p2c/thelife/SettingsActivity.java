@@ -178,14 +178,6 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 			intent.putExtra("position", SlidingMenuSupport.SETTINGS_POSITION);
 			intent.putExtra("home", "com.p2c.thelife.Settings");
 			startActivity(intent);
-		} else if (item.getItemId() == R.id.action_license) {
-			Intent intent = new Intent("com.p2c.thelife.HelpContainer");
-			intent.putExtra("layout", R.layout.activity_license);
-			intent.putExtra("position", SlidingMenuSupport.SETTINGS_POSITION);
-			intent.putExtra("title", getResources().getString(R.string.title_license));
-			intent.putExtra("home", "com.p2c.thelife.Settings");
-			intent.putExtra("webview_data", getResources().getString(R.string.license));			
-			startActivity(intent);
 		}
 		
 		return true;
@@ -271,6 +263,17 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// save new image bitmap
 		imageView.setImageBitmap(m_updatedBitmap);
-	}	
+	}
+	
+	
+	public void showLicense(View view) {
+		Intent intent = new Intent("com.p2c.thelife.HelpContainer");
+		intent.putExtra("layout", R.layout.activity_license);
+		intent.putExtra("position", SlidingMenuSupport.SETTINGS_POSITION);
+		intent.putExtra("title", getResources().getString(R.string.title_license));
+		intent.putExtra("home", "com.p2c.thelife.Settings");
+		intent.putExtra("webview_data", getResources().getString(R.string.license));			
+		startActivity(intent);
+	}
 	
 }
