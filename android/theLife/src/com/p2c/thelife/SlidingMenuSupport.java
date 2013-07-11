@@ -36,9 +36,10 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	public static final int COMMUNITY_POSITION = 0;
 	public static final int FRIENDS_POSITION = 1;
 	public static final int GROUPS_POSITION = 2;
-	public static final int HELP_POSITION = 3;
-	public static final int SETTINGS_POSITION = 4;
-	public static final int TEST_POSITION = 5;
+	public static final int RESOURCES_POSITION = 3;
+	public static final int HELP_POSITION = 4;
+	public static final int SETTINGS_POSITION = 5;
+	public static final int TEST_POSITION = 6;
 	
 	public SlidingMenuSupport(Activity activity, int slidingMenuPosition) {
 		
@@ -93,6 +94,12 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
         			Intent intent = null;
 	        		switch (position) {
 	        		
+		    			case REQUESTS_POSITION:
+							intent = new Intent("com.p2c.thelife.Requests");	        				
+		    				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		    				m_activity.startActivity(intent);
+		    				break;		        		
+	        		
 	    				case COMMUNITY_POSITION:
 	    					intent = new Intent("com.p2c.thelife.EventsForCommunity");
 	    					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -111,11 +118,11 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	        				m_activity.startActivity(intent);
 	        				break;
 	        				
-	        			case REQUESTS_POSITION:
-	    					intent = new Intent("com.p2c.thelife.Requests");	        				
+	        			case RESOURCES_POSITION:
+	    					intent = new Intent("com.p2c.thelife.Resources");	        				
 	        				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        				m_activity.startActivity(intent);
-	        				break;	        				
+	        				break;         				
 	        				
 	        			case HELP_POSITION:
 	    					intent = new Intent("com.p2c.thelife.HelpCentral");	        				

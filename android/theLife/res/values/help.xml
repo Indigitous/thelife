@@ -103,5 +103,7 @@
 	<string name="activity_groups_help">Groups Help in here</string>
 	<string name="activity_groups_search_help">Groups Search Help in here</string>
 	<string name="activity_settings_help">Settings Help in here</string>
+	<string name="activity_resources_help">Resources Help in here</string>
+	<string name="activity_resources_deed_help">Resources Help in here</string>
 		
 </resources>

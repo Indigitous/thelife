@@ -215,6 +215,27 @@
             android:label="@string/title_help" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.HelpContainer" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.ResourcesActivity"
+            android:label="@string/title_resources"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.Resources" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>            
+        </activity>
+        <activity
+            android:name="com.p2c.thelife.ResourcesDeedActivity"
+            android:label="@string/title_resources"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.ResourcesDeed" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>            
         </activity>        

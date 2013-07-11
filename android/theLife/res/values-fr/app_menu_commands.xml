@@ -3,7 +3,8 @@
     <string-array name="app_menu_commands">
 	    <item name="community">Flux communautaire</item>  
 	    <item name="friends">Amis</item>    
-	    <item name="groups_menu">Groupes</item> 
+	    <item name="groups_menu">Groupes</item>
+	    <item name="resources_menu">Resources</item>	    
 	    <item name="help_menu">Aide</item>    
 	    <item name="settings_menu">Paramètres</item>
     </string-array>
