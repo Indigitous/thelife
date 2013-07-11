@@ -1,6 +1,7 @@
 package com.p2c.thelife;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import android.content.Context;
 import android.text.Html;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.CategoryModel;
 import com.p2c.thelife.model.DeedModel;
+import com.p2c.thelife.model.FriendModel;
 
 
 /**
@@ -49,6 +51,11 @@ public class ResourcesAdapter extends BaseExpandableListAdapter implements Abstr
 		
 		// redisplay
 		notifyDataSetChanged();
+	}
+	
+	
+	public void filter(EnumSet<FriendModel.Threshold> thresholds) {
+		
 	}
 	
 	

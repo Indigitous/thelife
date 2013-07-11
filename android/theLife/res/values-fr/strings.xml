@@ -171,7 +171,11 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="title_license">License</string>
     <string name="action_license">License</string>    
 
-    <!--  added July 10, 2013 -->
+    <!--  added July 10+, 2013 -->
     <string name="show_license">Show License Information</string>
     <string name="title_resources">Resources</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter">Filter</string>
+    <string name="threshold_filter_prompt">Filter by thresholds</string>
+    
 </resources>
