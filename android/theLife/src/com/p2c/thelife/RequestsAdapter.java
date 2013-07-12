@@ -57,7 +57,7 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 		textViewTime.setText(eventTime);				
 		
 		ImageView imageView1 = (ImageView)requestView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap(UserModel.getThumbnail(request.user_id));
+		imageView1.setImageBitmap(UserModel.getThumbnail(request.getAuthorId()));
 		
 		requestView.setTag(request);		
 		

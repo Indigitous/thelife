@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.p2c.thelife.R;
-import com.p2c.thelife.TheLifeConfiguration;
 
 
 
@@ -30,6 +29,7 @@ public class RequestModel extends AbstractModel {
 	public int    request_id;
 	public int    user_id;			// user making the request
 	public String userName;			// the name of the user making the original request
+	public int    recipient_id;		// the id of the user receiving the original request
 	public String recipientName;    // the name of the user receiving the original request; will be empty if the person never registered
 	public int    group_id;			// the group to join
 	public String groupName;        // the name of the group to join
@@ -45,12 +45,14 @@ public class RequestModel extends AbstractModel {
 	
 	
 	
-	public RequestModel(Resources resources, int request_id, int user_id, String userName, String recipientName, int group_id, String groupName, 
+	public RequestModel(Resources resources, int request_id, 
+						int user_id, String userName, int recipient_id, String recipientName, int group_id, String groupName, 
 						String type, String email, String sms, long timestamp, String status) {
 		super(request_id);
 		
 		this.user_id = user_id;
 		this.userName = userName;
+		this.recipient_id = recipient_id;
 		this.recipientName = recipientName;
 		this.group_id = group_id;
 		this.groupName = groupName;
@@ -83,6 +85,10 @@ public class RequestModel extends AbstractModel {
 		return status.equals(REJECTED);
 	}
 	
+	// return the id of the user that authored this object
+	public int getAuthorId() {
+		return isDelivered() ? user_id : recipient_id;
+	}
 	
 	@Override
 	public String toString() {
@@ -141,6 +147,7 @@ public class RequestModel extends AbstractModel {
 			json.getInt("id"),
 			json.getInt("user_id"),
 			json.optString("sender_full_name", null),
+			json.optInt("recipient_id", 0),
 			json.optString("recipient_full_name", null),
 			json.getInt("group_id"),
 			json.optString("group_name", null),		
