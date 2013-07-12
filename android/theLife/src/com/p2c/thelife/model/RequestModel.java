@@ -29,7 +29,8 @@ public class RequestModel extends AbstractModel {
 		
 	public int    request_id;
 	public int    user_id;			// user making the request
-	public String userName;			// the name of the user making the request
+	public String userName;			// the name of the user making the original request
+	public String recipientName;    // the name of the user receiving the original request; will be empty if the person never registered
 	public int    group_id;			// the group to join
 	public String groupName;        // the name of the group to join
 	public String type;				// either REQUEST_MEMBERSHIP or INVITE:
@@ -44,12 +45,13 @@ public class RequestModel extends AbstractModel {
 	
 	
 	
-	public RequestModel(Resources resources, int request_id, int user_id, String userName, int group_id, String groupName, 
+	public RequestModel(Resources resources, int request_id, int user_id, String userName, String recipientName, int group_id, String groupName, 
 						String type, String email, String sms, long timestamp, String status) {
 		super(request_id);
 		
 		this.user_id = user_id;
 		this.userName = userName;
+		this.recipientName = recipientName;
 		this.group_id = group_id;
 		this.groupName = groupName;
 		this.type = type;
@@ -84,7 +86,7 @@ public class RequestModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return id + ", " + user_id + ", " + userName + "," + group_id + ", " + groupName + 
+		return id + ", " + user_id + ", [from] " + userName + ", [to] " + recipientName + "," + group_id + ", " + groupName + 
 				", " + email + ", " + sms + "," + finalDescription + "," + timestamp + "," + status;
 	}
 	
@@ -106,12 +108,6 @@ public class RequestModel extends AbstractModel {
 		// friend name parameter
 		String paramGroupName = this.groupName;
 		if (paramGroupName == null) {
-			GroupModel group = TheLifeConfiguration.getGroupsDS().findById(group_id);
-			if (group != null) {
-				paramGroupName = group.name;
-			}
-		}
-		if (paramGroupName == null) {
 			paramGroupName = "???";
 		}
 		
@@ -120,13 +116,11 @@ public class RequestModel extends AbstractModel {
 		} else if (isDelivered() && isMembershipRequest()) {
 			finalDescription = resources.getString(R.string.membership_request_description, paramUserName, paramGroupName);
 		} else if (isAccepted() && isInvite()) {
-			paramUserName = resources.getString(R.string.user); // TODO get around server bug
-			finalDescription = resources.getString(R.string.invite_request_accepted_description, paramUserName, paramGroupName);
+			finalDescription = resources.getString(R.string.invite_request_accepted_description, this.recipientName, paramGroupName);
 		} else if (isAccepted() && isMembershipRequest()) {
 			finalDescription = resources.getString(R.string.membership_request_accepted_description, paramGroupName);
 		} else if (isRejected() && isInvite()) {
-			paramUserName = resources.getString(R.string.user);	// TODO get around server bug	
-			finalDescription = resources.getString(R.string.invite_request_rejected_description, paramUserName, paramGroupName);
+			finalDescription = resources.getString(R.string.invite_request_rejected_description, this.recipientName, paramGroupName);
 		} else if (isRejected() && isMembershipRequest()) {
 			finalDescription = resources.getString(R.string.membership_request_rejected_description, paramGroupName);				
 		} else {
@@ -146,7 +140,8 @@ public class RequestModel extends AbstractModel {
 			resources,
 			json.getInt("id"),
 			json.getInt("user_id"),
-			json.optString("user_name", null),			
+			json.optString("sender_full_name", null),
+			json.optString("recipient_full_name", null),
 			json.getInt("group_id"),
 			json.optString("group_name", null),		
 			json.getString("type"),
