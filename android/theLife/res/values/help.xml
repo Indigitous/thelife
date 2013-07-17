@@ -105,5 +105,11 @@
 	<string name="activity_settings_help">Settings Help in here</string>
 	<string name="activity_resources_help">Resources Help in here</string>
 	<string name="activity_resources_deed_help">Resources Help in here</string>
+	
+	<!-- added July 17+ -->
+	<string name="feedback_help">
+	&lt;h4>Feedback?&lt;/h4>
+	&lt;p>Please give us your feedback online at our &lt;a href="https://getsatisfaction.com/powertochange/">GetSatisfaction&lt;/a> site.&lt;/p>
+	</string>
 		
 </resources>
