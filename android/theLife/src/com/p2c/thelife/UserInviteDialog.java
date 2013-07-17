@@ -35,10 +35,6 @@ public class UserInviteDialog extends ServerAccessDialogAbstract {
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
 
-				EditText firstNameField = (EditText)view.findViewById(R.id.invite_user_first_name);
-				String firstName = firstNameField.getText().toString();
-				EditText lastNameField = (EditText)view.findViewById(R.id.invite_user_last_name);
-				String lastName = lastNameField.getText().toString();
 				EditText emailField = (EditText)view.findViewById(R.id.invite_user_email);
 				String email = emailField.getText().toString();
 				EditText phoneField = (EditText)view.findViewById(R.id.invite_user_phone);

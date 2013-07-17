@@ -5,24 +5,6 @@
     android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/invite_user_first_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/first_name"
-        android:inputType="textCapWords" >
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/invite_user_last_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/last_name"
-        android:inputType="textCapWords" />
-
-    <EditText
         android:id="@+id/invite_user_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
