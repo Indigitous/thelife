@@ -1,10 +1,19 @@
 package com.p2c.thelife;
 
+import java.io.IOException;
+
 import org.json.JSONObject;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorDescription;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +21,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.p2c.thelife.model.UserModel;
 
 
@@ -24,6 +38,13 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 	
 	private static final String TAG = "SetupActivity";
 	
+	public static final int REQUESTCODE_AUTHENTICATION = 1;
+	
+	
+	Account m_googleAccount = null;
+	Account m_facebookAccount = null;
+	String m_appClientId = "clarence";
+	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +55,132 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 		if (Build.VERSION.SDK_INT >= 11) {
 			getActionBar().hide();
 		}
+		
+		
+		
+		//GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)
+		
+//		getAndUseAuthTokenInAsyncTask();
+		
+		
+		
+		
+		
+//		AccountManager accountManager = AccountManager.get(this);
+//		// type 
+//		Account[] accountsG = accountManager.getAccountsByType("com.google");
+//		if (accountsG.length > 0) {
+//			m_googleAccount = accountsG[0];
+//System.out.println("GOOGLE ACCOUNT NAME: " + m_googleAccount.name);
+//		}
+//		Account[] accountsF = accountManager.getAccountsByType("com.facebook.auth.login");
+//		if (accountsF.length > 0) {
+//			m_facebookAccount = accountsF[0];
+//System.out.println("FACEBOOK ACCOUNT NAME: " + m_facebookAccount.name);
+//		}
+//		
+//		AuthenticatorDescription[] authenticators = accountManager.getAuthenticatorTypes();
+//		for (AuthenticatorDescription authenticatorDescription : authenticators) {
+//System.out.println("AUTHENTICATOR " + authenticatorDescription.toString());
+//// com.google
+//// com.facebook.auth.login
+//		}
+//		
+//		
+//		AccountManagerFuture<Bundle> amFuture = 
+//			accountManager.getAuthToken(
+//				m_googleAccount, 
+//				"gmail", 
+//				null, 
+//				this, 
+//				new AccountManagerCallback<Bundle>() {
+//					
+//					@Override
+//					public void run(AccountManagerFuture<Bundle> arg0) {
+//						System.out.println("GOT CALLBACK WITH " + arg0);
+//						
+//					}
+//				}, 
+//				null);
+
 	}
+	
+	/********************************** FROM GoogleAuthUtil ****************************************/
+	
+	   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	       if (requestCode == REQUESTCODE_AUTHENTICATION) {
+	           if (resultCode == RESULT_OK) {
+	               getAndUseAuthTokenInAsyncTask();
+	           }
+	       }
+	   }
+	   
+	  // Example of how to use the GoogleAuthUtil in a blocking, non-main thread context
+	   void getAndUseAuthTokenBlocking() {
+	       try {
+	          // Retrieve a token for the given account and scope. It will always return either
+	          // a non-empty String or throw an exception.
+System.out.println("HERE IS MY CALL TO GOOGLE AUTH UTIL");
+	          final String token = GoogleAuthUtil.getToken(this, "clarence@ballistiq.com", "audience:server:client_id:" + m_appClientId);
+System.out.println("HERE IS MY CALL RESULT FROM GOOGLE AUTH UTIL " + token);
+	          // Do work with token.
+	          //...
+//	          if (server indicates token is invalid) {
+//	              // invalidate the token that we found is bad so that GoogleAuthUtil won't
+//	              // return it next time (it may have cached it)
+//	              GoogleAuthUtil.invalidateToken(this, token);
+//	              // consider retrying getAndUseTokenBlocking() once more
+//	              return;
+//	          }
+	          return;
+	       } catch (GooglePlayServicesAvailabilityException playEx) {
+System.out.println("GOOGLE PLAY EXCEPTION " + playEx);	    	   
+	         Dialog alert = GooglePlayServicesUtil.getErrorDialog(
+	             playEx.getConnectionStatusCode(),
+	             this,
+	             REQUESTCODE_AUTHENTICATION);
+	         // ...
+	       } catch (UserRecoverableAuthException userAuthEx) {
+System.out.println("GOOGLE USERREC EXCEPTION " + userAuthEx);	    	   	    	   
+	          // Start the user recoverable action using the intent returned by
+	          // getIntent()
+	          startActivityForResult(
+	                  userAuthEx.getIntent(),
+	                  REQUESTCODE_AUTHENTICATION);
+	          return;
+	       } catch (IOException transientEx) {
+System.out.println("GOOGLE IO EXCEPTION " + transientEx);	    	   
+	          // network or server error, the call is expected to succeed if you try again later.
+	          // Don't attempt to call again immediately - the request is likely to
+	          // fail, you'll hit quotas or back-off.
+	          //...
+	          return;
+	       } catch (GoogleAuthException authEx) {
+	          // Failure. The call is not expected to ever succeed so it should not be
+	          // retried.
+	          //...
+System.out.println("GOOGLE AUTH EXCEPTION " + authEx);
+	          return;
+	       }
+	   }
+
+	   // Example of how to use AsyncTask to call blocking code on a background thread.
+	   void getAndUseAuthTokenInAsyncTask() {
+	       AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+	           protected Void doInBackground(Void... params) {
+	               getAndUseAuthTokenBlocking();
+	               return null;
+	           }
+	       };
+	       task.execute((Void)null);
+	   }	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
