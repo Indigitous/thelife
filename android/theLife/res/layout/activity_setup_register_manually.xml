@@ -21,7 +21,7 @@
     	android:orientation="horizontal" >
 
 	    <ImageView
-	        android:id="@+id/setup_register_image"
+	        android:id="@+id/setup_register_manually_image"
 	        android:layout_width="100dp"
 	        android:layout_height="100dp"
 	        android:src="@drawable/generic_avatar_image" 
@@ -54,7 +54,7 @@
     </LinearLayout>
    
     <EditText
-        android:id="@+id/setup_register_first_name"
+        android:id="@+id/setup_register_manually_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -64,7 +64,7 @@
 	</EditText>        
     
     <EditText
-        android:id="@+id/setup_register_last_name"
+        android:id="@+id/setup_register_manually_last_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -72,7 +72,7 @@
         android:inputType="textCapWords" />  
         
     <EditText
-        android:id="@+id/setup_register_email"
+        android:id="@+id/setup_register_manually_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -83,7 +83,7 @@
     </EditText>
 
     <EditText
-        android:id="@+id/setup_register_password"
+        android:id="@+id/setup_register_manually_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -91,7 +91,7 @@
         android:inputType="textPassword" />
     
     <EditText
-        android:id="@+id/setup_register_password_confirm"
+        android:id="@+id/setup_register_manually_password_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

@@ -20,13 +20,13 @@ import android.widget.Toast;
 import com.p2c.thelife.model.UserModel;
 
 /**
- * Register the user, allowing for an image from the Android system.
+ * Register the user manually, allowing for an image from the Android system.
  * @author clarence
  *
  */
-public class SetupRegisterActivity extends SetupActivityAbstract implements Server.ServerListener, ImageSelectSupport.Listener {
+public class SetupRegisterManuallyActivity extends SetupActivityAbstract implements Server.ServerListener, ImageSelectSupport.Listener {
 	
-	private static final String TAG = "SetupRegisterActivity";
+	private static final String TAG = "SetupRegisterManuallyActivity";
 	
 	private Bitmap m_bitmap = null;
 	private UserModel m_user = null;
@@ -36,13 +36,13 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setup_register);
+		setContentView(R.layout.activity_setup_register_manually);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.setup_register, menu);
+		getMenuInflater().inflate(R.menu.setup_register_manually, menu);
 		return true;
 	}
 	
@@ -51,17 +51,17 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 	 * @param view
 	 */
 	public void register(View view) {
-		EditText emailField = (EditText)findViewById(R.id.setup_register_email);
+		EditText emailField = (EditText)findViewById(R.id.setup_register_manually_email);
 		String email = emailField.getText().toString();
-		EditText firstNameField = (EditText)findViewById(R.id.setup_register_first_name);
+		EditText firstNameField = (EditText)findViewById(R.id.setup_register_manually_first_name);
 		String firstName = firstNameField.getText().toString();
-		EditText lastNameField = (EditText)findViewById(R.id.setup_register_last_name);
+		EditText lastNameField = (EditText)findViewById(R.id.setup_register_manually_last_name);
 		String lastName = lastNameField.getText().toString();
 		
 		// make sure the passwords agree
-		EditText passwordField = (EditText)findViewById(R.id.setup_register_password);
+		EditText passwordField = (EditText)findViewById(R.id.setup_register_manually_password);
 		String password = passwordField.getText().toString();
-		EditText passwordFieldConfirm = (EditText)findViewById(R.id.setup_register_password_confirm);
+		EditText passwordFieldConfirm = (EditText)findViewById(R.id.setup_register_manually_password_confirm);
 		String passwordConfirm = passwordFieldConfirm.getText().toString();
 		if (!password.equals(passwordConfirm)) {
 			Toast.makeText(this, R.string.different_passwords_error, Toast.LENGTH_SHORT).show();
@@ -148,7 +148,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 		m_bitmap = bitmap;
 
 		// set the image
-		ImageView imageView = (ImageView)findViewById(R.id.setup_register_image);
+		ImageView imageView = (ImageView)findViewById(R.id.setup_register_manually_image);
 		imageView.setImageBitmap(m_bitmap);
 		
 		// enable rotate buttons
@@ -210,7 +210,7 @@ public class SetupRegisterActivity extends SetupActivityAbstract implements Serv
 			m_bitmap = Bitmap.createBitmap(m_bitmap, 0, 0, m_bitmap.getWidth(), m_bitmap.getHeight(), matrix, true);
 			
 			// save new image bitmap
-			ImageView imageView = (ImageView)findViewById(R.id.setup_register_image);		
+			ImageView imageView = (ImageView)findViewById(R.id.setup_register_manually_image);		
 			imageView.setImageBitmap(m_bitmap);	
 		}
 	}

@@ -177,5 +177,9 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="action_filter">Filter</string>
     <string name="filter">Filter</string>
     <string name="threshold_filter_prompt">Filter by thresholds</string>
+    <string name="title_register_manually">SetupRegisterActivity</string>
+    <string name="choose_register_method_prompt">Choose how to register:</string>
+    <string name="manually">Manually</string>
     
+
 </resources>
