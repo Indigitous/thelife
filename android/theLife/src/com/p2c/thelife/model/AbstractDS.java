@@ -456,7 +456,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		protected ArrayList<T> doInBackground(URL... urls) {
 			ArrayList<T> data2 = null;
 				
-			HttpsURLConnection modelsConnection = null;
+			HttpURLConnection modelsConnection = null;
 			InputStreamReader isr = null;
 			
 			// try multiple retries for connection timeouts
@@ -467,7 +467,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				try {			
 					Log.d(TAG, i + " DS READFROMSERVER with " + urls[0]);	
 					URL modelsEP = urls[0];
-					modelsConnection = (HttpsURLConnection)modelsEP.openConnection();
+					modelsConnection = (HttpURLConnection)modelsEP.openConnection();
 					modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
 					modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 					
