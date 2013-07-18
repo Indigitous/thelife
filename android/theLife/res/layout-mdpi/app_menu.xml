@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#34383A"   
+    android:orientation="vertical" >
+    
+	<LinearLayout
+	    android:id="@+id/app_menu_notification"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+		android:background="#23282A"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+		android:orientation="horizontal"
+		>        
+	    
+	   <TextView
+	       android:id="@+id/app_menu_notification_number"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_weight="0"
+	       android:layout_gravity="center"
+	       android:paddingTop="0dp"
+	       android:paddingBottom="0dp"
+	       android:paddingLeft="8dp"
+	       android:paddingRight="8dp"
+	       android:layout_marginLeft="@dimen/activity_horizontal_margin"
+	       android:textColor="#ffffff"	       
+	       android:textSize="22sp"	       
+	       android:background="@drawable/round_black"
+	       android:text="0"
+	       />
+	         
+	   <TextView
+	       android:id="@+id/app_menu_notification_label"
+	       android:layout_width="0dp"
+	       android:layout_height="wrap_content"
+	       android:layout_weight="1"
+	       android:layout_gravity="center_vertical"
+	       android:paddingLeft="4dp"
+	       android:textColor="#ffffff"
+	       android:textSize="22sp"
+	       android:text="@string/notification_plural" />
+	</LinearLayout>    
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+    	android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_height="60dp" >
+
+	    <ImageView
+	        android:id="@+id/app_menu_user_image"
+	        android:layout_width="60dp"
+	        android:layout_height="60dp"
+	        android:paddingRight="8dp"
+	        android:layout_weight="0"
+	        android:src="@drawable/generic_avatar_image" />
+
+	    <TextView
+	        android:id="@+id/app_menu_user_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="center_vertical"
+	        android:text="Large Text"
+	        android:textColor="#ffffff"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+    
+    <ListView
+        android:id="@+id/app_menu_command_list"
+        android:paddingTop="0dp"
+    	android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
+
+</LinearLayout>

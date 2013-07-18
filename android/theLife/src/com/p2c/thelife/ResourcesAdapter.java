@@ -29,15 +29,17 @@ public class ResourcesAdapter extends BaseExpandableListAdapter implements Abstr
 	
 	private Context m_context = null;
 	private ArrayList<CategoryModel> m_categories = null;
+	private EnumSet<FriendModel.Threshold> m_thresholds = null;
 	
 	// whether or not each category is expanded
 	private ArrayList<Boolean> m_isCategoryExpandeds = null;
 	
 	
-	public ResourcesAdapter(Context context) {
+	public ResourcesAdapter(Context context, EnumSet<FriendModel.Threshold> thresholds) {
 		
 		m_context = context;
 		m_categories = new ArrayList<CategoryModel>();
+		m_thresholds = thresholds;
 		
 		query();
 	}
@@ -54,8 +56,25 @@ public class ResourcesAdapter extends BaseExpandableListAdapter implements Abstr
 	}
 	
 	
+	/**
+	 * @return the thresholds filter currently in use
+	 */
+	public EnumSet<FriendModel.Threshold> getFilter() {
+		return m_thresholds;
+	}
+	
+	
+	/**
+	 * Filter the resources by the given thresholds.
+	 */
 	public void filter(EnumSet<FriendModel.Threshold> thresholds) {
+		m_thresholds = thresholds;
 		
+		// clear data and redo local query		
+		query();
+		
+		// redisplay
+		notifyDataSetChanged();		
 	}
 	
 	
@@ -75,7 +94,7 @@ public class ResourcesAdapter extends BaseExpandableListAdapter implements Abstr
 		m_categories.add(nullCategory);		
 		
 		// find all the deeds/activities applicable to the friend's threshold	
-		ArrayList<DeedModel> deeds = TheLifeConfiguration.getDeedsDS().findAll();
+		ArrayList<DeedModel> deeds = TheLifeConfiguration.getDeedsDS().findByThresholds(m_thresholds);
 		
 		// Add each deed (that has data in the owner's language) (but not special deeds) to the categories list
 		// Since only a few categories are likely to exist, this should not be too inefficient.

@@ -1,7 +1,7 @@
 package com.p2c.thelife.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.EnumSet;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +53,23 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 		
 		return deeds;
 	}
+	
+	
+	/**
+	 * @param thresholds
+	 * @return all deed model objects applicable to the given thresholds
+	 */
+	public ArrayList<DeedModel> findByThresholds(EnumSet<FriendModel.Threshold> thresholds) {
+		ArrayList<DeedModel> deeds = new ArrayList<DeedModel>();
+		
+		for (DeedModel m:m_data) {
+			if (m.isApplicable(thresholds)) {
+				deeds.add(m);
+			}		
+		}
+		
+		return deeds;
+	}	
 	
 	
 	public ArrayList<DeedModel> findByCategoryAndThreshold(int categoryId, FriendModel.Threshold threshold) {

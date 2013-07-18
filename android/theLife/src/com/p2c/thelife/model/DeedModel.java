@@ -63,6 +63,22 @@ public class DeedModel extends AbstractModel {
 	
 	
 	/**
+	 * whether or not the deed/activity is applicable to the given thresholds
+	 * @param applicableThresholds
+	 * @return
+	 */
+	public boolean isApplicable(EnumSet<FriendModel.Threshold> applicableThresholds) {
+		for (FriendModel.Threshold threshold : applicableThresholds) {
+			if (isApplicable(threshold)) {
+				return true;
+			}
+		}
+
+		return false;
+	}	
+	
+	
+	/**
 	 * Whether or not the deed/activity is generally applicable to all thresholds.
 	 * Deeds/activities not marked with any thresholds are generally applicable to all thresholds.
 	 * @return
