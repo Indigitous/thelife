@@ -5,7 +5,9 @@ import java.util.EnumSet;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,6 +28,9 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 	
 	private static final String TAG = "ResourcesActivity";
 	
+	// system settings key
+	private static final String KEY_THRESHOLDS_FILTER = "thresholds";
+	
 	private ResourcesAdapter m_adapter = null;
 	
 
@@ -34,8 +39,10 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 		super.onCreate(savedInstanceState, R.layout.activity_resources, SlidingMenuSupport.RESOURCES_POSITION);
 					
 		ExpandableListView activitiesView = (ExpandableListView)findViewById(R.id.deeds_list);
-		EnumSet<FriendModel.Threshold> thresholds = EnumSet.allOf(FriendModel.Threshold.class);
-		m_adapter = new ResourcesAdapter(this, thresholds);
+		
+		// use the remembered thresholds filter
+		m_adapter = new ResourcesAdapter(this, getThresholdsFilter());
+		
 		activitiesView.setAdapter(m_adapter);
 	}
 	
@@ -74,6 +81,8 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 		TheLifeConfiguration.getDeedsDS().removeDSChangedListener(m_adapter);				
 		TheLifeConfiguration.getCategoriesDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getCategoriesDS().removeDSChangedListener(m_adapter);
+		
+		storeThresholdsFilter();		
 	}		
 	
 	
@@ -162,4 +171,52 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 		
 		return true;
 	}
+	
+	
+	/**
+	 * @return the thresholds filter
+	 */
+	private EnumSet<FriendModel.Threshold> getThresholdsFilter() {
+
+		// default is all filters
+		EnumSet<FriendModel.Threshold> thresholds = EnumSet.allOf(FriendModel.Threshold.class);
+		
+		// look for a thresholds filter in system settings
+		String thresholdsString = TheLifeConfiguration.getSystemSettings().getString(KEY_THRESHOLDS_FILTER, null);
+		if (thresholdsString != null) {
+			thresholds = EnumSet.noneOf(FriendModel.Threshold.class);			
+			String[] thresholdIntStrings = thresholdsString.split(",");
+			for (String thresholdIntString : thresholdIntStrings) {
+				try {
+					int thresholdInt = Integer.valueOf(thresholdIntString);
+					thresholds.add(FriendModel.Threshold.values()[thresholdInt]);
+				} catch (Exception e) {
+					Log.e(TAG, "Incorrect threshold filter " + thresholdsString, e);
+				}
+			}
+		}
+		
+		return thresholds;
+	}
+	
+	
+	/**
+	 * store the thresholds filter so that the user won't need to recreate it later
+	 */
+	private void storeThresholdsFilter() {
+		
+		// store the thresholds filter in system settings
+		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
+		StringBuilder thresholdsString = new StringBuilder(25);		
+		EnumSet<FriendModel.Threshold> thresholds = m_adapter.getFilter();
+		for (FriendModel.Threshold threshold : thresholds) {
+			if (thresholdsString.length() > 0) {
+				thresholdsString.append(',');
+			}
+			thresholdsString.append(threshold.ordinal());
+		}		
+		systemSettingsEditor.putString(KEY_THRESHOLDS_FILTER, thresholdsString.toString());
+		systemSettingsEditor.commit();
+	}
+	
 }
