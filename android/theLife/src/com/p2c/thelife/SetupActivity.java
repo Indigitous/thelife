@@ -1,19 +1,11 @@
 package com.p2c.thelife;
 
-import java.io.IOException;
-
 import org.json.JSONObject;
 
 import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorDescription;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +13,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.p2c.thelife.model.UserModel;
 
 
@@ -73,6 +60,10 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 		// go to the register screen
 		Intent intent = new Intent("com.p2c.thelife.SetupRegister");
 		startActivity(intent);				
+		
+		// Android provided account picker
+//		Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[] { "com.google" }, true, null, "the-life", null, null);
+//		startActivityForResult(intent, 0);
 	}
 	
 	@Override
