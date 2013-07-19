@@ -86,7 +86,6 @@ public class SetupRegisterActivity extends Activity {
 		// progress bar while waiting
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 		
-		m_token = null;
 		new AsyncTask<String, Void, Exception>() {
 
 			// background thread
@@ -95,7 +94,7 @@ public class SetupRegisterActivity extends Activity {
 
 				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
 				try {
-					// successfully got the token
+					m_token = null;
 					m_token = GoogleAuthUtil.getToken(SetupRegisterActivity.this, params[0], "audience:server:client_id:" + m_webClientId);
 					Log.i(TAG, "successfully got Google account token for account " + params[0]);
 					return null;
@@ -126,6 +125,7 @@ public class SetupRegisterActivity extends Activity {
 						Utilities.showErrorToast(SetupRegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT);
 					}
 				}
+System.out.println("THE GOOGLE TOKEN IS " + m_token);
 			}				
 		}.execute(accountName);
 		
