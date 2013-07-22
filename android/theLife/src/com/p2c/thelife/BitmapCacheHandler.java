@@ -8,9 +8,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -78,17 +77,17 @@ public class BitmapCacheHandler extends Handler {
 	private static Bitmap getBitmapAtURLSafe(String urlPath, String cacheFileName) {
 		
 		InputStream is = null;
-		HttpsURLConnection connection = null;
+		HttpURLConnection connection = null;
 		Bitmap bitmap = null;
 		
 		try {
 			
 			// attempt to get the bitmap from the server
 			URL url = new URL(Utilities.makeServerUrlString(urlPath));
-			connection = (HttpsURLConnection)url.openConnection();
+			connection = (HttpURLConnection)url.openConnection();
 			
 			int responseCode = connection.getResponseCode();
-			if (responseCode == HttpsURLConnection.HTTP_OK) {
+			if (responseCode == HttpURLConnection.HTTP_OK) {
 				is =  new BufferedInputStream(connection.getInputStream());
 				bitmap = BitmapFactory.decodeStream(is);
 				
