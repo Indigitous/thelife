@@ -109,6 +109,33 @@ public class Server {
 		}
 	}
 	
+	
+	/**
+	 * Log into theLife using a token from an external account. This means the user already has an account in theLife.
+	 */
+	public void loginWithToken(String username, String provider, String externalToken, ServerListener listener, String indicator) {
+		
+		// API end point
+		// returns HTTP 201 on a success, HTTP 401 on a fail
+		String urlString = Utilities.makeServerUrlStringNoToken("authenticate");
+		
+		try {
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("email", username));
+			pairs.add(new BasicNameValuePair("password", "------")); // placeholder password
+			pairs.add(new BasicNameValuePair("provider", provider));
+			pairs.add(new BasicNameValuePair("authentication_token", externalToken));			
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "loginWithToken()", e);
+		}
+	}	
+	
 	/**
 	 * Register for an account in theLife. The email must not already be taken.
 	 */
@@ -164,7 +191,7 @@ public class Server {
 						
 			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
 		} catch (Exception e) {
-			Log.e(TAG, "register()", e);
+			Log.e(TAG, "registerWithToken()", e);
 		}
 	}	
 	

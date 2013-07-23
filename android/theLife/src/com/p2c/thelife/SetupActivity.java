@@ -60,14 +60,13 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 		return true;
 	}
 	
-	public void loginUser(View view) {
-		SetupLoginDialog dialog = new SetupLoginDialog();		
-		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
-	}
 	
-	public void registerUser(View view) {
-			
-		// add the registration options
+	/**
+	 * @param isRegister	true if registering, false if logging in
+	 * @return a new dialog showing the registration/login options
+	 */
+	private AlertDialog.Builder createRegisterLoginDialog(final boolean isRegister) {
+		// add the options
 		AccountManager accountManager = AccountManager.get(this);
 		final Account[] googleAccounts = accountManager.getAccountsByType("com.google"); // facebook is type "com.facebook.auth.login"
 		final int[] selected = new int[] { 0 }; // must be final so it is an array
@@ -75,11 +74,11 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 		for (int index= 0; index < googleAccounts.length; index++) {
 			options[index] = "Google " + googleAccounts[index].name;
 		}
-		options[options.length - 1] = getResources().getString(R.string.manually); // manual registration option
+		options[options.length - 1] = getResources().getString(R.string.manually); // manual option
 		
 		// create the dialog
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-		alertBuilder.setTitle(getResources().getString(R.string.choose_register_method_prompt));;
+		alertBuilder.setTitle(getResources().getString(isRegister ? R.string.choose_register_method_prompt : R.string.choose_login_method_prompt));;
 		alertBuilder.setSingleChoiceItems(options, selected[0], new OnClickListener() {
 			
 			@Override
@@ -87,7 +86,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 				selected[0] = which;
 			}
 		});
-		
+			
 		// set the buttons of the alert
 		alertBuilder.setNegativeButton(R.string.cancel, null); 		
 		alertBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
@@ -95,20 +94,122 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (selected[0] < googleAccounts.length) {
-					registerViaGoogle(googleAccounts[selected[0]].name);
+					if (isRegister) {
+						registerViaGoogle(googleAccounts[selected[0]].name);
+					} else {
+						loginViaGoogle(googleAccounts[selected[0]].name);
+					}
 				} else {
-					registerManually();
+					if (isRegister) {
+						registerManually();
+					} else {
+						loginManually();
+					}
 				}
-				System.out.println("GOOGLE ACCOUNTS LENGTH " + googleAccounts.length);
-				System.out.println("CHOSE " + selected[0]);
 			}
 		});
 
-		alertBuilder.show();
+		return alertBuilder;		
 	}
 	
 	
-	// Get the Google Account token.
+	public void loginUser(View view) {
+		createRegisterLoginDialog(false).show();
+	}
+	
+	
+	public void loginViaGoogle(String accountName) {
+		// progress bar while waiting
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
+		
+		new AsyncTask<String, Void, String>() {
+			
+			private Exception m_e;
+			private String m_accountName;
+
+			// background thread
+			@Override
+			protected String doInBackground(String... params) {
+				
+				m_accountName = params[0];
+
+				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
+				try {
+										
+					// read the google account token, which will be verified by theLife server (no user permission needed)
+					String token = null;
+					token = GoogleAuthUtil.getToken(SetupActivity.this, params[0], 
+								"audience:server:client_id:" + TheLifeConfiguration.WEB_CLIENT_ID);
+					Log.i(TAG, "successfully got Google account token for account " + params[0]);
+					
+					return token;
+				} catch (Exception e) {
+					// some kind of error
+					Log.e(TAG, "loginViaGoogle()", e);
+					m_e = e;
+					return null;
+				}
+			}
+			
+			// UI thread		
+			@Override
+			protected void onPostExecute(String externalToken) {
+				m_progressDialog.dismiss();
+				
+				if (m_e == null) {
+					loginWithToken(m_accountName, "google", externalToken);
+				}
+				else {
+					Log.e(TAG, "loginViaGoogle", m_e);					
+					if (m_e instanceof GooglePlayServicesAvailabilityException) {
+						// GooglePlay is not there?
+						GooglePlayServicesAvailabilityException e2 = (GooglePlayServicesAvailabilityException)m_e;					
+						Dialog alert = GooglePlayServicesUtil.getErrorDialog(e2.getConnectionStatusCode(), SetupActivity.this, 0);
+						alert.show();
+					} else if (m_e instanceof UserRecoverableAuthException) {
+						// allow the user to try to recover
+						startActivityForResult(((UserRecoverableAuthException)m_e).getIntent(), 0);
+					} else if (m_e instanceof IOException) {
+						Utilities.showConnectionErrorToast(SetupActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
+					} else if (m_e instanceof GoogleAuthException) {
+						Utilities.showErrorToast(SetupActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
+					}				
+				}
+
+			}				
+		}.execute(accountName);
+				
+	}
+	
+	
+	/**
+	 * Register the user with an external token.
+	 * Called on the UI thread.
+	 * @param accountName
+	 * @param provider
+	 * @param externalToken
+	 */
+	private void loginWithToken(String accountName, String provider, String externalToken) {
+		
+		// progress bar while waiting
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
+		
+		Server server = new Server(this);
+		server.loginWithToken(accountName, provider, externalToken, this, "loginWithToken");
+	}	
+	
+	
+	public void loginManually() {
+		SetupLoginDialog dialog = new SetupLoginDialog();		
+		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+	}	
+	
+	
+	public void registerUser(View view) {
+		createRegisterLoginDialog(true).show();
+	}
+	
+	
 	private void registerViaGoogle(String accountName) {
 		
 		// progress bar while waiting
@@ -188,6 +289,14 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 		
 	}
 	
+	
+	/**
+	 * Register the user with an external token.
+	 * Called on the UI thread.
+	 * @param accountName
+	 * @param provider
+	 * @param externalToken
+	 */
 	private void registerWithToken(String accountName, String provider, String externalToken) {
 		
 		// progress bar while waiting
@@ -207,6 +316,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 		Intent intent = new Intent("com.p2c.thelife.SetupRegisterManually");
 		startActivity(intent);		
 	}	
+	
 	
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {

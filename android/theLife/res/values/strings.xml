@@ -180,6 +180,6 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="title_register_manually">SetupRegisterActivity</string>
     <string name="choose_register_method_prompt">Choose how to register:</string>
     <string name="manually">Manually</string>
-    
+    <string name="choose_login_method_prompt">Choose how to log in:</string>
 
 </resources>
