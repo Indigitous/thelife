@@ -62,10 +62,11 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	
 	
 	/**
+	 * Make a register or login dialog.
 	 * @param isRegister	true if registering, false if logging in
 	 * @return a new dialog showing the registration/login options
 	 */
-	private AlertDialog.Builder createRegisterLoginDialog(final boolean isRegister) {
+	private AlertDialog.Builder createRegisterOrLoginDialog(final boolean isRegister) {
 		// add the options
 		AccountManager accountManager = AccountManager.get(this);
 		final Account[] googleAccounts = accountManager.getAccountsByType("com.google"); // facebook is type "com.facebook.auth.login"
@@ -94,11 +95,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (selected[0] < googleAccounts.length) {
-					if (isRegister) {
-						registerViaGoogle(googleAccounts[selected[0]].name);
-					} else {
-						loginViaGoogle(googleAccounts[selected[0]].name);
-					}
+					registerOrLoginViaGoogle(isRegister, googleAccounts[selected[0]].name);
 				} else {
 					if (isRegister) {
 						registerManually();
@@ -113,12 +110,13 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	}
 	
 	
-	public void loginUser(View view) {
-		createRegisterLoginDialog(false).show();
-	}
-	
-	
-	public void loginViaGoogle(String accountName) {
+	/**
+	 * Register or login using an external google token.
+	 * @param isRegister	true if registering, false if logging in
+	 * @param accountName
+	 */
+	private void registerOrLoginViaGoogle(final boolean isRegister, String accountName) {
+		
 		// progress bar while waiting
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 		
@@ -135,6 +133,25 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 
 				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
 				try {
+					
+					if (isRegister) {
+						// read the Google user account info; this can result in a permission request to the user
+						String userInfoToken = GoogleAuthUtil.getToken(SetupActivity.this, m_accountName,  
+								"oauth2:https://www.googleapis.com/auth/userinfo.profile");
+						m_externalUserAccount = Utilities.readJSONFromServer("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + userInfoToken);
+						Log.i(TAG, "received user info" + m_externalUserAccount);
+						
+						// read the Google account image, if available
+						String pictureURL = m_externalUserAccount.optString("picture");
+						if (pictureURL != null) {
+							m_bitmap = Utilities.getExternalBitmap(pictureURL);
+							if (m_bitmap != null) {
+								Log.i(TAG, "successfully got Google account image");
+							}
+						}
+					}
+					
+					// TODO if logging then update theLife account with latest from Google
 										
 					// read the google account token, which will be verified by theLife server (no user permission needed)
 					String token = null;
@@ -145,7 +162,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 					return token;
 				} catch (Exception e) {
 					// some kind of error
-					Log.e(TAG, "loginViaGoogle()", e);
+					Log.e(TAG, "registerLoginViaGoogle()", e);
 					m_e = e;
 					return null;
 				}
@@ -153,14 +170,16 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			
 			// UI thread		
 			@Override
-			protected void onPostExecute(String externalToken) {
-				m_progressDialog.dismiss();
-				
+			protected void onPostExecute(String externalToken) {				
 				if (m_e == null) {
-					loginWithToken(m_accountName, "google", externalToken);
+					if (isRegister) {
+						registerWithToken(m_accountName, "google", externalToken);
+					} else {
+						loginWithToken(m_accountName, "google", externalToken);
+					}
 				}
 				else {
-					Log.e(TAG, "loginViaGoogle", m_e);					
+					Log.e(TAG, "registerLoginViaGoogle", m_e);					
 					if (m_e instanceof GooglePlayServicesAvailabilityException) {
 						// GooglePlay is not there?
 						GooglePlayServicesAvailabilityException e2 = (GooglePlayServicesAvailabilityException)m_e;					
@@ -178,9 +197,14 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 
 			}				
 		}.execute(accountName);
-				
-	}
+		
+	}	
 	
+	
+	public void loginUser(View view) {
+		createRegisterOrLoginDialog(false).show();
+	}	
+
 	
 	/**
 	 * Register the user with an external token.
@@ -190,10 +214,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	 * @param externalToken
 	 */
 	private void loginWithToken(String accountName, String provider, String externalToken) {
-		
-		// progress bar while waiting
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
-		
+			
 		Server server = new Server(this);
 		server.loginWithToken(accountName, provider, externalToken, this, "loginWithToken");
 	}	
@@ -206,87 +227,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	
 	
 	public void registerUser(View view) {
-		createRegisterLoginDialog(true).show();
-	}
-	
-	
-	private void registerViaGoogle(String accountName) {
-		
-		// progress bar while waiting
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
-		
-		new AsyncTask<String, Void, String>() {
-			
-			private Exception m_e;
-			private String m_accountName;
-
-			// background thread
-			@Override
-			protected String doInBackground(String... params) {
-				
-				m_accountName = params[0];
-
-				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
-				try {
-					
-					// read the Google user account info; this can result in a permission request to the user
-					String userInfoToken = GoogleAuthUtil.getToken(SetupActivity.this, m_accountName,  
-							"oauth2:https://www.googleapis.com/auth/userinfo.profile");
-					m_externalUserAccount = Utilities.readJSONFromServer("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + userInfoToken);
-					Log.i(TAG, "received user info" + m_externalUserAccount);
-										
-					// read the google account token, which will be verified by theLife server (no user permission needed)
-					String token = null;
-					token = GoogleAuthUtil.getToken(SetupActivity.this, params[0], 
-								"audience:server:client_id:" + TheLifeConfiguration.WEB_CLIENT_ID);
-					Log.i(TAG, "successfully got Google account token for account " + params[0]);
-					
-					// read the Google account image, if available
-					String pictureURL = m_externalUserAccount.optString("picture");
-					if (pictureURL != null) {
-						m_bitmap = Utilities.getExternalBitmap(pictureURL);
-						if (m_bitmap != null) {
-							Log.i(TAG, "successfully got Google account image");
-						}
-					}					
-					
-					return token;
-				} catch (Exception e) {
-					// some kind of error
-					Log.e(TAG, "registerViaGoogle()", e);
-					m_e = e;
-					return null;
-				}
-			}
-			
-			// UI thread		
-			@Override
-			protected void onPostExecute(String externalToken) {
-				m_progressDialog.dismiss();
-				
-				if (m_e == null) {
-					registerWithToken(m_accountName, "google", externalToken);
-				}
-				else {
-					Log.e(TAG, "registerViaGoogle", m_e);					
-					if (m_e instanceof GooglePlayServicesAvailabilityException) {
-						// GooglePlay is not there?
-						GooglePlayServicesAvailabilityException e2 = (GooglePlayServicesAvailabilityException)m_e;					
-						Dialog alert = GooglePlayServicesUtil.getErrorDialog(e2.getConnectionStatusCode(), SetupActivity.this, 0);
-						alert.show();
-					} else if (m_e instanceof UserRecoverableAuthException) {
-						// allow the user to try to recover
-						startActivityForResult(((UserRecoverableAuthException)m_e).getIntent(), 0);
-					} else if (m_e instanceof IOException) {
-						Utilities.showConnectionErrorToast(SetupActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
-					} else if (m_e instanceof GoogleAuthException) {
-						Utilities.showErrorToast(SetupActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
-					}				
-				}
-
-			}				
-		}.execute(accountName);
-		
+		createRegisterOrLoginDialog(true).show();
 	}
 	
 	
@@ -298,10 +239,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	 * @param externalToken
 	 */
 	private void registerWithToken(String accountName, String provider, String externalToken) {
-		
-		// progress bar while waiting
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);
-				
+					
 		String firstName = m_externalUserAccount.optString("given_name");
 		String lastName = m_externalUserAccount.optString("family_name");
 		String locale = Locale.getDefault().getLanguage();
@@ -332,7 +270,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			// register workflow continues with the superclass
 			super.notifyServerResponseAvailable(indicator, httpCode, jsonObject, errorString);
 		} else {
-			// login
+			// login or loginWithToken
 			
 			// make sure the user hasn't already cancelled
 			if (m_progressDialog.isShowing()) {
