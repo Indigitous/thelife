@@ -4,10 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.p2c.thelife.BitmapCacheHandler;
 import com.p2c.thelife.TheLifeConfiguration;
+import com.p2c.thelife.Utilities;
 
 
 
@@ -24,8 +24,9 @@ public class UserModel extends AbstractModel {
 	public String   lastName;
 	public String   email;
 	public String   mobile;
+	public String   provider;
 	
-	public UserModel(int user_id, String firstName, String lastName, String email, String mobile) {
+	public UserModel(int user_id, String firstName, String lastName, String email, String mobile, String provider) {
 		
 		super(user_id);
 
@@ -33,6 +34,7 @@ public class UserModel extends AbstractModel {
 		this.lastName = lastName;
 		this.email = email;
 		this.mobile = mobile;
+		this.provider = provider;
 	}
 	
 	
@@ -65,18 +67,14 @@ public class UserModel extends AbstractModel {
 	
 	public static UserModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
 							
-		// create the deed
-		int id = json.getInt("id");
-		String mobile = json.optString("mobile", null);
-		if (mobile != null && mobile.equals("null")) {
-			mobile = null;
-		}
+		// create the user
 		return new UserModel(
-			id,
+			json.getInt("id"),
 			json.getString("first_name"),
 			json.getString("last_name"),	
 			json.optString("email", ""),
-			mobile
+			Utilities.getOptionalField("mobile", json),
+			Utilities.getOptionalField("provider", json)
 		);
 	}	
 	
@@ -90,10 +88,8 @@ public class UserModel extends AbstractModel {
 		if (newEmail != null) {
 			this.email = newEmail; 
 		}
-		String newMobile = json.optString("mobile", null);
-		if (newMobile != null && newMobile.equals("null")) {
-			this.mobile = null;
-		} else if (newMobile != null) {
+		String newMobile = Utilities.getOptionalField("mobile", json);
+		if (newMobile != null) {
 			this.mobile = newMobile;
 		}
 		String newFirstName = json.optString("first_name", null);
@@ -104,5 +100,9 @@ public class UserModel extends AbstractModel {
 		if (newLastName != null) {
 			this.lastName = newLastName;
 		}
+		String newProvider = Utilities.getOptionalField("provider", json);
+		if (newProvider != null) {
+			this.provider = newProvider;
+		}		
 	}
 }

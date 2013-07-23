@@ -66,7 +66,13 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		String email = textView.getText().toString();
 		textView = (TextView)findViewById(R.id.settings_phone);
 		String phone = textView.getText().toString();
-		m_updatedUser = new UserModel(TheLifeConfiguration.getOwnerDS().getId(), firstName, lastName, email, phone);
+		m_updatedUser = new UserModel(
+			TheLifeConfiguration.getOwnerDS().getId(), 
+			firstName, 
+			lastName, 
+			email, 
+			phone, 
+			TheLifeConfiguration.getOwnerDS().getProvider());
 		
 		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_account), true, true);

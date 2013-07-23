@@ -124,7 +124,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("password", password));
 			pairs.add(new BasicNameValuePair("first_name", firstName));
 			pairs.add(new BasicNameValuePair("last_name", lastName));
-			pairs.add(new BasicNameValuePair("mobile", null));
+			pairs.add(new BasicNameValuePair("mobile", null));  // TODO
 			pairs.add(new BasicNameValuePair("locale", locale));
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
@@ -136,6 +136,37 @@ public class Server {
 			Log.e(TAG, "register()", e);
 		}
 	}
+	
+	
+	/**
+	 * Register for an account in theLife using a token from an external account (eg Google). The email must not already be taken.
+	 */
+	public void registerWithToken(String email, String firstName, String lastName, String locale, String provider, String externalToken, ServerListener listener, String indicator) {
+		
+		// API endpoint
+		// returns HTTP 422 on a already taken (or missing) email, HTTP 201 on a success
+		String urlString = Utilities.makeServerUrlStringNoToken("register");
+		
+		try {
+			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("email", email));
+			pairs.add(new BasicNameValuePair("password", "------")); // placeholder password
+			pairs.add(new BasicNameValuePair("first_name", firstName));
+			pairs.add(new BasicNameValuePair("last_name", lastName));
+			pairs.add(new BasicNameValuePair("mobile", null));   // TODO
+			pairs.add(new BasicNameValuePair("locale", locale));
+			pairs.add(new BasicNameValuePair("provider", provider));
+			pairs.add(new BasicNameValuePair("authentication_token", externalToken));
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(pairs, "UTF-8");
+			
+			HttpPost httpRequest = new HttpPost(urlString);
+			httpRequest.setEntity(formEntity);			
+						
+			new ServerCall(httpRequest, listener, indicator).execute(urlString);			
+		} catch (Exception e) {
+			Log.e(TAG, "register()", e);
+		}
+	}	
 	
 	
 	/**

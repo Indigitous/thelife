@@ -51,9 +51,12 @@ public class TheLifeConfiguration {
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
-	//private static String m_serverURL = "http://75.157.251.192:3000"; // TODO debugging
-	private static String m_serverURL = "https://srv1.thelifeapp.com"; // production
+	private static String m_serverURL = "http://75.157.251.192:3000"; // TODO debugging
+	//private static String m_serverURL = "https://srv1.thelifeapp.com"; // production
 	//private static String m_serverURL = "https://thelifeapp.ballistiq.com"; // staging
+	
+	// Google account information
+	public static final String WEB_CLIENT_ID = "900671345436.apps.googleusercontent.com"; // from P2C's Google Console API
 	
 	// Version number of the server
 	private static String m_serverVersion = "/v1/";
@@ -102,6 +105,7 @@ public class TheLifeConfiguration {
 	public static String getServerVersion() {
 		return m_serverVersion;
 	}
+	
 	
 	/*************************** Data Stores *****************************/
 	

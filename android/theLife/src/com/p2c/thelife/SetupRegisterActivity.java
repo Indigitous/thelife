@@ -1,10 +1,12 @@
 package com.p2c.thelife;
 
 import java.io.IOException;
+import java.util.Locale;
+
+import org.json.JSONObject;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,13 +25,12 @@ import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-public class SetupRegisterActivity extends Activity {
+public class SetupRegisterActivity extends SetupRegisterActivityAbstract {
 	
 	private static final String TAG = "SetupRegisterActivity";
 	
-	private String m_token = null;
-	private String m_webClientId = "900671345436.apps.googleusercontent.com"; // from P2C's Google Console API
-	private ProgressDialog m_progressDialog = null;	
+	private String m_externalToken = null;			 // the token sent to theLife server to identify the user
+	private JSONObject m_externalUserAccount = null; // the user account info
 	
 	
 	@Override
@@ -69,7 +70,6 @@ public class SetupRegisterActivity extends Activity {
 		});
 		layout.addView(button);
 		
-		
 	}
 
 	@Override
@@ -86,52 +86,90 @@ public class SetupRegisterActivity extends Activity {
 		// progress bar while waiting
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_account), true, true);
 		
-		new AsyncTask<String, Void, Exception>() {
+		new AsyncTask<String, Void, String>() {
+			
+			private Exception m_e;
+			private String m_accountName;
 
 			// background thread
 			@Override
-			protected Exception doInBackground(String... params) {
+			protected String doInBackground(String... params) {
+				
+				m_accountName = params[0];
 
 				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
 				try {
-					m_token = null;
-					m_token = GoogleAuthUtil.getToken(SetupRegisterActivity.this, params[0], "audience:server:client_id:" + m_webClientId);
+					
+					// read the Google user account info; this can result in a permission request to the user
+					String userInfoToken = GoogleAuthUtil.getToken(SetupRegisterActivity.this, m_accountName,  
+							"oauth2:https://www.googleapis.com/auth/userinfo.profile");
+					m_externalUserAccount = Utilities.readJSONFromServer("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + userInfoToken);
+					Log.i(TAG, "received user info" + m_externalUserAccount);
+										
+					// read the google account token, which will be verified by theLife server (no user permission needed)
+					String token = null;
+					token = GoogleAuthUtil.getToken(SetupRegisterActivity.this, params[0], 
+								"audience:server:client_id:" + TheLifeConfiguration.WEB_CLIENT_ID);
 					Log.i(TAG, "successfully got Google account token for account " + params[0]);
-					return null;
+					
+					return token;
 				} catch (Exception e) {
 					// some kind of error
-					return e;
+					Log.e(TAG, "registerViaGoogle()", e);
+					m_e = e;
+					return null;
 				}
 			}
 			
 			// UI thread		
 			@Override
-			protected void onPostExecute(Exception e) {
+			protected void onPostExecute(String externalToken) {
 				m_progressDialog.dismiss();
 				
-				if (e != null) {
-					Log.e(TAG, "registerViaGoogle", e);					
-					if (e instanceof GooglePlayServicesAvailabilityException) {
+				if (m_e == null) {
+					registerWithToken(m_accountName, "google", externalToken);
+				}
+				else {
+					Log.e(TAG, "registerViaGoogle", m_e);					
+					if (m_e instanceof GooglePlayServicesAvailabilityException) {
 						// GooglePlay is not there?
-						GooglePlayServicesAvailabilityException e2 = (GooglePlayServicesAvailabilityException)e;					
+						GooglePlayServicesAvailabilityException e2 = (GooglePlayServicesAvailabilityException)m_e;					
 						Dialog alert = GooglePlayServicesUtil.getErrorDialog(e2.getConnectionStatusCode(), SetupRegisterActivity.this, 0);
 						alert.show();
-					} else if (e instanceof UserRecoverableAuthException) {
-						// try to recover via user action
-						startActivityForResult(((UserRecoverableAuthException)e).getIntent(), 0);
-					} else if (e instanceof IOException) {
-						Utilities.showConnectionErrorToast(SetupRegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT);
-					} else if (e instanceof GoogleAuthException) {
-						Utilities.showErrorToast(SetupRegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT);
+					} else if (m_e instanceof UserRecoverableAuthException) {
+						// allow the user to try to recover
+						startActivityForResult(((UserRecoverableAuthException)m_e).getIntent(), 0);
+					} else if (m_e instanceof IOException) {
+						Utilities.showConnectionErrorToast(SetupRegisterActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
+					} else if (m_e instanceof GoogleAuthException) {
+						Utilities.showErrorToast(SetupRegisterActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
 					}
 				}
-System.out.println("THE GOOGLE TOKEN IS " + m_token);
+System.out.println("THE GOOGLE USER ACCOUNT IS " + m_externalUserAccount);
+System.out.println("THE GOOGLE USER ACCOUNT FIRST NAME IS " + m_externalUserAccount.optString("given_name"));
+System.out.println("THE GOOGLE USER ACCOUNT LAST NAME IS " + m_externalUserAccount.optString("family_name"));
+System.out.println("THE GOOGLE TOKEN IS " + externalToken);
 			}				
 		}.execute(accountName);
 		
-	}	
+	}
 	
-	public void registerManually() {
+	// this routine must not called from the UI thread
+	private void registerWithToken(String accountName, String provider, String externalToken) {
+		
+		// progress bar while waiting
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);
+				
+		String firstName = m_externalUserAccount.optString("given_name");
+		String lastName = m_externalUserAccount.optString("family_name");
+		String locale = Locale.getDefault().getLanguage();
+		
+		Server server = new Server(this);
+		server.registerWithToken(accountName, firstName, lastName, locale, provider, externalToken, this, "registerWithToken");
+	}
+	
+	
+	private void registerManually() {
 		// go to the register manually screen
 		Intent intent = new Intent("com.p2c.thelife.SetupRegisterManually");
 		startActivity(intent);		

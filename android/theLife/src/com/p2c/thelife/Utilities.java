@@ -2,8 +2,11 @@ package com.p2c.thelife;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.http.util.CharArrayBuffer;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -79,24 +82,22 @@ public class Utilities {
 	}		
 
 	
-	public static String makeServerUrlStringDebug(String server, String urlPath) {
-		return server + urlPath + "?authentication_token=" + TheLifeConfiguration.getOwnerDS().getToken();
+	public static String makeServerUrlStringNoToken(String urlPath) {
+		return TheLifeConfiguration.getServerUrl() + TheLifeConfiguration.getServerVersion() + urlPath;
 	}
 	
-	public static String makeServerUrlString(String urlPath) {
-		return Utilities.makeServerUrlString(urlPath, TheLifeConfiguration.getOwnerDS().getToken());
-	}
 	
 	public static String makeServerUrlString(String urlPath, String token) {
 		if (token == null) {
 			token = TheLifeConfiguration.getOwnerDS().getToken();
 		}
 		return makeServerUrlStringNoToken(urlPath) + "?authentication_token=" + token;
-	}	
+	}
 	
-	public static String makeServerUrlStringNoToken(String urlPath) {
-		return TheLifeConfiguration.getServerUrl() + TheLifeConfiguration.getServerVersion() + urlPath;
-	}	
+	
+	public static String makeServerUrlString(String urlPath) {
+		return Utilities.makeServerUrlString(urlPath, TheLifeConfiguration.getOwnerDS().getToken());
+	}
 	
 	
 	public static boolean isSuccessfulHttpCode(int httpCode) {
@@ -131,4 +132,49 @@ public class Utilities {
 	public static boolean hasData(String string) {
 		return string != null && !string.isEmpty() && !string.trim().isEmpty(); 
 	}
+	
+	
+	public static String getOptionalField(String key, JSONObject jsonObject) {
+		String field = null;
+		
+		field = jsonObject.optString(key, null);
+		if (field != null && field.equals("null")) {
+			field = null;
+		}		
+		
+		return field;
+	}
+	
+	
+	/**
+	 * @param serverURL
+	 * @return the JSONArray read from the server, or null if there was a problem
+	 */
+	public static JSONObject readJSONFromServer(String serverURL) throws Exception {
+		JSONObject jsonArray = null;
+		InputStreamReader isr = null;
+		
+		try {
+			URL userInfoURL = new URL(serverURL);
+			HttpURLConnection connection = (HttpURLConnection)userInfoURL.openConnection();
+			connection.setConnectTimeout(TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
+			connection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
+			
+			if (isSuccessfulHttpCode(connection.getResponseCode())) {
+				String jsonString = null;
+				if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					isr = new InputStreamReader(connection.getInputStream());
+					jsonString = Utilities.readBufferedStream(isr);
+					jsonArray = new JSONObject(jsonString);						
+				}
+			}
+		} finally {
+			if (isr != null) {
+				try { isr.close(); } catch (Exception e) { }
+			}
+		}
+		
+		return jsonArray;
+	}
+
 }
