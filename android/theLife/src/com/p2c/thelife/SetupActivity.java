@@ -25,13 +25,6 @@ public class SetupActivity extends SetupActivityAbstract implements Server.Serve
 	
 	private static final String TAG = "SetupActivity";
 	
-	public static final int REQUESTCODE_AUTHENTICATION = 1;
-	
-	
-	Account m_googleAccount = null;		// type "com.google"
-	Account m_facebookAccount = null;	// type "com.facebook.auth.login"
-
-	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

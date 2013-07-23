@@ -40,7 +40,7 @@ public class SetupRegisterActivity extends SetupRegisterActivityAbstract {
 		// look for Google accounts, and add them to the layout
 		LinearLayout layout = (LinearLayout)findViewById(R.id.register_layout);		
 		AccountManager accountManager = AccountManager.get(this);
-		final Account[] googleAccounts = accountManager.getAccountsByType("com.google");
+		final Account[] googleAccounts = accountManager.getAccountsByType("com.google"); // facebook is type "com.facebook.auth.login"
 		for (int index= 0; index < googleAccounts.length; index++) {
 			Button button = new Button(this);
 			button.setId(index);
