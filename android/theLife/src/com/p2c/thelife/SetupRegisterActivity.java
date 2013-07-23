@@ -29,7 +29,6 @@ public class SetupRegisterActivity extends SetupRegisterActivityAbstract {
 	
 	private static final String TAG = "SetupRegisterActivity";
 	
-	private String m_externalToken = null;			 // the token sent to theLife server to identify the user
 	private JSONObject m_externalUserAccount = null; // the user account info
 	
 	
