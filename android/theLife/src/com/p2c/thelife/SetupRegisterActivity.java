@@ -111,6 +111,15 @@ public class SetupRegisterActivity extends SetupRegisterActivityAbstract {
 								"audience:server:client_id:" + TheLifeConfiguration.WEB_CLIENT_ID);
 					Log.i(TAG, "successfully got Google account token for account " + params[0]);
 					
+					// read the Google account image, if available
+					String pictureURL = m_externalUserAccount.optString("picture");
+					if (pictureURL != null) {
+						m_bitmap = Utilities.getExternalBitmap(pictureURL);
+						if (m_bitmap != null) {
+							Log.i(TAG, "successfully got Google account image");
+						}
+					}					
+					
 					return token;
 				} catch (Exception e) {
 					// some kind of error
@@ -142,18 +151,14 @@ public class SetupRegisterActivity extends SetupRegisterActivityAbstract {
 						Utilities.showConnectionErrorToast(SetupRegisterActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
 					} else if (m_e instanceof GoogleAuthException) {
 						Utilities.showErrorToast(SetupRegisterActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
-					}
+					}				
 				}
-System.out.println("THE GOOGLE USER ACCOUNT IS " + m_externalUserAccount);
-System.out.println("THE GOOGLE USER ACCOUNT FIRST NAME IS " + m_externalUserAccount.optString("given_name"));
-System.out.println("THE GOOGLE USER ACCOUNT LAST NAME IS " + m_externalUserAccount.optString("family_name"));
-System.out.println("THE GOOGLE TOKEN IS " + externalToken);
+
 			}				
 		}.execute(accountName);
 		
 	}
 	
-	// this routine must not called from the UI thread
 	private void registerWithToken(String accountName, String provider, String externalToken) {
 		
 		// progress bar while waiting

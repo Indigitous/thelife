@@ -70,6 +70,7 @@ public class BitmapCacheHandler extends Handler {
 
 	/**
 	 * Get the bitmap at the given URL and, if successful, write it to disk cache. Will not throw an exception.
+	 * This is intended to retrieve bitmaps from theLife server.
 	 * Note: must not be called on the main/UI thread. 
 	 * @param urlString
 	 * @return the bitmap or null if any exception

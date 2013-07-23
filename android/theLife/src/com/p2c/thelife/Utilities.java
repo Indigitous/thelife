@@ -1,6 +1,8 @@
 package com.p2c.thelife;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -11,9 +13,11 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -147,6 +151,7 @@ public class Utilities {
 	
 	
 	/**
+	 * Must not be called on UI thread.
 	 * @param serverURL
 	 * @return the JSONArray read from the server, or null if there was a problem
 	 */
@@ -175,6 +180,93 @@ public class Utilities {
 		}
 		
 		return jsonArray;
+	}
+	
+	
+	/**
+	 * Get a bitmap from a content provider.
+	 * Must not be called on UI thread.
+	 * @param context, for obtaining a content resolver
+	 * @param uri
+	 * @return bitmap sized for this app, or null if a problem
+	 */
+	public static Bitmap getExternalBitmap(Context context, Uri uri) {
+		InputStream is = null;
+		Bitmap bitmap = null;
+		try {
+			// read bitmap from a content provider
+			is = context.getContentResolver().openInputStream(uri);
+
+			// first pass: just get the size of the image				
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			BitmapFactory.decodeStream(is, null, options);
+			is.close();
+			
+			// second pass: get the scaled down version of the image
+			is = context.getContentResolver().openInputStream(uri);
+			options.inJustDecodeBounds = false;
+			options.inSampleSize = Math.min(options.outHeight / TheLifeConfiguration.IMAGE_HEIGHT, options.outWidth / TheLifeConfiguration.IMAGE_WIDTH);
+			bitmap = BitmapFactory.decodeStream(is, null, options);
+		} catch (Exception e) {
+			bitmap = null;
+			Log.e(TAG, "getExternalBitmap()", e);
+		} finally {
+			if (is != null) {
+				try { is.close(); } catch (Exception e) { }
+				is = null;
+			}
+		}
+		
+		return bitmap;		
+	}
+	
+	
+	/**
+	 * Get a bitmap from a URL.
+	 * Must not be called on UI thread.
+	 * @param url
+	 * @return bitmap sized for this app, or null if a problem
+	 */	
+	public static Bitmap getExternalBitmap(String urlString) {
+		InputStream is = null;
+		Bitmap bitmap = null;
+		try {
+			// read bitmap from a standard URL
+			URL url = new URL(urlString);
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		
+			int responseCode = connection.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				is =  new BufferedInputStream(connection.getInputStream());
+					
+				// first pass: just get the size of the image				
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inJustDecodeBounds = true;
+				BitmapFactory.decodeStream(is, null, options);
+				is.close();
+				connection.disconnect();
+				
+				// second pass: get the scaled down version of the image
+				connection = (HttpURLConnection)url.openConnection();				
+				is = new BufferedInputStream(connection.getInputStream());
+				options.inJustDecodeBounds = false;
+				options.inSampleSize = Math.min(options.outHeight / TheLifeConfiguration.IMAGE_HEIGHT, options.outWidth / TheLifeConfiguration.IMAGE_WIDTH);
+				bitmap = BitmapFactory.decodeStream(is, null, options);
+			} else {
+				Log.e(TAG, "getExternalBitmap() HTTP code " + responseCode);
+			}
+		} catch (Exception e) {
+			bitmap = null;
+			Log.e(TAG, "getExternalBitmap()", e);
+		} finally {
+			if (is != null) {
+				try { is.close(); } catch (Exception e) { }
+				is = null;
+			}
+		}
+		
+		return bitmap;		
 	}
 
 }

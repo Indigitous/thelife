@@ -91,32 +91,7 @@ public class ImageSelectSupport {
 		// background thread
 		@Override
 		protected Bitmap doInBackground(Uri... params) {
-			
-			InputStream is = null;
-			Bitmap bitmap = null;
-			try {
-				// first pass: just get the size of the image
-				is = m_context.getContentResolver().openInputStream(params[0]);								
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inJustDecodeBounds = true;
-				BitmapFactory.decodeStream(is, null, options);
-				is.close();
-				
-				// second pass: get the scaled down version of the image
-				is = m_context.getContentResolver().openInputStream(params[0]);
-				options.inJustDecodeBounds = false;
-				options.inSampleSize = Math.min(options.outHeight / 160, options.outWidth / 160);
-				bitmap = BitmapFactory.decodeStream(is, null, options);								
-			} catch (Exception e) {
-				Log.e(TAG, "GetExternalBitmap()", e);
-			} finally {
-				if (is != null) {
-					try { is.close(); } catch (Exception e) { }
-					is = null;
-				}
-			}
-			
-			return bitmap;
+			return Utilities.getExternalBitmap(m_context, params[0]);
 		}
 		
 		// UI thread		

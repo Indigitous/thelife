@@ -61,12 +61,16 @@ public class TheLifeConfiguration {
 	// Version number of the server
 	private static String m_serverVersion = "/v1/";
 	
-	// stock images
+	// placeholder images
 	private static Bitmap m_genericPersonImage;
 	private static Bitmap m_genericPersonThumbnail;
 	private static Bitmap m_genericDeedImage;
 	private static Bitmap m_missingDataImage;
 	private static Bitmap m_missingDataThumbnail;
+	
+	// image dimensions in pixels
+	public static final int IMAGE_WIDTH = 160;
+	public static final int IMAGE_HEIGHT = 160;
 	
 	// directory of local cache files
 	private static String m_cacheDirectory = null; 
