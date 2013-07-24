@@ -49,6 +49,5 @@ public class SetupLoginDialog extends ServerAccessDialogAbstract {
 		
 		return alertBuilder.create();				
 	}
-	
 
 }

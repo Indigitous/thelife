@@ -62,7 +62,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	
 	
 	/**
-	 * Make a register or login dialog.
+	 * Make a register or login dialog showing external accounts and manual options.
 	 * @param isRegister	true if registering, false if logging in
 	 * @return a new dialog showing the registration/login options
 	 */
@@ -179,7 +179,9 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 					}
 				}
 				else {
-					Log.e(TAG, "registerLoginViaGoogle", m_e);					
+					m_progressDialog.dismiss();
+					
+					Log.e(TAG, "registerLoginViaGoogle", m_e);
 					if (m_e instanceof GooglePlayServicesAvailabilityException) {
 						// GooglePlay is not there?
 						GooglePlayServicesAvailabilityException e2 = (GooglePlayServicesAvailabilityException)m_e;					
