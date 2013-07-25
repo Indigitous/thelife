@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.p2c.thelife"
-    android:versionCode="21"
-    android:versionName="0.93.5" >
+    android:versionCode="22"
+    android:versionName="0.94" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -21,6 +21,7 @@
     
     <!-- android:theme="@style/AppTheme" -->
     <!-- android:theme="@style/Theme.Sherlock.Light" -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <application
         android:name="com.p2c.thelife.TheLifeApplication"
         android:allowBackup="true"
