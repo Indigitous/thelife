@@ -157,6 +157,32 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		}		
 
 	}
+	
+	
+	private void createAddFriendEvent() {
+		DeedModel addFriendDeed = TheLifeConfiguration.getDeedsDS().findSpecial(DeedModel.SPECIAL_ADD_FRIEND);
+		if (addFriendDeed != null) {
+			Server server = new Server(this);
+			server.createEvent(addFriendDeed.id, m_friendId, false, null, this, "createEvent");
+		} else {
+			finishImport();
+		}
+	}
+	
+	
+	/**
+	 * Have just added a friend.
+	 */
+	private void finishImport() {
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+			m_progressDialog = null;
+		}
+		
+		Intent intent = new Intent("com.p2c.thelife.Friends");
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}	
 		
 		
 	/**
@@ -198,32 +224,6 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		button.setEnabled(true);
 		button = (Button)findViewById(R.id.image_rotate_ccw);
 		button.setEnabled(true);		
-	}
-	
-	
-	private void createAddFriendEvent() {
-		DeedModel addFriendDeed = TheLifeConfiguration.getDeedsDS().findSpecial(DeedModel.SPECIAL_ADD_FRIEND);
-		if (addFriendDeed != null) {
-			Server server = new Server(this);
-			server.createEvent(addFriendDeed.id, m_friendId, false, null, this, "createEvent");
-		} else {
-			finishImport();
-		}
-	}
-	
-	
-	/**
-	 * Have just added a friend.
-	 */
-	private void finishImport() {
-		if (m_progressDialog != null) {
-			m_progressDialog.dismiss();
-			m_progressDialog = null;
-		}
-		
-		Intent intent = new Intent("com.p2c.thelife.Friends");
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
 	}
 	
 	
