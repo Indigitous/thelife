@@ -4,11 +4,11 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,11 +22,9 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener {
+public class FriendsImportActivity extends FriendImportActivityAbstract {
 	
 	private static String TAG = "FriendsImportActivity";
-	
-	private Bitmap m_bitmap = null;
 	
 	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS = 1;	
 	
@@ -67,6 +65,7 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity im
 		
 		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_CONTACTS);	
 	}
+	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent contactData) {
@@ -147,18 +146,12 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity im
 							int pIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO);
 							byte[] photoBlob = mCursor.getBlob(pIndex);
 							m_bitmap = BitmapFactory.decodeByteArray(photoBlob, 0, photoBlob.length);
-						}						
-
+						}
 						
-						
-System.out.println("RECEIVED FIRST NAME " + firstName + " AND LAST NAME " + lastName);
-System.out.println("RECEIVED EMAIL " + email);							
-System.out.println("RECEIVED MOBILE " + mobile);							
-System.out.println("RECEIVED PHOTO");
+						Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));
 
 						// now create the friend
-						Server server = new Server(this);
-						server.createFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact, this, "createFriend");
+						addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact);
 					}
 					
 				}
@@ -169,31 +162,13 @@ System.out.println("RECEIVED PHOTO");
 	}
 	
 	public void importFriendsByFacebook(View view) {
-		
+		// not yet implemented
 	}	
 
 	
 	public void importFriendManually(View view) {
 		Intent intent = new Intent("com.p2c.thelife.FriendImportManually");
 		startActivity(intent);		
-	}
-
-	@Override
-	public void notifyServerResponseAvailable(String indicator, int httpCode,
-			JSONObject jsonObject, String errorString) {
-
-		if (indicator.equals("createFriend") && m_bitmap != null) {
-			int friendId = jsonObject.optInt("id", 0);
-			
-			BitmapCacheHandler.saveBitmapToCache("friends", friendId, "image", m_bitmap);						
-			Server server = new Server(this);
-			server.updateImage("friends", friendId, this, "updateImage");			
-		}
-		
-		// finish import
-		Intent intent = new Intent("com.p2c.thelife.Friends");
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
 	}
 
 }
