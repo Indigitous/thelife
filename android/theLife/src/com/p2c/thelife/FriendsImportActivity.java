@@ -1,7 +1,5 @@
 package com.p2c.thelife;
 
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -72,90 +70,113 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 		
 		if (resultCode == RESULT_OK) {
 			if (requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS) {
-				Uri selectedContact = contactData.getData();
+				// user has selected a contact
 				
-				Cursor mCursor = getContentResolver().query(
-					    selectedContact,
-					    new String[] { ContactsContract.Contacts._ID },
-					    null,
-					    null,
-					    null);
-				if (mCursor == null || !mCursor.moveToNext()) {
-					Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
-				} else {
-					// get the contact id
-					int contactId = mCursor.getInt(mCursor.getColumnIndex(ContactsContract.Contacts._ID));
-					
-					// get the name information
+				// TODO do this in a background thread?
+				Cursor mCursor = null;
+				try {
+					// ask for the contact information from the provider
+					Uri selectedContact = contactData.getData();
 					mCursor = getContentResolver().query(
-							ContactsContract.Data.CONTENT_URI,
-						    new String[] { ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME },
-						    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
-						    new String[] { String.valueOf(contactId) },
+						    selectedContact,
+						    new String[] { ContactsContract.Contacts._ID },
+						    null,
+						    null,
 						    null);
 					if (mCursor == null || !mCursor.moveToNext()) {
 						Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
-					} else {		
+					} else {
+						// get the contact id
+						int contactId = mCursor.getInt(mCursor.getColumnIndex(ContactsContract.Contacts._ID));
+						mCursor.close();
+						mCursor = null;
 						
-						// success: get the name information
-						int fnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
-						int lnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME);
-						String firstName = mCursor.getString(fnIndex);
-						String lastName = mCursor.getString(lnIndex);
-
-						// try to get email
-						String email = null;
+						// get the name information
 						mCursor = getContentResolver().query(
 								ContactsContract.Data.CONTENT_URI,
-							    new String[] { ContactsContract.CommonDataKinds.Email.ADDRESS, ContactsContract.CommonDataKinds.Email.TYPE  },
-							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
+							    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME },
+							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
 							    new String[] { String.valueOf(contactId) },
 							    null);
-						if (mCursor != null && mCursor.moveToNext()) {
+						if (mCursor == null || !mCursor.moveToNext()) {
+							Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
+						} else {		
 							
-							// TODO: look for which TYPE of email?
-							int eIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
-							email = mCursor.getString(eIndex);
+							// success: access the name information
+							int fnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
+							int lnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME);
+							String firstName = mCursor.getString(fnIndex);
+							String lastName = mCursor.getString(lnIndex);
+							mCursor.close();
+							mCursor = null;							
+	
+							// try to get email
+							String email = null;
+							mCursor = getContentResolver().query(
+									ContactsContract.Data.CONTENT_URI,
+								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Email.ADDRESS, ContactsContract.CommonDataKinds.Email.TYPE  },
+								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
+								    new String[] { String.valueOf(contactId) },
+								    null);
+							if (mCursor != null && mCursor.moveToNext()) {								
+								int eIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
+								email = mCursor.getString(eIndex);
+							}
+							mCursor.close();
+							mCursor = null;							
+							
+							// try to get mobile phone number
+							String mobile = null;
+							mCursor = getContentResolver().query(
+									ContactsContract.Data.CONTENT_URI,
+								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE },
+								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
+								    new String[] { String.valueOf(contactId) },
+								    null);						
+							if (mCursor != null && mCursor.moveToNext()) {
+								// TODO: look for MOBILE type, else OTHER type 
+								int mIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+								mobile = mCursor.getString(mIndex);
+							}
+							mCursor.close();
+							mCursor = null;							
+							
+							// try to get photo
+							m_bitmap = null;
+							mCursor = getContentResolver().query(
+									ContactsContract.Data.CONTENT_URI,
+								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Photo.PHOTO },
+								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
+								    new String[] { String.valueOf(contactId) },
+								    null);
+							if (mCursor != null && mCursor.moveToNext()) {
+								int pIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO);
+								byte[] photoBlob = mCursor.getBlob(pIndex);
+								m_bitmap = BitmapFactory.decodeByteArray(photoBlob, 0, photoBlob.length);
+							}
+							mCursor.close();
+							mCursor = null;							
+							
+							// now create the friend
+							Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + email + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));							
+							addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact);
+							Log.i(TAG, "ALL DONE!!!");
 						}
 						
-						// try to get mobile phone number
-						String mobile = null;
-						mCursor = getContentResolver().query(
-								ContactsContract.Data.CONTENT_URI,
-							    new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE },
-							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
-							    new String[] { String.valueOf(contactId) },
-							    null);						
-						if (mCursor != null && mCursor.moveToNext()) {
-							
-							// TODO: look for MOBILE type, else OTHER type 
-							int mIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-							mobile = mCursor.getString(mIndex);
-						}
-						
-						// try to get photo
-						m_bitmap = null;
-						mCursor = getContentResolver().query(
-								ContactsContract.Data.CONTENT_URI,
-							    new String[] { ContactsContract.CommonDataKinds.Photo.PHOTO },
-							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
-							    new String[] { String.valueOf(contactId) },
-							    null);
-						if (mCursor != null && mCursor.moveToNext()) {
-							
-							int pIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO);
-							byte[] photoBlob = mCursor.getBlob(pIndex);
-							m_bitmap = BitmapFactory.decodeByteArray(photoBlob, 0, photoBlob.length);
-						}
-						
-						Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));
-
-						// now create the friend
-						addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact);
 					}
+				} catch (Exception e) {
+					Log.e(TAG, "onActivityResult()", e);
+					Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
 					
+					if (m_progressDialog != null) {
+						m_progressDialog.dismiss();
+						m_progressDialog = null;
+					}
+				} finally {
+					if (mCursor != null) {
+						mCursor.close();
+					}
 				}
-				
 
 			}
 		}
