@@ -157,6 +157,8 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 							mCursor.close();
 							mCursor = null;							
 							
+							// TODO only a friend once
+							
 							// now create the friend
 							Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + email + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));							
 							addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact);
