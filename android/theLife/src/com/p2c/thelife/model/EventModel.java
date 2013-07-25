@@ -88,7 +88,7 @@ public class EventModel extends AbstractModel {
 		if (paramFriendName == null) {
 			FriendModel friend = TheLifeConfiguration.getFriendsDS().findById(friend_id);
 			if (friend != null) {
-				paramFriendName = friend.firstName;
+				paramFriendName = friend.getFirstNameOrLastName();
 			}
 		}
 		if (paramFriendName == null) {

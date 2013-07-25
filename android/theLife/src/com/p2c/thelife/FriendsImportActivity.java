@@ -4,6 +4,8 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -23,6 +25,8 @@ import com.p2c.thelife.model.FriendModel;
 public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener {
 	
 	private static String TAG = "FriendsImportActivity";
+	
+	private Bitmap m_bitmap = null;
 	
 	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS = 1;	
 	
@@ -73,36 +77,88 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity im
 				
 				Cursor mCursor = getContentResolver().query(
 					    selectedContact,
-					    null,              // The columns to return for each row
-					    null,              // Selection criteria
-					    null,              // Selection criteria
+					    new String[] { ContactsContract.Contacts._ID },
+					    null,
+					    null,
 					    null);
 				if (mCursor == null || !mCursor.moveToNext()) {
 					Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
 				} else {
 					// get the contact id
-					int contactId = mCursor.getInt(mCursor.getColumnIndex(ContactsContract.Data.CONTACT_ID));
+					int contactId = mCursor.getInt(mCursor.getColumnIndex(ContactsContract.Contacts._ID));
 					
 					// get the name information
 					mCursor = getContentResolver().query(
 							ContactsContract.Data.CONTENT_URI,
-						    null,
+						    new String[] { ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME },
 						    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
 						    new String[] { String.valueOf(contactId) },
 						    null);
 					if (mCursor == null || !mCursor.moveToNext()) {
 						Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
-					} else {
+					} else {		
 						
 						// success: get the name information
 						int fnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
 						int lnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME);
 						String firstName = mCursor.getString(fnIndex);
 						String lastName = mCursor.getString(lnIndex);
+
+						// try to get email
+						String email = null;
+						mCursor = getContentResolver().query(
+								ContactsContract.Data.CONTENT_URI,
+							    new String[] { ContactsContract.CommonDataKinds.Email.ADDRESS, ContactsContract.CommonDataKinds.Email.TYPE  },
+							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
+							    new String[] { String.valueOf(contactId) },
+							    null);
+						if (mCursor != null && mCursor.moveToNext()) {
+							
+							// TODO: look for which TYPE of email?
+							int eIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
+							email = mCursor.getString(eIndex);
+						}
 						
+						// try to get mobile phone number
+						String mobile = null;
+						mCursor = getContentResolver().query(
+								ContactsContract.Data.CONTENT_URI,
+							    new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE },
+							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
+							    new String[] { String.valueOf(contactId) },
+							    null);						
+						if (mCursor != null && mCursor.moveToNext()) {
+							
+							// TODO: look for MOBILE type, else OTHER type 
+							int mIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+							mobile = mCursor.getString(mIndex);
+						}
+						
+						// try to get photo
+						m_bitmap = null;
+						mCursor = getContentResolver().query(
+								ContactsContract.Data.CONTENT_URI,
+							    new String[] { ContactsContract.CommonDataKinds.Photo.PHOTO },
+							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
+							    new String[] { String.valueOf(contactId) },
+							    null);
+						if (mCursor != null && mCursor.moveToNext()) {
+							
+							int pIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO);
+							byte[] photoBlob = mCursor.getBlob(pIndex);
+							m_bitmap = BitmapFactory.decodeByteArray(photoBlob, 0, photoBlob.length);
+						}						
+
+						
+						
+System.out.println("RECEIVED FIRST NAME " + firstName + " AND LAST NAME " + lastName);
+System.out.println("RECEIVED EMAIL " + email);							
+System.out.println("RECEIVED MOBILE " + mobile);							
+System.out.println("RECEIVED PHOTO");
+
+						// now create the friend
 						Server server = new Server(this);
-						server.createFriend(firstName, lastName, null, null, FriendModel.Threshold.NewContact, this, "createFriend");
-			
+						server.createFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact, this, "createFriend");
 					}
 					
 				}
@@ -126,6 +182,14 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity im
 	public void notifyServerResponseAvailable(String indicator, int httpCode,
 			JSONObject jsonObject, String errorString) {
 
+		if (indicator.equals("createFriend") && m_bitmap != null) {
+			int friendId = jsonObject.optInt("id", 0);
+			
+			BitmapCacheHandler.saveBitmapToCache("friends", friendId, "image", m_bitmap);						
+			Server server = new Server(this);
+			server.updateImage("friends", friendId, this, "updateImage");			
+		}
+		
 		// finish import
 		Intent intent = new Intent("com.p2c.thelife.Friends");
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
