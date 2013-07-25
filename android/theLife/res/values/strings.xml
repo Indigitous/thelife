@@ -181,5 +181,8 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="choose_register_method_prompt">Choose how to register:</string>
     <string name="manually">Manually</string>
     <string name="choose_login_method_prompt">Choose how to log in:</string>
+    <string name="title_friends_import">Import Friends</string>
+    <string name="import_friend_error">Error when importing friend</string>
+    
 
 </resources>

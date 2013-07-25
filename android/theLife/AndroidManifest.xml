@@ -5,7 +5,7 @@
     android:versionName="0.94" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <uses-feature
@@ -141,6 +141,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.p2c.thelife.FriendsImportActivity"
+            android:label="@string/title_friends_import"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.FriendsImport" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
         <activity
             android:name="com.p2c.thelife.FriendImportManuallyActivity"
             android:label="@string/title_friend_import"

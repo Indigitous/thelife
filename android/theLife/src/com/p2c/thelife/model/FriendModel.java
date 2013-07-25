@@ -177,16 +177,14 @@ public class FriendModel extends AbstractModel {
 	}
 	
 	public static FriendModel fromJSON(JSONObject json, boolean useServer) throws JSONException {
-			
-		FriendModel.Threshold threshold = thresholdId2Threshold(json.getInt("threshold_id"));
-			
+						
 		// create the friend
 		int id = json.getInt("id");
 		return new FriendModel(
 			id,
 			json.getString("first_name"),
 			json.getString("last_name"),				
-			threshold,
+			thresholdId2Threshold(json.getInt("threshold_id")),
 			json.getString("email"),
 			json.getString("mobile")
 		);

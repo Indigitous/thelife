@@ -126,7 +126,7 @@ public class FriendsActivity
 			intent.putExtra("home", "com.p2c.thelife.Friends");
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_new) {
-			Intent intent = new Intent("com.p2c.thelife.FriendImportManually");
+			Intent intent = new Intent("com.p2c.thelife.FriendsImport");
 			startActivity(intent);
 		} else if (item.getItemId() == android.R.id.home) {
 			m_support.slideOpen();		
