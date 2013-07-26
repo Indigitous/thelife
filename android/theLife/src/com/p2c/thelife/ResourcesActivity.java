@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -33,17 +35,19 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 	
 	private ResourcesAdapter m_adapter = null;
 	
+	private TextView m_filterDescription = null; 
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_resources, SlidingMenuSupport.RESOURCES_POSITION);
 					
-		ExpandableListView activitiesView = (ExpandableListView)findViewById(R.id.deeds_list);
-		
 		// use the remembered thresholds filter
-		m_adapter = new ResourcesAdapter(this, getThresholdsFilter());
-		
+		m_adapter = new ResourcesAdapter(this, retrieveThresholdsFilter());
+		ExpandableListView activitiesView = (ExpandableListView)findViewById(R.id.deeds_list);		
 		activitiesView.setAdapter(m_adapter);
+		
+		m_filterDescription = (TextView)findViewById(R.id.filter_description);
 	}
 	
 	/**
@@ -122,49 +126,7 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 			intent.putExtra("home", "com.p2c.thelife.Resources");
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_filter) {
-			
-			// view to set filter
-			LayoutInflater inflater = getLayoutInflater();		
-			final View view = inflater.inflate(R.layout.dialog_filter_resources, null);
-			
-			// set the options in the filter
-	        String[] thresholdStrings = getResources().getStringArray(R.array.thresholds_medium_all);
-	        EnumSet<FriendModel.Threshold> thresholds = m_adapter.getFilter();
-	        final CheckBox checkBoxes[] = new CheckBox[7];
-	        int checkBoxIds[] = new int[7];
-	        checkBoxIds[0] = R.id.checkBox0;
-	        checkBoxIds[1] = R.id.checkBox1;
-	        checkBoxIds[2] = R.id.checkBox2;
-	        checkBoxIds[3] = R.id.checkBox3;
-	        checkBoxIds[4] = R.id.checkBox4;
-	        checkBoxIds[5] = R.id.checkBox5;
-	        checkBoxIds[6] = R.id.checkBox6;
-	        for (int i = 0; i < checkBoxes.length; i++) {
-	        	checkBoxes[i] = (CheckBox)view.findViewById(checkBoxIds[i]);
-	        	checkBoxes[i].setText(thresholdStrings[i]);
-	        	checkBoxes[i].setChecked(thresholds.contains(FriendModel.thresholdValues[i]));
-	        }
-			
-			new AlertDialog.Builder(this)
-				.setMessage(getResources().getString(R.string.threshold_filter_prompt))
-				.setView(view)
-				.setNegativeButton(R.string.cancel, null)
-				.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
-				
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						
-						// set the threshold filter
-						EnumSet<FriendModel.Threshold> thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
-						for (int i = 0; i < checkBoxes.length; i++) {
-							if (checkBoxes[i].isChecked()) {
-								thresholds.add(FriendModel.thresholdValues[i]);
-							}
-						}
-						m_adapter.filter(thresholds);
-						
-					}
-				}).show();
+			showFilterDialog();
 		} else if (item.getItemId() == android.R.id.home) {
 			m_support.slideOpen();
 		}		
@@ -173,10 +135,88 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 	}
 	
 	
+	private void showFilterDialog() {
+		
+		// view to set filter
+		LayoutInflater inflater = getLayoutInflater();		
+		final View view = inflater.inflate(R.layout.dialog_filter_resources, null);
+		
+		// set the options in the filter
+        final String[] thresholdStrings = getResources().getStringArray(R.array.thresholds_medium_all);
+        EnumSet<FriendModel.Threshold> thresholds = m_adapter.getFilter();
+        final CheckBox checkBoxes[] = new CheckBox[7];
+        int checkBoxIds[] = new int[7];
+        checkBoxIds[0] = R.id.checkBox0;
+        checkBoxIds[1] = R.id.checkBox1;
+        checkBoxIds[2] = R.id.checkBox2;
+        checkBoxIds[3] = R.id.checkBox3;
+        checkBoxIds[4] = R.id.checkBox4;
+        checkBoxIds[5] = R.id.checkBox5;
+        checkBoxIds[6] = R.id.checkBox6;
+        for (int i = 0; i < checkBoxes.length; i++) {
+        	checkBoxes[i] = (CheckBox)view.findViewById(checkBoxIds[i]);
+        	checkBoxes[i].setText(thresholdStrings[i]);
+        	checkBoxes[i].setChecked(thresholds.contains(FriendModel.thresholdValues[i]));
+        }
+        
+		// support the all/nothing switch
+		final CheckBox allThresholds = (CheckBox)view.findViewById(R.id.allThresholdsSelector);
+		allThresholds.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				for (CheckBox checkBox: checkBoxes) {
+					checkBox.setChecked(allThresholds.isChecked());
+				}
+			}
+		});
+		allThresholds.setChecked(thresholds.size() == thresholdStrings.length);
+		
+		// show the dialog
+		new AlertDialog.Builder(this)
+			.setMessage(getResources().getString(R.string.threshold_filter_prompt))
+			.setView(view)
+			.setNegativeButton(R.string.cancel, null)
+			.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
+			
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+					// set the threshold filter
+					int selectedIndex = -1;
+					EnumSet<FriendModel.Threshold> thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
+					for (int i = 0; i < checkBoxes.length; i++) {
+						if (checkBoxes[i].isChecked()) {
+							thresholds.add(FriendModel.thresholdValues[i]);
+							selectedIndex = i;
+						}
+					}
+					m_adapter.filter(thresholds);
+					
+					// set the filter description
+					m_filterDescription.setText(getFilterDescription(thresholdStrings, thresholds, selectedIndex));
+				}
+			}).show();		
+	}
+	
+	
+	private String getFilterDescription(String[] thresholdStrings, EnumSet<FriendModel.Threshold> thresholds, int selectedIndex) {
+        if (thresholds.size() == thresholdStrings.length) {
+        	return getResources().getString(R.string.all_thresholds);
+        } else if (thresholds.size() == 0) {
+        	return getResources().getString(R.string.no_thresholds);
+        } else if (thresholds.size() == 1) {
+        	return thresholdStrings[selectedIndex];
+        } else {
+        	return getResources().getString(R.string.multiple_thresholds);
+        }
+	}
+	
+	
 	/**
 	 * @return the thresholds filter
 	 */
-	private EnumSet<FriendModel.Threshold> getThresholdsFilter() {
+	private EnumSet<FriendModel.Threshold> retrieveThresholdsFilter() {
 
 		// default is all filters
 		EnumSet<FriendModel.Threshold> thresholds = EnumSet.allOf(FriendModel.Threshold.class);

@@ -183,6 +183,9 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="choose_login_method_prompt">Choose how to log in:</string>
     <string name="title_friends_import">Import Friends</string>
     <string name="import_friend_error">Error when importing friend</string>
+    <string name="all_thresholds">All Thresholds</string>
+    <string name="no_thresholds">No Thresholds</string>
+    <string name="multiple_thresholds">Multiple Thresholds</string>    
     
 
 </resources>
