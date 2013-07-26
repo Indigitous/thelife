@@ -36,8 +36,9 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 	private static final String KEY_THRESHOLDS_FILTER = "thresholds";
 	
 	private ResourcesAdapter m_adapter = null;
+	private TextView m_filterDescriptionView = null; 
+    private String[] m_thresholdStrings = null;
 	
-	private TextView m_filterDescription = null; 
 	
 
 	@Override
@@ -49,7 +50,10 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 		ExpandableListView activitiesView = (ExpandableListView)findViewById(R.id.deeds_list);		
 		activitiesView.setAdapter(m_adapter);
 		
-		m_filterDescription = (TextView)findViewById(R.id.filter_description);
+		EnumSet<FriendModel.Threshold> thresholds = m_adapter.getFilter();		
+		m_filterDescriptionView = (TextView)findViewById(R.id.filter_description);
+		m_thresholdStrings = getResources().getStringArray(R.array.thresholds_medium_all);		
+		m_filterDescriptionView.setText(getFilterDescription(m_thresholdStrings, thresholds));		
 	}
 	
 	/**
@@ -144,7 +148,6 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 		final View view = inflater.inflate(R.layout.dialog_filter_resources, null);
 		
 		// set the options in the filter
-        final String[] thresholdStrings = getResources().getStringArray(R.array.thresholds_medium_all);
         EnumSet<FriendModel.Threshold> thresholds = m_adapter.getFilter();
         final CheckBox checkBoxes[] = new CheckBox[7];
         int checkBoxIds[] = new int[7];
@@ -157,7 +160,7 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
         checkBoxIds[6] = R.id.checkBox6;
         for (int i = 0; i < checkBoxes.length; i++) {
         	checkBoxes[i] = (CheckBox)view.findViewById(checkBoxIds[i]);
-        	checkBoxes[i].setText(thresholdStrings[i]);
+        	checkBoxes[i].setText(m_thresholdStrings[i]);
         	checkBoxes[i].setChecked(thresholds.contains(FriendModel.thresholdValues[i]));
         }
         
@@ -172,18 +175,16 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 				public void onClick(DialogInterface dialog, int which) {
 					
 					// set the threshold filter
-					int selectedIndex = -1;
 					EnumSet<FriendModel.Threshold> thresholds = EnumSet.noneOf(FriendModel.Threshold.class);
 					for (int i = 0; i < checkBoxes.length; i++) {
 						if (checkBoxes[i].isChecked()) {
 							thresholds.add(FriendModel.thresholdValues[i]);
-							selectedIndex = i;
 						}
 					}
 					m_adapter.filter(thresholds);
 					
 					// set the filter description
-					m_filterDescription.setText(getFilterDescription(thresholdStrings, thresholds, selectedIndex));
+					m_filterDescriptionView.setText(getFilterDescription(m_thresholdStrings, thresholds));
 				}
 			}).create();
 		
@@ -222,19 +223,20 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 				enableFilter(dialog, allThresholds.isChecked());				
 			}
 		});
-		allThresholds.setChecked(thresholds.size() == thresholdStrings.length);		
+		allThresholds.setChecked(thresholds.size() == m_thresholdStrings.length);		
 		
 		dialog.show();
 	}
 	
 	
-	private String getFilterDescription(String[] thresholdStrings, EnumSet<FriendModel.Threshold> thresholds, int selectedIndex) {
+	private String getFilterDescription(String[] thresholdStrings, EnumSet<FriendModel.Threshold> thresholds) {
         if (thresholds.size() == thresholdStrings.length) {
         	return getResources().getString(R.string.all_thresholds);
         } else if (thresholds.size() == 0) {
         	return getResources().getString(R.string.no_thresholds);
         } else if (thresholds.size() == 1) {
-        	return thresholdStrings[selectedIndex];
+        	FriendModel.Threshold threshold = thresholds.iterator().next();
+        	return thresholdStrings[threshold.ordinal()];
         } else {
         	return getResources().getString(R.string.multiple_thresholds);
         }

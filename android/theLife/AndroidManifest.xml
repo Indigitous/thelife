@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    
     
     <!-- android:theme="@style/AppTheme" -->
     <!-- android:theme="@style/Theme.Sherlock.Light" -->
