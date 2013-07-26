@@ -3,6 +3,7 @@ package com.p2c.thelife;
 import java.util.EnumSet;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -159,21 +161,8 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
         	checkBoxes[i].setChecked(thresholds.contains(FriendModel.thresholdValues[i]));
         }
         
-		// support the all/nothing switch
-		final CheckBox allThresholds = (CheckBox)view.findViewById(R.id.allThresholdsSelector);
-		allThresholds.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				for (CheckBox checkBox: checkBoxes) {
-					checkBox.setChecked(allThresholds.isChecked());
-				}
-			}
-		});
-		allThresholds.setChecked(thresholds.size() == thresholdStrings.length);
-		
 		// show the dialog
-		new AlertDialog.Builder(this)
+		final AlertDialog dialog = new AlertDialog.Builder(this)
 			.setMessage(getResources().getString(R.string.threshold_filter_prompt))
 			.setView(view)
 			.setNegativeButton(R.string.cancel, null)
@@ -196,7 +185,46 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 					// set the filter description
 					m_filterDescription.setText(getFilterDescription(thresholdStrings, thresholds, selectedIndex));
 				}
-			}).show();		
+			}).create();
+		
+		// enable/disable the filter based on checkboxes
+		for (CheckBox checkbox: checkBoxes) {
+			checkbox.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					CheckBox checkbox = (CheckBox)v;
+					if (checkbox.isChecked()) {
+						enableFilter(dialog, true);
+					} else {
+						for (CheckBox cb: checkBoxes) {
+							if (cb.isChecked()) {
+								return;
+							}
+						}
+						enableFilter(dialog, false);
+					}
+				}
+			});
+        }	
+		
+		// support the all/nothing switch
+		final CheckBox allThresholds = (CheckBox)view.findViewById(R.id.allThresholdsSelector);
+		allThresholds.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				for (CheckBox checkBox: checkBoxes) {
+					checkBox.setChecked(allThresholds.isChecked());
+				}
+				
+				// enable/disable the filter based on the all/nothing switch
+				enableFilter(dialog, allThresholds.isChecked());				
+			}
+		});
+		allThresholds.setChecked(thresholds.size() == thresholdStrings.length);		
+		
+		dialog.show();
 	}
 	
 	
@@ -210,6 +238,12 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
         } else {
         	return getResources().getString(R.string.multiple_thresholds);
         }
+	}
+	
+	
+	private void enableFilter(AlertDialog dialog, boolean isEnabled) {
+		Button filterButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
+		filterButton.setEnabled(isEnabled);
 	}
 	
 	
