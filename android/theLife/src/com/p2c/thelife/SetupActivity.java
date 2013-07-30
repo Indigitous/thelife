@@ -192,6 +192,7 @@ Utilities.showErrorToast(SetupActivity.this, "EXCEPTION: " + m_e, Toast.LENGTH_S
 						alert.show();
 					} else if (m_e instanceof UserRecoverableAuthException) {
 						// TODO: too much info in the exception?
+						// TODO: just retry?
 						String errorMessage = isRegister ? 
 							SetupActivity.this.getResources().getString(R.string.recoverable_register_error, m_e.getMessage()) :
 							SetupActivity.this.getResources().getString(R.string.recoverable_login_error, m_e.getMessage());
