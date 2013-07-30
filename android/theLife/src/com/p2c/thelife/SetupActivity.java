@@ -133,7 +133,8 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 
 				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
 				try {
-					
+if (isRegister)		
+throw new UserRecoverableAuthException("TESTING", SetupActivity.this.getIntent());					
 					if (isRegister) {
 						// read the Google user account info; this can result in a permission request to the user
 						String userInfoToken = GoogleAuthUtil.getToken(SetupActivity.this, m_accountName,  
@@ -181,6 +182,8 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 				else {
 					m_progressDialog.dismiss();
 					
+// TODO debugging							
+Utilities.showErrorToast(SetupActivity.this, "EXCEPTION: " + m_e, Toast.LENGTH_SHORT);					
 					Log.e(TAG, "registerLoginViaGoogle", m_e);
 					if (m_e instanceof GooglePlayServicesAvailabilityException) {
 						// GooglePlay is not there?
@@ -188,6 +191,11 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 						Dialog alert = GooglePlayServicesUtil.getErrorDialog(e2.getConnectionStatusCode(), SetupActivity.this, 0);
 						alert.show();
 					} else if (m_e instanceof UserRecoverableAuthException) {
+						// TODO: too much info in the exception?
+						String errorMessage = isRegister ? 
+							SetupActivity.this.getResources().getString(R.string.recoverable_register_error, m_e.getMessage()) :
+							SetupActivity.this.getResources().getString(R.string.recoverable_login_error, m_e.getMessage());
+						Utilities.showErrorToast(SetupActivity.this, errorMessage, Toast.LENGTH_SHORT);
 						// allow the user to try to recover
 						startActivityForResult(((UserRecoverableAuthException)m_e).getIntent(), 0);
 					} else if (m_e instanceof IOException) {
