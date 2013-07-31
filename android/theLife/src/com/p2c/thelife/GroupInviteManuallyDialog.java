@@ -22,7 +22,7 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		
-		final GroupModel group = ((GroupActivity)m_listener).getSelectedGroup();
+		final GroupModel group = ((GroupInviteActivity)m_listener).getSelectedGroup();
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		final View view = inflater.inflate(R.layout.dialog_group_invite_manually, null);

@@ -165,7 +165,6 @@ public class GroupsActivity extends SlidingMenuPollingFragmentActivity
 		Intent intent = new Intent("com.p2c.thelife.Group");
 		intent.putExtra("group_id", group.id);
 		startActivity(intent);
-				
 	}
 
 	@Override

@@ -7,14 +7,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".FriendsImportActivity" >
+    tools:context=".GroupInviteActivity" >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="40dp"
         android:textSize="20sp"
-        android:text="@string/import_friends_from" />
+        android:text="@string/invite_person_from" />
 
     <Button
         android:id="@+id/button1"
@@ -26,8 +26,8 @@
         android:drawablePadding="0dp"
         android:enabled="true"
         android:gravity="center"
-        android:onClick="importFriendsByInternalContact"
-        android:text="@string/import_by_phone" />
+        android:onClick="inviteByInternalContact"
+        android:text="@string/invite_by_phone" />
 
     <Button
         android:id="@+id/button2"
@@ -37,8 +37,8 @@
         android:layout_marginBottom="20dp"
         android:drawableLeft="@drawable/ic_launcher"
         android:enabled="false"
-        android:onClick="importFriendsByFacebook"
-        android:text="@string/import_by_facebook" />
+        android:onClick="inviteByFacebook"
+        android:text="@string/invite_by_facebook" />
 
     <Button
         android:id="@+id/button3"
@@ -47,7 +47,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:drawableLeft="@drawable/ic_launcher"        
-        android:onClick="importFriendManually"
-        android:text="@string/import_manually" />
+        android:onClick="inviteManually"
+        android:text="@string/invite_manually" />
 
 </LinearLayout>

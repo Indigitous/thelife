@@ -186,8 +186,13 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="all_thresholds">All Thresholds</string>
     <string name="no_thresholds">No Thresholds</string>
     <string name="multiple_thresholds">Multiple Thresholds</string>
-    <string name="recoverable_register_error">Error encountered: please register again %1$s</string>    
-    <string name="recoverable_login_error">Error encountered: please login again %1$s</string>    
+    <string name="recoverable_register_error">Error encountered: please register again %1$s</string>
+    <string name="recoverable_login_error">Error encountered: please login again %1$s</string>
+    <string name="title_group_invite">Invite To Group</string>
+    <string name="invite_person_from">Choose person from:</string>
+    <string name="invite_by_phone">Mobile Phone</string>
+    <string name="invite_by_facebook">Facebook</string>
+    <string name="invite_manually">Manual Entry</string>    
     
 
 </resources>

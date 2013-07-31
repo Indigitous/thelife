@@ -56,7 +56,7 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 		return true;
 	}		
 	
-	public void importFriendsByPhone(View view) {
+	public void importFriendsByInternalContact(View view) {
 //		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
 //		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Email.CONTENT_URI);
 		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -190,7 +190,7 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 	
 	public void importFriendsByFacebook(View view) {
 		// not yet implemented
-	}	
+	}
 
 	
 	public void importFriendManually(View view) {

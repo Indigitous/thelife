@@ -120,8 +120,9 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_new) {
 			if (m_group != null) {
-				GroupInviteManuallyDialog dialog = new GroupInviteManuallyDialog();
-				dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
+				Intent intent = new Intent("com.p2c.thelife.GroupInvite");
+				intent.putExtra("group_id", m_group.id);
+				startActivity(intent);
 			}
 		}  else if (item.getItemId() == android.R.id.home) {
 			Intent intent = new Intent("com.p2c.thelife.Groups");
