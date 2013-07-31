@@ -23,7 +23,7 @@ import com.p2c.thelife.model.UserModel;
  * @author clarence
  *
  */
-public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, UserDeleteFromGroupDialog.Listener, OnItemLongClickListener {
+public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, GroupDeleteUserDialog.Listener, OnItemLongClickListener {
 	
 	private static final String TAG = "GroupActivity";
 	
@@ -139,7 +139,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	@Override
 	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		m_user = (UserModel)arg1.getTag();
-		UserDeleteFromGroupDialog dialog = new UserDeleteFromGroupDialog();
+		GroupDeleteUserDialog dialog = new GroupDeleteUserDialog();
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 		
 		return true;
@@ -149,7 +149,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	public void selectUser(View view) {
 		m_user = (UserModel)view.getTag();
 		
-		UserDeleteFromGroupDialog dialog = new UserDeleteFromGroupDialog();
+		GroupDeleteUserDialog dialog = new GroupDeleteUserDialog();
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());			
 	}
 	
