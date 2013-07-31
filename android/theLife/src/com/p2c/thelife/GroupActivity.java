@@ -120,7 +120,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 			startActivity(intent);
 		} else if (item.getItemId() == R.id.action_new) {
 			if (m_group != null) {
-				GroupInvitationManuallyDialog dialog = new GroupInvitationManuallyDialog();
+				GroupInviteManuallyDialog dialog = new GroupInviteManuallyDialog();
 				dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 			}
 		}  else if (item.getItemId() == android.R.id.home) {
