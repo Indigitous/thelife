@@ -83,14 +83,8 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 						    null,
 						    null,
 						    null);
-// TODO debugging					
-if (mCursor == null) {
-Utilities.showErrorToast(this, "mCursor is NULL for initial contact data!!", Toast.LENGTH_SHORT);	
-}
+
 					if (mCursor == null || !mCursor.moveToNext()) {
-// TODO debugging							
-Utilities.showErrorToast(this, "empty cursor for initial contact data!!", Toast.LENGTH_SHORT);
-Utilities.showErrorToast(this,  "the contact URI is " + selectedContact.toString(), Toast.LENGTH_SHORT);
 						Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
 					} else {
 						// get the contact id
@@ -105,14 +99,8 @@ Utilities.showErrorToast(this,  "the contact URI is " + selectedContact.toString
 							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
 							    new String[] { String.valueOf(contactId) },
 							    null);
-// TODO debugging						
-if (mCursor == null) {
-Utilities.showErrorToast(this, "mCursor is NULL for name data!!", Toast.LENGTH_SHORT);	
-}						
+						
 						if (mCursor == null || !mCursor.moveToNext()) {
-// TODO debugging								
-Utilities.showErrorToast(this, "empty cursor for name data!!", Toast.LENGTH_SHORT);
-Utilities.showErrorToast(this, "the contact ID is " + contactId, Toast.LENGTH_SHORT);							
 							Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
 						} else {		
 							
@@ -184,8 +172,6 @@ Utilities.showErrorToast(this, "the contact ID is " + contactId, Toast.LENGTH_SH
 					}
 				} catch (Exception e) {
 					Log.e(TAG, "onActivityResult()", e);
-// TODO debugging					
-Utilities.showErrorToast(this, "EXCEPTION onActivityResult() " + e, Toast.LENGTH_SHORT);
 					Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
 					
 					if (m_progressDialog != null) {
