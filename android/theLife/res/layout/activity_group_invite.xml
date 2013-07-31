@@ -26,11 +26,24 @@
         android:drawablePadding="0dp"
         android:enabled="true"
         android:gravity="center"
-        android:onClick="inviteByInternalContact"
-        android:text="@string/invite_by_phone" />
-
+        android:onClick="inviteByInternalContactEmail"
+        android:text="@string/invite_contact_by_email" />
+    
     <Button
         android:id="@+id/button2"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:drawablePadding="0dp"
+        android:enabled="true"
+        android:gravity="center"
+        android:onClick="inviteByInternalContactSMS"
+        android:text="@string/invite_contact_by_sms" />    
+
+    <Button
+        android:id="@+id/button3"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -41,7 +54,7 @@
         android:text="@string/invite_by_facebook" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button4"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

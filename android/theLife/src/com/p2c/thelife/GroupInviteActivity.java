@@ -21,10 +21,13 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 
 	public static final String TAG = "GroupInviteActivity";
 	
-	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS = 1;		
+	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL = 1;
+	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS_SMS = 2;		
+
 	
 	private GroupModel m_group = null;
-	private ProgressDialog m_progressDialog = null;		
+	private ProgressDialog m_progressDialog = null;
+	private boolean m_isEmailRequest = false;
 	
 	
 	@Override
@@ -87,28 +90,40 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 	}
 	
 	
-	public void inviteByInternalContact(View view) {
+	public void inviteByInternalContactEmail(View view) {
 		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Email.CONTENT_URI);
-		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_CONTACTS);			
+		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL);			
 	}
+	
+	
+	public void inviteByInternalContactSMS(View view) {
+		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_CONTACTS_SMS);			
+	}	
 	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent contactData) {
 		
 		if (resultCode == RESULT_OK) {
-			if (requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS) {
+			if (requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL || requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS_SMS) {
 				// user has selected a contact
+				
+				m_isEmailRequest = requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL;
+				String contactField = (m_isEmailRequest) ?
+					ContactsContract.CommonDataKinds.Email.ADDRESS :
+					ContactsContract.CommonDataKinds.Phone.NUMBER;
 				
 				// TODO do this in a background thread?
 				String email = null;
+				String mobile = null;
 				Cursor cursor = null;
 				try {				
 					// ask for the contact information from the provider
 					Uri selectedContact = contactData.getData();
 					cursor = getContentResolver().query(
 						selectedContact, 
-						new String[] { ContactsContract.Contacts._ID, ContactsContract.CommonDataKinds.Email.ADDRESS }, 
+						new String[] { ContactsContract.Contacts._ID, contactField }, 
 						null, 
 						null, 
 						null);
@@ -116,17 +131,21 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 					if (cursor == null || !cursor.moveToNext()) {
 						Utilities.showErrorToast(this, getResources().getString(R.string.invite_person_error), Toast.LENGTH_SHORT);
 					} else {
-						// get the email
-						int eIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
-						email = cursor.getString(eIndex);
+						// get the email/mobile
+						int eIndex = cursor.getColumnIndex(contactField);
+						if (m_isEmailRequest) {
+							email = cursor.getString(eIndex);
+						} else {
+							mobile = cursor.getString(eIndex);
+						}
 						cursor.close();
 						cursor = null;
 						
 						// now invite the person
-						Log.i(TAG, "Invite a person from contacts: " + email);
+						Log.i(TAG, "Invite a person from contacts: " + (m_isEmailRequest ? email : mobile));
 						notifyAttemptingServerAccess("createRequest");
 						Server server = new Server(this);
-						server.createRequest(m_group.id, RequestModel.INVITE, email, null, this, "createRequest");						
+						server.createRequest(m_group.id, RequestModel.INVITE, email, mobile, this, "createRequest");						
 					}
 				} catch (Exception e) {
 					Log.e(TAG, "onActivityResult()", e);
@@ -162,7 +181,7 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 		}
 		
 		if (Utilities.isSuccessfulHttpCode(httpCode)) {
-			Utilities.showInfoToast(this, getResources().getString(R.string.person_invited_by_email), Toast.LENGTH_SHORT);
+			Utilities.showInfoToast(this, getResources().getString(m_isEmailRequest ? R.string.person_invited_by_email : R.string.person_invited_by_sms), Toast.LENGTH_SHORT);
 		}
 	}
 	
