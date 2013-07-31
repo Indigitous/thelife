@@ -157,7 +157,7 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	
 	public GroupModel getSelectedGroup() {
 		return m_group;
-	}	
+	}
 	
 	
 	public UserModel getSelectedUser() {
