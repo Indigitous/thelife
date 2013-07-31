@@ -4,16 +4,24 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.GroupModel;
+import com.p2c.thelife.model.RequestModel;
 
 public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity implements GroupInviteManuallyDialog.Listener, Server.ServerListener {
 
 	public static final String TAG = "GroupInviteActivity";
+	
+	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS = 1;		
 	
 	private GroupModel m_group = null;
 	private ProgressDialog m_progressDialog = null;		
@@ -80,7 +88,60 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 	
 	
 	public void inviteByInternalContact(View view) {
+		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Email.CONTENT_URI);
+		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_CONTACTS);			
+	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent contactData) {
 		
+		if (resultCode == RESULT_OK) {
+			if (requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS) {
+				// user has selected a contact
+				
+				// TODO do this in a background thread?
+				String email = null;
+				Cursor cursor = null;
+				try {				
+					// ask for the contact information from the provider
+					Uri selectedContact = contactData.getData();
+					cursor = getContentResolver().query(
+						selectedContact, 
+						new String[] { ContactsContract.Contacts._ID, ContactsContract.CommonDataKinds.Email.ADDRESS }, 
+						null, 
+						null, 
+						null);
+
+					if (cursor == null || !cursor.moveToNext()) {
+						Utilities.showErrorToast(this, getResources().getString(R.string.invite_person_error), Toast.LENGTH_SHORT);
+					} else {
+						// get the email
+						int eIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
+						email = cursor.getString(eIndex);
+						cursor.close();
+						cursor = null;
+						
+						// now invite the person
+						Log.i(TAG, "Invite a person from contacts: " + email);
+						Server server = new Server(this);
+						server.createRequest(m_group.id, RequestModel.INVITE, email, null, this, "createRequest");						
+					}
+				} catch (Exception e) {
+					Log.e(TAG, "onActivityResult()", e);
+					Utilities.showErrorToast(this, getResources().getString(R.string.invite_person_error), Toast.LENGTH_SHORT);
+					
+					if (m_progressDialog != null) {
+						m_progressDialog.dismiss();
+						m_progressDialog = null;
+					}
+				} finally {
+					if (cursor != null) {
+						cursor.close();
+					}
+				}
+			}				
+		}
 	}
 	
 	
@@ -97,7 +158,10 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
-		}				
+		}
+		
+		if (Utilities.isSuccessfulHttpCode(httpCode)) {
+		}
 	}
 	
 

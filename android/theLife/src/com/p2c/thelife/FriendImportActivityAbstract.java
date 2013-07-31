@@ -96,7 +96,7 @@ public class FriendImportActivityAbstract extends SlidingMenuPollingFragmentActi
 			return;
 		}
 		
-		Toast.makeText(this, getResources().getString(R.string.friend_import_error), Toast.LENGTH_LONG).show();
+		Utilities.showErrorToast(this, getResources().getString(R.string.friend_import_error), Toast.LENGTH_LONG);
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 			m_progressDialog = null;

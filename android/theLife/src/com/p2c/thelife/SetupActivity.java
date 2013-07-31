@@ -313,7 +313,7 @@ Utilities.showErrorToast(SetupActivity.this, "EXCEPTION: " + m_e, Toast.LENGTH_S
 			}
 			
 			// failed login
-			Toast.makeText(this, getResources().getString(R.string.login_failed), Toast.LENGTH_SHORT).show(); 
+			Utilities.showInfoToast(this, getResources().getString(R.string.login_failed), Toast.LENGTH_SHORT); 
 	
 			closeProgressBar();
 			if (m_progressDialog != null) {

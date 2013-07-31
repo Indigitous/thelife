@@ -169,8 +169,6 @@ public class GroupActivity extends SlidingMenuPollingFragmentActivity implements
 	public void notifyAttemptingServerAccess(String indicator) {
 		if (indicator.equals("deleteUser")) {
 			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.deleting_user), true, true);
-		} else if (indicator.equals("createRequest")) {
-			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.inviting_person), true, true);
 		}
 	}
 

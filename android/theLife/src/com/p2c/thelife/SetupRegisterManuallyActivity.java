@@ -60,7 +60,7 @@ public class SetupRegisterManuallyActivity extends SetupRegisterActivityAbstract
 		EditText passwordFieldConfirm = (EditText)findViewById(R.id.setup_register_manually_password_confirm);
 		String passwordConfirm = passwordFieldConfirm.getText().toString();
 		if (!password.equals(passwordConfirm)) {
-			Toast.makeText(this, R.string.different_passwords_error, Toast.LENGTH_SHORT).show();
+			Utilities.showInfoToast(this, getResources().getString(R.string.different_passwords_error), Toast.LENGTH_SHORT);
 		} else {
 			// send the registration to the server
 			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.creating_account), true, true);		

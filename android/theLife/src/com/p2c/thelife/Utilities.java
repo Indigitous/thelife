@@ -109,6 +109,11 @@ public class Utilities {
 	}
 	
 	
+	public static void showInfoToast(Context context, String text, int duration) {
+		Toast.makeText(context, text, duration).show();
+	}
+	
+	
 	public static void showConnectionErrorToast(Context context, String text, int duration) {
 		Toast toast = new Toast(context);
 		TextView textView = new TextView(context);

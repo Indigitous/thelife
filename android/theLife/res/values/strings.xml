@@ -193,6 +193,6 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="invite_by_phone">Mobile Phone</string>
     <string name="invite_by_facebook">Facebook</string>
     <string name="invite_manually">Manual Entry</string>    
-    
+    <string name="invite_person_error">Error when inviting person</string>
 
 </resources>

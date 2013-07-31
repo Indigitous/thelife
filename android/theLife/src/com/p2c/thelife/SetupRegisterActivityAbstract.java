@@ -42,7 +42,7 @@ public class SetupRegisterActivityAbstract extends SetupActivityAbstract impleme
 			
 				if (m_user != null && m_user.id != 0 && m_token != "" && m_user.email != "") {
 					
-					Toast.makeText(this, getResources().getString(R.string.registration_successful), Toast.LENGTH_SHORT).show(); 
+					Utilities.showInfoToast(this, getResources().getString(R.string.registration_successful), Toast.LENGTH_SHORT); 
 					
 					// successful registration, so now update the user profile image if necessary
 					if (m_bitmap != null) {
@@ -54,7 +54,7 @@ public class SetupRegisterActivityAbstract extends SetupActivityAbstract impleme
 			
 			} else {
 				// failed register
-				Toast.makeText(this, getResources().getString(R.string.registration_failed), Toast.LENGTH_SHORT).show(); 
+				Utilities.showInfoToast(this, getResources().getString(R.string.registration_failed), Toast.LENGTH_SHORT); 
 				
 				closeProgressBar();
 			}

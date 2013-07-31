@@ -59,7 +59,7 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 	public void importFriendsByInternalContact(View view) {
 //		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
 //		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Email.CONTENT_URI);
-		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI); // all contacts
 		
 		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_CONTACTS);	
 	}
@@ -161,12 +161,11 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 							mCursor.close();
 							mCursor = null;							
 							
-							// TODO only a friend once
+							// TODO only add a friend once
 							
 							// now create the friend
 							Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + email + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));							
 							addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact);
-							Log.i(TAG, "ALL DONE!!!");
 						}
 						
 					}

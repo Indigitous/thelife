@@ -132,7 +132,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 						updateImageOnServer(m_updatedBitmap);
 					} else {
 						closeProgressBar();
-						Toast.makeText(this, R.string.user_profile_updated, Toast.LENGTH_SHORT).show();
+						Utilities.showInfoToast(this, getResources().getString(R.string.user_profile_updated), Toast.LENGTH_SHORT);
 					}
 				} else {
 					closeProgressBar();
@@ -143,7 +143,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				if (Utilities.isSuccessfulHttpCode(httpCode)) {
 					TheLifeConfiguration.getOwnerDS().notifyDSChangedListeners();
 					m_updatedBitmap = null;
-					Toast.makeText(this, R.string.user_profile_updated, Toast.LENGTH_SHORT).show();					
+					Utilities.showInfoToast(this, getResources().getString(R.string.user_profile_updated), Toast.LENGTH_SHORT);				
 				}
 				closeProgressBar();			
 			}
