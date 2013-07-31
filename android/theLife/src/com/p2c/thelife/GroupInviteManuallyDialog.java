@@ -5,9 +5,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
@@ -27,9 +27,29 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		final View view = inflater.inflate(R.layout.dialog_group_invite_manually, null);
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+		
+		// either email or mobile, but not both
+		final EditText emailText = (EditText)view.findViewById(R.id.invite_person_email);
+		final EditText mobileText = (EditText)view.findViewById(R.id.invite_person_phone);
+		emailText.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				mobileText.setText("");
+				return false;
+			}
+		});
+		mobileText.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				emailText.setText("");
+				return false;
+			}
+		});		
 			
 		// set the message, content and buttons of the alert
-		alertBuilder.setMessage(R.string.invite_person_to_group);
+		//alertBuilder.setMessage(Html.fromHtml(getResources().getString(R.string.invite_person_to_group)));
 		alertBuilder.setView(view);
 		alertBuilder.setNegativeButton(R.string.cancel, null); 
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
