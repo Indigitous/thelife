@@ -132,9 +132,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 				m_accountName = params[0];
 
 				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
-				try {
-if (isRegister)		
-throw new UserRecoverableAuthException("TESTING", SetupActivity.this.getIntent());					
+				try {				
 					if (isRegister) {
 						// read the Google user account info; this can result in a permission request to the user
 						String userInfoToken = GoogleAuthUtil.getToken(SetupActivity.this, m_accountName,  
