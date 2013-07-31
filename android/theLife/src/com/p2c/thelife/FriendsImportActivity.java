@@ -73,93 +73,93 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 				// user has selected a contact
 				
 				// TODO do this in a background thread?
-				Cursor mCursor = null;
+				Cursor cursor = null;
 				try {
 					// ask for the contact information from the provider
 					Uri selectedContact = contactData.getData();
-					mCursor = getContentResolver().query(
+					cursor = getContentResolver().query(
 						    selectedContact,
 						    new String[] { ContactsContract.Contacts._ID },
 						    null,
 						    null,
 						    null);
 
-					if (mCursor == null || !mCursor.moveToNext()) {
+					if (cursor == null || !cursor.moveToNext()) {
 						Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
 					} else {
 						// get the contact id
-						int contactId = mCursor.getInt(mCursor.getColumnIndex(ContactsContract.Contacts._ID));
-						mCursor.close();
-						mCursor = null;
+						int contactId = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+						cursor.close();
+						cursor = null;
 						
 						// get the name information
-						mCursor = getContentResolver().query(
+						cursor = getContentResolver().query(
 								ContactsContract.Data.CONTENT_URI,
 							    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME },
 							    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
 							    new String[] { String.valueOf(contactId) },
 							    null);
 						
-						if (mCursor == null || !mCursor.moveToNext()) {
+						if (cursor == null || !cursor.moveToNext()) {
 							Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
 						} else {		
 							
 							// success: access the name information
-							int fnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
-							int lnIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME);
-							String firstName = mCursor.getString(fnIndex);
-							String lastName = mCursor.getString(lnIndex);
-							mCursor.close();
-							mCursor = null;							
+							int fnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
+							int lnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME);
+							String firstName = cursor.getString(fnIndex);
+							String lastName = cursor.getString(lnIndex);
+							cursor.close();
+							cursor = null;							
 	
 							// try to get email
 							String email = null;
-							mCursor = getContentResolver().query(
+							cursor = getContentResolver().query(
 									ContactsContract.Data.CONTENT_URI,
 								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Email.ADDRESS, ContactsContract.CommonDataKinds.Email.TYPE  },
 								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
 								    new String[] { String.valueOf(contactId) },
 								    null);
-							if (mCursor != null && mCursor.moveToNext()) {								
-								int eIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
-								email = mCursor.getString(eIndex);
+							if (cursor != null && cursor.moveToNext()) {								
+								int eIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
+								email = cursor.getString(eIndex);
 							}
-							mCursor.close();
-							mCursor = null;							
+							cursor.close();
+							cursor = null;							
 							
 							// try to get mobile phone number
 							String mobile = null;
-							mCursor = getContentResolver().query(
+							cursor = getContentResolver().query(
 									ContactsContract.Data.CONTENT_URI,
 								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE },
 								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
 								    new String[] { String.valueOf(contactId) },
 								    null);						
-							if (mCursor != null && mCursor.moveToNext()) {
+							if (cursor != null && cursor.moveToNext()) {
 								// TODO: look for MOBILE type, else OTHER type 
-								int mIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-								mobile = mCursor.getString(mIndex);
+								int mIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+								mobile = cursor.getString(mIndex);
 							}
-							mCursor.close();
-							mCursor = null;							
+							cursor.close();
+							cursor = null;							
 							
 							// try to get photo
 							m_bitmap = null;
-							mCursor = getContentResolver().query(
+							cursor = getContentResolver().query(
 									ContactsContract.Data.CONTENT_URI,
 								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Photo.PHOTO },
 								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
 								    new String[] { String.valueOf(contactId) },
 								    null);
-							if (mCursor != null && mCursor.moveToNext()) {
-								int pIndex = mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO);
-								byte[] photoBlob = mCursor.getBlob(pIndex);
+							if (cursor != null && cursor.moveToNext()) {
+								int pIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO);
+								byte[] photoBlob = cursor.getBlob(pIndex);
 								if (photoBlob != null) {
 									m_bitmap = BitmapFactory.decodeByteArray(photoBlob, 0, photoBlob.length);
 								}
 							}
-							mCursor.close();
-							mCursor = null;							
+							cursor.close();
+							cursor = null;							
 							
 							// TODO only add a friend once
 							
@@ -178,8 +178,8 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 						m_progressDialog = null;
 					}
 				} finally {
-					if (mCursor != null) {
-						mCursor.close();
+					if (cursor != null) {
+						cursor.close();
 					}
 				}
 

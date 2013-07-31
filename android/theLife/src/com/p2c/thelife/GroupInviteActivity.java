@@ -124,6 +124,7 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 						
 						// now invite the person
 						Log.i(TAG, "Invite a person from contacts: " + email);
+						notifyAttemptingServerAccess("createRequest");
 						Server server = new Server(this);
 						server.createRequest(m_group.id, RequestModel.INVITE, email, null, this, "createRequest");						
 					}
@@ -161,6 +162,7 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 		}
 		
 		if (Utilities.isSuccessfulHttpCode(httpCode)) {
+			Utilities.showInfoToast(this, getResources().getString(R.string.person_invited_by_email), Toast.LENGTH_SHORT);
 		}
 	}
 	
