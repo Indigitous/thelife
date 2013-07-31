@@ -20,7 +20,7 @@ import com.p2c.thelife.model.GroupModel;
 /*
  * Support querying for groups.
  */
-public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, OnItemClickListener, GroupRequestJoinDialog.Listener {
+public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, OnItemClickListener, GroupMembershipRequestDialog.Listener {
 	
 	private static final String TAG = "GroupsSearchActivity";
 	
@@ -74,7 +74,7 @@ public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity imp
 		m_group = (GroupModel)arg1.getTag();
 		
 		// confirm the choice
-		GroupRequestJoinDialog dialog = new GroupRequestJoinDialog();
+		GroupMembershipRequestDialog dialog = new GroupMembershipRequestDialog();
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());		
 	}
 	

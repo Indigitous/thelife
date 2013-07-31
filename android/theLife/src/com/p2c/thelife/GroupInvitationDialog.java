@@ -13,11 +13,11 @@ import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
 
 /**
- * As a person to join your group. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.
+ * Invite a person to join your group. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.
  * @author clarence
  *
  */
-public class UserInviteDialog extends ServerAccessDialogAbstract {
+public class GroupInvitationDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class UserInviteDialog extends ServerAccessDialogAbstract {
 		final GroupModel group = ((GroupActivity)m_listener).getSelectedGroup();
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
-		final View view = inflater.inflate(R.layout.dialog_invite_user_manually, null);
+		final View view = inflater.inflate(R.layout.dialog_group_invitation_manually, null);
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
 			
 		// set the message, content and buttons of the alert
@@ -35,9 +35,9 @@ public class UserInviteDialog extends ServerAccessDialogAbstract {
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface di, int which) {
 
-				EditText emailField = (EditText)view.findViewById(R.id.invite_user_email);
+				EditText emailField = (EditText)view.findViewById(R.id.invite_person_email);
 				String email = emailField.getText().toString();
-				EditText phoneField = (EditText)view.findViewById(R.id.invite_user_phone);
+				EditText phoneField = (EditText)view.findViewById(R.id.invite_person_phone);
 				String phone = phoneField.getText().toString();			
 				
 				// enable a progress bar

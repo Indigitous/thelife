@@ -13,7 +13,7 @@ import com.p2c.thelife.model.RequestModel;
  * @author clarence
  *
  */
-public class GroupRequestJoinDialog extends ServerAccessDialogAbstract {
+public class GroupMembershipRequestDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

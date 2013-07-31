@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/invite_user_email"
+        android:id="@+id/invite_person_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -13,7 +13,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/invite_user_phone"
+        android:id="@+id/invite_person_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
