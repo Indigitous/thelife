@@ -17,7 +17,7 @@ import com.p2c.thelife.model.RequestModel;
  * @author clarence
  *
  */
-public class GroupInvitationManuallyDialog extends ServerAccessDialogAbstract {
+public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class GroupInvitationManuallyDialog extends ServerAccessDialogAbstract {
 		final GroupModel group = ((GroupActivity)m_listener).getSelectedGroup();
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
-		final View view = inflater.inflate(R.layout.dialog_group_invitation_manually, null);
+		final View view = inflater.inflate(R.layout.dialog_group_invite_manually, null);
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
 			
 		// set the message, content and buttons of the alert
