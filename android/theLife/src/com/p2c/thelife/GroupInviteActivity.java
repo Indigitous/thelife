@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -142,8 +143,16 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 						cursor = null;
 						
 						// now invite the person
-						Log.i(TAG, "Invite a person from contacts: " + (m_isEmailRequest ? email : mobile));
+						Log.i(TAG, "Invite a person from contacts: " + (m_isEmailRequest ? "EMAIL " + email : "MOBILE " + mobile));
 						notifyAttemptingServerAccess("createRequest");
+						
+						// SMS invitations
+						if (!m_isEmailRequest) {
+							SmsManager smsManager = SmsManager.getDefault();
+							String invitation = getResources().getString(R.string.sms_invitation, TheLifeConfiguration.getOwnerDS().getOwner().getFullName());
+							smsManager.sendTextMessage(mobile, null, invitation, null,  null);
+						}
+						
 						Server server = new Server(this);
 						server.createRequest(m_group.id, RequestModel.INVITE, email, mobile, this, "createRequest");						
 					}
