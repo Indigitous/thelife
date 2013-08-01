@@ -45,6 +45,7 @@ public class OwnerDS {
 	public OwnerDS() {
 		SharedPreferences systemSettings = TheLifeConfiguration.getSystemSettings();
 
+		// if ownerId == 0 then nobody is logged in
 		int ownerId = systemSettings.getInt(KEY_ID, 0);
 		if (ownerId != 0) {
 			String firstName = systemSettings.getString(KEY_FIRST_NAME, "");
@@ -54,10 +55,9 @@ public class OwnerDS {
 			String provider = systemSettings.getString(KEY_PROVIDER, "");
 			
 			m_owner = new UserModel(ownerId, firstName, lastName, email, mobile, provider);
+			m_token = systemSettings.getString(KEY_TOKEN, "");
+			m_hasAddedFriend = systemSettings.getBoolean(KEY_HAS_ADDED_FRIEND, false);			
 		}
-		
-		m_token = systemSettings.getString(KEY_TOKEN, "");
-		m_hasAddedFriend = systemSettings.getBoolean(KEY_HAS_ADDED_FRIEND, false);
 	}
 	
 	
@@ -90,6 +90,7 @@ public class OwnerDS {
 			systemSettingsEditor.commit();		
 		} else {
 			systemSettingsEditor.putInt(KEY_ID, 0); // marks a not-valid owner
+			systemSettingsEditor.commit();			
 		}
 		
 		// tell all the listeners about the change
