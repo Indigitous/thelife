@@ -109,6 +109,7 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 		if (resultCode == RESULT_OK) {
 			if (requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL || requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS_SMS) {
 				// user has selected a contact
+				// TODO don't invite someone who is already a group member
 				
 				m_isEmailRequest = requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL;
 				String contactField = (m_isEmailRequest) ?
@@ -146,7 +147,7 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 						Log.i(TAG, "Invite a person from contacts: " + (m_isEmailRequest ? "EMAIL " + email : "MOBILE " + mobile));
 						notifyAttemptingServerAccess("createRequest");
 						
-						// SMS invitations
+						// SMS invitations are sent by Android
 						if (!m_isEmailRequest) {
 							SmsManager smsManager = SmsManager.getDefault();
 							String invitation = getResources().getString(R.string.sms_invitation, TheLifeConfiguration.getOwnerDS().getOwner().getFullName());
