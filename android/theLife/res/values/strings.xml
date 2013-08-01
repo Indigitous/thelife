@@ -32,7 +32,6 @@
     <string name="create_group">Create Group</string>
     <string name="group_name">Group Name</string>
     <string name="group_description">Description</string>
-    <string name="setup_prompt">Welcome to theLife!\n\nPlease login\nor create a new account.</string>
     <string name="login">Log In</string>
     <string name="register">Get Started</string>
     <string name="login_prompt">Please login to your account.</string>
@@ -171,7 +170,7 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="action_license">License</string>
     <string name="confirm_activity">Do you want to do this activity?</string>
 
-    <!-- added July 10+, 2013 -->
+    <!-- added/changed July 10+, 2013 -->
     <string name="show_license">Show License Information</string>
     <string name="title_resources">Resources</string>
     <string name="action_filter">Filter</string>
@@ -199,5 +198,7 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="person_invited_by_email">An invitation email was sent.</string>
     <string name="person_invited_by_sms">An invitation SMS was sent.</string>
     <string name="sms_invitation">%1$s invites you to join theLife App beta test! You can download it from Google Play at http://bit.ly/abc123456.</string>
+    <string name="setup_prompt">You are about to start an incredible faith adventure</string>
+    
 
 </resources>
