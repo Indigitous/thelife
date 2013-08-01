@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="new_user_help">&lt;h3>Welcome to theLife Smart Evangelism Toolbox&lt;/h3>
+    <string name="new_user_help">&lt;h3>Welcome to &lt;i>&lt;b>theLife App&lt;/b>&lt;/i> Smart Evangelism Toolbox&lt;/h3>
 &lt;p>You want to help your friends discover Jesus, but every person, and every journey, is different.&lt;/p>
 &lt;p>Our goal is to help you walk with your friends on their journey towards Jesus.&lt;/p>
 &lt;p>At each step of the journey, we\'ll supply personalised resources, conversation ideas, and other tools which will help you connect your friends to God in meaningful ways.&lt;/p>
 &lt;p>We understand that evangelism is hard. Without a like-minded community, it\'s easy to lose our motivation to live missionally.&lt;/p>
-&lt;p>To keep motivated and active, we recommend you use theLife Smart Evangelism Toolbox with a group of like-minded Christians so you can encourage and pray for one another on the journey.&lt;/p>
+&lt;p>To keep motivated and active, we recommend you use &lt;i>&lt;b>theLife App&lt;/b>&lt;/i> Smart Evangelism Toolbox with a group of like-minded Christians so you can encourage and pray for one another on the journey.&lt;/p>
 </string>
     <string name="first_time_adding_friend_help">
 &lt;h3>The Process&lt;/h3>
-&lt;p> theLife sees evangelism as a process: on the journey towards Jesus, most people move through a few different stages.&lt;/p>
-&lt;p> To understand the journey, we us an approach from the book &lt;a href="http://www.ivpress.com/cgi-ivpress/book.pl/code=3608" >"I Once Was Lost: What Postmodern Skeptics Taught Us About Their Path to Jesus.&lt;/a>&lt;/p>
-&lt;p> I Once Was Lost describes five thresholds, or turning points, that people confront:&lt;/p>
+&lt;p> Beginning a relationship with Jesus is radically life-changing. 
+	For most people, the process involved in knowing and embracing Jesus is like a journey that travels through different stages.&lt;/p>
+&lt;p> Based on the work of authors 
+	&lt;a href="http://www.ivpress.com/cgi-ivpress/book.pl/code=3608" >Don Everts&lt;/a> and &lt;a href="http://www.ivpress.com/cgi-ivpress/book.pl/code=3608" >Doug Schaupp&lt;/a> 
+	in their book, &lt;i>I Once Was Lost: What postmodern skeptics taught us about their path to Jesus&lt;/i>, &lt;i>&lt;b>theLife App&lt;/b>&lt;/i> uses five thresholds, 
+	or turning points to describe the stages a person confronts on their journey to Jesus:&lt;/p>       
 &lt;ol>
     &lt;li>Knowing and trusting a Christian&lt;/li>
-    &lt;li>Becoming curious about Jesus&lt;/li>
+    &lt;li>Becoming curious about Jesus/Christianity&lt;/li>
     &lt;li>Opening up to change&lt;/li>
-    &lt;li>Seeking God&lt;/li>
-    &lt;li>Entering the Kingdom&lt;/li>
+    &lt;li>Seeking God (in Christ Jesus)&lt;/li>
+    &lt;li>Entering the kingdom&lt;/li>
 &lt;/ol>
-&lt;p> These five steps aren\'t a magic formula, and they don\'t always happen in order, but they help us understand our friends\'s journeys.&lt;/p>
-&lt;p> As you use theLife App, we\'ll explain what each threshold means, how to recognise them, and how to help friends take the next step.&lt;/p>
+&lt;p> These five stages are not a magic formula nor do they always occur in order 
+	but they do help us understand the journey and process involved in our friend’s lives as they journey towards Jesus.&lt;/p>
 </string>
 
 	<string name="first_time_using_trusting_threshold_help">
@@ -74,7 +77,7 @@
     &lt;p> Your friend may not respond right away to a call, but this provides a great chance to address roadblocks together.&lt;/p>
     &lt;p> As you talk it through, keep the focus on Jesus rather than on secondary issues.&lt;/p>
     &lt;p> Finally, be prepared for spiritual warfare. As souls approach the Kingdom, Satan will fight to keep them out.&lt;/p>
-    &lt;p>Persever in prayer and the power of the Holy Spirit. And get ready to party.&lt;/p>
+    &lt;p>Persevere in prayer and the power of the Holy Spirit. And get ready to party.&lt;/p>
 </string>
 
 <string name="first_time_using_christian_threshold_help">

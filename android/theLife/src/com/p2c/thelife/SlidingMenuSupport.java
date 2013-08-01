@@ -157,8 +157,27 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
         if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 	        ImageView imageView = (ImageView)m_appMenu.findViewById(R.id.app_menu_user_image);
 	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getId()));
+	        imageView.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent("com.p2c.thelife.Settings");	        				
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					m_activity.startActivity(new Intent("com.p2c.thelife.Settings"));	
+				}
+			});
+        
 	        TextView textView = (TextView)m_appMenu.findViewById(R.id.app_menu_user_name);
 	        textView.setText(TheLifeConfiguration.getOwnerDS().getOwner().getFullName());
+	        textView.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent("com.p2c.thelife.Settings");	        				
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					m_activity.startActivity(new Intent("com.p2c.thelife.Settings"));	
+				}
+			});
         }		
 	}
 	
