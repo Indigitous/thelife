@@ -1,48 +1,52 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/login_screen"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    tools:context=".SetupActivity" >
+    android:background="@drawable/login_screen"    
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/register"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"        
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"        
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"    
+        android:text="@string/register" 
+       	android:background="@drawable/round_gray_shadow"
+        android:onClick="registerUser"/>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_marginLeft="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/register"
+        android:layout_alignRight="@+id/register"
+        android:layout_marginBottom="20dp"        
+        android:text="@string/login" 
+        android:background="@drawable/round_green_shadow"
+        android:onClick="loginUser"/>
 
     <TextView
         android:textSize="24sp"
         android:textColor="#FFFFFF"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"        
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"        
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="240dp"
-        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp"
         android:shadowColor="#000000"
         android:shadowDx="3.5"
         android:shadowDy="3.5"
         android:shadowRadius="3.14"
         android:text="@string/setup_prompt" />
-        
-    <Button
-        android:id="@+id/login"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"        
-        android:text="@string/login" 
-        android:background="@drawable/round_green_shadow"
-        android:layout_marginBottom="20dp"
-        android:onClick="loginUser"/>
-        
-    <Button
-        android:id="@+id/register"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"        
-        android:text="@string/register" 
-       	android:background="@drawable/round_gray_shadow"
-		android:paddingLeft="4dp"	        
-        android:onClick="registerUser"/>
 
-</LinearLayout>
+</RelativeLayout>
