@@ -113,7 +113,7 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 				
 				m_isEmailRequest = requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL;
 				String contactField = (m_isEmailRequest) ?
-					ContactsContract.CommonDataKinds.Email.ADDRESS :
+					/* ContactsContract.CommonDataKinds.Email.ADDRESS API 11 */ "data1" :
 					ContactsContract.CommonDataKinds.Phone.NUMBER;
 				
 				// TODO do this in a background thread?
