@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="new_user_help">&lt;h3>Welcome to &lt;i>&lt;b>theLife App&lt;/b>&lt;/i> Smart Evangelism Toolbox&lt;/h3>
+    <string name="new_user_help">&lt;h3>Welcome to TheLife App Smart Evangelism Toolbox&lt;/h3>
 &lt;p>You want to help your friends discover Jesus, but every person, and every journey, is different.&lt;/p>
 &lt;p>Our goal is to help you walk with your friends on their journey towards Jesus.&lt;/p>
 &lt;p>At each step of the journey, we\'ll supply personalised resources, conversation ideas, and other tools which will help you connect your friends to God in meaningful ways.&lt;/p>
 &lt;p>We understand that evangelism is hard. Without a like-minded community, it\'s easy to lose our motivation to live missionally.&lt;/p>
-&lt;p>To keep motivated and active, we recommend you use &lt;i>&lt;b>theLife App&lt;/b>&lt;/i> Smart Evangelism Toolbox with a group of like-minded Christians so you can encourage and pray for one another on the journey.&lt;/p>
+&lt;p>To keep motivated and active, we recommend you use TheLife App Smart Evangelism Toolbox with a group of like-minded Christians so you can encourage and pray for one another on the journey.&lt;/p>
 </string>
     <string name="first_time_adding_friend_help">
 &lt;h3>The Process&lt;/h3>
@@ -14,7 +14,7 @@
 	For most people, the process involved in knowing and embracing Jesus is like a journey that travels through different stages.&lt;/p>
 &lt;p> Based on the work of authors 
 	&lt;a href="http://www.ivpress.com/cgi-ivpress/book.pl/code=3608" >Don Everts&lt;/a> and &lt;a href="http://www.ivpress.com/cgi-ivpress/book.pl/code=3608" >Doug Schaupp&lt;/a> 
-	in their book, &lt;i>I Once Was Lost: What postmodern skeptics taught us about their path to Jesus&lt;/i>, &lt;i>&lt;b>theLife App&lt;/b>&lt;/i> uses five thresholds, 
+	in their book, &lt;i>I Once Was Lost: What postmodern skeptics taught us about their path to Jesus&lt;/i>, TheLife App uses five thresholds, 
 	or turning points to describe the stages a person confronts on their journey to Jesus:&lt;/p>       
 &lt;ol>
     &lt;li>Knowing and trusting a Christian&lt;/li>

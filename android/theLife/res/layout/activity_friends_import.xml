@@ -18,6 +18,7 @@
 
     <Button
         android:id="@+id/button1"
+        android:background="@drawable/round_gray_shadow"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,6 +32,7 @@
 
     <Button
         android:id="@+id/button2"
+        android:background="@drawable/round_gray_shadow"        
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -42,6 +44,7 @@
 
     <Button
         android:id="@+id/button3"
+        android:background="@drawable/round_gray_shadow"        
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -49,5 +52,15 @@
         android:drawableLeft="@drawable/ic_launcher"        
         android:onClick="importFriendManually"
         android:text="@string/import_manually" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"        
+        android:gravity="center"
+        android:textColor="#a7a7a7"
+        android:text="@string/friend_info_is_private"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
