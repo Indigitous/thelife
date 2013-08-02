@@ -70,12 +70,16 @@
     	        android:layout_marginRight="16dp"
     	        android:layout_marginTop="12dp"
     	        android:layout_gravity="bottom"
-    	        android:background="@drawable/round_green_shadow"
+    	        android:background="@drawable/round_green_double_shadow"
     	        android:gravity="center"
     	        android:includeFontPadding="false"
     	        android:onClick="presentActivities"
     	        android:padding="0dp"
     	        android:text="@string/activity_friend_whats_next"
+				android:shadowColor="#23282A"
+				android:shadowDx="0"
+				android:shadowDy="-2"
+				android:shadowRadius="3.14"    	        
     	        android:textColor="#FFFFFFFF" />
     	    
     	</LinearLayout>
