@@ -197,7 +197,7 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="invite_person_error">Error when inviting person</string>
     <string name="person_invited_by_email">An invitation email was sent.</string>
     <string name="person_invited_by_sms">An invitation SMS was sent.</string>
-    <string name="sms_invitation">%1$s invites you to join TheLife App beta test! You can download it from Google Play at http://bit.ly/abc123456.</string>
+    <string name="sms_invitation">%1$s invites you to join TheLife App beta test! You can download it from Google Play at http://p2c.sh.</string>
     <string name="setup_prompt">You are about to start an incredible faith adventure</string>
     <string name="friend_info_is_private">TheLife App will not make any contact with your friends; contact information is only stored for your reference.</string>
     

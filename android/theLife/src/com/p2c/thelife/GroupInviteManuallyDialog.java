@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.p2c.thelife.model.RequestModel;
  *
  */
 public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
+	
+	private static final String TAG = "GroupInviteManuallyDialog";
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -57,14 +61,25 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 
 				EditText emailField = (EditText)view.findViewById(R.id.invite_person_email);
 				String email = emailField.getText().toString();
-				EditText phoneField = (EditText)view.findViewById(R.id.invite_person_phone);
-				String phone = phoneField.getText().toString();			
+				EditText mobileField = (EditText)view.findViewById(R.id.invite_person_phone);
+				String mobile = mobileField.getText().toString();			
 				
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createRequest");
+				
+				// now invite the person
+				boolean isEmailRequest = (email != null && !email.isEmpty());
+				Log.i(TAG, "Invite a person from contacts: " + (isEmailRequest ? "EMAIL " + email : "MOBILE " + mobile));
+				
+				// SMS invitations are sent by Android
+				if (!isEmailRequest) {
+					SmsManager smsManager = SmsManager.getDefault();
+					String invitation = getResources().getString(R.string.sms_invitation, TheLifeConfiguration.getOwnerDS().getOwner().getFullName());
+					smsManager.sendTextMessage(mobile, null, invitation, null,  null);
+				}
 
 				Server server = new Server(getActivity());
-				server.createRequest(group.id, RequestModel.INVITE, email, phone, (Server.ServerListener)m_listener, "createRequest");
+				server.createRequest(group.id, RequestModel.INVITE, email, mobile, (Server.ServerListener)m_listener, "createRequest");
 			}
 		});		
 		
