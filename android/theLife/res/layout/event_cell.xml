@@ -13,7 +13,7 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal" >
         
-	    <com.p2c.thelife.EventUserFriendView
+	    <com.p2c.thelife.view.EventUserFriendView
 	        android:id="@+id/event_images"
 	        android:layout_width="@dimen/event_bitmaps_length"
 	        android:layout_height="@dimen/thumbnail_side"
