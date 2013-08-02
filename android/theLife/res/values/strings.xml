@@ -32,8 +32,8 @@
     <string name="create_group">Create Group</string>
     <string name="group_name">Group Name</string>
     <string name="group_description">Description</string>
-    <string name="login">Log In</string>
-    <string name="register">Get Started</string>
+    <string name="login">Log in</string>
+    <string name="register">Get started</string>
     <string name="login_prompt">Please login to your account.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

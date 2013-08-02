@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.p2c.thelife.TheLifeConfiguration;
 
@@ -14,6 +15,11 @@ import com.p2c.thelife.TheLifeConfiguration;
  *
  */
 public class RequestsDS extends AbstractDS<RequestModel> {
+	
+	private static final String KEY_HAS_NEW_NOTIFICATIONS = "requests_has_new_notifications";
+	
+	private boolean m_hasNewNotifications = false;
+	
 	
 	public RequestsDS(Context context, String token) {
 		
@@ -26,8 +32,14 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 				"my_requests",
 				"refresh_requests_delta_key",
 				TheLifeConfiguration.REFRESH_REQUESTS_DELTA
-			);		
+			);
 		
+		// see if there are new notifications
+		SharedPreferences systemSettings = TheLifeConfiguration.getSystemSettings();
+		m_hasNewNotifications = systemSettings.getBoolean(KEY_HAS_NEW_NOTIFICATIONS, false);
+		if (count() == 1) {
+			setHasNewNotifications(false);
+		}
 	}
 	
 	
@@ -36,5 +48,26 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 	 */
 	protected RequestModel createFromJSON(JSONObject json, boolean useServer) throws JSONException {
 		return RequestModel.fromJSON(m_context.getResources(), json, useServer);
+	}
+	
+	
+	public boolean hasNewNotifications() {
+		return m_hasNewNotifications;
+	}
+	
+	
+	public void setHasNewNotifications(boolean hasNewNotifications) {
+		m_hasNewNotifications = hasNewNotifications;
+		SharedPreferences.Editor editor = TheLifeConfiguration.getSystemSettings().edit();
+		editor.putBoolean(KEY_HAS_NEW_NOTIFICATIONS, hasNewNotifications);
+		editor.commit();		
 	}	
+	
+	
+	public void notifyDSChangedListeners() {
+		if (m_newModelIds.size() > 0) {
+			setHasNewNotifications(true);
+		}
+		super.notifyDSChangedListeners();
+	}
 }

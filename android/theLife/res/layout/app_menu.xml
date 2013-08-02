@@ -48,7 +48,9 @@
         android:layout_width="wrap_content"
     	android:paddingLeft="@dimen/activity_horizontal_margin"
     	android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_height="60dp" >
+    	android:paddingTop="2dp"
+    	android:paddingBottom="2dp"    	
+        android:layout_height="64dp" >
 
 	    <ImageView
 	        android:id="@+id/app_menu_user_image"
@@ -64,7 +66,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:layout_gravity="center_vertical"
-	        android:text="Large Text"
+	        android:text="Alphonzo Morrison"
 	        android:textColor="#ffffff"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>

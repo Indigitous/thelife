@@ -62,7 +62,11 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 					m_listView.postDelayed(m_displayRefreshRunnable, 60 * 1000);
 				}
 			}
-		};		
+		};
+		
+		// clear the new notifications flag
+		TheLifeConfiguration.getRequestsDS().setHasNewNotifications(false);
+		showNotificationNumber();
 	}
 
 	

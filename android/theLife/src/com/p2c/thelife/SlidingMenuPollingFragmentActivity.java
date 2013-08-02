@@ -50,6 +50,13 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 		TheLifeConfiguration.getRequestsPoller().stop();
 		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);
 		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_support);		
-	}		
-
+	}
+	
+	
+	/**
+	 * Show the notifications number in the sliding menu.
+	 */
+	protected void showNotificationNumber() {
+		m_support.showNotificationNumber();
+	}	
 }

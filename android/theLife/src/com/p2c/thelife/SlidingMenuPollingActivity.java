@@ -29,7 +29,7 @@ public class SlidingMenuPollingActivity extends SherlockActivity {
 	protected void onResume() {
 		super.onResume();
 		
-		// guard against an not-valid user
+		// guard against a not-valid user
 		if (!TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			Intent intent = new Intent("com.p2c.thelife.Setup");
 			startActivity(intent);
@@ -49,6 +49,13 @@ public class SlidingMenuPollingActivity extends SherlockActivity {
 		TheLifeConfiguration.getRequestsPoller().stop();
 		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);
 		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_support);		
-	}	
+	}
+	
+	/**
+	 * Show the notifications number in the sliding menu.
+	 */
+	protected void showNotificationNumber() {
+		m_support.showNotificationNumber();
+	}
 
 }

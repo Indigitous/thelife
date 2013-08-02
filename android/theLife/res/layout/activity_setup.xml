@@ -17,45 +17,32 @@
         android:layout_height="wrap_content"
         android:gravity="center"        
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="240dp"
+        android:layout_marginBottom="20dp"
         android:shadowColor="#000000"
         android:shadowDx="3.5"
         android:shadowDy="3.5"
         android:shadowRadius="3.14"
         android:text="@string/setup_prompt" />
-    
-    <LinearLayout
-    	android:layout_width="match_parent"
-    	android:layout_height="match_parent"  
-    	android:gravity="center"
-        android:orientation="horizontal" 
-        >
         
-	    <Button
-	        android:id="@+id/register"
-	        android:layout_width="120dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_vertical"        
-	        android:text="@string/register" 
-	       	android:background="@drawable/round_gray"
-			android:paddingLeft="4dp"	        
-	        android:onClick="registerUser"/>
-	    
-	    <Button 
-	        android:id="@+id/settings_space"
-	        android:layout_width="20dp"
-	        android:layout_height="0dp"
-	        />
-	    
-	    <Button
-	        android:id="@+id/login"
-	        android:layout_width="120dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_vertical"        
-	        android:text="@string/login" 
-	        android:background="@drawable/round_gray"
-	        android:onClick="loginUser"/>	    
-    
-	</LinearLayout>    
+    <Button
+        android:id="@+id/login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"        
+        android:text="@string/login" 
+        android:background="@drawable/round_green_shadow"
+        android:layout_marginBottom="20dp"
+        android:onClick="loginUser"/>
+        
+    <Button
+        android:id="@+id/register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"        
+        android:text="@string/register" 
+       	android:background="@drawable/round_gray_shadow"
+		android:paddingLeft="4dp"	        
+        android:onClick="registerUser"/>
 
 </LinearLayout>
