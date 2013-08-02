@@ -52,19 +52,19 @@
     	android:paddingBottom="2dp"    	
         android:layout_height="64dp" >
 
-	    <ImageView
+	    <com.p2c.thelife.view.RoundedImageView
 	        android:id="@+id/app_menu_user_image"
-	        android:layout_width="60dp"
-	        android:layout_height="60dp"
-	        android:paddingRight="8dp"
-	        android:layout_weight="0"
-	        android:src="@drawable/generic_avatar_image" />
+	        android:layout_width="@dimen/app_menu_owner_side"
+	        android:layout_height="@dimen/app_menu_owner_side"
+	        android:layout_gravity="center_vertical"
+	        android:layout_weight="0" />
 
 	    <TextView
 	        android:id="@+id/app_menu_user_name"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:paddingLeft="8dp"	        
 	        android:layout_gravity="center_vertical"
 	        android:text="Alphonzo Morrison"
 	        android:textColor="#ffffff"

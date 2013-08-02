@@ -21,6 +21,10 @@
     <dimen name="user_cell_text_padleft">4dp</dimen>
     <dimen name="user_cell_name_padbottom">16dp</dimen>
     <dimen name="user_cell_name_textsize">16sp</dimen>
-    <dimen name="user_cell_border">2dp</dimen>     
+    <dimen name="user_cell_border">2dp</dimen>
+    
+    <dimen name="app_menu_owner_radius">4dp</dimen>
+    <dimen name="app_menu_owner_side">60dp</dimen>
+    
 
 </resources>

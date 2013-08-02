@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 /**
- * Set up the views in the sliding menu list view.
+ * Set up the menu cell views in the sliding menu list view.
  * @author clarence
  *
  */

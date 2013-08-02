@@ -4,5 +4,6 @@
     <color name="green">#00FF00</color>
     
     <color name="event_background">#FFFFFF</color>
+    <color name="app_menu_owner_background">#34383A</color>
     
 </resources>

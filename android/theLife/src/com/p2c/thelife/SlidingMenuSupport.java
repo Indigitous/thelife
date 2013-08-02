@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.p2c.thelife.model.OwnerDS;
 import com.p2c.thelife.model.RequestsDS;
 import com.p2c.thelife.model.UserModel;
+import com.p2c.thelife.view.RoundedImageView;
 import com.slidingmenu.lib.SlidingMenu;
 
 /**
@@ -155,8 +155,11 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	private void showOwner() {
         // show the app user
         if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
-	        ImageView imageView = (ImageView)m_appMenu.findViewById(R.id.app_menu_user_image);
-	        imageView.setImageBitmap(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getId()));
+        	RoundedImageView imageView = (RoundedImageView)m_appMenu.findViewById(R.id.app_menu_user_image);
+        	imageView.setImageInfo(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getId()),
+        		m_activity.getResources().getColor(R.color.app_menu_owner_background),
+        		m_activity.getResources().getDimension(R.dimen.app_menu_owner_side),
+        		m_activity.getResources().getDimension(R.dimen.app_menu_owner_radius));
 	        imageView.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
