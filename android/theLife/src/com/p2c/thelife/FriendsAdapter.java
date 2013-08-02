@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.FriendModel;
+import com.p2c.thelife.view.FriendImageView;
 
 
 /**

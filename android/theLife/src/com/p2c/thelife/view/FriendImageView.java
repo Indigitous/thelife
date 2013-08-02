@@ -1,4 +1,4 @@
-package com.p2c.thelife;
+package com.p2c.thelife.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +8,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.p2c.thelife.R;
+import com.p2c.thelife.Utilities;
 import com.p2c.thelife.model.FriendModel;
 
 

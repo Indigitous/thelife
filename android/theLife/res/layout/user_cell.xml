@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     
     <!-- placeholder view size below; real size is calculated -->
-    <com.p2c.thelife.UserImageView
+    <com.p2c.thelife.view.UserImageView
         android:id="@+id/user_image"
         android:layout_width="180dp"
         android:layout_height="180dp"

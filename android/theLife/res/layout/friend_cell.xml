@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     
     <!-- placeholder view size below; real size is calculated -->
-    <com.p2c.thelife.FriendImageView
+    <com.p2c.thelife.view.FriendImageView
         android:id="@+id/friend_image"
         android:layout_width="180dp"
         android:layout_height="180dp"

@@ -12,6 +12,7 @@ import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.GroupUsersDS;
 import com.p2c.thelife.model.UserModel;
+import com.p2c.thelife.view.UserImageView;
 
 
 /**
