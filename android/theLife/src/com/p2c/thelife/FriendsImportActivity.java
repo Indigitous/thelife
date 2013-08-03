@@ -57,10 +57,7 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 	}		
 	
 	public void importFriendsByInternalContact(View view) {
-//		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-//		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Email.CONTENT_URI);
 		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI); // all contacts
-		
 		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_CONTACTS);	
 	}
 	
@@ -155,7 +152,7 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 								int pIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO);
 								byte[] photoBlob = cursor.getBlob(pIndex);
 								if (photoBlob != null) {
-									m_bitmap = BitmapFactory.decodeByteArray(photoBlob, 0, photoBlob.length);
+									m_bitmap = Utilities.makeSquare(BitmapFactory.decodeByteArray(photoBlob, 0, photoBlob.length));
 								}
 							}
 							cursor.close();

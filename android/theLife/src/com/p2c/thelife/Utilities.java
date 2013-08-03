@@ -273,5 +273,31 @@ public class Utilities {
 		
 		return bitmap;		
 	}
+	
+	
+	/**
+	 * @param bitmap
+	 * @return a square bitmap from the middle of the given bitmap
+	 */
+	public static Bitmap makeSquare(Bitmap bitmap) {
+		
+		if (bitmap != null) {
+			int originalWidth = bitmap.getWidth();
+			int originalHeight = bitmap.getHeight();
+			if (originalWidth < originalHeight) {
+				// choose a square from the middle of the column
+				int sideLength = originalWidth;
+				int y = (originalHeight - sideLength) / 2;
+				bitmap = Bitmap.createBitmap(bitmap, 0, y, sideLength, sideLength);
+			} else if (originalHeight < originalWidth){
+				// choose a square from the middle of the row
+				int sideLength = originalHeight;
+				int x = (originalWidth - sideLength) / 2;
+				bitmap = Bitmap.createBitmap(bitmap, x, 0, sideLength, sideLength);
+			}
+		}
+		
+		return bitmap;
+	}
 
 }

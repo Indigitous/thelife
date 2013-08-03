@@ -51,7 +51,7 @@ public class ImageSelectSupport {
 				
 				// just get the low res camera image from the activity result 
 				Bundle bundle = intent.getExtras();
-				Bitmap bitmap = (Bitmap)bundle.get("data");
+				Bitmap bitmap = Utilities.makeSquare((Bitmap)bundle.get("data"));
 				m_listener.notifyImageSelected(bitmap);
 				m_context = null;
 				m_listener = null;
@@ -104,6 +104,7 @@ public class ImageSelectSupport {
 				m_progressDialog = null;
 			}				
 			
+			bitmap = Utilities.makeSquare(bitmap);
 			m_listener.notifyImageSelected(bitmap);
 			m_context = null;			
 			m_listener = null;
