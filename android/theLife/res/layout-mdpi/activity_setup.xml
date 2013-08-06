@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/login"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="34dp"
+        android:layout_marginBottom="12dp"
         android:shadowColor="#000000"
         android:shadowDx="3.5"
         android:shadowDy="3.5"
