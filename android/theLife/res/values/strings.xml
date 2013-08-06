@@ -193,12 +193,15 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="invite_contact_by_email">Email Contacts</string>
     <string name="invite_contact_by_sms">SMS Contacts</string>
     <string name="invite_by_facebook">Facebook</string>
-    <string name="invite_manually">Manual Entry</string>    
+    <string name="invite_manually">Manual Entry</string>
     <string name="invite_person_error">Error when inviting person</string>
     <string name="person_invited_by_email">An invitation email was sent.</string>
     <string name="person_invited_by_sms">An invitation SMS was sent.</string>
     <string name="sms_invitation">%1$s invites you to join TheLife App beta test! You can download it from Google Play at http://p2c.sh.</string>
     <string name="setup_prompt">You are about to start an incredible faith adventure</string>
     <string name="friend_info_is_private">TheLife App will not make any contact with your friends; contact information is only stored for your reference.</string>
-    
+    <string name="title_events_for_owner">Events</string>
+    <string name="activity_owner_edit_profile">Edit Profile</string>
+    <string name="no_owner_events">There are no events to show.</string>
+
 </resources>

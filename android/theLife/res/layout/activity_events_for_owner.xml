@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#d0d4d9"    
-    tools:context=".EventsForFriendActivity" >
+    tools:context=".EventsForOwnerActivity" >
 
     <LinearLayout 
     	android:layout_width="match_parent"
@@ -18,26 +18,25 @@
     	android:orientation="horizontal" >       
         
     	<ImageView
-	        android:id="@+id/activity_friend_image"
+	        android:id="@+id/activity_owner_image"
 	        android:layout_width="120dp"
 	        android:layout_height="120dp"
 	        android:src="@drawable/generic_avatar_image"
 	        android:scaleType="centerCrop"
 	        android:padding="2dp"
 	        android:background="#FFFFFF"
-	        android:onClick="editFriend" />
+	        android:onClick="editowner" />
     	
     	<LinearLayout
     		android:layout_width="match_parent"
     		android:layout_height="match_parent"
     		android:paddingLeft="12dp"
-    		android:orientation="vertical"
-	        android:onClick="editFriend" > 
+    		android:orientation="vertical" >
 	        
     	    <TextView 
-	        	android:id="@+id/activity_friend_name"  
+	        	android:id="@+id/activity_owner_name"  
 	        	android:paddingTop="2dp"  	        
-    	        android:text="Friendly NamesonSpec"
+    	        android:text="Alphonzo Malesquez"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
 		        android:textAppearance="?android:attr/textAppearanceLarge"
@@ -47,21 +46,6 @@
 		        android:shadowDy="3.5"
 		        android:shadowRadius="3.14"		        
     	        />
-    	    
-    	    <TextView
-	        	android:id="@+id/activity_friend_threshold"    	        
-    	        android:text="Friend Threshold"
-    	        android:textSize="12sp"    	        
-    	        android:layout_gravity="left"
-    			android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"
-   		        android:textAppearance="?android:attr/textAppearanceSmall"
-   		       	android:textColor="#FFFFFF"
-		        android:shadowColor="#000000"
-		        android:shadowDx="3.5"
-		        android:shadowDy="3.5"
-		        android:shadowRadius="3.14"   		       	
-    	        />    	    
     		
     	    <Button
     	        android:layout_width="match_parent"
@@ -73,9 +57,9 @@
     	        android:background="@drawable/round_green_double_shadow"
     	        android:gravity="center"
     	        android:includeFontPadding="false"
-    	        android:onClick="presentActivities"
+    	        android:onClick="editProfile"
     	        android:padding="0dp"
-    	        android:text="@string/activity_friend_whats_next"
+    	        android:text="@string/activity_owner_edit_profile"
 				android:shadowColor="#23282A"
 				android:shadowDx="0"
 				android:shadowDy="-2"
@@ -86,16 +70,16 @@
     </LinearLayout>
     
     <TextView
-        android:id="@+id/events_for_friend_none"
+        android:id="@+id/events_for_owner_none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/no_friend_events"
+        android:text="@string/no_owner_events"
         android:textStyle="italic"
         android:textAppearance="?android:attr/textAppearanceMedium" />       
 
    	<ListView
-        android:id="@+id/activity_friend_events"
+        android:id="@+id/activity_owner_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="8dp"
@@ -105,6 +89,6 @@
         android:dividerHeight="8dp"
         android:divider="#d0d4d9"        
         android:drawSelectorOnTop="false" />        
+    
 
-    	    
 </LinearLayout>

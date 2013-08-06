@@ -50,7 +50,19 @@ public class EventsDS extends AbstractDS<EventModel> {
 		}
 		
 		return events;
-	}	
+	}
+	
+	public ArrayList<EventModel> findByUser(int userId) {
+		ArrayList<EventModel> events = new ArrayList<EventModel>();
+		
+		for (EventModel m:m_data) {
+			if (m.user_id == userId) {
+				events.add(m);
+			}		
+		}
+		
+		return events;
+	}		
 	
 	
 	@Override

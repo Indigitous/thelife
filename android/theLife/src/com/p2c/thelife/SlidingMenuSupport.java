@@ -155,32 +155,27 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 	private void showOwner() {
         // show the app user
         if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+        	
+        	// listener for the owner views
+        	View.OnClickListener listener = new  View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent("com.p2c.thelife.EventsForOwner");	        				
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					m_activity.startActivity(intent);	
+				}
+			};
+			
         	RoundedImageView imageView = (RoundedImageView)m_appMenu.findViewById(R.id.app_menu_user_image);
         	imageView.setImageInfo(UserModel.getImage(TheLifeConfiguration.getOwnerDS().getId()),
         		m_activity.getResources().getColor(R.color.app_menu_owner_background),
         		m_activity.getResources().getDimension(R.dimen.app_menu_owner_side),
         		m_activity.getResources().getDimension(R.dimen.app_menu_owner_radius));
-	        imageView.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent("com.p2c.thelife.Settings");	        				
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					m_activity.startActivity(new Intent("com.p2c.thelife.Settings"));	
-				}
-			});
+	        imageView.setOnClickListener(listener);
         
 	        TextView textView = (TextView)m_appMenu.findViewById(R.id.app_menu_user_name);
 	        textView.setText(TheLifeConfiguration.getOwnerDS().getOwner().getFullName());
-	        textView.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent("com.p2c.thelife.Settings");	        				
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					m_activity.startActivity(new Intent("com.p2c.thelife.Settings"));	
-				}
-			});
+	        textView.setOnClickListener(listener);
         }		
 	}
 	

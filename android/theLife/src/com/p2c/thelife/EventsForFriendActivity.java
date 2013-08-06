@@ -232,7 +232,7 @@ public class EventsForFriendActivity extends SlidingMenuPollingActivity implemen
 			intent.putExtra("position", SlidingMenuSupport.FRIENDS_POSITION);
 			intent.putExtra("webview_data", getThresholdHelp(m_friend.threshold));
 			intent.putExtra("home", "com.p2c.thelife.EventsForFriend");
-			intent.putExtra("friend_id", m_friend.id);			
+			intent.putExtra("friend_id", m_friend.id);
 			startActivity(intent);
 		}
 		
