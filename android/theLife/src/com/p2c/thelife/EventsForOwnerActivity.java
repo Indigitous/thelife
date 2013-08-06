@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.model.EventsDS;
-import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 
 
@@ -42,7 +41,7 @@ public class EventsForOwnerActivity extends SlidingMenuPollingActivity implement
 		// Show the owner
 		if (owner != null) {
 			ImageView imageView = (ImageView)findViewById(R.id.activity_owner_image);
-			imageView.setImageBitmap(FriendModel.getImage(owner.id));
+			imageView.setImageBitmap(UserModel.getImage(owner.id));
 			
 			TextView nameView = (TextView)findViewById(R.id.activity_owner_name);
 			nameView.setText(owner.getFullName());

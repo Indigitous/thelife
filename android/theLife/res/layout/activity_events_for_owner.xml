@@ -36,9 +36,10 @@
     	    <TextView 
 	        	android:id="@+id/activity_owner_name"  
 	        	android:paddingTop="2dp"  	        
-    	        android:text="Alphonzo Malesquez"
+    	        android:text="Alphonzo Malesez"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
+    			android:layout_gravity="center"
 		        android:textAppearance="?android:attr/textAppearanceLarge"
 		        android:textColor="#FFFFFF"
 		        android:shadowColor="#000000"
