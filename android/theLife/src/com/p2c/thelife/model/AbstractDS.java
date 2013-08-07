@@ -36,7 +36,7 @@ import com.p2c.thelife.Utilities;
  *
  */
 public abstract class AbstractDS<T extends AbstractModel> {
-	
+
 	private static final int NUM_RETRIES = 2;
 	
 	
@@ -311,17 +311,19 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		
 		boolean success = true;
 		
-		FileWriter fileWriter = null;
-		try {
-			File cacheFile = new File(m_cacheFileName);
-			fileWriter = new FileWriter(cacheFile); // buffered
-			fileWriter.write(jsonString);
-		} catch (IOException e) {
-			Log.e(TAG, "writeJSONCache()", e);
-			success = false;
-		} finally {
-			if (fileWriter != null) {
-				try { fileWriter.close(); } catch (IOException e) { }
+		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {	
+			FileWriter fileWriter = null;
+			try {
+				File cacheFile = new File(m_cacheFileName);
+				fileWriter = new FileWriter(cacheFile); // buffered
+				fileWriter.write(jsonString);
+			} catch (IOException e) {
+				Log.e(TAG, "writeJSONCache()", e);
+				success = false;
+			} finally {
+				if (fileWriter != null) {
+					try { fileWriter.close(); } catch (IOException e) { }
+				}
 			}
 		}
 		
@@ -339,57 +341,59 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		
 		boolean success = true;
 		
-		if (newDataSize > 0) {
-			if (oldDataSize == 0) {
-				// if there isn't any old data, just write the file
-				replaceJSONCache(newDataJSONString);
-			} else {
-				
-				// make sure the cache file is really there
-				File cacheFile = new File(m_cacheFileName);
-				if (!cacheFile.exists()) {
-					Log.wtf(TAG, "prependJSONCache() missing cache file " + m_cacheFileName);
-					success = false;
-				} else {				
+		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+			if (newDataSize > 0) {
+				if (oldDataSize == 0) {
+					// if there isn't any old data, just write the file
+					replaceJSONCache(newDataJSONString);
+				} else {
 					
-					FileReader fileReader = null;
-					FileWriter fileWriter = null;					
-					try {
-					
-						// read in the old JSON data
-						fileReader = new FileReader(cacheFile);
-						String oldDataJSONString = Utilities.readBufferedStream(fileReader);
-						fileReader.close();
-						fileReader = null;
-						
-						// write the new JSON data at the start of the file, 
-						//      adding a comma after the final '}' and skipping the final ']'
-						fileWriter = new FileWriter(cacheFile);
-						int finalBraceIndex = newDataJSONString.lastIndexOf('}');					
-						fileWriter.write(newDataJSONString, 0, finalBraceIndex + 1);
-						fileWriter.write(',');
-						
-						// write the old JSON next, starting with the first '{' and thus skipping the first '['
-						int firstBraceIndex = oldDataJSONString.indexOf('{');
-						fileWriter.write(oldDataJSONString, firstBraceIndex, oldDataJSONString.length() - firstBraceIndex);
-						fileWriter.close();
-						fileWriter = null;
-						
-					} catch (Exception e) {
-						Log.e(TAG, "prependJSONCache()", e);
+					// make sure the cache file is really there
+					File cacheFile = new File(m_cacheFileName);
+					if (!cacheFile.exists()) {
+						Log.wtf(TAG, "prependJSONCache() missing cache file " + m_cacheFileName);
 						success = false;
-					} finally {
-						if (fileReader != null) {
-							try { fileReader.close(); } catch (Exception e) { }
+					} else {				
+						
+						FileReader fileReader = null;
+						FileWriter fileWriter = null;					
+						try {
+						
+							// read in the old JSON data
+							fileReader = new FileReader(cacheFile);
+							String oldDataJSONString = Utilities.readBufferedStream(fileReader);
+							fileReader.close();
+							fileReader = null;
+							
+							// write the new JSON data at the start of the file, 
+							//      adding a comma after the final '}' and skipping the final ']'
+							fileWriter = new FileWriter(cacheFile);
+							int finalBraceIndex = newDataJSONString.lastIndexOf('}');					
+							fileWriter.write(newDataJSONString, 0, finalBraceIndex + 1);
+							fileWriter.write(',');
+							
+							// write the old JSON next, starting with the first '{' and thus skipping the first '['
+							int firstBraceIndex = oldDataJSONString.indexOf('{');
+							fileWriter.write(oldDataJSONString, firstBraceIndex, oldDataJSONString.length() - firstBraceIndex);
+							fileWriter.close();
+							fileWriter = null;
+							
+						} catch (Exception e) {
+							Log.e(TAG, "prependJSONCache()", e);
+							success = false;
+						} finally {
+							if (fileReader != null) {
+								try { fileReader.close(); } catch (Exception e) { }
+							}
+							if (fileWriter != null) {
+								try { fileWriter.close(); } catch (Exception e) { }
+							}						
 						}
-						if (fileWriter != null) {
-							try { fileWriter.close(); } catch (Exception e) { }
-						}						
 					}
 				}
 			}
 		}
-		
+			
 		return success;
 	}
 	
@@ -635,9 +639,10 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		});
 		
 		for (File f:cacheFiles) {
+			Log.i("removeAllJSONFiles()", "Deleting file " + f.getName());
 			boolean wasDeleted = f.delete();
 			if (!wasDeleted) {
-				Log.e("removeAllJSONFiles", "Unable to delete cache file " + f.getName());
+				Log.e("removeAllJSONFiles()", "Unable to delete cache file " + f.getName());
 			}
 		}
 

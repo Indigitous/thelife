@@ -38,7 +38,7 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
 		}
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_configuration), true, true);		
+		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.retrieving_configuration), true, true);
 		
 		// get the owner's image, if not yet known (example: owner Login after an uninstall and re-install)
 		BitmapCacheHandler.loadOwnerBitmap();
