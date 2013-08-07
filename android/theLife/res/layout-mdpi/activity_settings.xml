@@ -75,7 +75,7 @@
 			        android:id="@+id/upload_image"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:drawableLeft="@drawable/action_search"
+			        android:drawableLeft="@drawable/upload_image"
 			        android:drawablePadding="2dp"
 			        android:gravity="left|center_vertical"
 			        android:onClick="selectImage"
