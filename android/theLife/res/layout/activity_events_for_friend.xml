@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#d0d4d9"    
+    android:background="#d0d4d9"
     tools:context=".EventsForFriendActivity" >
     
     <ImageView
@@ -13,16 +13,15 @@
         android:src="@drawable/person_background"
         android:scaleType="centerCrop"
         android:padding="0dp"
-        android:background="#FFFFFF"
         android:onClick="editFriend" />
     
     <LinearLayout 
     	android:layout_width="match_parent"
-    	android:layout_height="160dp"
+    	android:layout_height="188dp"
     	android:layout_marginTop="-88dp"
     	android:paddingTop="12dp"         
     	android:paddingLeft="12dp"
-    	android:paddingRight="12dp"        
+    	android:paddingRight="12dp"
         android:dividerHeight="12dp"
 	    android:paddingBottom="@dimen/activity_vertical_margin"	
     	android:orientation="horizontal" >
@@ -30,8 +29,8 @@
         
     	<ImageView
 	        android:id="@+id/activity_friend_image"
-	        android:layout_width="132dp"
-	        android:layout_height="132dp"
+	        android:layout_width="154dp"
+	        android:layout_height="154dp"
 	        android:src="@drawable/generic_avatar_image"
 	        android:scaleType="centerCrop"
 	        android:padding="2dp"
@@ -45,39 +44,46 @@
     		android:orientation="vertical"
 	        android:onClick="editFriend" > 
 	        
-    	    <TextView 
-	        	android:id="@+id/activity_friend_name"  
-	        	android:paddingTop="2dp"  	        
-    	        android:text="Friendly Millerton"
-    			android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"
-		        android:textAppearance="?android:attr/textAppearanceLarge"
-		        android:textColor="#FFFFFF"
-		        android:shadowColor="#000000"
-		        android:shadowDx="3.5"
-		        android:shadowDy="3.5"
-		        android:shadowRadius="3.14"		        
-    	        />
-    	    
-    	    <TextView
-	        	android:id="@+id/activity_friend_threshold"    	        
-    	        android:text="Friend Threshold"
-    	        android:textSize="12sp"    	        
-    	        android:layout_gravity="left"
-    			android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"
-   		        android:textAppearance="?android:attr/textAppearanceSmall"
-   		       	android:textColor="#FFFFFF"
-		        android:shadowColor="#000000"
-		        android:shadowDx="3.5"
-		        android:shadowDy="3.5"
-		        android:shadowRadius="3.14"   		       	
-    	        />
+	    	<LinearLayout
+	    		android:layout_width="match_parent"
+	    		android:layout_height="72dp"
+	    		android:paddingLeft="0dp"
+	    		android:orientation="vertical"
+		        android:onClick="editFriend" >     	    
+	    	    <TextView 
+		        	android:id="@+id/activity_friend_name"  
+		        	android:paddingTop="2dp"  	        
+	    	        android:text="Friendly Millertonson"
+	    			android:layout_width="wrap_content"
+	    			android:layout_height="wrap_content"
+			        android:textAppearance="?android:attr/textAppearanceLarge"
+			        android:textColor="#FFFFFF"
+			        android:shadowColor="#000000"
+			        android:shadowDx="3.5"
+			        android:shadowDy="3.5"
+			        android:shadowRadius="3.14"		        
+	    	        />
+	    	    
+	    	    <TextView
+		        	android:id="@+id/activity_friend_threshold"    	        
+	    	        android:text="Friend Threshold"
+	    	        android:textSize="12sp"    	        
+	    	        android:layout_gravity="left"
+	    			android:layout_width="wrap_content"
+	    			android:layout_height="wrap_content"
+	   		        android:textAppearance="?android:attr/textAppearanceSmall"
+	   		       	android:textColor="#FFFFFF"
+			        android:shadowColor="#000000"
+			        android:shadowDx="3.5"
+			        android:shadowDy="3.5"
+			        android:shadowRadius="3.14"   		       	
+	    	        />
+	    	</LinearLayout>
 
     	    <Button
     	        android:layout_width="match_parent"
     	        android:layout_height="wrap_content"
-    	        android:layout_marginTop="40dp"
+    	        android:layout_marginTop="34dp"
     	        android:layout_gravity="bottom"
     	        android:background="@drawable/round_green_double_shadow"
     	        android:gravity="center"
