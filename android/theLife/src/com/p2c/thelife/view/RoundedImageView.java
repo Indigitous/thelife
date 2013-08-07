@@ -23,10 +23,10 @@ public class RoundedImageView extends View {
 	}
 
 
-	private Bitmap m_bitmap = null;
-	private Paint m_paint = null;
-	private Rect m_imageDestRect = null;
-	private static Bitmap m_roundRectBitmap = null;
+	protected Bitmap m_bitmap = null;
+	protected Paint m_paint = null;
+	protected Rect m_imageDestRect = null;
+	protected static Bitmap m_roundRectBitmap = null;
 
 	
 	/**

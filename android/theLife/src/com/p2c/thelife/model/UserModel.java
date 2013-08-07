@@ -57,6 +57,14 @@ public class UserModel extends AbstractModel {
 	}
 	
 	/**
+	 * @param id	user id
+	 * @return whether or not the user's image bitmap is in the cache
+	 */
+	public static boolean isInCache(int id) {
+		return BitmapCacheHandler.hasBitmapInCache("users", id, "image");
+	}
+	
+	/**
 	 * Will attempt to load the image or use the placeholder.
 	 * @param id
 	 * @return

@@ -168,6 +168,24 @@ public class BitmapCacheHandler extends Handler {
 	}
 	
 	
+	/**
+	 * @param dataType		dataType of bitmap: "friends", "users" or "activities"
+	 * @param id			model id
+	 * @param imageType			type of bitmap: "image" or "thumbnail"
+	 * @return whether or not the image is in the local file cache
+	 */	
+	public static boolean hasBitmapInCache(String dataType, int id, String imageType) {
+		boolean exists = false;
+		
+		if (id != 0) {
+			String fileName = generateFullCacheFileName(dataType, id, imageType);
+			return new File(fileName).exists();
+		}
+		
+		return exists;
+	}
+	
+	
 	/** 
 	 * Ensure that the owner image is in the file cache.
 	 */
