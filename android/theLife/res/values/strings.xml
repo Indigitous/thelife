@@ -203,5 +203,10 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="title_events_for_owner">Events</string>
     <string name="activity_owner_edit_profile">Edit Profile</string>
     <string name="no_owner_events">There are no events to show.</string>
-
+    <string name="upload_image">Upload image</string>
+    <string name="rotate_ccw">Rotate left</string>
+    <string name="rotate_cw">Rotate right</string>
+    <string name="your_information">Your Information</string>    
+    <string name="save">Save</string>    
+    
 </resources>

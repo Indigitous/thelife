@@ -102,8 +102,6 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 					
 				// update the UI
 				TextView textView = null;
-				textView = (TextView)findViewById(R.id.settings_name_by_image);
-				textView.setText(user.getFullName());
 				textView = (TextView)findViewById(R.id.settings_first_name);
 				textView.setText(user.firstName);
 				textView = (TextView)findViewById(R.id.settings_last_name);
@@ -122,9 +120,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				
 				if (Utilities.isSuccessfulHttpCode(httpCode)) {
 					
-					// update the UI and app user
-					TextView textView = (TextView)findViewById(R.id.settings_name_by_image);				
-					textView.setText(m_updatedUser.getFullName());
+					// update the app user
 					TheLifeConfiguration.getOwnerDS().setOwner(m_updatedUser);					
 	
 					// have updated the user profile, so now update the user profile image if necessary
