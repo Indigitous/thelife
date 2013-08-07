@@ -206,7 +206,7 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="upload_image">Upload image</string>
     <string name="rotate_ccw">Rotate left</string>
     <string name="rotate_cw">Rotate right</string>
-    <string name="your_information">Your Information</string>    
+    <string name="your_information">Your Information</string>
     <string name="save">Save</string>
     <string name="settings_update_photo_prompt">Update Your Photo</string>
     <string name="settings_update_photo_prompt_short">Set Photo</string>    
