@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,7 +111,12 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 				textView.setText(user.email);
 				textView = (TextView)findViewById(R.id.settings_phone);
 				textView.setText(user.mobile);
-				Bitmap bitmap = UserModel.getImage(TheLifeConfiguration.getOwnerDS().getId());
+				
+				// show the update photo prompt if there's no bitmap in the cache
+				int ownerId = TheLifeConfiguration.getOwnerDS().getId();				
+				showUpdatePhotoPrompt(!UserModel.isInCache(ownerId));
+				
+				Bitmap bitmap = UserModel.getImage(ownerId);
 				ImageView imageView = (ImageView)findViewById(R.id.settings_image);
 				imageView.setImageBitmap(bitmap);
 			
@@ -218,8 +224,18 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// set the image
 		ImageView imageView = (ImageView)findViewById(R.id.settings_image);
-		imageView.setImageBitmap(m_updatedBitmap);		
-	}	
+		imageView.setImageBitmap(m_updatedBitmap);
+		showUpdatePhotoPrompt(false);		
+	}
+	
+	
+	/**
+	 * @param show 	whether or not to show the update photo prompt
+	 */
+	private void showUpdatePhotoPrompt(boolean show) {
+		Button updatePhotoPrompt = (Button)findViewById(R.id.settings_update_photo_prompt);
+		updatePhotoPrompt.setVisibility(show ? View.VISIBLE : View.GONE);
+	}
 	
 	
 	/**
