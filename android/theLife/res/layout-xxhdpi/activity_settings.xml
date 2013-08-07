@@ -14,7 +14,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:paddingLeft="6dp"
+        android:background="#d0d4d9"        
         android:text="@string/show_license"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#677073"        
