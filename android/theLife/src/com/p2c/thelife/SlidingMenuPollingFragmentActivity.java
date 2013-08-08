@@ -37,9 +37,9 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 			finish();
 		}
 		
+		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_support);		
 		TheLifeConfiguration.getRequestsPoller().start();
 		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);
-		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_support);		
 	}
 	
 	
