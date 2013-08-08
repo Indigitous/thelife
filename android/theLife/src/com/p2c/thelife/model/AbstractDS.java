@@ -311,19 +311,17 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		
 		boolean success = true;
 		
-		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {	
-			FileWriter fileWriter = null;
-			try {
-				File cacheFile = new File(m_cacheFileName);
-				fileWriter = new FileWriter(cacheFile); // buffered
-				fileWriter.write(jsonString);
-			} catch (IOException e) {
-				Log.e(TAG, "writeJSONCache()", e);
-				success = false;
-			} finally {
-				if (fileWriter != null) {
-					try { fileWriter.close(); } catch (IOException e) { }
-				}
+		FileWriter fileWriter = null;
+		try {
+			File cacheFile = new File(m_cacheFileName);
+			fileWriter = new FileWriter(cacheFile); // buffered
+			fileWriter.write(jsonString);
+		} catch (IOException e) {
+			Log.e(TAG, "writeJSONCache()", e);
+			success = false;
+		} finally {
+			if (fileWriter != null) {
+				try { fileWriter.close(); } catch (IOException e) { }
 			}
 		}
 		
@@ -341,54 +339,52 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		
 		boolean success = true;
 		
-		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
-			if (newDataSize > 0) {
-				if (oldDataSize == 0) {
-					// if there isn't any old data, just write the file
-					replaceJSONCache(newDataJSONString);
-				} else {
+		if (newDataSize > 0) {
+			if (oldDataSize == 0) {
+				// if there isn't any old data, just write the file
+				replaceJSONCache(newDataJSONString);
+			} else {
+				
+				// make sure the cache file is really there
+				File cacheFile = new File(m_cacheFileName);
+				if (!cacheFile.exists()) {
+					Log.wtf(TAG, "prependJSONCache() missing cache file " + m_cacheFileName);
+					success = false;
+				} else {				
 					
-					// make sure the cache file is really there
-					File cacheFile = new File(m_cacheFileName);
-					if (!cacheFile.exists()) {
-						Log.wtf(TAG, "prependJSONCache() missing cache file " + m_cacheFileName);
+					FileReader fileReader = null;
+					FileWriter fileWriter = null;					
+					try {
+					
+						// read in the old JSON data
+						fileReader = new FileReader(cacheFile);
+						String oldDataJSONString = Utilities.readBufferedStream(fileReader);
+						fileReader.close();
+						fileReader = null;
+						
+						// write the new JSON data at the start of the file, 
+						//      adding a comma after the final '}' and skipping the final ']'
+						fileWriter = new FileWriter(cacheFile);
+						int finalBraceIndex = newDataJSONString.lastIndexOf('}');					
+						fileWriter.write(newDataJSONString, 0, finalBraceIndex + 1);
+						fileWriter.write(',');
+						
+						// write the old JSON next, starting with the first '{' and thus skipping the first '['
+						int firstBraceIndex = oldDataJSONString.indexOf('{');
+						fileWriter.write(oldDataJSONString, firstBraceIndex, oldDataJSONString.length() - firstBraceIndex);
+						fileWriter.close();
+						fileWriter = null;
+						
+					} catch (Exception e) {
+						Log.e(TAG, "prependJSONCache()", e);
 						success = false;
-					} else {				
-						
-						FileReader fileReader = null;
-						FileWriter fileWriter = null;					
-						try {
-						
-							// read in the old JSON data
-							fileReader = new FileReader(cacheFile);
-							String oldDataJSONString = Utilities.readBufferedStream(fileReader);
-							fileReader.close();
-							fileReader = null;
-							
-							// write the new JSON data at the start of the file, 
-							//      adding a comma after the final '}' and skipping the final ']'
-							fileWriter = new FileWriter(cacheFile);
-							int finalBraceIndex = newDataJSONString.lastIndexOf('}');					
-							fileWriter.write(newDataJSONString, 0, finalBraceIndex + 1);
-							fileWriter.write(',');
-							
-							// write the old JSON next, starting with the first '{' and thus skipping the first '['
-							int firstBraceIndex = oldDataJSONString.indexOf('{');
-							fileWriter.write(oldDataJSONString, firstBraceIndex, oldDataJSONString.length() - firstBraceIndex);
-							fileWriter.close();
-							fileWriter = null;
-							
-						} catch (Exception e) {
-							Log.e(TAG, "prependJSONCache()", e);
-							success = false;
-						} finally {
-							if (fileReader != null) {
-								try { fileReader.close(); } catch (Exception e) { }
-							}
-							if (fileWriter != null) {
-								try { fileWriter.close(); } catch (Exception e) { }
-							}						
+					} finally {
+						if (fileReader != null) {
+							try { fileReader.close(); } catch (Exception e) { }
 						}
+						if (fileWriter != null) {
+							try { fileWriter.close(); } catch (Exception e) { }
+						}						
 					}
 				}
 			}
@@ -468,55 +464,63 @@ public abstract class AbstractDS<T extends AbstractModel> {
 			for (int i = 0; i < (m_numRetries + 1) && m_connectionTimeout; i++) {
 				m_connectionTimeout = false;
 				
-				try {			
-					Log.d(TAG, i + " DS READFROMSERVER with " + urls[0]);	
-					URL modelsEP = urls[0];
-					modelsConnection = (HttpURLConnection)modelsEP.openConnection();
-					modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
-					modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
+				// make sure the user hasn't logged out
+				if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 					
-					Log.d(TAG, i + " DS HTTP RESPONSE CODE " + modelsConnection.getResponseCode());
-	
-					String jsonString = null;
-					if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-						isr = new InputStreamReader(modelsConnection.getInputStream());
-						jsonString = Utilities.readBufferedStream(isr);
-					}
-					
-					if (jsonString != null) {
-						JSONArray jsonArray = new JSONArray(jsonString);					
-					
-						// add the new data models to a separate list in case of an error
-						data2 = new ArrayList<T>();
-						addModels(jsonArray, true, data2);
+					try {			
+						Log.d(TAG, i + " DS READFROMSERVER with " + urls[0]);	
+						URL modelsEP = urls[0];
+						modelsConnection = (HttpURLConnection)modelsEP.openConnection();
+						modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
+						modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
 						
-						// write the new data models to disk
-						boolean success = (m_newDataMode == MODE_REPLACE) ? replaceJSONCache(jsonString) : prependJSONCache(jsonString, m_data.size(), data2.size());
-						if (success) {
-							// remember the timestamp of this successful refresh
+						Log.d(TAG, i + " DS HTTP RESPONSE CODE " + modelsConnection.getResponseCode());
+		
+						String jsonString = null;
+						if (modelsConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+							isr = new InputStreamReader(modelsConnection.getInputStream());
+							jsonString = Utilities.readBufferedStream(isr);
+						}
+						
+						if (jsonString != null) {
+							JSONArray jsonArray = new JSONArray(jsonString);					
+						
+							// add the new data models to a separate list in case of an error
+							data2 = new ArrayList<T>();
+							addModels(jsonArray, true, data2);
 							
-							SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
-							system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
-							system_settings_editor.commit();
-						}					
-					}
-				} catch (JSONException e) {
-					Log.wtf(TAG, "readFromServer()", e);				
-				} catch (MalformedURLException e) {
-					Log.wtf(TAG, "readFromServer()", e);
-				} catch (java.net.SocketTimeoutException e) {
-					m_connectionTimeout = true;
-					Log.e(TAG, "readFromServer() CONNECTION TIMEOUT " + e.getMessage());
-				} catch (IOException e) {
-					Log.e(TAG, "readFromServer()", e);				
-				} finally {
-					if (isr != null) {
-						try { isr.close(); } catch (Exception e) { }
-						isr = null;
-					}
-					if (modelsConnection != null) {
-						modelsConnection.disconnect();
-						modelsConnection = null;
+							// make sure the user hasn't logged out							
+							if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+								
+								// write the new data models to disk								
+								boolean success = (m_newDataMode == MODE_REPLACE) ? replaceJSONCache(jsonString) : prependJSONCache(jsonString, m_data.size(), data2.size());
+								if (success) {
+									// remember the timestamp of this successful refresh
+									
+									SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
+									system_settings_editor.putLong(m_refreshSettingTimestampKey, System.currentTimeMillis());
+									system_settings_editor.commit();
+								}
+							}
+						}
+					} catch (JSONException e) {
+						Log.wtf(TAG, "readFromServer()", e);				
+					} catch (MalformedURLException e) {
+						Log.wtf(TAG, "readFromServer()", e);
+					} catch (java.net.SocketTimeoutException e) {
+						m_connectionTimeout = true;
+						Log.e(TAG, "readFromServer() CONNECTION TIMEOUT " + e.getMessage());
+					} catch (IOException e) {
+						Log.e(TAG, "readFromServer()", e);				
+					} finally {
+						if (isr != null) {
+							try { isr.close(); } catch (Exception e) { }
+							isr = null;
+						}
+						if (modelsConnection != null) {
+							modelsConnection.disconnect();
+							modelsConnection = null;
+						}
 					}
 				}
 			}
