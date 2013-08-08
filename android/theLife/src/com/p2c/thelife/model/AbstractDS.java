@@ -249,51 +249,54 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 */
 	protected void refresh(String refreshIndicator, boolean force, int numRetries, int max, String params, int newDataMode) {
 		
-		if (force) {
+		// make sure the user hasn't logged out
+		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			
-			// force a refresh by erasing the timestamp indicating previous refresh time
-			SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
-			system_settings_editor.putLong(m_refreshSettingTimestampKey, 0L);
-			system_settings_editor.commit();			
-		}				
-		
-		// find when the model objects were most recently refreshed
-		long lastRefresh = TheLifeConfiguration.getSystemSettings().getLong(m_refreshSettingTimestampKey, 0);
-		
-		// TODO: for debugging
-		//lastRefresh = 0;
-		
-		// if the model objects were not refreshed recently
-		if (System.currentTimeMillis() - lastRefresh > m_refreshDelta) {
-				
-			// if the model objects are not currently being refreshed
-			if (!m_isRefreshing) {  // this variable is only accessed in the UI (main) thread
-				try {
-					m_isRefreshing = true;
-					m_refreshIndicator = refreshIndicator;
-					m_numRetries = numRetries;
-					String refreshURL = Utilities.makeServerUrlString(m_refreshURLPath, m_token);
+			if (force) {
+				// force a refresh by erasing the timestamp indicating previous refresh time
+				SharedPreferences.Editor system_settings_editor = TheLifeConfiguration.getSystemSettings().edit();
+				system_settings_editor.putLong(m_refreshSettingTimestampKey, 0L);
+				system_settings_editor.commit();			
+			}				
+			
+			// find when the model objects were most recently refreshed
+			long lastRefresh = TheLifeConfiguration.getSystemSettings().getLong(m_refreshSettingTimestampKey, 0);
+			
+			// TODO: for debugging
+			//lastRefresh = 0;
+			
+			// if the model objects were not refreshed recently
+			if (System.currentTimeMillis() - lastRefresh > m_refreshDelta) {
 					
-					// add on optional parameters
-					if (max != 0) {
-						refreshURL += "&max=" + String.valueOf(max);
+				// if the model objects are not currently being refreshed
+				if (!m_isRefreshing) {  // this variable is only accessed in the UI (main) thread
+					try {
+						m_isRefreshing = true;
+						m_refreshIndicator = refreshIndicator;
+						m_numRetries = numRetries;
+						String refreshURL = Utilities.makeServerUrlString(m_refreshURLPath, m_token);
+						
+						// add on optional parameters
+						if (max != 0) {
+							refreshURL += "&max=" + String.valueOf(max);
+						}
+						if (params != null) {
+							refreshURL += params;
+						}
+						
+						m_newDataMode = newDataMode;
+						
+						// run in background thread
+						Log.d(TAG, "WILL NOW RUN BACKGROUND MODELS REFRESH");					
+						new readFromServer().execute(new URL(refreshURL));
+					} catch (MalformedURLException e) {
+						Log.e(TAG, "refresh()", e);
+					} finally {
+						m_isRefreshing = false;
 					}
-					if (params != null) {
-						refreshURL += params;
-					}
-					
-					m_newDataMode = newDataMode;
-					
-					// run in background thread
-					Log.d(TAG, "WILL NOW RUN BACKGROUND MODELS REFRESH");					
-					new readFromServer().execute(new URL(refreshURL));
-				} catch (MalformedURLException e) {
-					Log.e(TAG, "refresh()", e);
-				} finally {
-					m_isRefreshing = false;
 				}
+				
 			}
-			
 		}
 	}	
 
