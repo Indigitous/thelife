@@ -16,7 +16,8 @@ import com.p2c.thelife.config.TheLifeConfiguration;
  */
 public class RequestsDS extends AbstractDS<RequestModel> {
 	
-	private static final String KEY_HAS_NEW_NOTIFICATIONS = "requests_has_new_notifications";
+	private static final String SYSKEY_REFRESH_REQUESTS_TIMESTAMP = "refresh_requests_timestamp";	
+	private static final String SYSKEY_HAS_NEW_NOTIFICATIONS = "requests_has_new_notifications";
 	
 	private boolean m_hasNewNotifications = false;
 	
@@ -28,15 +29,14 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 				token,
 				"RequestsDS", 
 				"requests.json",
-				"refresh_requests_timestamp_key",
+				SYSKEY_REFRESH_REQUESTS_TIMESTAMP,
 				"my_requests",
-				"refresh_requests_delta_key",
 				TheLifeConfiguration.REFRESH_REQUESTS_DELTA
 			);
 		
 		// see if there are new notifications
 		SharedPreferences systemSettings = TheLifeConfiguration.getSystemSettings();
-		m_hasNewNotifications = systemSettings.getBoolean(KEY_HAS_NEW_NOTIFICATIONS, false);
+		m_hasNewNotifications = systemSettings.getBoolean(SYSKEY_HAS_NEW_NOTIFICATIONS, false);
 		if (count() == 1) {
 			setHasNewNotifications(false);
 		}
@@ -59,7 +59,7 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 	public void setHasNewNotifications(boolean hasNewNotifications) {
 		m_hasNewNotifications = hasNewNotifications;
 		SharedPreferences.Editor editor = TheLifeConfiguration.getSystemSettings().edit();
-		editor.putBoolean(KEY_HAS_NEW_NOTIFICATIONS, hasNewNotifications);
+		editor.putBoolean(SYSKEY_HAS_NEW_NOTIFICATIONS, hasNewNotifications);
 		editor.commit();		
 	}	
 	

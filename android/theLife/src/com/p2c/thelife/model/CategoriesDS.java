@@ -15,6 +15,9 @@ import com.p2c.thelife.config.TheLifeConfiguration;
  */
 public class CategoriesDS extends AbstractDS<CategoryModel> {
 	
+	private static final String SYSKEY_REFRESH_CATEGORIES_TIMESTAMP = "refresh_categories_timestamp";
+	
+	
 	public CategoriesDS(Context context, String token) {
 		
 		super(
@@ -22,9 +25,8 @@ public class CategoriesDS extends AbstractDS<CategoryModel> {
 				token,
 				"CategoriesDS", 
 				"categories.json",
-				"refresh_categories_timestamp_key",
+				SYSKEY_REFRESH_CATEGORIES_TIMESTAMP,
 				"categories",
-				"refresh_categories_delta_key",
 				TheLifeConfiguration.REFRESH_CATEGORIES_DELTA
 			);		
 		

@@ -22,9 +22,12 @@ public class EventsDS extends AbstractDS<EventModel> {
 	
 	private static final String TAG = "EventsDS";
 	
+	private static final String SYSKEY_REFRESH_EVENTS_TIMESTAMP = "refresh_events_timestamp";
+	
 	// maximum number of events on a full refresh
 	public static final int MAX_EVENTS = 100;
 		
+
 	public EventsDS(Context context, String token) {
 		
 		super(
@@ -32,9 +35,8 @@ public class EventsDS extends AbstractDS<EventModel> {
 				token,
 				"EventsDS", 
 				"events.json",
-				"refresh_events_timestamp_key",
+				SYSKEY_REFRESH_EVENTS_TIMESTAMP,
 				"my_events",
-				"refresh_events_delta_key",
 				TheLifeConfiguration.REFRESH_EVENTS_DELTA
 			);		
 		

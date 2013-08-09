@@ -34,7 +34,7 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 	private static final String TAG = "ResourcesActivity";
 	
 	// system settings key
-	private static final String KEY_THRESHOLDS_FILTER = "thresholds";
+	private static final String SYSKEY_THRESHOLDS_FILTER = "thresholds";
 	
 	private ResourcesAdapter m_adapter = null;
 	private TextView m_filterDescriptionView = null; 
@@ -259,7 +259,7 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 		EnumSet<FriendModel.Threshold> thresholds = EnumSet.allOf(FriendModel.Threshold.class);
 		
 		// look for a thresholds filter in system settings
-		String thresholdsString = TheLifeConfiguration.getSystemSettings().getString(KEY_THRESHOLDS_FILTER, null);
+		String thresholdsString = TheLifeConfiguration.getSystemSettings().getString(SYSKEY_THRESHOLDS_FILTER, null);
 		if (thresholdsString != null) {
 			thresholds = EnumSet.noneOf(FriendModel.Threshold.class);			
 			String[] thresholdIntStrings = thresholdsString.split(",");
@@ -292,7 +292,7 @@ public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implem
 			}
 			thresholdsString.append(threshold.ordinal());
 		}		
-		systemSettingsEditor.putString(KEY_THRESHOLDS_FILTER, thresholdsString.toString());
+		systemSettingsEditor.putString(SYSKEY_THRESHOLDS_FILTER, thresholdsString.toString());
 		systemSettingsEditor.commit();
 	}
 	

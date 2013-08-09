@@ -15,6 +15,9 @@ import com.p2c.thelife.config.TheLifeConfiguration;
  */
 public class FriendsDS extends AbstractDS<FriendModel> {
 	
+	private static final String SYSKEY_REFRESH_FRIENDS_TIMESTAMP = "refresh_friends_timestamp";
+	
+	
 	public FriendsDS(Context context, String token) {
 		
 		super(
@@ -22,9 +25,8 @@ public class FriendsDS extends AbstractDS<FriendModel> {
 				token,
 				"FriendsDS", 
 				"friends.json",
-				"refresh_friends_timestamp_key",
+				SYSKEY_REFRESH_FRIENDS_TIMESTAMP,
 				"my_friends",
-				"refresh_friends_delta_key",
 				TheLifeConfiguration.REFRESH_FRIENDS_DELTA
 			);		
 		

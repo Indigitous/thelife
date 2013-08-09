@@ -15,6 +15,9 @@ import com.p2c.thelife.config.TheLifeConfiguration;
  */
 public class GroupsDS extends AbstractDS<GroupModel> {
 	
+	private static final String SYSKEY_REFRESH_GROUPS_TIMESTAMP = "refresh_groups_timestamp";
+	
+	
 	public GroupsDS(Context context, String token) {
 		
 		super(
@@ -22,9 +25,8 @@ public class GroupsDS extends AbstractDS<GroupModel> {
 				token,
 				"GroupsDS", 
 				"groups.json",
-				"refresh_groups_timestamp_key",
+				SYSKEY_REFRESH_GROUPS_TIMESTAMP,
 				"my_groups",
-				"refresh_groups_delta_key",
 				TheLifeConfiguration.REFRESH_GROUPS_DELTA
 			);		
 		

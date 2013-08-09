@@ -90,10 +90,10 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	 * @param cache_file_name
 	 * @param refreshSettingTimestampKey 	system preferences key
 	 * @param refreshURL
-	 * @param 
+	 * @param refreshDelta					time between refreshes; in millis
 	 */
 	public AbstractDS(Context context, String token, String tag, String cacheFileName, 
-					  String refreshSettingTimestampKey, String refreshURLPath, String refreshSettingDeltaKey, long refreshDeltaDefault) {
+					  String refreshSettingTimestampKey, String refreshURLPath, long refreshDelta) {
 		
 		// initialize instance vars
 		m_context = context;
@@ -102,7 +102,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		m_cacheFileName = TheLifeConfiguration.getCacheDirectory() + cacheFileName;
 		m_refreshSettingTimestampKey = refreshSettingTimestampKey;
 		m_refreshURLPath = refreshURLPath;
-		m_refreshDelta = TheLifeConfiguration.getSystemSettings().getLong(refreshSettingDeltaKey, refreshDeltaDefault);
+		m_refreshDelta = refreshDelta;
 		
 		// load model objects from the JSON cache file on this device.
 		if (m_token == null && TheLifeConfiguration.getOwnerDS().isValidOwner()) {

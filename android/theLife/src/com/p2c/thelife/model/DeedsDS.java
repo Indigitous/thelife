@@ -18,6 +18,9 @@ import com.p2c.thelife.config.TheLifeConfiguration;
  */
 public class DeedsDS extends AbstractDS<DeedModel> {
 	
+	private static final String SYSKEY_REFRESH_DEEDS_TIMESTAMP = "refresh_deeds_timestamp";
+	
+	
 	/** 
 	 * Deeds (Activity Objects) Data Store.
 	 * @param context
@@ -29,9 +32,8 @@ public class DeedsDS extends AbstractDS<DeedModel> {
 			token,
 			"DeedsDS", 
 			"deeds.json",
-			"refresh_deeds_timestamp_key",
+			SYSKEY_REFRESH_DEEDS_TIMESTAMP,
 			"activities",
-			"refresh_deeds_delta_key",
 			TheLifeConfiguration.REFRESH_DEEDS_DELTA
 		);
 		

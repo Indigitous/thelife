@@ -23,15 +23,15 @@ public class OwnerDS {
 	private String m_token = null;
 	private boolean m_hasAddedFriend = false;
 	
-	private static final String KEY_ID = "owner_id";
-	private static final String KEY_FIRST_NAME = "owner_first_name";
-	private static final String KEY_LAST_NAME = "owner_last_name";
-	private static final String KEY_EMAIL = "owner_email";
-	private static final String KEY_MOBILE = "owner_mobile";
-	private static final String KEY_PROVIDER = "owner_provider";
-	private static final String KEY_TOKEN = "owner_token";
-	private static final String KEY_HAS_ADDED_FRIEND= "owner_has_added_friend";
-	private static final String KEY_HAS_USED_THRESHOLD = "owner_has_used_threshold";
+	private static final String SYSKEY_ID = "owner_id";
+	private static final String SYSKEY_FIRST_NAME = "owner_first_name";
+	private static final String SYSKEY_LAST_NAME = "owner_last_name";
+	private static final String SYSKEY_EMAIL = "owner_email";
+	private static final String SYSKEY_MOBILE = "owner_mobile";
+	private static final String SYSKEY_PROVIDER = "owner_provider";
+	private static final String SYSKEY_TOKEN = "owner_token";
+	private static final String SYSKEY_HAS_ADDED_FRIEND= "owner_has_added_friend";
+	private static final String SYSKEY_HAS_USED_THRESHOLD = "owner_has_used_threshold";
 	
 	
 	public interface DSChangedListener {
@@ -46,17 +46,17 @@ public class OwnerDS {
 		SharedPreferences systemSettings = TheLifeConfiguration.getSystemSettings();
 
 		// if ownerId == 0 then nobody is logged in
-		int ownerId = systemSettings.getInt(KEY_ID, 0);
+		int ownerId = systemSettings.getInt(SYSKEY_ID, 0);
 		if (ownerId != 0) {
-			String firstName = systemSettings.getString(KEY_FIRST_NAME, "");
-			String lastName = systemSettings.getString(KEY_LAST_NAME, "");	
-			String email = systemSettings.getString(KEY_EMAIL, "");		
-			String mobile = systemSettings.getString(KEY_MOBILE, "");
-			String provider = systemSettings.getString(KEY_PROVIDER, "");
+			String firstName = systemSettings.getString(SYSKEY_FIRST_NAME, "");
+			String lastName = systemSettings.getString(SYSKEY_LAST_NAME, "");	
+			String email = systemSettings.getString(SYSKEY_EMAIL, "");		
+			String mobile = systemSettings.getString(SYSKEY_MOBILE, "");
+			String provider = systemSettings.getString(SYSKEY_PROVIDER, "");
 			
 			m_owner = new UserModel(ownerId, firstName, lastName, email, mobile, provider);
-			m_token = systemSettings.getString(KEY_TOKEN, "");
-			m_hasAddedFriend = systemSettings.getBoolean(KEY_HAS_ADDED_FRIEND, false);			
+			m_token = systemSettings.getString(SYSKEY_TOKEN, "");
+			m_hasAddedFriend = systemSettings.getBoolean(SYSKEY_HAS_ADDED_FRIEND, false);			
 		}
 	}
 	
@@ -81,15 +81,15 @@ public class OwnerDS {
 		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
 		
 		if (m_owner != null) {
-			systemSettingsEditor.putInt(KEY_ID, m_owner.id);
-			systemSettingsEditor.putString(KEY_FIRST_NAME, m_owner.firstName);
-			systemSettingsEditor.putString(KEY_LAST_NAME, m_owner.lastName);	
-			systemSettingsEditor.putString(KEY_EMAIL, m_owner.email);		
-			systemSettingsEditor.putString(KEY_MOBILE, m_owner.mobile);
-			systemSettingsEditor.putString(KEY_PROVIDER, m_owner.provider);		
+			systemSettingsEditor.putInt(SYSKEY_ID, m_owner.id);
+			systemSettingsEditor.putString(SYSKEY_FIRST_NAME, m_owner.firstName);
+			systemSettingsEditor.putString(SYSKEY_LAST_NAME, m_owner.lastName);	
+			systemSettingsEditor.putString(SYSKEY_EMAIL, m_owner.email);		
+			systemSettingsEditor.putString(SYSKEY_MOBILE, m_owner.mobile);
+			systemSettingsEditor.putString(SYSKEY_PROVIDER, m_owner.provider);		
 			systemSettingsEditor.commit();		
 		} else {
-			systemSettingsEditor.putInt(KEY_ID, 0); // marks a not-valid owner
+			systemSettingsEditor.putInt(SYSKEY_ID, 0); // marks a not-valid owner
 			systemSettingsEditor.commit();			
 		}
 		
@@ -114,7 +114,7 @@ public class OwnerDS {
 		m_token = token;
 		
 		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
-		systemSettingsEditor.putString(KEY_TOKEN, m_token);
+		systemSettingsEditor.putString(SYSKEY_TOKEN, m_token);
 		systemSettingsEditor.commit();				
 	}
 	
@@ -142,7 +142,7 @@ public class OwnerDS {
 		m_hasAddedFriend = true;
 		
 		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
-		systemSettingsEditor.putBoolean(KEY_HAS_ADDED_FRIEND, m_hasAddedFriend);
+		systemSettingsEditor.putBoolean(SYSKEY_HAS_ADDED_FRIEND, m_hasAddedFriend);
 		systemSettingsEditor.commit();			
 	}
 	
@@ -151,7 +151,7 @@ public class OwnerDS {
 	 * @return whether or not the owner has used the given threshold level before now
 	 */
 	public boolean getHasUsedThreshold(FriendModel.Threshold threshold) {
-		return TheLifeConfiguration.getSystemSettings().getBoolean(KEY_HAS_USED_THRESHOLD + threshold.serverId, false);
+		return TheLifeConfiguration.getSystemSettings().getBoolean(SYSKEY_HAS_USED_THRESHOLD + threshold.serverId, false);
 	}	
 	
 	
@@ -160,7 +160,7 @@ public class OwnerDS {
 	 */
 	public void setHasUsedThreshold(FriendModel.Threshold threshold) {
 		SharedPreferences.Editor systemSettingsEditor = TheLifeConfiguration.getSystemSettings().edit();
-		systemSettingsEditor.putBoolean(KEY_HAS_USED_THRESHOLD + threshold.serverId, true);
+		systemSettingsEditor.putBoolean(SYSKEY_HAS_USED_THRESHOLD + threshold.serverId, true);
 		systemSettingsEditor.commit();			
 	}	
 		
