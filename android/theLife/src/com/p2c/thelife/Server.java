@@ -457,7 +457,7 @@ public class Server {
 	/**
 	 * Update the user's profile. Users can only update their own profile.
 	 */
-	public void updateUserProfile(int userId, String firstName, String lastName, String email, String mobile, ServerListener listener, String indicator) {
+	public void updateUserProfile(int userId, String firstName, String lastName, String email, String mobile, String pushRegistration, ServerListener listener, String indicator) {
 		try {
 			// API endpoint
 			// returns HTTP 422 on an incorrect form (such as a missing name), HTTP 201 on a success
@@ -470,6 +470,7 @@ public class Server {
 			pairs.add(new BasicNameValuePair("last_name", String.valueOf(lastName)));
 			pairs.add(new BasicNameValuePair("email", String.valueOf(email)));
 			pairs.add(new BasicNameValuePair("mobile", String.valueOf(mobile)));
+			pairs.add(new BasicNameValuePair("push_registration", String.valueOf(pushRegistration)));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			httpRequest.setEntity(entity);

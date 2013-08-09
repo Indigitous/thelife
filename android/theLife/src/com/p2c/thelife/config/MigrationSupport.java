@@ -11,14 +11,33 @@ public class MigrationSupport {
 	private static final String TAG = "MigrationSupport";
 	
 	private static final String SYSKEY_VERSION_CODE = "app_version_code";
+	
+	private static MigrationSupport m_support = null;
+	
+	
+	
+	/**
+	 * restricted constructor
+	 */
+	private MigrationSupport() {
+	}
 
 	
-	public static int getAppVersionCode() {
+	public static MigrationSupport getInstance() {
+		if (m_support == null) {
+			m_support = new MigrationSupport();
+		}
+		
+		return m_support;
+	}
+	
+	
+	public int getAppVersionCode() {
 		return TheLifeConfiguration.getSystemSettings().getInt(SYSKEY_VERSION_CODE, 0);
 	}
 	
 	
-	public static void setAppVersionCode(Context context) {
+	public void setAppVersionCode(Context context) {
 		try {
 			PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
 			int versionCode = info.versionCode;
@@ -30,10 +49,11 @@ public class MigrationSupport {
 		}
 	}
 	
+	
 	/**
 	 * @return whether or not the app has been updated
 	 */
-	public static boolean hasUpdated(Context context) {
+	public boolean hasUpdated(Context context) {
 		boolean updated = true;
 		
 		try {
@@ -44,6 +64,6 @@ public class MigrationSupport {
 		}
 		
 		return updated;
-	}	
+	}
 
 }

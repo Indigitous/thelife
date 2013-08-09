@@ -4,16 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
+import com.p2c.thelife.push.GCMSupport;
 
 /**
  * Superclass for setup (login/register activities).
  * @author clarence
  *
  */
-public abstract class SetupActivityAbstract extends FragmentActivity implements DSRefreshedListener {
+public abstract class SetupActivityAbstract extends FragmentActivity implements DSRefreshedListener, GCMSupport.Listener {
 	
 	private static final String TAG = "BaseSetupActivity";
 	
@@ -74,18 +76,30 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 			TheLifeConfiguration.getEventsDS().addDSRefreshedListener(this);			
 			TheLifeConfiguration.getEventsDS().forceRefresh("events");
 		} else if (indicator.equals("events")) {
-			TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);			
-			if (m_progressDialog != null) {
-				m_progressDialog.dismiss();
-				
-				// first time user sees the introduction help
-				Intent intent = new Intent(m_isNewUser ? "com.p2c.thelife.NewUserHelp" : "com.p2c.thelife.EventsForCommunity");
-				
-				startActivity(intent);
-				finish(); // keep this activity off the back stack (out of history)				
-			}					
+			TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
+			
+			// access the GCM registration
+			GCMSupport.getInstance().accessRegistration(this, this, "push");			
 		} else {
 			Log.wtf(TAG, "unknown refresh indicator " + indicator);
+		}
+	}
+	
+	
+	@Override
+	public void notifyGCMRegistrationAvailable(String indicator, String errorString) {
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+			
+			if (errorString != null) {
+				Utilities.showErrorToast(this, errorString, Toast.LENGTH_SHORT);
+			}
+			
+			// first time user sees the introduction help
+			Intent intent = new Intent(m_isNewUser ? "com.p2c.thelife.NewUserHelp" : "com.p2c.thelife.EventsForCommunity");
+			
+			startActivity(intent);
+			finish(); // keep this activity off the back stack (out of history)				
 		}
 	}
 

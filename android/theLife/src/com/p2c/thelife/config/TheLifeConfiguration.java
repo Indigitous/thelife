@@ -60,6 +60,7 @@ public class TheLifeConfiguration {
 	
 	// Google account information
 	public static final String WEB_CLIENT_ID = "900671345436.apps.googleusercontent.com"; // from P2C's Google Console API
+	public static final String PROJECT_ID = "900671345436";
 	
 	// Version number of the server
 	private static String m_serverVersion = "/v1/";

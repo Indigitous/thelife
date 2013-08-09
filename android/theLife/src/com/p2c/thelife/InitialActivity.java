@@ -8,6 +8,7 @@ import android.view.Menu;
 import com.p2c.thelife.config.MigrationSupport;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS;
+import com.p2c.thelife.push.GCMSupport;
 
 
 /**
@@ -23,12 +24,15 @@ public class InitialActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_initial);
 		
-		if (MigrationSupport.hasUpdated(this)) {
+		if (MigrationSupport.getInstance().hasUpdated(this)) {
 			// the app has been updated, so logout to clean state
 			TheLifeConfiguration.getOwnerDS().setOwner(null);
 			
+			// clear the GCM registration
+			GCMSupport.getInstance().clearRegistration();
+			
 			// update to new version
-			MigrationSupport.setAppVersionCode(this);
+			MigrationSupport.getInstance().setAppVersionCode(this);
 		}
 		
 		// Check to see if the user has authenticated

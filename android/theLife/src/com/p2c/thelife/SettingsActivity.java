@@ -79,7 +79,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_account), true, true);
 		Server server = new Server(this);
-		server.updateUserProfile(TheLifeConfiguration.getOwnerDS().getId(), firstName, lastName, email, phone, this, "updateUserProfile");		
+		server.updateUserProfile(TheLifeConfiguration.getOwnerDS().getId(), firstName, lastName, email, phone, null, this, "updateUserProfile");		
 		return true;
 	}
 
