@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.RequestModel;
 import com.p2c.thelife.model.UserModel;

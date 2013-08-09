@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
 

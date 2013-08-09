@@ -2,6 +2,7 @@ package com.p2c.thelife;
 import android.app.Application;
 import android.widget.Toast;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.CategoriesDS;
 import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;

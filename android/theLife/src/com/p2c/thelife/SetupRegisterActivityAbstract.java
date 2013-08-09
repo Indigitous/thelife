@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.UserModel;
 
 /**

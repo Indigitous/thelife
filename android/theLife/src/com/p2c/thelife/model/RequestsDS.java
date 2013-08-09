@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.p2c.thelife.TheLifeConfiguration;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 /**

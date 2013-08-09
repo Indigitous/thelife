@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.DeedModel;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;

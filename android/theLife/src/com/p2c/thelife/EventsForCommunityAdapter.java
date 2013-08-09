@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import android.content.Context;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.EventModel;
 
 

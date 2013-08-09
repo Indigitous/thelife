@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.GroupModel;
 
 /**

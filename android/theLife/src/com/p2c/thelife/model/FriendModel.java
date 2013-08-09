@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 
 import com.p2c.thelife.BitmapCacheHandler;
 import com.p2c.thelife.R;
-import com.p2c.thelife.TheLifeConfiguration;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 

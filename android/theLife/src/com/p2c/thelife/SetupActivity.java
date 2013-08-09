@@ -27,6 +27,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.UserModel;
 
 

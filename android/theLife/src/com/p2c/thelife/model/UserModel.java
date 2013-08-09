@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import android.graphics.Bitmap;
 
 import com.p2c.thelife.BitmapCacheHandler;
-import com.p2c.thelife.TheLifeConfiguration;
 import com.p2c.thelife.Utilities;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.RequestModel;
 
 /**

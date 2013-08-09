@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.p2c.thelife.config.MigrationSupport;
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS;
 
 
@@ -21,13 +23,21 @@ public class InitialActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_initial);
 		
+		if (MigrationSupport.hasUpdated(this)) {
+			// the app has been updated, so logout to clean state
+			TheLifeConfiguration.getOwnerDS().setOwner(null);
+			
+			// update to new version
+			MigrationSupport.setAppVersionCode(this);
+		}
+		
 		// Check to see if the user has authenticated
 		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			// authenticated user, so main screen
 			Intent intent = new Intent("com.p2c.thelife.EventsForCommunity");
 			startActivity(intent);
 		} else {
-			// not authenticated user, so first delete the cache files
+			// not authenticated user, so delete the cache files
 			BitmapCacheHandler.removeAllBitmaps();
 			AbstractDS.removeAllJSONFiles();
 			

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 /**
  * Superclass of all FragmentActivities that use the sliding menu. 

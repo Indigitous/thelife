@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.p2c.thelife.TheLifeConfiguration;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 

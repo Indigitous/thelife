@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.OwnerDS;
 import com.p2c.thelife.model.RequestsDS;
 import com.p2c.thelife.model.UserModel;

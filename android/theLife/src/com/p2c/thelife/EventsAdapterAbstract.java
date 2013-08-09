@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;

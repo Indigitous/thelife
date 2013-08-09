@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.GroupModel;
 
 

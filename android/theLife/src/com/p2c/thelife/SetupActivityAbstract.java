@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS.DSRefreshedListener;
 
 /**

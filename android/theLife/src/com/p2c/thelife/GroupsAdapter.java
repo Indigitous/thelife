@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.AbstractDS;
 

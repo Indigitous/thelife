@@ -1,8 +1,11 @@
-package com.p2c.thelife;
+package com.p2c.thelife.config;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
+import com.p2c.thelife.BitmapCacheHandler;
+import com.p2c.thelife.BitmapNotifierHandler;
+import com.p2c.thelife.RequestsPoller;
 import com.p2c.thelife.model.CategoriesDS;
 import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
@@ -94,7 +97,7 @@ public class TheLifeConfiguration {
 	public static void loadSystemSettings(Context context) {
 		m_systemSettings = context.getSharedPreferences("system_prefs", Context.MODE_PRIVATE);		
 	}
-	
+
 	
 	/*************************** Server Info *****************************/
 	

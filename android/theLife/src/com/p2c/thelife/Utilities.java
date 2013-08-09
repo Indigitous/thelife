@@ -22,6 +22,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.FriendModel;
 import com.p2c.thelife.model.UserModel;
 

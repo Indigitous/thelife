@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.CategoryModel;
 import com.p2c.thelife.model.DeedModel;

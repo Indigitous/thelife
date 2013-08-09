@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 /**
  * Superclass of all Activities that use the sliding menu and application-wide polling and Sherlock ActionBar.

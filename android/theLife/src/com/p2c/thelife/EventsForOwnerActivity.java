@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.EventsDS;
 import com.p2c.thelife.model.UserModel;
 

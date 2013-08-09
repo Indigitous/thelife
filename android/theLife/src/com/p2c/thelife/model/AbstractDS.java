@@ -24,8 +24,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.p2c.thelife.TheLifeConfiguration;
 import com.p2c.thelife.Utilities;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 
