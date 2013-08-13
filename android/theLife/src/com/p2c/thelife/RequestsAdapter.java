@@ -17,6 +17,7 @@ import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.AbstractDS;
 import com.p2c.thelife.model.RequestModel;
 import com.p2c.thelife.model.UserModel;
+import com.p2c.thelife.view.RoundedImageView;
 
 
 /**
@@ -55,10 +56,13 @@ public class RequestsAdapter extends ArrayAdapter<RequestModel> implements Abstr
 		TextView textViewTime = (TextView)requestView.findViewById(R.id.request_time);
 		String eventTime = DateUtils.getRelativeDateTimeString(getContext(), request.timestamp, 
 			DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();		
-		textViewTime.setText(eventTime);				
+		textViewTime.setText(eventTime);
 		
-		ImageView imageView1 = (ImageView)requestView.findViewById(R.id.imageView1);
-		imageView1.setImageBitmap(UserModel.getThumbnail(request.getAuthorId()));
+    	RoundedImageView imageView = (RoundedImageView)requestView.findViewById(R.id.request_image);
+    	imageView.setImageInfo(UserModel.getThumbnail(request.getAuthorId()),
+    		getContext().getResources().getColor(R.color.event_background),
+    		getContext().getResources().getDimension(R.dimen.thumbnail_side),
+    		getContext().getResources().getDimension(R.dimen.event_radius));
 		
 		requestView.setTag(request);		
 		
