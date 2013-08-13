@@ -11,6 +11,7 @@
     <LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:paddingBottom="2dp"
 	    android:orientation="horizontal" >
         
 	    <com.p2c.thelife.view.EventUserFriendView
@@ -51,11 +52,13 @@
 	    
     </LinearLayout>     
 	  
-    <LinearLayout 
+    <LinearLayout
+		android:id="@+id/event_interactive"
     	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:layout_marginRight="0dp"
-    	android:paddingTop="8dp"
+    	android:paddingTop="4dp"
+    	android:paddingBottom="2dp"
         android:orientation="horizontal" >
 	     
 		<TextView

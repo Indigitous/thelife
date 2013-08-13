@@ -78,9 +78,11 @@ public abstract class EventsAdapterAbstract
 			FriendModel.getThumbnail(event.friend_id));
 		
 		// only show the pledge view if the event requests it
-		ToggleButton pledgeView = (ToggleButton)eventView.findViewById(R.id.event_pledge);
-		TextView peoplePrayedView = (TextView)eventView.findViewById(R.id.event_people_prayed);
+		View interactiveView = eventView.findViewById(R.id.event_interactive);
 		if (event.isPrayerRequested) {
+			
+			ToggleButton pledgeView = (ToggleButton)eventView.findViewById(R.id.event_pledge);
+			TextView peoplePrayedView = (TextView)eventView.findViewById(R.id.event_people_prayed);
 			
 			// only show the pledge icon if not the event is not from the owner
 			pledgeView.setVisibility((event.user_id == TheLifeConfiguration.getOwnerDS().getId()) ? View.GONE : View.VISIBLE);
@@ -106,8 +108,7 @@ public abstract class EventsAdapterAbstract
 
 			pledgeView.setTag(event);
 		} else {
-			pledgeView.setVisibility(View.GONE);
-			peoplePrayedView.setVisibility(View.GONE);			
+			interactiveView.setVisibility(View.GONE);	
 		}
 		
 		return eventView;
