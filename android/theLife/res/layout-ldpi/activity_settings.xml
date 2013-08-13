@@ -46,10 +46,10 @@
 		    
     	    <Button
     	        android:id="@+id/settings_update_photo_prompt"
-    	        android:visibility="visible"
+    	        android:visibility="gone"
     	        android:layout_width="140dp"
 			    android:layout_height="wrap_content"    	        
-    	        android:layout_marginLeft="-140dp"
+    	        android:layout_marginLeft="-141dp"
     	        android:layout_gravity="bottom"
     	        android:background="@drawable/round_green_double_shadow"
     	        android:gravity="center"

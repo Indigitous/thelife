@@ -39,21 +39,19 @@
 	    
 		    <ImageView
 		        android:id="@+id/settings_image"
-		        android:layout_width="134dp"
-		        android:layout_height="134dp"
+		        android:layout_width="136dp"
+		        android:layout_height="136dp"
 	    		android:layout_gravity="center"		        
 			    android:onClick="selectImage"	        
 		        android:src="@drawable/generic_avatar_image" />
 		    
     	    <Button
     	        android:id="@+id/settings_update_photo_prompt"
-    	        android:visibility="visible"
-    	        android:layout_width="134dp"
+    	        android:visibility="gone"
+    	        android:layout_width="136dp"
 			    android:layout_height="wrap_content"    	        
-    	        android:layout_marginLeft="-134dp"
+    	        android:layout_marginLeft="-136dp"
     	        android:layout_gravity="bottom"
-    	        android:background="@drawable/round_green_double_shadow"
-    	        android:gravity="center"
     	        android:onClick="selectImage"
     	        android:padding="0dp"
     	        android:text="@string/settings_update_photo_prompt_short"
