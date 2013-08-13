@@ -102,7 +102,7 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 		
 		// test updateUserProfile
 		server = new Server(getContext(), m_ownerToken);
-		server.updateUserProfile(m_owner.id, OWNER_FIRST_NAME + CHANGE_SUFFIX, OWNER_LAST_NAME + CHANGE_SUFFIX, OWNER_EMAIL + CHANGE_SUFFIX, OWNER_MOBILE, this, "updateUserProfile1");
+		server.updateUserProfile(m_owner.id, OWNER_FIRST_NAME + CHANGE_SUFFIX, OWNER_LAST_NAME + CHANGE_SUFFIX, OWNER_EMAIL + CHANGE_SUFFIX, OWNER_MOBILE, null, this, "updateUserProfile1");
 		waitForServerResponse();
 		server = null;		
 		
