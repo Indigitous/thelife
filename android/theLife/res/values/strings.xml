@@ -139,8 +139,8 @@
     <string name="friend_import_error">Error importing friend</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="logout_prompt">Do you want to log out?</string>
-    <string name="no_community_events">No community events to show.</string>
-    <string name="no_friend_events">No events to show for this friend.</string>
+    <string name="no_community_events">No events to show.</string>
+    <string name="no_friend_events">No events to show.</string>
     <string name="no_groups">No groups to show.</string>
     <string name="no_friends">No friends to show.</string>
     <string name="no_requests">No notifications to show.</string>

@@ -14,7 +14,7 @@
         android:id="@+id/requests_none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+		android:layout_gravity="center_horizontal"        
         android:text="@string/no_requests"
         android:textStyle="italic"
         android:textAppearance="?android:attr/textAppearanceLarge" />        
