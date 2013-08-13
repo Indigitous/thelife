@@ -70,7 +70,7 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 				
 				// now invite the person
 				boolean isEmailRequest = (email != null && !email.isEmpty());
-				Log.i(TAG, "Invite a person from contacts: " + (isEmailRequest ? "EMAIL " + email : "MOBILE " + mobile));
+				Log.i(TAG, "Invite a person manually: " + (isEmailRequest ? "EMAIL " + email : "MOBILE " + mobile));
 				
 				// SMS invitations are sent by Android
 				if (!isEmailRequest) {

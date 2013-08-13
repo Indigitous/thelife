@@ -192,9 +192,8 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 		}
 		
 		if (Utilities.isSuccessfulHttpCode(httpCode)) {
-			Utilities.showInfoToast(this, getResources().getString(m_isEmailRequest ? R.string.person_invited_by_email : R.string.person_invited_by_sms), Toast.LENGTH_SHORT);
+			Utilities.showInfoToast(this, getResources().getString(R.string.person_invited), Toast.LENGTH_SHORT);
 		}
 	}
-	
 
 }

@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.p2c.thelife.R;
@@ -158,6 +159,27 @@ public class RequestModel extends AbstractModel {
 			json.optString("status", "DELIVERED")
 		);
 	
-	}	
+	}
+	
+	
+	public static RequestModel fromBundle(Resources resources, Bundle bundle) {
+		Log.d(TAG, "fromBundle");
+		
+		return new RequestModel(
+			resources,
+			Integer.valueOf(bundle.getString("id")),
+			Integer.valueOf(bundle.getString("user_id")),
+			bundle.getString("sender_full_name", null),
+			Integer.valueOf(bundle.getString("recipient_id", "0")),
+			bundle.getString("recipient_full_name", null),
+			Integer.valueOf(bundle.getString("group_id")),
+			bundle.getString("group_name", null),		
+			bundle.getString("type"),
+			bundle.getString("email"),
+			bundle.getString("sms"),
+			Long.valueOf(bundle.getString("updated_at", "0")) * 1000, // convert seconds from server into millis
+			bundle.getString("status", "DELIVERED")
+		);
+	}
 
 }
