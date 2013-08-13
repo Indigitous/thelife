@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.p2c.thelife.R;
+import com.p2c.thelife.Utilities;
 
 
 
@@ -30,7 +31,7 @@ public class RequestModel extends AbstractModel {
 	public int    request_id;
 	public int    user_id;			// user making the request
 	public String userName;			// the name of the user making the original request
-	public int    recipient_id;		// the id of the user receiving the original request
+	public int    recipient_id;		// the id of the user receiving the original request; will be empty if the person is unknown
 	public String recipientName;    // the name of the user receiving the original request; will be empty if the person never registered
 	public int    group_id;			// the group to join
 	public String groupName;        // the name of the group to join
@@ -169,16 +170,16 @@ public class RequestModel extends AbstractModel {
 			resources,
 			Integer.valueOf(bundle.getString("id")),
 			Integer.valueOf(bundle.getString("user_id")),
-			bundle.getString("sender_full_name", null),
-			Integer.valueOf(bundle.getString("recipient_id", "0")),
-			bundle.getString("recipient_full_name", null),
+			bundle.getString("sender_full_name"),
+			Integer.valueOf(Utilities.getOptionalField("recipient_id", bundle, "0")),
+			bundle.getString("recipient_full_name"),
 			Integer.valueOf(bundle.getString("group_id")),
-			bundle.getString("group_name", null),		
+			bundle.getString("group_name"),		
 			bundle.getString("type"),
 			bundle.getString("email"),
 			bundle.getString("sms"),
-			Long.valueOf(bundle.getString("updated_at", "0")) * 1000, // convert seconds from server into millis
-			bundle.getString("status", "DELIVERED")
+			Long.valueOf(Utilities.getOptionalField("updated_at", bundle, "0")) * 1000, // convert seconds from server into millis
+			bundle.getString("status")
 		);
 	}
 

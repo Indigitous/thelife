@@ -21,6 +21,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.Server.ServerListener;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.UserModel;
+import com.p2c.thelife.push.GCMSupport;
 
 /**
  * Edit the Owner's profile.
@@ -79,7 +80,14 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		// call the server
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.storing_account), true, true);
 		Server server = new Server(this);
-		server.updateUserProfile(TheLifeConfiguration.getOwnerDS().getId(), firstName, lastName, email, phone, null, this, "updateUserProfile");		
+		server.updateUserProfile(
+			TheLifeConfiguration.getOwnerDS().getId(), 
+			firstName, lastName, 
+			email, 
+			phone, 
+			GCMSupport.getInstance().getRegistrationId(), // keep the current value
+			this, 
+			"updateUserProfile");		
 		return true;
 	}
 

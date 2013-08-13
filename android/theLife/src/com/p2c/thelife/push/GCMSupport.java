@@ -58,6 +58,14 @@ public class GCMSupport implements Server.ServerListener {
 	
 	
 	/**
+	 * @return	the registration ID from the system settings, if it exists; can return null.
+	 */
+	public String getRegistrationId() {
+		return TheLifeConfiguration.getSystemSettings().getString(SYSKEY_GCM_REGISTRATION_ID, null);
+	}
+	
+	
+	/**
 	 * Nullify the registration ID.
 	 */
 	public void clearRegistration() {
@@ -79,6 +87,7 @@ public class GCMSupport implements Server.ServerListener {
 	
 	/**
 	 * Get the GCM registration ID from the system settings.
+	 * If necessary, get a new GCM registration ID from the provider and notify the listener.
 	 * @param context
 	 */
 	public void accessRegistration(Context context, GCMSupport.Listener listener, String indicator) {

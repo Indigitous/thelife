@@ -86,10 +86,10 @@
     <string name="adding_new_member">Adding new member to group</string>
     <string name="membership_request_description">&lt;b>%1$s&lt;/b> wants to join your group &lt;b>%2$s&lt;/b>.</string>
     <string name="membership_request_accepted_description">Your request to join group &lt;b>%1$s&lt;/b> has been accepted.</string>
-    <string name="membership_request_rejected_description">Your request to join group &lt;b>%1$s&lt;/b> has been rejected.</string>
+    <string name="membership_request_rejected_description">Your request to join group &lt;b>%1$s&lt;/b> has been declined.</string>
     <string name="invite_request_description">&lt;b>%1$s&lt;/b> invites you to join group &lt;b>%2$s&lt;/b>.</string>
     <string name="invite_request_accepted_description">&lt;b>%1$s&lt;/b> has accepted your invitation to join group &lt;b>%2$s&lt;/b>.</string>
-    <string name="invite_request_rejected_description">&lt;b>%1$s&lt;/b> has rejected your invitation to join group &lt;b>%2$s&lt;/b>.</string>
+    <string name="invite_request_rejected_description">&lt;b>%1$s&lt;/b> has declined your invitation to join group &lt;b>%2$s&lt;/b>.</string>
     <string name="rejecting_request">Rejecting request</string>
     <string name="creating_new_event">Creating new event</string>
     <string name="email">Email Address</string>

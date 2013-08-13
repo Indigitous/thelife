@@ -411,6 +411,7 @@ public class Server {
 	
 	/**
 	 * Process a request to add a user to a group.
+	 * @param userId	the user replying to the initial request
 	 */
 	public void processGroupMembershipRequest(int requestId, boolean hasAccepted, int userId, int groupId, ServerListener listener, String indicator ) {
 		
@@ -466,11 +467,11 @@ public class Server {
 			HttpPut httpRequest = new HttpPut(urlString);	
 			
 			ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("first_name", String.valueOf(firstName)));			
-			pairs.add(new BasicNameValuePair("last_name", String.valueOf(lastName)));
-			pairs.add(new BasicNameValuePair("email", String.valueOf(email)));
-			pairs.add(new BasicNameValuePair("mobile", String.valueOf(mobile)));
-			pairs.add(new BasicNameValuePair("push_registration", String.valueOf(pushRegistration)));
+			pairs.add(new BasicNameValuePair("first_name", Utilities.getEmpty(firstName)));			
+			pairs.add(new BasicNameValuePair("last_name", Utilities.getEmpty(lastName)));
+			pairs.add(new BasicNameValuePair("email", Utilities.getEmpty(email)));
+			pairs.add(new BasicNameValuePair("mobile", Utilities.getEmpty(mobile)));
+			pairs.add(new BasicNameValuePair("push_registration", Utilities.getEmpty(pushRegistration)));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, "UTF-8");
 			
 			httpRequest.setEntity(entity);

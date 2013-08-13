@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -153,6 +154,19 @@ public class Utilities {
 		}		
 		
 		return field;
+	}
+	
+	
+	public static String getOptionalField(String key, Bundle bundle, String defaultValue) {
+		return bundle.getString(key) != null ? bundle.getString(key) : defaultValue;
+	}
+	
+	
+	/**
+	 * return the given value or empty string if it is null
+	 */
+	public static String getEmpty(String value) {
+		return value != null ? value : "";
 	}
 	
 	
