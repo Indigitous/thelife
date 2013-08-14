@@ -6,9 +6,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.p2c.thelife.config.TheLifeConfiguration;
@@ -82,9 +84,34 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 				Server server = new Server(getActivity());
 				server.createRequest(group.id, RequestModel.INVITE, email, mobile, (Server.ServerListener)m_listener, "createRequest");
 			}
-		});		
+		});
 		
-		return alertBuilder.create();				
+		// enable the dialog positive button when something has been entered
+		alertBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+			@Override
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+				boolean shouldEnable = !emailText.getText().toString().trim().isEmpty() ||
+									   !mobileText.getText().toString().trim().isEmpty();
+				enableInvite(dialog, shouldEnable);
+				return false;
+			}
+		});
+		
+		// disable the dialog positive button when it is shown
+		AlertDialog dialog = alertBuilder.create();
+		dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				enableInvite(dialog, false);
+			}
+		});
+		return dialog;
+	}
+	
+	
+	private void enableInvite(DialogInterface dialog, boolean isEnabled) {
+		Button inviteButton = ((AlertDialog)dialog).getButton(Dialog.BUTTON_POSITIVE);
+		inviteButton.setEnabled(isEnabled);
 	}
 
 }
