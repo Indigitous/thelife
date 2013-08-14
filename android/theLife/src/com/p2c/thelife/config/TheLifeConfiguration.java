@@ -41,6 +41,9 @@ public class TheLifeConfiguration {
 	public static final int HTTP_SERVER_CONNECTION_TIMEOUT = 4000; // in millis
 	public static final int HTTP_SERVER_NUM_RETRIES = 4;
 	
+	public static final int EXPONENTIAL_BACKOFF_START = 1000; // in millis
+	public static final int EXPONENTIAL_BACKOFF_MAX = 16000;  // in millis
+	
 	// refresh deltas: time before a refresh
 	// these are in milliseconds
 	public static final long REFRESH_DEEDS_DELTA = 60 * 60 * 1000; // 1 hour
