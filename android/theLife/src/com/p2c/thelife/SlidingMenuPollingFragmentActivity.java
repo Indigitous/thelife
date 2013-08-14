@@ -39,7 +39,7 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 		}
 		
 		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_support);		
-		TheLifeConfiguration.getRequestsPoller().start();
+//		TheLifeConfiguration.getRequestsPoller().start();
 		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);
 	}
 	
@@ -48,7 +48,7 @@ public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity
 	protected void onPause() {
 		super.onPause();
 		
-		TheLifeConfiguration.getRequestsPoller().stop();
+//		TheLifeConfiguration.getRequestsPoller().stop();
 		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);
 		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_support);		
 	}

@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.p2c.thelife.R;
+import com.p2c.thelife.Utilities;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.RequestModel;
 
@@ -39,7 +40,8 @@ public class GCMReceiver extends BroadcastReceiver {
 			
 			if (messageType.equals(GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE)) {
 				Bundle extras = intent.getExtras();
-				if (extras.getString("app_type").equals("request")) {
+				String appType = extras.getString("app_type");
+				if (appType.equals("request")) {
 					
 					// create the model object
 					RequestModel request = RequestModel.fromBundle(context.getResources(), extras);
@@ -47,12 +49,8 @@ public class GCMReceiver extends BroadcastReceiver {
 					
 					// make sure the request is for this user
 					if (request.getDestinationId() != TheLifeConfiguration.getOwnerDS().getId()) {
-						Log.i(TAG, "GCM Message is not for the current user.");
+						Log.i(TAG, "GCM message is not for the current user.");
 					} else {
-						
-						// add the request to the data store
-						TheLifeConfiguration.getRequestsDS().add(request);
-						
 						// create the Android notification
 						NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 						builder.setSmallIcon(R.drawable.ic_launcher);
@@ -77,12 +75,24 @@ public class GCMReceiver extends BroadcastReceiver {
 						// add the notification to the manager
 						NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 						notificationManager.notify("requests", request.id, builder.build());
+						
+						// add the request to the data store and tell listeners
+						TheLifeConfiguration.getRequestsDS().add(request);
+						TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();						
 					}
+				} else {
+					Log.e(TAG, "Can't parse GCM message: " + appType);
 				}
 			} else if (messageType.equals(GoogleCloudMessaging.MESSAGE_TYPE_DELETED)) {
-				;
+				// too many messages from the server, causing some to be deleted
+				Bundle extras = intent.getExtras();
+				int numberDeleted = Integer.valueOf(Utilities.getOptionalField("total_deleted", extras, "0"));
+				Log.i(TAG, "Received GCM delete message: " + numberDeleted);
+				
+				// refresh the requests data store from the server
+				TheLifeConfiguration.getRequestsDS().forceRefresh("push");
 			} else if (messageType.equals(GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR)) {
-				;
+				Log.i(TAG, "Received GCM send error message");
 			}
 		}
 		

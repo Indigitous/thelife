@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +20,11 @@ import com.p2c.thelife.model.RequestsDS;
 
 /**
  * Show the requests/notifications for the owner.
- * Requests are automatically polled by the separate RequestsPoller class.
+ * Requests are received from Google Cloud Messaging (GCM).
  * A local time refreshes the displayed timestamps every minute.
  */
-public class RequestsActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, RequestsDS.DSChangedListener, ServerAccessDialogAbstract.Listener {
+public class RequestsActivity extends SlidingMenuPollingFragmentActivity 
+	implements Server.ServerListener, RequestsDS.DSChangedListener, ServerAccessDialogAbstract.Listener {
 	
 	private static final String TAG = "RequestsActivity";
 	
@@ -42,7 +42,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_requests, SlidingMenuSupport.REQUESTS_POSITION);
 				
-		// attach the event list view
+		// attach the event list view and adapter
 		m_listView = (ListView)findViewById(R.id.activity_requests_list);
 		m_adapter = new RequestsAdapter(this, android.R.layout.simple_list_item_1);
 		m_listView.setAdapter(m_adapter);
@@ -87,7 +87,10 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		// set the data store listener
 		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_adapter);
-		TheLifeConfiguration.getRequestsDS().addDSChangedListener(this);		
+		TheLifeConfiguration.getRequestsDS().addDSChangedListener(this);
+		
+		// force a refresh to make sure the requests are in sync with the server
+		TheLifeConfiguration.getRequestsDS().forceRefresh(null);		
 		
 		// set the bitmap listener
 		TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);
@@ -163,15 +166,14 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 	@Override
 	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
 		
-		if (Utilities.isSuccessfulHttpCode(httpCode)) {
-				
+		if (Utilities.isSuccessfulHttpCode(httpCode)) {		
 			// successful
 			
 			// delete the request
 			TheLifeConfiguration.getRequestsDS().delete(m_request.id);
 			TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();
 			
-			// if the request was accepted, refresh my groups
+			// if the request was accepted, refresh my requests
 			if (indicator.equals("accept")) {							
 				TheLifeConfiguration.getGroupsDS().forceRefresh("postRequest");
 			}
@@ -179,8 +181,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity impleme
 		
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
-		}						
-		
+		}	
 	}
 	
 	@Override

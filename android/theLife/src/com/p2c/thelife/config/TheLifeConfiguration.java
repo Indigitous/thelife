@@ -246,14 +246,14 @@ public class TheLifeConfiguration {
 	
 	/********************** Application-wide polling ***********************/
 	
-	public static RequestsPoller getRequestsPoller() {
-		return m_requestsPoller;
-	}
-	
-	
-	public static void setRequestsPoller(RequestsPoller requestsPoller) {
-		m_requestsPoller = requestsPoller;
-	}
+//	public static RequestsPoller getRequestsPoller() {
+//		return m_requestsPoller;
+//	}
+//	
+//	
+//	public static void setRequestsPoller(RequestsPoller requestsPoller) {
+//		m_requestsPoller = requestsPoller;
+//	}
 	
 
 }
