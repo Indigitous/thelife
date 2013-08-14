@@ -109,8 +109,8 @@
         android:textColor="#FFFFFF"
 		android:shadowColor="#23282A"
 		android:shadowDx="0"
-		android:shadowDy="-2"
-		android:shadowRadius="3.14"         
+		android:shadowDy="-1"
+		android:shadowRadius="0.001"         
         android:onClick="setFriendProfile"/>
 
 </LinearLayout>

@@ -46,7 +46,7 @@
         android:shadowColor="#000000"
         android:shadowDx="3.5"
         android:shadowDy="3.5"
-        android:shadowRadius="3.14"
+        android:shadowRadius="3.0"
         android:text="@string/setup_prompt" />
 
 </RelativeLayout>

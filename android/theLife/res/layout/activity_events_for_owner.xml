@@ -74,7 +74,7 @@
 		        android:shadowColor="#000000"
 		        android:shadowDx="3.5"
 		        android:shadowDy="3.5"
-		        android:shadowRadius="3.14"
+		        android:shadowRadius="3.0"
 				android:onClick="editProfile" />    
 
     	    <Button
@@ -90,7 +90,7 @@
     	        android:shadowColor="#23282A"
     	        android:shadowDx="0"
     	        android:shadowDy="-2"
-    	        android:shadowRadius="3.14"
+    	        android:shadowRadius="3.0"
     	        android:text="@string/activity_owner_edit_profile"
     	        android:textColor="#FFFFFFFF" />
     	    
