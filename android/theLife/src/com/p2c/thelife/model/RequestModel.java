@@ -38,9 +38,9 @@ public class RequestModel extends AbstractModel {
 	public String groupName;        // the name of the group to join
 	public String type;				// either REQUEST_MEMBERSHIP or INVITE:
 									// 		REQUEST_MEMBERSHIP means the user_id requests to join group group_id
-									// 		INVITE means the user_id, who is the group leader of group_id, requests email/sms to join
+									// 		INVITE means the user_id, who is the group leader of group_id, requests email/mobile to join
 	public String email;			// for INVITE: this is the invited person's email
-	public String sms;				// for INVITE: this is the invited person's SMS
+	public String mobile;				// for INVITE: this is the invited person's SMS/mobile
 	public String finalDescription; // description with template place holders replaced with real values
 	public long   timestamp; 		// in milliseconds, android.text.format.Time
 	public String status;			// either DELIVERED, ACCEPTED or REJECTED
@@ -50,7 +50,7 @@ public class RequestModel extends AbstractModel {
 	
 	public RequestModel(Resources resources, int request_id, 
 						int user_id, String userName, int recipient_id, String recipientName, int group_id, String groupName, 
-						String type, String email, String sms, long timestamp, String status) {
+						String type, String email, String mobile, long timestamp, String status) {
 		super(request_id);
 		
 		this.user_id = user_id;
@@ -61,7 +61,7 @@ public class RequestModel extends AbstractModel {
 		this.groupName = groupName;
 		this.type = type;
 		this.email = email;		
-		this.sms = sms;
+		this.mobile = mobile;
 		this.timestamp = timestamp;
 		this.status = status;
 		
@@ -106,7 +106,7 @@ public class RequestModel extends AbstractModel {
 					// invites go to the email/mobile
 					UserModel owner = TheLifeConfiguration.getOwnerDS().getOwner();
 					if (Utilities.hasData(owner.email) && owner.email.equals(email) ||
-						Utilities.hasData(owner.mobile) && owner.mobile.equals(sms)) {
+						Utilities.hasData(owner.mobile) && owner.mobile.equals(mobile)) {
 						destinationId = owner.id;
 					}
 				}
@@ -122,7 +122,7 @@ public class RequestModel extends AbstractModel {
 	@Override
 	public String toString() {
 		return id + ", " + user_id + ", [from] " + userName + ", [to] " + recipientName + "," + group_id + ", " + groupName + 
-				", " + email + ", " + sms + "," + finalDescription + "," + timestamp + "," + status;
+				", " + email + ", " + mobile + "," + finalDescription + "," + timestamp + "," + status;
 	}
 	
 	
