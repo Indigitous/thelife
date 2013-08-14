@@ -20,6 +20,7 @@ public class GCMSupport implements Server.ServerListener {
 	
 	private static final String TAG = "GCMSupport";
 	
+	// note: app backup must not include registation id
 	private static final String SYSKEY_GCM_REGISTRATION_ID = "gcm_registration_id";
 	private static final String SYSKEY_GCM_REGISTRATION_EXPIRY = "gcm_registration_expiry";
 	private static final long   EXPIRY_DELTA = 4 * 24 * 60 * 60 * 1000; // 4 days in millis
@@ -174,6 +175,10 @@ public class GCMSupport implements Server.ServerListener {
 
 	@Override
 	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
+		if (!Utilities.isSuccessfulHttpCode(httpCode)) {
+			// server failed to store registration ID, so clear it locally
+			clearRegistration();
+		}
 		notifyGCMListener(Utilities.isSuccessfulHttpCode(httpCode) ? null : m_context.getResources().getString(R.string.gcm_error));
 	}
 	

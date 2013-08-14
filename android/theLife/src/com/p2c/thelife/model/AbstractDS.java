@@ -163,9 +163,15 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	/**
 	 * Add a model which is already in the server.
 	 * This does not update the cache or notify listeners.
+	 * @return 	true if added, false if the model was already in the data store
 	 */
-	public void add(T model) {
-		m_data.add(0, model); // add to the start of the list
+	public boolean add(T model) {
+		if (findById(model.id) != null) {
+			return false;
+		} else {
+			m_data.add(0, model); // add to the start of the list
+			return true;
+		}
 	}
 	
 	/**

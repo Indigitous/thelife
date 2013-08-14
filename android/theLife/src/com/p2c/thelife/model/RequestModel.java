@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.p2c.thelife.R;
 import com.p2c.thelife.Utilities;
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 
@@ -92,6 +93,32 @@ public class RequestModel extends AbstractModel {
 		return isDelivered() ? user_id : recipient_id;
 	}
 	
+	// return the id of the user that should receive this message
+	public int getDestinationId() {
+		int destinationId = 0;
+		
+		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {		
+			if (isDelivered()) {
+				if (isMembershipRequest()) {
+					// membership requests go to the group leader
+					destinationId = TheLifeConfiguration.getGroupsDS().findById(group_id).leader_id;
+				} else {
+					// invites go to the email/mobile
+					UserModel owner = TheLifeConfiguration.getOwnerDS().getOwner();
+					if (Utilities.hasData(owner.email) && owner.email.equals(email) ||
+						Utilities.hasData(owner.mobile) && owner.mobile.equals(sms)) {
+						destinationId = owner.id;
+					}
+				}
+			} else {
+				// acceptance/rejection go to the originator of the message
+				destinationId = user_id;
+			}
+		}
+		
+		return destinationId;
+	}
+	
 	@Override
 	public String toString() {
 		return id + ", " + user_id + ", [from] " + userName + ", [to] " + recipientName + "," + group_id + ", " + groupName + 
@@ -113,7 +140,7 @@ public class RequestModel extends AbstractModel {
 			paramUserName = "???";
 		}
 		
-		// friend name parameter
+		// group name parameter
 		String paramGroupName = this.groupName;
 		if (paramGroupName == null) {
 			paramGroupName = "???";
