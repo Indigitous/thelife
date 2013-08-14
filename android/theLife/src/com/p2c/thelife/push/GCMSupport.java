@@ -1,5 +1,7 @@
 package com.p2c.thelife.push;
 
+import java.io.IOException;
+
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -127,22 +129,33 @@ public class GCMSupport implements Server.ServerListener {
 		{
 			@Override
 			protected String doInBackground(Void... params) {
-				String registrationId = null;				
-				try {
-					Log.i(TAG, "Getting a GCM registration ID from Google");
-					GoogleCloudMessaging messaging = GoogleCloudMessaging.getInstance(context);
-					registrationId = messaging.register(TheLifeConfiguration.PROJECT_ID);
-					Log.i(TAG, "Got a new GCM registration ID from Google: " + registrationId);
-
-					// send it to the server
-					if (registrationId != null) {
-						Server server = new Server(context);
-						UserModel owner = TheLifeConfiguration.getOwnerDS().getOwner();
-						server.updateUserProfile(owner.id, owner.firstName, owner.lastName, owner.email, owner.mobile, registrationId, GCMSupport.this, "updateRegistration");
+				String registrationId = null;
+				int sleepTime = TheLifeConfiguration.EXPONENTIAL_BACKOFF_START; // 1 second
+				boolean shouldRegister = true;
+				while (shouldRegister) {
+					try {
+						Log.i(TAG, "Getting a GCM registration ID from Google");
+						GoogleCloudMessaging messaging = GoogleCloudMessaging.getInstance(context);
+						registrationId = messaging.register(TheLifeConfiguration.PROJECT_ID);
+						Log.i(TAG, "Got a new GCM registration ID from Google: " + registrationId);
+	
+						// send it to the server
+						if (registrationId != null) {
+							Server server = new Server(context);
+							UserModel owner = TheLifeConfiguration.getOwnerDS().getOwner();
+							server.updateUserProfile(owner.id, owner.firstName, owner.lastName, owner.email, owner.mobile, registrationId, GCMSupport.this, "updateRegistration");
+						}
+						shouldRegister = false;
+					} catch (IOException e) {
+						Log.e(TAG, "getNewRegistrationId()", e);
+						// exponential back off						
+						try { Thread.sleep(sleepTime); } catch (Exception e2) { }
+						sleepTime *= 2;
+						shouldRegister = sleepTime < TheLifeConfiguration.EXPONENTIAL_BACKOFF_MAX;
+					} catch (Exception e) {
+						Log.e(TAG, "getNewRegistrationId()", e);
+						shouldRegister = false;
 					}
-					
-				} catch (Exception e) {
-					Log.e(TAG, "getNewRegistrationId()", e);
 				}
 				
 				return registrationId;
