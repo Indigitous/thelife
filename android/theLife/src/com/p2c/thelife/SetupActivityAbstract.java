@@ -77,6 +77,10 @@ public abstract class SetupActivityAbstract extends FragmentActivity implements 
 			TheLifeConfiguration.getEventsDS().forceRefresh("events");
 		} else if (indicator.equals("events")) {
 			TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
+			TheLifeConfiguration.getRequestsDS().addDSRefreshedListener(this);			
+			TheLifeConfiguration.getRequestsDS().forceRefresh("requests");
+		} else if (indicator.equals("requests")) {
+			TheLifeConfiguration.getRequestsDS().removeDSRefreshedListener(this);
 			
 			// access the GCM registration
 			GCMSupport.getInstance().accessRegistration(this, this, "push");			

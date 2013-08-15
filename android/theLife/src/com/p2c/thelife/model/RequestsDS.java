@@ -60,14 +60,18 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 		m_hasNewNotifications = hasNewNotifications;
 		SharedPreferences.Editor editor = TheLifeConfiguration.getSystemSettings().edit();
 		editor.putBoolean(SYSKEY_HAS_NEW_NOTIFICATIONS, hasNewNotifications);
-		editor.commit();		
+		editor.commit();
 	}	
 	
 	
-	public void notifyDSChangedListeners() {
-		if (m_newModelIds.size() > 0) {
+	@Override
+	public boolean add(RequestModel model) {
+		boolean wasAdded = super.add(model);
+		if (wasAdded) {
 			setHasNewNotifications(true);
 		}
-		super.notifyDSChangedListeners();
-	}
+		
+		return wasAdded;
+	}	
+
 }
