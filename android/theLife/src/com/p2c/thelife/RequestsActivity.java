@@ -90,7 +90,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity
 		TheLifeConfiguration.getRequestsDS().addDSChangedListener(this);
 		
 		// force a refresh to make sure the requests are in sync with the server
-		TheLifeConfiguration.getRequestsDS().forceRefresh(null);		
+		TheLifeConfiguration.getRequestsDS().refresh("activity_refresh");
 		
 		// set the bitmap listener
 		TheLifeConfiguration.getBitmapNotifier().addUserBitmapListener(m_adapter);
