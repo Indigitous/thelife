@@ -160,7 +160,5 @@ public class GCMReceiver extends BroadcastReceiver {
 		NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(REQUESTS_NOTIFICATION_ID, builder.build());		
 	}
-	
-	
 
 }
