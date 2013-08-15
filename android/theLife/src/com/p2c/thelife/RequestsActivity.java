@@ -65,8 +65,8 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity
 			}
 		};
 		
-		// clear the new notifications flag
-		TheLifeConfiguration.getRequestsDS().setHasNewNotifications(false);
+		// no longer have notified requests
+		TheLifeConfiguration.getRequestsDS().setNumRequestsNotified(0);
 		showNotificationNumber();
 	}
 

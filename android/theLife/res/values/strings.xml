@@ -219,5 +219,9 @@ The Apache Software Foundation (http://www.apache.org/).
     <string name="notification_request_accepted">Request accepted</string>
     <string name="notification_invitation_rejected">Invitation declined</string>
     <string name="notification_request_rejected">Request declined</string>
+    <string name="message_received">Message received from another user.</string>
+    <string name="messages_received">Messages received from other users.</string>
+    <string name="notifications_received">Notifications received.</string>
+	<string name="notifications_pending">Notifications are pending.</string>    
     
 </resources>

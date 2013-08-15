@@ -16,6 +16,7 @@ import com.p2c.thelife.R;
 import com.p2c.thelife.Utilities;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.RequestModel;
+import com.p2c.thelife.model.UserModel;
 
 
 /**
@@ -24,6 +25,8 @@ import com.p2c.thelife.model.RequestModel;
 public class GCMReceiver extends BroadcastReceiver {
 	
 	private static final String TAG = "GCMReceiver";
+	
+	private static final int REQUESTS_NOTIFICATION_ID = 1;
 
 	@Override
 	/**
@@ -51,52 +54,113 @@ public class GCMReceiver extends BroadcastReceiver {
 					if (request.getDestinationId() != TheLifeConfiguration.getOwnerDS().getId()) {
 						Log.i(TAG, "GCM message is not for the current user.");
 					} else {
-						// create the Android notification
-						NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-						builder.setSmallIcon(R.drawable.ic_launcher);
-						if (request.isDelivered()) {
-							builder.setContentTitle(Html.fromHtml(res.getString(request.isInvite() ? R.string.notification_invitation_delivered : 
-																									 R.string.notification_request_delivered, 
-																									 request.userName)));
-						} else if (request.isAccepted()) {
-							builder.setContentTitle(res.getString(request.isInvite() ? R.string.notification_invitation_accepted : 
-																					   R.string.notification_request_accepted));
-						} else if (request.isRejected()) {
-							builder.setContentTitle(res.getString(request.isInvite() ? R.string.notification_invitation_rejected : 
-								   													   R.string.notification_request_rejected));					
-						}
-						String description = res.getString(R.string.notification_group, request.groupName);
-						builder.setContentText(Html.fromHtml(description));
-						
-						// destination activity when notification is selected
-						PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent("com.p2c.thelife.Requests"), 0);
-						builder.setContentIntent(pendingIntent);
-						
-						// add the notification to the manager
-						NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-						notificationManager.notify("requests", request.id, builder.build());
-						
-						// add the request to the data store and tell listeners
-						TheLifeConfiguration.getRequestsDS().add(request);
-						TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();						
+						handleRequestMessage(context, res, extras);						
 					}
 				} else {
 					Log.e(TAG, "Can't parse GCM message: " + appType);
 				}
 			} else if (messageType.equals(GoogleCloudMessaging.MESSAGE_TYPE_DELETED)) {
-				// too many messages from the server, causing some to be deleted
-				Bundle extras = intent.getExtras();
-				int numberDeleted = Integer.valueOf(Utilities.getOptionalField("total_deleted", extras, "0"));
-				Log.i(TAG, "Received GCM delete message: " + numberDeleted);
+				handleDeleteMessage(context, res, intent);
 				
-				// refresh the requests data store from the server
-				TheLifeConfiguration.getRequestsDS().forceRefresh("push");
 			} else if (messageType.equals(GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR)) {
-				Log.i(TAG, "Received GCM send error message");
+				Log.e(TAG, "Received GCM send error message");
 			}
 		}
 		
 		// this object will now die
 	}
+	
+	
+	private void handleRequestMessage(Context context, Resources res, Bundle extras) {
+		
+		// create the model object
+		RequestModel request = RequestModel.fromBundle(context.getResources(), extras);
+		Log.i(TAG, "Received " + request);
+		
+		// make sure the request is for this user
+		if (request.getDestinationId() != TheLifeConfiguration.getOwnerDS().getId()) {
+			Log.e(TAG, "GCM message is not for the current user.");
+			
+		} else {
+			
+			// create the Android notification
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+			builder.setSmallIcon(R.drawable.ic_launcher);
+
+			int numRequestsNotified = TheLifeConfiguration.getRequestsDS().numRequestsNotified();
+			if (numRequestsNotified > 0) {
+				// more than one request to show in Notification Manager
+				
+				builder.setContentTitle(res.getString(R.string.notifications_received));
+				builder.setContentText(res.getString(R.string.notifications_pending));
+				builder.setNumber(numRequestsNotified + 1);
+			} else {
+				// first request to show in Notification Manager
+				
+				if (UserModel.isInCache(request.getAuthorId())) {
+					builder.setLargeIcon(UserModel.getThumbnail(request.getAuthorId()));
+				} 
+				if (request.isDelivered()) {
+					builder.setContentTitle(Html.fromHtml(res.getString(request.isInvite() ? R.string.notification_invitation_delivered : 
+																							 R.string.notification_request_delivered, 
+																							 request.userName)));
+				} else if (request.isAccepted()) {
+					builder.setContentTitle(res.getString(request.isInvite() ? R.string.notification_invitation_accepted : 
+																			   R.string.notification_request_accepted));
+				} else if (request.isRejected()) {
+					builder.setContentTitle(res.getString(request.isInvite() ? R.string.notification_invitation_rejected : 
+						   													   R.string.notification_request_rejected));					
+				}
+				String description = res.getString(R.string.notification_group, request.groupName);
+				builder.setContentText(Html.fromHtml(description));
+			}
+			
+			// destination activity when notification is selected
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent("com.p2c.thelife.Requests"), 0);
+			builder.setContentIntent(pendingIntent);
+			builder.setAutoCancel(true);
+			
+			// add the notification to the manager
+			NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(REQUESTS_NOTIFICATION_ID, builder.build());
+
+			// add the request to the data store and tell listeners
+			TheLifeConfiguration.getRequestsDS().add(request);
+			TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();						
+		}		
+	}
+	
+	
+	/**
+	 * Too many messages flooded GCM, so some were deleted.
+	 * @param res
+	 * @param intent
+	 */
+	private void handleDeleteMessage(Context context, Resources res, Intent intent) {
+		Bundle extras = intent.getExtras();
+		int numberDeleted = Integer.valueOf(Utilities.getOptionalField("total_deleted", extras, "0"));
+		Log.i(TAG, "Received GCM delete message: " + numberDeleted);
+		
+		// refresh the requests data store from the server
+		TheLifeConfiguration.getRequestsDS().forceRefresh("push");				
+		
+		// create the Android notification
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+		builder.setSmallIcon(R.drawable.ic_launcher);
+		builder.setContentTitle(res.getString((numberDeleted > 1) ? R.string.messages_received : R.string.message_received));
+		if (numberDeleted > 1) {
+			builder.setNumber(numberDeleted);
+		}
+		
+		// destination activity when notification is selected
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent("com.p2c.thelife.Requests"), 0);
+		builder.setContentIntent(pendingIntent);
+		
+		// add the notification to the manager
+		NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify(REQUESTS_NOTIFICATION_ID, builder.build());		
+	}
+	
+	
 
 }

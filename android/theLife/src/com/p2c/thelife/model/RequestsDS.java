@@ -10,16 +10,17 @@ import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 /**
- * Requests/notifications model data store.
+ * Requests model data store.
  * @author clarence
  *
  */
 public class RequestsDS extends AbstractDS<RequestModel> {
 	
 	private static final String SYSKEY_REFRESH_REQUESTS_TIMESTAMP = "refresh_requests_timestamp";	
-	private static final String SYSKEY_HAS_NEW_NOTIFICATIONS = "requests_has_new_notifications";
+	private static final String SYSKEY_NUM_REQUESTS_NOTIFIED = "num_requests_notified";
 	
-	private boolean m_hasNewNotifications = false;
+	// number of unseen/notified requests (used by NotificationManager)
+	private int m_numRequestsNotified = 0;
 	
 	
 	public RequestsDS(Context context, String token) {
@@ -34,12 +35,9 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 				TheLifeConfiguration.REFRESH_REQUESTS_DELTA
 			);
 		
-		// see if there are new notifications
+		// see if there are new requests
 		SharedPreferences systemSettings = TheLifeConfiguration.getSystemSettings();
-		m_hasNewNotifications = systemSettings.getBoolean(SYSKEY_HAS_NEW_NOTIFICATIONS, false);
-		if (count() == 1) {
-			setHasNewNotifications(false);
-		}
+		m_numRequestsNotified = systemSettings.getInt(SYSKEY_NUM_REQUESTS_NOTIFIED, 0);
 	}
 	
 	
@@ -51,15 +49,20 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 	}
 	
 	
-	public boolean hasNewNotifications() {
-		return m_hasNewNotifications;
+	public boolean hasRequestsNotified() {
+		return m_numRequestsNotified > 0;
 	}
 	
 	
-	public void setHasNewNotifications(boolean hasNewNotifications) {
-		m_hasNewNotifications = hasNewNotifications;
+	public int numRequestsNotified() {
+		return m_numRequestsNotified;
+	}	
+	
+	
+	public void setNumRequestsNotified(int numNewRequests) {
+		m_numRequestsNotified = numNewRequests;
 		SharedPreferences.Editor editor = TheLifeConfiguration.getSystemSettings().edit();
-		editor.putBoolean(SYSKEY_HAS_NEW_NOTIFICATIONS, hasNewNotifications);
+		editor.putInt(SYSKEY_NUM_REQUESTS_NOTIFIED, numNewRequests);
 		editor.commit();
 	}	
 	
@@ -68,7 +71,7 @@ public class RequestsDS extends AbstractDS<RequestModel> {
 	public boolean add(RequestModel model) {
 		boolean wasAdded = super.add(model);
 		if (wasAdded) {
-			setHasNewNotifications(true);
+			setNumRequestsNotified(++m_numRequestsNotified);
 		}
 		
 		return wasAdded;
