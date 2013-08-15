@@ -15,6 +15,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.p2c.thelife.R;
 import com.p2c.thelife.Utilities;
 import com.p2c.thelife.config.TheLifeConfiguration;
+import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.RequestModel;
 import com.p2c.thelife.model.UserModel;
 
@@ -27,6 +28,9 @@ public class GCMReceiver extends BroadcastReceiver {
 	private static final String TAG = "GCMReceiver";
 	
 	private static final int REQUESTS_NOTIFICATION_ID = 1;
+	private static final int EVENTS_NOTIFICATION_ID = 2;
+	private static final int AFTER_DELETE_NOTIFICATION_ID = 3;
+	
 
 	@Override
 	/**
@@ -45,17 +49,9 @@ public class GCMReceiver extends BroadcastReceiver {
 				Bundle extras = intent.getExtras();
 				String appType = extras.getString("app_type");
 				if (appType.equals("request")) {
-					
-					// create the model object
-					RequestModel request = RequestModel.fromBundle(context.getResources(), extras);
-					Log.i(TAG, "Received " + request);
-					
-					// make sure the request is for this user
-					if (request.getDestinationId() != TheLifeConfiguration.getOwnerDS().getId()) {
-						Log.i(TAG, "GCM message is not for the current user.");
-					} else {
-						handleRequestMessage(context, res, extras);						
-					}
+					handleRequestMessage(context, res, extras);
+				} else if (appType.equals("event")) {
+					handleEventMessage(context, res, extras);					
 				} else {
 					Log.e(TAG, "Can't parse GCM message: " + appType);
 				}
@@ -75,7 +71,7 @@ public class GCMReceiver extends BroadcastReceiver {
 		
 		// create the model object
 		RequestModel request = RequestModel.fromBundle(context.getResources(), extras);
-		Log.i(TAG, "Received " + request);
+		Log.i(TAG, "Received request: " + request);
 		
 		// make sure the request is for this user
 		if (request.getDestinationId() != TheLifeConfiguration.getOwnerDS().getId()) {
@@ -123,12 +119,66 @@ public class GCMReceiver extends BroadcastReceiver {
 			// add the notification to the manager
 			NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(REQUESTS_NOTIFICATION_ID, builder.build());
+			notificationManager.cancel(AFTER_DELETE_NOTIFICATION_ID);			
 
 			// add the request to the data store and tell listeners
 			TheLifeConfiguration.getRequestsDS().add(request);
 			TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();						
 		}		
 	}
+	
+	
+	private void handleEventMessage(Context context, Resources res, Bundle extras) {
+		
+		// create the model object
+		EventModel event = EventModel.fromBundle(context.getResources(), extras);
+		Log.i(TAG, "Received event: " + event);
+		
+		// make sure the request is for this user
+		int ownerId = TheLifeConfiguration.getOwnerDS().getId();
+		if (!event.isVisibleToUser(ownerId)) {
+			Log.e(TAG, "GCM message is not for the current user.");
+			
+		// make sure this event was not caused by this user (because then it wouldn't need a notification)
+		} else if (event.user_id != ownerId) {
+			
+			// create the Android notification
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+			builder.setSmallIcon(R.drawable.ic_launcher);
+
+			int numEventsNotified = TheLifeConfiguration.getEventsDS().numEventsNotified();
+			if (numEventsNotified > 0) {
+				// more than one request to show in Notification Manager
+				
+				builder.setContentTitle(res.getString(R.string.events_received));
+				builder.setContentText(res.getString(R.string.events_pending));
+				builder.setNumber(numEventsNotified + 1);
+			} else {
+				// first request to show in Notification Manager
+				
+				if (UserModel.isInCache(event.user_id)) {
+					builder.setLargeIcon(UserModel.getThumbnail(event.user_id));
+				}
+				
+				builder.setContentTitle(event.userName);
+				builder.setContentText(Html.fromHtml(event.finalDescription));
+			}
+			
+			// destination activity when notification is selected
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent("com.p2c.thelife.EventsForCommunity"), 0);
+			builder.setContentIntent(pendingIntent);
+			builder.setAutoCancel(true);
+			
+			// add the notification to the manager
+			NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(EVENTS_NOTIFICATION_ID, builder.build());
+			notificationManager.cancel(AFTER_DELETE_NOTIFICATION_ID);			
+
+			// add the request to the data store and tell listeners
+			TheLifeConfiguration.getEventsDS().add(event);
+			TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();					
+		}		
+	}	
 	
 	
 	/**
@@ -142,7 +192,9 @@ public class GCMReceiver extends BroadcastReceiver {
 		Log.i(TAG, "Received GCM delete message: " + numberDeleted);
 		
 		// refresh the requests data store from the server
-		TheLifeConfiguration.getRequestsDS().forceRefresh("push");				
+		TheLifeConfiguration.getRequestsDS().forceRefresh("push_after_delete");
+		// refresh the events data store from the server
+		TheLifeConfiguration.getEventsDS().forceRefresh("push_after_delete");			
 		
 		// create the Android notification
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -151,14 +203,18 @@ public class GCMReceiver extends BroadcastReceiver {
 		if (numberDeleted > 1) {
 			builder.setNumber(numberDeleted);
 		}
+		builder.setAutoCancel(true);		
 		
 		// destination activity when notification is selected
+		// TODO where should it go? RequestsActivity or EventsActivity?
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent("com.p2c.thelife.Requests"), 0);
 		builder.setContentIntent(pendingIntent);
 		
 		// add the notification to the manager
 		NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(REQUESTS_NOTIFICATION_ID, builder.build());		
+		notificationManager.notify(AFTER_DELETE_NOTIFICATION_ID, builder.build());
+		notificationManager.cancel(REQUESTS_NOTIFICATION_ID);
+		notificationManager.cancel(EVENTS_NOTIFICATION_ID);
 	}
 
 }

@@ -50,7 +50,12 @@ public class GroupModel extends AbstractModel {
 	 */
 	public void removeUser(int user_id) {
 		member_ids.remove(Integer.valueOf(user_id));
-	}	
+	}
+	
+	
+	public boolean containsUser(int user_id) {
+		return member_ids.contains(user_id);
+	}
 	
 	@Override
 	public String toString() {

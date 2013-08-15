@@ -4,8 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.p2c.thelife.Utilities;
 import com.p2c.thelife.config.TheLifeConfiguration;
 
 
@@ -106,9 +108,29 @@ public class EventModel extends AbstractModel {
 		return finalDescription;
 	}
 	
+	
+	/**
+	 * @return whether or not this event can be seen by the given user
+	 */
+	public boolean isVisibleToUser(int userId) {
+		
+		if (user_id == userId)
+			return true;
+		else {
+			for (GroupModel group: TheLifeConfiguration.getGroupsDS().findAll()) {
+				if (group.containsUser(userId)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	
 	public static EventModel fromJSON(Resources resources, JSONObject json, boolean useServer) throws JSONException {
 		
-		Log.d(TAG, "IN EVENT MODEL from JSON");
+		Log.d(TAG, "fromJSON()");
 		
 		// create the event
 		return new EventModel(
@@ -126,6 +148,27 @@ public class EventModel extends AbstractModel {
 			json.optInt("pledges_count", 0),
 			json.optBoolean("has_pledged", false),
 			json.optInt("threshold_id", 0)
+		);
+	}
+	
+	public static EventModel fromBundle(Resources resources, Bundle bundle) {
+		Log.d(TAG, "fromBundle()");
+		
+		return new EventModel(
+			resources,
+			Integer.valueOf(bundle.getString("id")),
+			Integer.valueOf(bundle.getString("user_id")),
+			Utilities.getOptionalField("user_name", bundle, null),
+			Integer.valueOf(bundle.getString("friend_id")),
+			Utilities.getOptionalField("friend_name", bundle, null),
+			Integer.valueOf(bundle.getString("activity_id")),
+			Integer.valueOf(Utilities.getOptionalField("event_id", bundle, "0")),			
+			bundle.getString("description"),
+			Long.valueOf(Utilities.getOptionalField("created_at", bundle, "0")) * 1000, // convert seconds from server into millis
+			bundle.getBoolean("prayer_requested"),
+			Integer.valueOf(Utilities.getOptionalField("pledges_count", bundle, "0")),
+			bundle.getBoolean("has_pledged", false),
+			Integer.valueOf(Utilities.getOptionalField("threshold_id", bundle, "0"))
 		);
 	}	
 

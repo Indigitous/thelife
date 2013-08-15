@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.p2c.thelife.config.TheLifeConfiguration;
@@ -23,9 +24,13 @@ public class EventsDS extends AbstractDS<EventModel> {
 	private static final String TAG = "EventsDS";
 	
 	private static final String SYSKEY_REFRESH_EVENTS_TIMESTAMP = "refresh_events_timestamp";
+	private static final String SYSKEY_NUM_EVENTS_NOTIFIED = "num_requests_notified";	
 	
 	// maximum number of events on a full refresh
 	public static final int MAX_EVENTS = 100;
+	
+	// number of unseen/notified events (used by NotificationManager)
+	private int m_numEventsNotified = 0;	
 		
 
 	public EventsDS(Context context, String token) {
@@ -140,6 +145,35 @@ public class EventsDS extends AbstractDS<EventModel> {
 				list.add(model);
 			}
 		}
+	}
+	
+	
+	public boolean hasEventsNotified() {
+		return m_numEventsNotified > 0;
+	}
+	
+	
+	public int numEventsNotified() {
+		return m_numEventsNotified;
+	}	
+	
+	
+	public void setNumEventsNotified(int numNewEvents) {
+		m_numEventsNotified = numNewEvents;
+		SharedPreferences.Editor editor = TheLifeConfiguration.getSystemSettings().edit();
+		editor.putInt(SYSKEY_NUM_EVENTS_NOTIFIED, numNewEvents);
+		editor.commit();
+	}	
+	
+	
+	@Override
+	public boolean add(EventModel model) {
+		boolean wasAdded = super.add(model);
+		if (wasAdded) {
+			setNumEventsNotified(++m_numEventsNotified);
+		}
+		
+		return wasAdded;
 	}		
 
 }
