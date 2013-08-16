@@ -47,12 +47,11 @@ public class TheLifeConfiguration {
 	// these are in milliseconds
 	public static final long REFRESH_DEEDS_DELTA = 60 * 60 * 1000; // 1 hour
 	public static final long REFRESH_CATEGORIES_DELTA = REFRESH_DEEDS_DELTA;
-	public static final long REFRESH_EVENTS_DELTA = 2 * 60 * 1000;
+	public static final long REFRESH_EVENTS_DELTA = 5 * 60 * 1000;
 	public static final long REFRESH_FRIENDS_DELTA = 60 * 60 * 1000;
 	public static final long REFRESH_GROUPS_DELTA = 60 * 60 * 1000;
 	public static final long REFRESH_USERS_DELTA = 60 * 60 * 1000;
-//	public static final long REFRESH_REQUESTS_FIRST_DELTA = 100; // time before first Requests refresh
-	public static final long REFRESH_REQUESTS_DELTA = 60 * 60 * 1000;
+	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000;
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
