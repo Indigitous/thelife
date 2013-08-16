@@ -47,12 +47,6 @@ public class TheLifeApplication extends Application {
 		TheLifeConfiguration.setEventsDS(new EventsDS(getApplicationContext(), null));
 		TheLifeConfiguration.setRequestsDS(new RequestsDS(getApplicationContext(), null));
 		
-		// initialize the application wide polling and its notification listener
-//		TheLifeConfiguration.setRequestsPoller(
-//			new RequestsPoller(TheLifeConfiguration.getRequestsDS(),
-//							   TheLifeConfiguration.REFRESH_REQUESTS_FIRST_DELTA,
-//							   TheLifeConfiguration.REFRESH_REQUESTS_DELTA));
-		
 		// start the bitmap notifier and remember it (which is for the UI thread)
 		BitmapNotifierHandler notifierHandler = new BitmapNotifierHandler();
 		TheLifeConfiguration.setBitmapNotifier(notifierHandler);

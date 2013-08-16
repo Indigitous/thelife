@@ -163,6 +163,9 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity
 		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), dialogMessage, true, true);				
 	}
 
+	/**
+	 * indicator is "accept", "reject" or "deleteRequest"
+	 */
 	@Override
 	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
 		
@@ -173,7 +176,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity
 			TheLifeConfiguration.getRequestsDS().delete(m_request.id);
 			TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();
 			
-			// if the request was accepted, refresh my requests
+			// if the request was accepted, refresh my groups
 			if (indicator.equals("accept")) {							
 				TheLifeConfiguration.getGroupsDS().forceRefresh("postRequest");
 			}

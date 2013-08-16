@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 
 import com.p2c.thelife.BitmapCacheHandler;
 import com.p2c.thelife.BitmapNotifierHandler;
-import com.p2c.thelife.RequestsPoller;
 import com.p2c.thelife.model.CategoriesDS;
 import com.p2c.thelife.model.DeedsDS;
 import com.p2c.thelife.model.EventsDS;
@@ -87,9 +86,6 @@ public class TheLifeConfiguration {
 	
 	// UI thread Handler to notify that a bitmap from the server has arrived
 	private static BitmapNotifierHandler m_bitmapNotifier = null;	
-	
-	// application wide polling
-	private static RequestsPoller m_requestsPoller = null;
 	
 	
 	/*************************** System Preferences **********************/
@@ -241,19 +237,6 @@ public class TheLifeConfiguration {
 	
 	public static void setBitmapNotifier(BitmapNotifierHandler bitmapNotifier) {
 		m_bitmapNotifier = bitmapNotifier;
-	}		
-	
-	
-	/********************** Application-wide polling ***********************/
-	
-//	public static RequestsPoller getRequestsPoller() {
-//		return m_requestsPoller;
-//	}
-//	
-//	
-//	public static void setRequestsPoller(RequestsPoller requestsPoller) {
-//		m_requestsPoller = requestsPoller;
-//	}
-	
+	}
 
 }

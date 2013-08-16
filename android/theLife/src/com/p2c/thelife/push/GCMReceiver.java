@@ -123,7 +123,8 @@ public class GCMReceiver extends BroadcastReceiver {
 
 			// add the request to the data store and tell listeners
 			TheLifeConfiguration.getRequestsDS().add(request);
-			TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();						
+			TheLifeConfiguration.getRequestsDS().notifyDSChangedListeners();
+			TheLifeConfiguration.getRequestsDS().refresh("push"); // TODO more efficient way to make persistent?
 		}		
 	}
 	
@@ -176,7 +177,8 @@ public class GCMReceiver extends BroadcastReceiver {
 
 			// add the request to the data store and tell listeners
 			TheLifeConfiguration.getEventsDS().add(event);
-			TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();					
+			TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+			TheLifeConfiguration.getEventsDS().refresh("push"); // TODO more efficient way to make persistent?
 		}		
 	}	
 	

@@ -26,9 +26,7 @@ public class EventsForOwnerActivity extends SlidingMenuPollingActivity implement
 	private ListView m_listView = null;
 	private EventsForOwnerAdapter m_adapter = null;
 	private TextView m_noEventsView = null;	
-	
-	// refresh the data store and display
-	private Runnable m_datastoreRefreshRunnable = null;	
+
 	// refresh the events list view
 	private Runnable m_displayRefreshRunnable = null;
 
@@ -55,16 +53,7 @@ public class EventsForOwnerActivity extends SlidingMenuPollingActivity implement
 		
 		// show a message if there are no events
 		m_noEventsView = (TextView)findViewById(R.id.events_for_owner_none);
-		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);				
-		
-		// events data store refresh runnable
-		// this will refresh the data store from the server.		
-		m_datastoreRefreshRunnable = new Runnable() {
-			@Override
-			public void run() {
-				TheLifeConfiguration.getEventsDS().refreshAfter(null);
-			}
-		};	
+		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);
 		
 		// timestamps in events list view refresh runnable
 		m_displayRefreshRunnable = new Runnable() {
@@ -107,7 +96,6 @@ public class EventsForOwnerActivity extends SlidingMenuPollingActivity implement
 	public void notifyDSRefreshed(String indicator) {
 		// keep polling the events in the background
 		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);						
-		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
 	}			
 	
 	
@@ -121,7 +109,6 @@ public class EventsForOwnerActivity extends SlidingMenuPollingActivity implement
 		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
-		m_listView.removeCallbacks(m_datastoreRefreshRunnable);
 		
 		// remove the display refresh
 		m_listView.removeCallbacks(m_displayRefreshRunnable);		

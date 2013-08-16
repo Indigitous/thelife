@@ -17,9 +17,7 @@ import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.EventsDS;
 
 /**
- * This activity uses polling to get fresh events into the data store and display while the activity is visible. 
- * 		[AsyncTask, getEventsDS().refreshAfter(), REFRESH_EVENTS_DELTA]
- * This activity also uses View.postDelayed to update the timestamps on each displayed event.
+ * This activity uses View.postDelayed to update the timestamps on each displayed event.
  * 		[View.postDelayed, local UI thread only, every minute] 
  * @author clarence
  *
@@ -32,8 +30,6 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	private EventsForCommunityAdapter m_adapter = null;
 	private View m_noEventsView = null;
 	
-	// refresh the data store and display
-	private Runnable m_datastoreRefreshRunnable = null;
 	// refresh the events list view
 	private Runnable m_displayRefreshRunnable = null;	
 
@@ -57,14 +53,8 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 			m_noEventsView.setVisibility(View.GONE);	
 		}
 		
-		// events data store refresh runnable
-		// this will refresh the data store from the server.
-		m_datastoreRefreshRunnable = new Runnable() {
-			@Override
-			public void run() {
-				TheLifeConfiguration.getEventsDS().refreshAfter(null);
-			}
-		};
+		// showing this activity means no notified events
+		TheLifeConfiguration.getEventsDS().setNumEventsNotified(0);
 		
 		// this will refresh the timestamps inside the list view's events
 		// this is all local -- server is not involved
@@ -104,11 +94,11 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	
 	
 	/**
-	 * Owner has decided to add a friend (from getting started).
+	 * Owner has decided to add a friend (from getting started button).
 	 * @param view
 	 */
 	public void addFriend(View view) {
-		Intent intent = new Intent("com.p2c.thelife.FriendImportManually");
+		Intent intent = new Intent("com.p2c.thelife.FriendsImport");
 		startActivity(intent);
 	}
 	
@@ -126,10 +116,7 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 			button.setVisibility(TheLifeConfiguration.getFriendsDS().count() == 0 ? View.VISIBLE : View.GONE);
 		} else {
 			m_noEventsView.setVisibility(View.GONE);	
-		}		
-		
-		// keep polling the events in the background		
-		m_listView.postDelayed(m_datastoreRefreshRunnable, TheLifeConfiguration.REFRESH_EVENTS_DELTA);
+		}
 	}			
 	
 	
@@ -143,7 +130,6 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
-		m_listView.removeCallbacks(m_datastoreRefreshRunnable);
 		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);				
 		TheLifeConfiguration.getBitmapNotifier().removeFriendBitmapListener(m_adapter);
 		
