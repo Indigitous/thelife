@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.p2c.thelife.Utilities;
 import com.p2c.thelife.config.TheLifeConfiguration;
@@ -165,9 +166,9 @@ public class EventModel extends AbstractModel {
 			Integer.valueOf(Utilities.getOptionalField("event_id", bundle, "0")),			
 			bundle.getString("description"),
 			Long.valueOf(Utilities.getOptionalField("created_at", bundle, "0")) * 1000, // convert seconds from server into millis
-			bundle.getBoolean("prayer_requested"),
+			Boolean.parseBoolean(bundle.getString("prayer_requested")),
 			Integer.valueOf(Utilities.getOptionalField("pledges_count", bundle, "0")),
-			bundle.getBoolean("has_pledged", false),
+			Boolean.parseBoolean(Utilities.getOptionalField("has_pledged", bundle, "false")),
 			Integer.valueOf(Utilities.getOptionalField("threshold_id", bundle, "0"))
 		);
 	}	
