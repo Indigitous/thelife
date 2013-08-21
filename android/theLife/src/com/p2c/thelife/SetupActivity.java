@@ -70,12 +70,16 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	private AlertDialog.Builder createRegisterOrLoginDialog(final boolean isRegister) {
 		// add the options
 		AccountManager accountManager = AccountManager.get(this);
-		final Account[] googleAccounts = accountManager.getAccountsByType("com.google"); // facebook is type "com.facebook.auth.login"
+		final Account[] googleAccounts = accountManager.getAccountsByType("com.google");
+		final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");		
 		final int[] selected = new int[] { 0 }; // must be final so it is an array
-		String[] options = new String[googleAccounts.length + 1];
+		String[] options = new String[googleAccounts.length + facebookAccounts.length + 1];
 		for (int index= 0; index < googleAccounts.length; index++) {
 			options[index] = "Google " + googleAccounts[index].name;
 		}
+		for (int index= 0; index < facebookAccounts.length; index++) {
+			options[googleAccounts.length + index] = "Fb " + facebookAccounts[index].name;
+		}		
 		options[options.length - 1] = getResources().getString(R.string.manually); // manual option
 		
 		// create the dialog
@@ -97,6 +101,8 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			public void onClick(DialogInterface dialog, int which) {
 				if (selected[0] < googleAccounts.length) {
 					registerOrLoginViaGoogle(isRegister, googleAccounts[selected[0]].name);
+				} else if (selected[0] < googleAccounts.length + facebookAccounts.length) {
+					registerOrLoginViaFacebook(isRegister, facebookAccounts[selected[0] - googleAccounts.length].name);
 				} else {
 					if (isRegister) {
 						registerManually();
@@ -156,7 +162,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 					// read the google account token, which will be verified by theLife server (no user permission needed)
 					String token = null;
 					token = GoogleAuthUtil.getToken(SetupActivity.this, params[0], 
-								"audience:server:client_id:" + TheLifeConfiguration.WEB_CLIENT_ID);
+								"audience:server:client_id:" + TheLifeConfiguration.GOOGLE_WEB_CLIENT_ID);
 					Log.i(TAG, "successfully got Google account token for account " + params[0]);
 					
 					return token;
@@ -208,7 +214,17 @@ Utilities.showErrorToast(SetupActivity.this, "EXCEPTION: " + m_e, Toast.LENGTH_S
 			}				
 		}.execute(accountName);
 		
-	}	
+	}
+	
+	
+	/**
+	 * Register or login using an external facebook token.
+	 * @param isRegister	true if registering, false if logging in
+	 * @param accountName
+	 */
+	private void registerOrLoginViaFacebook(final boolean isRegister, String accountName) {
+		Utilities.showInfoToast(this, "LOGIN OR REGISTER WITH FACEBOOK " + accountName, Toast.LENGTH_SHORT);
+	}
 	
 	
 	public void loginUser(View view) {

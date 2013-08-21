@@ -59,9 +59,12 @@ public class TheLifeConfiguration {
 	private static String m_serverURL = "https://srv1.thelifeapp.com"; // production
 	//private static String m_serverURL = "https://thelifeapp.ballistiq.com"; // staging
 	
-	// Google account information
-	public static final String WEB_CLIENT_ID = "900671345436.apps.googleusercontent.com"; // from P2C's Google Console API
-	public static final String PROJECT_ID = "900671345436";
+	// Google information
+	public static final String GOOGLE_WEB_CLIENT_ID = "900671345436.apps.googleusercontent.com"; // from P2C's Google Console API
+	public static final String GOOGLE_PROJECT_ID = "900671345436";
+	
+	// Facebook information
+	public static final String FACEBOOK_APP_ID = "565568403501222";
 	
 	// Version number of the server
 	private static String m_serverVersion = "/v1/";
