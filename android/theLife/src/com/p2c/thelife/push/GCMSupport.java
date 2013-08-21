@@ -137,7 +137,7 @@ public class GCMSupport implements Server.ServerListener {
 					try {
 						Log.i(TAG, "Getting a GCM registration ID from Google");
 						GoogleCloudMessaging messaging = GoogleCloudMessaging.getInstance(context);
-						registrationId = messaging.register(TheLifeConfiguration.PROJECT_ID);
+						registrationId = messaging.register(TheLifeConfiguration.GOOGLE_PROJECT_ID);
 						Log.i(TAG, "Got a new GCM registration ID from Google: " + registrationId);
 	
 						// send it to the server
