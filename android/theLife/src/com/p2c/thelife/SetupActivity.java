@@ -22,6 +22,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
@@ -39,8 +44,7 @@ import com.p2c.thelife.model.UserModel;
 public class SetupActivity extends SetupRegisterActivityAbstract implements Server.ServerListener, ServerAccessDialogAbstract.Listener {
 	
 	private static final String TAG = "SetupActivity";
-	
-	private JSONObject m_externalUserAccount = null; // the user account info	
+
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -53,6 +57,14 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			getActionBar().hide();
 		}
 	}
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        // facebook requestCode=64206 resultCode=-1
+ 		Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+    }    
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,17 +83,14 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 		// add the options
 		AccountManager accountManager = AccountManager.get(this);
 		final Account[] googleAccounts = accountManager.getAccountsByType("com.google");
-		final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");		
 		final int[] selected = new int[] { 0 }; // must be final so it is an array
-		String[] options = new String[googleAccounts.length + facebookAccounts.length + 1];
+		String[] options = new String[googleAccounts.length + 1 /* facebook */ + 1 /* manual */];
 		for (int index= 0; index < googleAccounts.length; index++) {
 			options[index] = "Google " + googleAccounts[index].name;
 		}
-		for (int index= 0; index < facebookAccounts.length; index++) {
-			options[googleAccounts.length + index] = "Fb " + facebookAccounts[index].name;
-		}		
+		options[options.length - 2] = "facebook";		
 		options[options.length - 1] = getResources().getString(R.string.manually); // manual option
-		
+				
 		// create the dialog
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 		alertBuilder.setTitle(getResources().getString(isRegister ? R.string.choose_register_method_prompt : R.string.choose_login_method_prompt));;
@@ -101,8 +110,8 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			public void onClick(DialogInterface dialog, int which) {
 				if (selected[0] < googleAccounts.length) {
 					registerOrLoginViaGoogle(isRegister, googleAccounts[selected[0]].name);
-				} else if (selected[0] < googleAccounts.length + facebookAccounts.length) {
-					registerOrLoginViaFacebook(isRegister, facebookAccounts[selected[0] - googleAccounts.length].name);
+				} else if (selected[0] < googleAccounts.length + 1) {
+					registerOrLoginViaFacebook(isRegister);
 				} else {
 					if (isRegister) {
 						registerManually();
@@ -129,8 +138,10 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 		
 		new AsyncTask<String, Void, String>() {
 			
-			private Exception m_e;
+			private Exception m_e = null;
 			private String m_accountName;
+			private JSONObject m_account = null; // the user account info
+			
 
 			// background thread
 			@Override
@@ -144,11 +155,11 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 						// read the Google user account info; this can result in a permission request to the user
 						String userInfoToken = GoogleAuthUtil.getToken(SetupActivity.this, m_accountName,  
 								"oauth2:https://www.googleapis.com/auth/userinfo.profile");
-						m_externalUserAccount = Utilities.readJSONFromServer("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + userInfoToken);
-						Log.i(TAG, "received user info" + m_externalUserAccount);
+						m_account = Utilities.readJSONFromServer("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + userInfoToken);
+						Log.i(TAG, "received user info" + m_account);
 						
 						// read the Google account image, if available
-						String pictureURL = m_externalUserAccount.optString("picture");
+						String pictureURL = m_account.optString("picture");
 						if (pictureURL != null) {
 							m_bitmap = Utilities.getExternalBitmap(pictureURL);
 							if (m_bitmap != null) {
@@ -157,7 +168,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 						}
 					}
 					
-					// TODO if logging then update theLife account with latest from Google
+					// TODO if login then update TheLife account with latest from Google
 										
 					// read the google account token, which will be verified by theLife server (no user permission needed)
 					String token = null;
@@ -179,7 +190,9 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			protected void onPostExecute(String externalToken) {				
 				if (m_e == null) {
 					if (isRegister) {
-						registerWithToken(m_accountName, "google", externalToken);
+						String firstName = m_account.optString("given_name");
+						String lastName = m_account.optString("family_name");
+						registerWithToken(m_accountName, firstName, lastName, "google", externalToken);
 					} else {
 						loginWithToken(m_accountName, "google", externalToken);
 					}
@@ -187,8 +200,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 				else {
 					m_progressDialog.dismiss();
 					
-// TODO debugging							
-Utilities.showErrorToast(SetupActivity.this, "EXCEPTION: " + m_e, Toast.LENGTH_SHORT);					
+					// handle the exception
 					Log.e(TAG, "registerLoginViaGoogle", m_e);
 					if (m_e instanceof GooglePlayServicesAvailabilityException) {
 						// GooglePlay is not there?
@@ -218,14 +230,82 @@ Utilities.showErrorToast(SetupActivity.this, "EXCEPTION: " + m_e, Toast.LENGTH_S
 	
 	
 	/**
-	 * Register or login using an external facebook token.
+	 * Register or login using an external facebook account.
 	 * @param isRegister	true if registering, false if logging in
-	 * @param accountName
 	 */
-	private void registerOrLoginViaFacebook(final boolean isRegister, String accountName) {
-		Utilities.showInfoToast(this, "LOGIN OR REGISTER WITH FACEBOOK " + accountName, Toast.LENGTH_SHORT);
+	private void registerOrLoginViaFacebook(final boolean isRegister) {
+			
+		Session session = Session.getActiveSession();
+		if (session == null) {
+			session = Session.openActiveSession(this, true, new Session.StatusCallback() {
+				
+				@Override
+				public void call(Session session, SessionState state, Exception exception) {
+System.out.println("FACEBOOK SESSION IS " + session);
+System.out.println("FACEBOOK STATE IS " + state);
+					if (session.isOpened()) {
+System.out.println("FACEBOOK SESSION IS OPEN ");
+
+						// progress bar while waiting
+						m_progressDialog = ProgressDialog.show(
+							SetupActivity.this, 
+							getResources().getString(R.string.waiting), 
+							getResources().getString(R.string.retrieving_account), 
+							true, 
+							true);
+
+						// get the Facebook user account info
+						final Session session2 = session;						
+						Request.newMeRequest(session2, new Request.GraphUserCallback() {
+							@Override
+							public void onCompleted(GraphUser user, Response response) {
+								if (Session.getActiveSession() == session2 && user != null) {
+									String id = user.getId();
+									String firstName = user.getFirstName();
+									String lastName = user.getLastName();
+									String externalToken = session2.getAccessToken();
+									
+									// get the facebook account name (email address or make one up)
+									AccountManager accountManager = AccountManager.get(SetupActivity.this);
+									final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");
+									String accountName = (facebookAccounts != null && facebookAccounts.length > 0) ? 
+										facebookAccounts[0].name : 
+										"fb_" + System.currentTimeMillis() + "@p2c.com";
+										
+System.out.println("FACEBOOK ID: " + id);										
+System.out.println("FACEBOOK EMAIL: " + accountName);
+System.out.println("FACEBOOK FIRST NAME: " + firstName);
+System.out.println("FACEBOOK LAST NAME: " + lastName);
+									// TODO if login then update TheLife account with latest from facebook
+
+									if (isRegister) {
+										registerWithToken(accountName, firstName, lastName, "facebook", externalToken);
+									} else {
+										loginWithToken(accountName, "facebook", externalToken);
+									}
+							    }
+								
+								// no longer waiting
+								if (m_progressDialog != null) {
+									m_progressDialog.dismiss();
+								}
+								
+								// deal with Facebook errors
+								if (response.getError() != null) {
+									Utilities.showErrorToast(
+										SetupActivity.this, 
+										SetupActivity.this.getResources().getString(R.string.facebook_error) + " :" + response.getError().getErrorMessage(), 
+										Toast.LENGTH_SHORT);
+									// TODO: see handleError() in Facebook's SDK SelectionFragment.java
+								}
+							}
+						}).executeAsync();
+					}
+				}
+			});
+		}
 	}
-	
+
 	
 	public void loginUser(View view) {
 		createRegisterOrLoginDialog(false).show();
@@ -258,16 +338,13 @@ Utilities.showErrorToast(SetupActivity.this, "EXCEPTION: " + m_e, Toast.LENGTH_S
 	
 	
 	/**
-	 * Register the user with an external token.
+	 * Register the user with external account information.
 	 * Called on the UI thread.
 	 * @param accountName
 	 * @param provider
 	 * @param externalToken
 	 */
-	private void registerWithToken(String accountName, String provider, String externalToken) {
-					
-		String firstName = m_externalUserAccount.optString("given_name");
-		String lastName = m_externalUserAccount.optString("family_name");
+	private void registerWithToken(String accountName, String firstName, String lastName, String provider, String externalToken) {
 		String locale = Locale.getDefault().getLanguage();
 		
 		Server server = new Server(this);
