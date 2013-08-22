@@ -225,5 +225,6 @@ The Apache Software Foundation (http://www.apache.org/).
 	<string name="notifications_pending">Notifications are pending.</string>
 	<string name="events_received">Events received</string>
 	<string name="events_pending">Events are pending.</string>
+	<string name="app_id">565568403501222</string>
     
 </resources>
