@@ -157,14 +157,19 @@
     <string name="error_prefix">Error:</string>
     <string name="error_bad_connection">Bad Connection</string>
     <string name="license">&lt;h4>Copyright \u00a9 by Power To Change Canada. All rights reserved.&lt;/h4>
-&lt;br />
+&lt;hr />        
 &lt;p>Apache HttpComponents Client&lt;br />
 Copyright 1999-2012 The Apache Software Foundation
 &lt;/p>
 &lt;p>
 This product includes software developed at&lt;br />
 The Apache Software Foundation (http://www.apache.org/).
-&lt;/p></string>
+&lt;/p>
+&lt;hr />
+&lt;p>
+Contains Facebook software made available under the Apache License, version 2.0; http://www.apache.org/licenses/.
+&lt;/p>
+	</string>
     <string name="title_license">License</string>
     <string name="action_license">License</string>
     <string name="confirm_activity">Do you want to do this activity?</string>
