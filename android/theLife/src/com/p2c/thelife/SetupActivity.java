@@ -80,15 +80,17 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	 * @return a new dialog showing the registration/login options
 	 */
 	private AlertDialog.Builder createRegisterOrLoginDialog(final boolean isRegister) {
-		// add the options
+		
+		// add the options: n google accounts, 1 facebook account and 1 manual entry
 		AccountManager accountManager = AccountManager.get(this);
 		final Account[] googleAccounts = accountManager.getAccountsByType("com.google");
+		final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");		
 		final int[] selected = new int[] { 0 }; // must be final so it is an array
 		String[] options = new String[googleAccounts.length + 1 /* facebook */ + 1 /* manual */];
 		for (int index= 0; index < googleAccounts.length; index++) {
 			options[index] = "Google " + googleAccounts[index].name;
 		}
-		options[options.length - 2] = "facebook";		
+		options[options.length - 2] = facebookAccounts.length > 0 ? "facebook " + facebookAccounts[0].name : "facebook";		
 		options[options.length - 1] = getResources().getString(R.string.manually); // manual option
 				
 		// create the dialog
@@ -111,7 +113,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 				if (selected[0] < googleAccounts.length) {
 					registerOrLoginViaGoogle(isRegister, googleAccounts[selected[0]].name);
 				} else if (selected[0] < googleAccounts.length + 1) {
-					registerOrLoginViaFacebook(isRegister);
+					registerOrLoginViaFacebook(isRegister, facebookAccounts.length > 0 ? facebookAccounts[0].name : null);
 				} else {
 					if (isRegister) {
 						registerManually();
@@ -232,8 +234,9 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	/**
 	 * Register or login using an external facebook account.
 	 * @param isRegister	true if registering, false if logging in
+	 * @param accountName	email of the account, can be null if not known
 	 */
-	private void registerOrLoginViaFacebook(final boolean isRegister) {
+	private void registerOrLoginViaFacebook(final boolean isRegister, final String accountName) {
 
 		// make a fresh session
 		Session session = Session.getActiveSession();
@@ -270,23 +273,26 @@ System.out.println("FACEBOOK SESSION IS OPEN ");
 								String externalToken = session2.getAccessToken();
 								
 								// get the facebook account name (email address or make one up)
-								AccountManager accountManager = AccountManager.get(SetupActivity.this);
-								final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");
-								String accountName = (facebookAccounts != null && facebookAccounts.length > 0) ? 
-									facebookAccounts[0].name : 
-									"fb_" + System.currentTimeMillis() + "@p2c.com";
+								String accountName2 = accountName;
+								if (accountName2 == null) {
+									AccountManager accountManager = AccountManager.get(SetupActivity.this);
+									final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");
+									accountName2 = (facebookAccounts != null && facebookAccounts.length > 0) ? 
+										facebookAccounts[0].name : 
+										"fb_" + System.currentTimeMillis() + "@p2c.com";
+								}
 											
 	System.out.println("FACEBOOK ID: " + id);
 	System.out.println("FACEBOOK TOKEN: " + externalToken);
-	System.out.println("FACEBOOK EMAIL: " + accountName);
+	System.out.println("FACEBOOK EMAIL: " + accountName2);
 	System.out.println("FACEBOOK FIRST NAME: " + firstName);
 	System.out.println("FACEBOOK LAST NAME: " + lastName);
 									// TODO if login then update TheLife account with latest from facebook
 
 								if (isRegister) {
-									registerWithToken(accountName, firstName, lastName, "facebook", externalToken);
+									registerWithToken(accountName2, firstName, lastName, "facebook", externalToken);
 								} else {
-									loginWithToken(accountName, "facebook", externalToken);
+									loginWithToken(accountName2, "facebook", externalToken);
 								}
 						    }
 							else {
