@@ -234,7 +234,13 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	 * @param isRegister	true if registering, false if logging in
 	 */
 	private void registerOrLoginViaFacebook(final boolean isRegister) {
-			
+
+		// make a fresh session
+		Session session = Session.getActiveSession();
+		if (session != null) {
+			session.closeAndClearTokenInformation();
+		}
+		
 		Session.openActiveSession(this, true, new Session.StatusCallback() {
 				
 			@Override
