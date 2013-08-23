@@ -34,6 +34,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.UserModel;
+import com.testflightapp.lib.TestFlight;
 
 
 /**
@@ -331,13 +332,14 @@ System.out.println("FACEBOOK SESSION IS OPEN ");
 	 * @param externalToken
 	 */
 	private void loginWithToken(String accountName, String provider, String externalToken) {
-			
+		TestFlight.passCheckpoint(TAG + "::loginWithToken() " + accountName + ", " + provider);
 		Server server = new Server(this);
 		server.loginWithToken(accountName, provider, externalToken, this, "loginWithToken");
 	}	
 	
 	
 	public void loginManually() {
+		TestFlight.passCheckpoint(TAG + "::loginManually()");		
 		SetupLoginDialog dialog = new SetupLoginDialog();		
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 	}	
@@ -356,6 +358,7 @@ System.out.println("FACEBOOK SESSION IS OPEN ");
 	 * @param externalToken
 	 */
 	private void registerWithToken(String accountName, String firstName, String lastName, String provider, String externalToken) {
+		TestFlight.passCheckpoint(TAG + "::registerWithToken() " + accountName + ", " + provider);
 		String locale = Locale.getDefault().getLanguage();
 		
 		Server server = new Server(this);

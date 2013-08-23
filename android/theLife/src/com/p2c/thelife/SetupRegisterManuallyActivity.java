@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.p2c.thelife.model.UserModel;
+import com.testflightapp.lib.TestFlight;
 
 /**
  * Register the user manually, allowing for an image from the Android system.
@@ -47,6 +48,7 @@ public class SetupRegisterManuallyActivity extends SetupRegisterActivityAbstract
 	 * @param view
 	 */
 	public void register(View view) {
+		TestFlight.passCheckpoint(TAG + "::register()");		
 		EditText emailField = (EditText)findViewById(R.id.setup_register_manually_email);
 		String email = emailField.getText().toString();
 		EditText firstNameField = (EditText)findViewById(R.id.setup_register_manually_first_name);

@@ -66,6 +66,9 @@ public class TheLifeConfiguration {
 	// Facebook information
 	public static final String FACEBOOK_APP_ID = "565568403501222";
 	
+	// TestFlight information
+	public static final String TESTFLIGHT_APP_ID = "7f161994-2a2b-4be4-a5c2-251b444a0559";
+	
 	// Version number of the server
 	private static String m_serverVersion = "/v1/";
 	

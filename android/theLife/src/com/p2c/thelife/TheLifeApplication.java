@@ -10,6 +10,7 @@ import com.p2c.thelife.model.FriendsDS;
 import com.p2c.thelife.model.GroupsDS;
 import com.p2c.thelife.model.OwnerDS;
 import com.p2c.thelife.model.RequestsDS;
+import com.testflightapp.lib.TestFlight;
 
 
 /**
@@ -26,6 +27,9 @@ public class TheLifeApplication extends Application {
 	 */
 	public void onCreate() {
 		super.onCreate();
+		
+		// TestFlight
+		TestFlight.takeOff(this, TheLifeConfiguration.TESTFLIGHT_APP_ID);
 					
 		// initialize configuration from system settings
 		TheLifeConfiguration.loadSystemSettings(getApplicationContext());
