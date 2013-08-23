@@ -45,7 +45,8 @@ public class GCMReceiver extends BroadcastReceiver {
 			GoogleCloudMessaging messaging = GoogleCloudMessaging.getInstance(context);
 			String messageType = messaging.getMessageType(intent);
 			Log.i(TAG, "Got a GCMReceiver Notification with type " + messageType);
-			TestFlight.passCheckpoint(TAG + "::onReceive() " + messageType);			
+			TestFlight.passCheckpoint(TAG + "::onReceive() " + messageType);
+			TestFlight.log(TAG + "::onReceive() " + messageType);			
 			
 			if (messageType.equals(GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE)) {
 				Bundle extras = intent.getExtras();

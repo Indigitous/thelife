@@ -333,13 +333,15 @@ System.out.println("FACEBOOK SESSION IS OPEN ");
 	 */
 	private void loginWithToken(String accountName, String provider, String externalToken) {
 		TestFlight.passCheckpoint(TAG + "::loginWithToken() " + accountName + ", " + provider);
+		TestFlight.log(TAG + "::loginWithToken() " + accountName + ", " + provider);
 		Server server = new Server(this);
 		server.loginWithToken(accountName, provider, externalToken, this, "loginWithToken");
 	}	
 	
 	
 	public void loginManually() {
-		TestFlight.passCheckpoint(TAG + "::loginManually()");		
+		TestFlight.passCheckpoint(TAG + "::loginManually()");	
+		TestFlight.log(TAG + "::loginManually()");		
 		SetupLoginDialog dialog = new SetupLoginDialog();		
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 	}	
@@ -359,6 +361,7 @@ System.out.println("FACEBOOK SESSION IS OPEN ");
 	 */
 	private void registerWithToken(String accountName, String firstName, String lastName, String provider, String externalToken) {
 		TestFlight.passCheckpoint(TAG + "::registerWithToken() " + accountName + ", " + provider);
+		TestFlight.log(TAG + "::registerWithToken() " + accountName + ", " + provider);		
 		String locale = Locale.getDefault().getLanguage();
 		
 		Server server = new Server(this);
