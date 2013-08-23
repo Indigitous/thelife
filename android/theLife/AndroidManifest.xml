@@ -178,7 +178,6 @@
         <activity
             android:name="com.p2c.thelife.SetupActivity"
             android:label="@string/title_setup"
-            android:noHistory="true"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.Setup" />
