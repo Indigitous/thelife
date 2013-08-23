@@ -287,7 +287,6 @@ System.out.println("FACEBOOK SESSION IS OPEN ");
 	System.out.println("FACEBOOK EMAIL: " + accountName2);
 	System.out.println("FACEBOOK FIRST NAME: " + firstName);
 	System.out.println("FACEBOOK LAST NAME: " + lastName);
-									// TODO if login then update TheLife account with latest from facebook
 
 								if (isRegister) {
 									registerWithToken(accountName2, firstName, lastName, "facebook", externalToken);
