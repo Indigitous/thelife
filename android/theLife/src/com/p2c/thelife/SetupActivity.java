@@ -249,10 +249,8 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 				
 			@Override
 			public void call(Session session, SessionState state, Exception exception) {
-System.out.println("FACEBOOK SESSION IS " + session);
 System.out.println("FACEBOOK STATE IS " + state);
 				if (session.isOpened()) {
-System.out.println("FACEBOOK SESSION IS OPEN ");
 
 					// progress bar while waiting
 					m_progressDialog = ProgressDialog.show(
@@ -262,60 +260,80 @@ System.out.println("FACEBOOK SESSION IS OPEN ");
 						true, 
 						true);
 	
-					// get the Facebook user account info
-					final Session session2 = session;						
-					Request.newMeRequest(session2, new Request.GraphUserCallback() {
-						@Override
-						public void onCompleted(GraphUser user, Response response) {
-							if (Session.getActiveSession() == session2 && user != null) {
-								String id = user.getId();
-								String firstName = user.getFirstName();
-								String lastName = user.getLastName();
-								String externalToken = session2.getAccessToken();
-								
-								// get the facebook account name (email address or make one up)
-								String accountName2 = accountName;
-								if (accountName2 == null) {
-									AccountManager accountManager = AccountManager.get(SetupActivity.this);
-									final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");
-									accountName2 = (facebookAccounts != null && facebookAccounts.length > 0) ? 
-										facebookAccounts[0].name : 
-										"fb_" + System.currentTimeMillis() + "@p2c.com";
-								}
-											
-	System.out.println("FACEBOOK ID: " + id);
-	System.out.println("FACEBOOK TOKEN: " + externalToken);
-	System.out.println("FACEBOOK EMAIL: " + accountName2);
-	System.out.println("FACEBOOK FIRST NAME: " + firstName);
-	System.out.println("FACEBOOK LAST NAME: " + lastName);
-
-								if (isRegister) {
-									registerWithToken(accountName2, firstName, lastName, "facebook", externalToken);
-								} else {
-									loginWithToken(accountName2, "facebook", externalToken);
-								}
-						    }
-							else {
-								// no longer waiting
-								if (m_progressDialog != null) {
-									m_progressDialog.dismiss();
-								}
-							
-								// deal with Facebook errors
-								if (response.getError() != null) {
-									Utilities.showErrorToast(
-										SetupActivity.this, 
-										SetupActivity.this.getResources().getString(R.string.facebook_error) + " :" + response.getError().getErrorMessage(), 
-										Toast.LENGTH_SHORT);
-									// TODO: see handleError() in Facebook's SDK SelectionFragment.java
-								}
-							}
-						}
-					}).executeAsync();
-					
+					registerOrLoginViaFacebookInfo(isRegister, accountName, session);
 				}
 			}
 		});
+	}
+	
+	
+	private void registerOrLoginViaFacebookInfo(final boolean isRegister, final String accountName, final Session session)
+	{
+		Request.newMeRequest(session, new Request.GraphUserCallback() {
+			@Override
+			public void onCompleted(GraphUser user, Response response) {
+				
+				if (Session.getActiveSession() == session && user != null) {
+					final String externalToken = session.getAccessToken();
+
+					// get the facebook account name (email address or make one up)
+					String accountName2 = accountName;
+					if (accountName2 == null) {
+						AccountManager accountManager = AccountManager.get(SetupActivity.this);
+						final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");
+						accountName2 = (facebookAccounts != null && facebookAccounts.length > 0) ? 
+							facebookAccounts[0].name : 
+							"fb_" + System.currentTimeMillis() + "@p2c.com";
+					}
+				
+					if (isRegister) {
+						String id = user.getId();
+						final String accountName3 = accountName2;
+						final String firstName = user.getFirstName();
+						final String lastName = user.getLastName();
+
+System.out.println("FACEBOOK ID: " + id);
+System.out.println("FACEBOOK TOKEN: " + externalToken);
+System.out.println("FACEBOOK EMAIL: " + accountName3);
+System.out.println("FACEBOOK FIRST NAME: " + firstName);
+System.out.println("FACEBOOK LAST NAME: " + lastName);
+
+						new AsyncTask<String, Void, Void>() {
+							// get the user's image in the background thread
+							@Override
+							protected Void doInBackground(String... params) {
+								String pictureURL = Utilities.makeFacebookPictureUrlString(externalToken);
+								m_bitmap = Utilities.getExternalBitmap(pictureURL);
+								return null;
+							}
+							
+							// UI thread		
+							@Override
+							protected void onPostExecute(Void _) {
+								registerWithToken(accountName3, firstName, lastName, "facebook", externalToken);
+							}
+						}.execute();
+					} else {
+						loginWithToken(accountName2, "facebook", externalToken);
+					}
+			    }
+				else {
+					// no longer waiting
+					if (m_progressDialog != null) {
+						m_progressDialog.dismiss();
+					}
+				
+					// deal with Facebook errors
+					if (response.getError() != null) {
+						Utilities.showErrorToast(
+							SetupActivity.this, 
+							SetupActivity.this.getResources().getString(R.string.facebook_error) + " :" + response.getError().getErrorMessage(), 
+							Toast.LENGTH_SHORT);
+						// TODO: see handleError() in Facebook's SDK SelectionFragment.java
+					}
+				}
+			}
+		}).executeAsync();		
 	}
 
 	

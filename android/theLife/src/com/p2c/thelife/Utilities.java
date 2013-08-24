@@ -314,5 +314,15 @@ public class Utilities {
 		
 		return bitmap;
 	}
+	
+
+	/**
+	 * @param accessToken
+	 * @return the URL for the Facebook picture
+	 */
+	public static String makeFacebookPictureUrlString(String accessToken) {
+		return "https://graph.facebook.com/me/picture?access_token=" + accessToken +
+				"&width=" + TheLifeConfiguration.IMAGE_WIDTH + "&height=" + TheLifeConfiguration.IMAGE_HEIGHT;		
+	}
 
 }
