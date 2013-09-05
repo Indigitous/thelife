@@ -13,9 +13,9 @@ import android.widget.EditText;
  * @author clarence
  *
  */
-public class SetupLoginDialog extends ServerAccessDialogAbstract {
+public class SetupLoginManuallyDialog extends ServerAccessDialogAbstract {
 	
-	private static final String TAG = "SetupLoginDialog";
+	private static final String TAG = "SetupLoginManuallyDialog";
 		
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

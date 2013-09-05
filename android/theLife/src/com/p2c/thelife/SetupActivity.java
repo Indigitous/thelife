@@ -360,7 +360,7 @@ System.out.println("FACEBOOK LAST NAME: " + lastName);
 	public void loginManually() {
 		TestFlight.passCheckpoint(TAG + "::loginManually()");	
 		TestFlight.log(TAG + "::loginManually()");		
-		SetupLoginDialog dialog = new SetupLoginDialog();		
+		SetupLoginManuallyDialog dialog = new SetupLoginManuallyDialog();		
 		dialog.show(getSupportFragmentManager(), dialog.getClass().getSimpleName());
 	}	
 	
