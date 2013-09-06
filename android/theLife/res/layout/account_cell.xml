@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/account_image"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center_vertical"        
+        android:src="@drawable/ic_launcher"
+         />
+
+    <TextView
+        android:id="@+id/account_name"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        android:text="@string/manually"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"        
+        android:textAppearance="?android:attr/textAppearanceMedium"
+         />
+
+</LinearLayout>

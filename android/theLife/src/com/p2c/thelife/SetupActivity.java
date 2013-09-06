@@ -18,8 +18,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.Request;
@@ -45,6 +48,8 @@ import com.testflightapp.lib.TestFlight;
 public class SetupActivity extends SetupRegisterActivityAbstract implements Server.ServerListener, ServerAccessDialogAbstract.Listener {
 	
 	private static final String TAG = "SetupActivity";
+	
+	private AlertDialog m_createOrRegisterDialog = null;
 
 	
 	@SuppressLint("NewApi")
@@ -80,40 +85,37 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 	 * @param isRegister	true if registering, false if logging in
 	 * @return a new dialog showing the registration/login options
 	 */
-	private AlertDialog.Builder createRegisterOrLoginDialog(final boolean isRegister) {
+	private void showRegisterOrLoginDialog(final boolean isRegister) {
 		
 		// add the options: n google accounts, 1 facebook account and 1 manual entry
 		AccountManager accountManager = AccountManager.get(this);
 		final Account[] googleAccounts = accountManager.getAccountsByType("com.google");
 		final Account[] facebookAccounts = accountManager.getAccountsByType("com.facebook.auth.login");		
-		final int[] selected = new int[] { 0 }; // must be final so it is an array
-		String[] options = new String[googleAccounts.length + 1 /* facebook */ + 1 /* manual */];
+		SetupAccountsAdapter accountsAdapter = new SetupAccountsAdapter(this, android.R.layout.simple_list_item_single_choice, googleAccounts.length);
 		for (int index= 0; index < googleAccounts.length; index++) {
-			options[index] = "Google " + googleAccounts[index].name;
+			accountsAdapter.add(googleAccounts[index].name);
 		}
-		options[options.length - 2] = facebookAccounts.length > 0 ? "facebook " + facebookAccounts[0].name : "facebook";		
-		options[options.length - 1] = getResources().getString(R.string.manually); // manual option
+		accountsAdapter.add(facebookAccounts.length > 0 ? facebookAccounts[0].name : "facebook"); // facebook
+		accountsAdapter.add(getResources().getString(R.string.manually)); // manual option
 				
-		// create the dialog
+		// build the dialog
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-		alertBuilder.setTitle(getResources().getString(isRegister ? R.string.choose_register_method_prompt : R.string.choose_login_method_prompt));;
-		alertBuilder.setSingleChoiceItems(options, selected[0], new OnClickListener() {
-			
+		alertBuilder.setTitle(getResources().getString(isRegister ? R.string.choose_register_method_prompt : R.string.choose_login_method_prompt));
+		
+		LayoutInflater inflater = LayoutInflater.from(this);
+		View accountsLayout = inflater.inflate(R.layout.dialog_setup_account_select, null);
+		alertBuilder.setView(accountsLayout);
+		ListView accountsList = (ListView)accountsLayout.findViewById(R.id.dialog_setup_account_list);
+		accountsList.setAdapter(accountsAdapter);
+		accountsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				selected[0] = which;
-			}
-		});
-			
-		// set the buttons of the alert
-		alertBuilder.setNegativeButton(R.string.cancel, null); 		
-		alertBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if (selected[0] < googleAccounts.length) {
-					registerOrLoginViaGoogle(isRegister, googleAccounts[selected[0]].name);
-				} else if (selected[0] < googleAccounts.length + 1) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int selectedIndex, long arg3) {
+				m_createOrRegisterDialog.dismiss();
+				m_createOrRegisterDialog = null;
+				if (selectedIndex < googleAccounts.length) {
+					registerOrLoginViaGoogle(isRegister, googleAccounts[selectedIndex].name);
+				} else if (selectedIndex < googleAccounts.length + 1) {
 					registerOrLoginViaFacebook(isRegister, facebookAccounts.length > 0 ? facebookAccounts[0].name : null);
 				} else {
 					if (isRegister) {
@@ -121,11 +123,13 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 					} else {
 						loginManually();
 					}
-				}
+				}				
 			}
 		});
 
-		return alertBuilder;		
+		// create and show the dialog
+		m_createOrRegisterDialog = alertBuilder.create();
+		m_createOrRegisterDialog.show();
 	}
 	
 	
@@ -338,7 +342,7 @@ System.out.println("FACEBOOK LAST NAME: " + lastName);
 
 	
 	public void loginUser(View view) {
-		createRegisterOrLoginDialog(false).show();
+		showRegisterOrLoginDialog(false);
 	}	
 
 	
@@ -366,7 +370,7 @@ System.out.println("FACEBOOK LAST NAME: " + lastName);
 	
 	
 	public void registerUser(View view) {
-		createRegisterOrLoginDialog(true).show();
+		showRegisterOrLoginDialog(true);
 	}
 	
 	
