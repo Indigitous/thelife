@@ -186,7 +186,8 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 	
 	
 	public void importFriendsByFacebook(View view) {
-		Utilities.showInfoToast(this, "importFriendsFacebook", Toast.LENGTH_SHORT);
+		Intent intent = new Intent("com.p2c.thelife.FriendsImportFacebook");
+		startActivity(intent);		
 	}
 
 	

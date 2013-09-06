@@ -168,8 +168,7 @@ The Apache Software Foundation (http://www.apache.org/).
 &lt;hr />
 &lt;p>
 Contains Facebook software made available under the Apache License, version 2.0; http://www.apache.org/licenses/.
-&lt;/p>
-	</string>
+&lt;/p></string>
     <string name="title_license">License</string>
     <string name="action_license">License</string>
     <string name="confirm_activity">Do you want to do this activity?</string>
@@ -227,10 +226,11 @@ Contains Facebook software made available under the Apache License, version 2.0;
     <string name="message_received">Message received from another user.</string>
     <string name="messages_received">Messages received from other users.</string>
     <string name="notifications_received">Notifications received</string>
-	<string name="notifications_pending">Notifications are pending.</string>
-	<string name="events_received">Events received</string>
-	<string name="events_pending">Events are pending.</string>
-	<string name="app_id">565568403501222</string>
-	<string name="facebook_error">facebook error</string>
-    
+    <string name="notifications_pending">Notifications are pending.</string>
+    <string name="events_received">Events received</string>
+    <string name="events_pending">Events are pending.</string>
+    <string name="app_id">565568403501222</string>
+    <string name="facebook_error">facebook error</string>
+    <string name="title_friends_import_facebook">Import Friends</string>
+
 </resources>
