@@ -24,7 +24,9 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 	
 	private static String TAG = "FriendsImportActivity";
 	
-	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS = 1;	
+	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS = 1;
+	private static final int REQUESTCODE_IMPORT_FROM_FACEBOOK = 2;	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +189,7 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 	
 	public void importFriendsByFacebook(View view) {
 		Intent intent = new Intent("com.p2c.thelife.FriendsImportFacebook");
-		startActivity(intent);		
+		startActivityForResult(intent, REQUESTCODE_IMPORT_FROM_FACEBOOK);			
 	}
 
 	
