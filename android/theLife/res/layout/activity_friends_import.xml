@@ -18,11 +18,11 @@
 
     <Button
         android:id="@+id/button1"
-        android:background="@drawable/round_gray_shadow"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
+        android:background="@drawable/round_gray_shadow"
         android:drawableLeft="@drawable/ic_launcher"
         android:drawablePadding="0dp"
         android:enabled="true"
@@ -32,13 +32,12 @@
 
     <Button
         android:id="@+id/button2"
-        android:background="@drawable/round_gray_shadow"        
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
-        android:drawableLeft="@drawable/ic_launcher"
-        android:enabled="false"
+        android:background="@drawable/round_gray_shadow"
+        android:drawableLeft="@drawable/facebook_144"
         android:onClick="importFriendsByFacebook"
         android:text="@string/import_by_facebook" />
 

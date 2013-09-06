@@ -44,7 +44,7 @@ public class SetupAccountsAdapter extends ArrayAdapter<String> {
 		if (position < m_numGoogleAccounts) {
 			accountImageView.setImageResource(R.drawable.common_signin_btn_icon_dark);
 		} else if (position < m_numGoogleAccounts + 1) {
-			accountImageView.setImageResource(R.drawable.facebook_114);
+			accountImageView.setImageResource(R.drawable.facebook_144);
 		} else {
 			accountImageView.setImageResource(R.drawable.ic_launcher);
 		}
