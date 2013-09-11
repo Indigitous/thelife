@@ -48,11 +48,11 @@ public class FriendsImportSupport implements Server.ServerListener {
 	 * Start adding friends.
 	 * @param numberToAdd
 	 */
-	protected void addFriendsStart(int numberToAdd) {
+	protected void addFriendsStart(int messageResourceId) {
 		m_progressDialog = ProgressDialog.show(
 				m_activity, 
 				m_activity.getResources().getString(R.string.waiting), 
-				(numberToAdd > 1) ? m_activity.getResources().getString(R.string.adding_friends) : m_activity.getResources().getString(R.string.adding_friend), 
+				m_activity.getResources().getString(messageResourceId), 
 				true, 
 				true);
 	}

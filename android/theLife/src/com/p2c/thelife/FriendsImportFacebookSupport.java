@@ -50,46 +50,44 @@ public class FriendsImportFacebookSupport implements AddFriendListener {
 	 */
 	public void addFriendsFromFacebook(final ArrayList<String> facebookIds)
 	{
-		
-		new AsyncTask<Void, Void, ArrayList<FacebookUserInfo>>() {
+		if (facebookIds.size() > 0) {
+			m_friendsImportSupport = new FriendsImportSupport(m_activity, FriendsImportFacebookSupport.this);
+			m_friendsImportSupport.addFriendsStart(facebookIds.size() > 1 ? R.string.adding_friends : R.string.adding_friend);
 
-			@Override
-			protected ArrayList<FacebookUserInfo> doInBackground(Void... params) {
+			new AsyncTask<Void, Void, ArrayList<FacebookUserInfo>>() {
+	
+				@Override
+				protected ArrayList<FacebookUserInfo> doInBackground(Void... params) {
+					
+					ArrayList<FacebookUserInfo> userInfos = new ArrayList<FacebookUserInfo>(facebookIds.size());
+					for (String facebookId : facebookIds) {
 				
-				ArrayList<FacebookUserInfo> userInfos = new ArrayList<FacebookUserInfo>(facebookIds.size());
-				for (String facebookId : facebookIds) {
-			
-					// get the Facebook picture
-					String pictureURL = Utilities.makeFacebookUserPictureUrl(facebookId);
-					Bitmap bitmap = Utilities.getExternalBitmap(pictureURL).copy(Bitmap.Config.ARGB_8888, false);
+						// get the Facebook picture
+						String pictureURL = Utilities.makeFacebookUserPictureUrl(facebookId);
+						Bitmap bitmap = Utilities.getExternalBitmap(pictureURL).copy(Bitmap.Config.ARGB_8888, false);
+						
+						// get the Facebook user info
+						String accountURL = Utilities.makeFacebookUserAccountUrl(facebookId);
+						String jsonString = Utilities.getExternalString(accountURL);
+						
+						// add to the list
+						userInfos.add(new FacebookUserInfo(bitmap, jsonString));
+					}
 					
-					// get the Facebook user info
-					String accountURL = Utilities.makeFacebookUserAccountUrl(facebookId);
-					String jsonString = Utilities.getExternalString(accountURL);
-					
-					// add to the list
-					userInfos.add(new FacebookUserInfo(bitmap, jsonString));
+					return userInfos;
 				}
 				
-				return userInfos;
-			}
-			
-			/**
-			 * on UI thread
-			 */
-			@Override
-			protected void onPostExecute(ArrayList<FacebookUserInfo> facebookUsers) {
-				
-				if (facebookUsers.size() > 0) {
-					m_friendsImportSupport = new FriendsImportSupport(m_activity, FriendsImportFacebookSupport.this);
-					m_friendsImportSupport.addFriendsStart(facebookIds.size());
-					
+				/**
+				 * on UI thread
+				 */
+				@Override
+				protected void onPostExecute(ArrayList<FacebookUserInfo> facebookUsers) {
 					m_facebookUserInfosIndex = 0;
 					m_facebookUserInfos = facebookUsers;
 					createAnotherFriendFromFacebook();
 				}
-			}
-		}.execute();
+			}.execute();
+		}
 		
 	}
 	

@@ -170,7 +170,7 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity {
 							// now create the friend on the server
 							Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + email + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));
 							FriendsImportSupport support = new FriendsImportSupport(this, null);
-							support.addFriendsStart(1);
+							support.addFriendsStart(R.string.adding_friend);
 							support.addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact, m_bitmap);
 							support.addFriendsFinish();							
 						}

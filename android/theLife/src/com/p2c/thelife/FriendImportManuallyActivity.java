@@ -80,7 +80,7 @@ public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActi
 		
 		// add the friend to the server
 		FriendsImportSupport support = new FriendsImportSupport(this, null);
-		support.addFriendsStart(1);
+		support.addFriendsStart(R.string.adding_friend);
 		support.addFriend(firstName, lastName, email, phone, threshold, m_bitmap);
 		support.addFriendsFinish();
 	}
