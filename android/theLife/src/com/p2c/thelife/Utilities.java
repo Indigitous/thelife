@@ -245,7 +245,7 @@ public class Utilities {
 	/**
 	 * Get a bitmap from a URL.
 	 * Must not be called on UI thread.
-	 * @param url
+	 * @param urlString
 	 * @return bitmap sized for this app, or null if a problem
 	 */	
 	public static Bitmap getExternalBitmap(String urlString) {
@@ -289,6 +289,41 @@ public class Utilities {
 		return bitmap;		
 	}
 	
+
+	/**
+	 * Get a string (example JSON) from a URL.
+	 * Must not be called on UI thread.
+	 * @param urlString
+	 * @return string or null if any problem
+	 */
+	public static String getExternalString(String urlString) {
+		InputStreamReader isr = null;
+		String externalString = null;
+		try {
+			// read bitmap from a standard URL
+			URL url = new URL(urlString);
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		
+			int responseCode = connection.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				isr = new InputStreamReader(connection.getInputStream());
+				externalString = Utilities.readBufferedStream(isr);
+			} else {
+				Log.e(TAG, "getExternalString() HTTP code " + responseCode);
+			}
+		} catch (Exception e) {
+			externalString = null;
+			Log.e(TAG, "getExternalString()", e);
+		} finally {
+			if (isr != null) {
+				try { isr.close(); } catch (Exception e) { }
+				isr = null;
+			}
+		}
+		
+		return externalString;		
+	}
+	
 	
 	/**
 	 * @param bitmap
@@ -318,11 +353,29 @@ public class Utilities {
 
 	/**
 	 * @param accessToken
-	 * @return the URL for the Facebook picture
+	 * @return the URL for the owner's Facebook picture
 	 */
-	public static String makeFacebookPictureUrlString(String accessToken) {
+	public static String makeOwnerFacebookPictureUrl(String accessToken) {
 		return "https://graph.facebook.com/me/picture?access_token=" + accessToken +
 				"&width=" + TheLifeConfiguration.IMAGE_WIDTH + "&height=" + TheLifeConfiguration.IMAGE_HEIGHT;		
 	}
+	
+	
+	/**
+	 * @param facebookId
+	 * @return the URL for the Facebook user's picture
+	 */
+	public static String makeFacebookUserPictureUrl(String facebookId) {
+		return "https://graph.facebook.com/" + facebookId + "/picture" +
+				"?width=" + TheLifeConfiguration.IMAGE_WIDTH + "&height=" + TheLifeConfiguration.IMAGE_HEIGHT;		
+	}	
+	
+	/**
+	 * @param facebookId
+	 * @return the URL for the Facebook user's account info
+	 */
+	public static String makeFacebookUserAccountUrl(String facebookId) {
+		return "https://graph.facebook.com/" + facebookId;		
+	}		
 
 }

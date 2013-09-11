@@ -232,5 +232,7 @@ Contains Facebook software made available under the Apache License, version 2.0;
     <string name="app_id">565568403501222</string>
     <string name="facebook_error">facebook error</string>
     <string name="title_friends_import_facebook">Import Friends</string>
+    <string name="adding_friends">Adding friends"</string>
+    <string name="facebook_account_error">Facebook account error</string>
 
 </resources>

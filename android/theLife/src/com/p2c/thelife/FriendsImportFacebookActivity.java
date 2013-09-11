@@ -19,6 +19,9 @@ package com.p2c.thelife;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +32,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.facebook.FacebookException;
 import com.facebook.Session;
 import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
 import com.facebook.widget.FriendPickerFragment;
 import com.facebook.widget.PickerFragment;
 
@@ -37,7 +41,7 @@ import com.facebook.widget.PickerFragment;
  * @author clarence
  *
  */
-public class FriendsImportFacebookActivity extends FriendImportActivityAbstract {
+public class FriendsImportFacebookActivity extends SlidingMenuPollingFragmentActivity {
 	
 	FriendPickerFragment m_friendPickerFragment = null;
 
@@ -66,12 +70,16 @@ public class FriendsImportFacebookActivity extends FriendImportActivityAbstract 
         m_friendPickerFragment.setOnDoneButtonClickedListener(new PickerFragment.OnDoneButtonClickedListener() {
             @Override
             public void onDoneButtonClicked(PickerFragment<?> fragment) {
-System.out.println("GOT THE SELECTIONS " + m_friendPickerFragment.getSelection());
+            	// gather the friends
+            	List<GraphUser> friendSelections = m_friendPickerFragment.getSelection();
+				ArrayList<String> facebookIds = new ArrayList<String>(friendSelections.size());
+            	for (GraphUser friendSelection : friendSelections) {
+					facebookIds.add(friendSelection.getId());
+				}
 
+            	// return the friends back to the import activity
 				Intent intent = new Intent();
-				Bundle bundle = new Bundle();
-				bundle.putParcelableArrayList("friends", null); // m_friendPickerFragment.getSelection());
-				intent.putExtras(bundle);
+				intent.putExtra("facebook_ids", facebookIds);
                 setResult(RESULT_OK, intent);
                 finish();
             }

@@ -1,7 +1,10 @@
 package com.p2c.thelife;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,12 +23,14 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendsImportActivity extends FriendImportActivityAbstract {
+public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity {
 	
 	private static String TAG = "FriendsImportActivity";
 	
 	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS = 1;
-	private static final int REQUESTCODE_IMPORT_FROM_FACEBOOK = 2;	
+	private static final int REQUESTCODE_IMPORT_FROM_FACEBOOK = 2;
+	
+	private Bitmap m_bitmap = null;
 	
 	
 	@Override
@@ -162,20 +167,18 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 							
 							// TODO only add a friend once
 							
-							// now create the friend
-							Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + email + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));							
-							addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact);
+							// now create the friend on the server
+							Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + email + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));
+							FriendsImportSupport support = new FriendsImportSupport(this, null);
+							support.addFriendsStart(1);
+							support.addFriend(firstName, lastName, email, mobile, FriendModel.Threshold.NewContact, m_bitmap);
+							support.addFriendsFinish();							
 						}
 						
 					}
 				} catch (Exception e) {
 					Log.e(TAG, "onActivityResult()", e);
 					Utilities.showErrorToast(this, getResources().getString(R.string.import_friend_error), Toast.LENGTH_SHORT);
-					
-					if (m_progressDialog != null) {
-						m_progressDialog.dismiss();
-						m_progressDialog = null;
-					}
 				} finally {
 					if (cursor != null) {
 						cursor.close();
@@ -183,8 +186,20 @@ public class FriendsImportActivity extends FriendImportActivityAbstract {
 				}
 
 			}
+			else if (requestCode == REQUESTCODE_IMPORT_FROM_FACEBOOK) {
+				// user has selected Facebook friends
+				
+				ArrayList<String> facebookIds = contactData.getStringArrayListExtra("facebook_ids");
+				if (facebookIds.size() > 0) {
+					FriendsImportFacebookSupport support = new FriendsImportFacebookSupport(this);
+					support.addFriendsFromFacebook(facebookIds);
+				}
+			}
 		}
 	}
+	
+
+
 	
 	
 	public void importFriendsByFacebook(View view) {

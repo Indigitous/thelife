@@ -1,24 +1,17 @@
 package com.p2c.thelife;
 
-import org.json.JSONObject;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.p2c.thelife.model.DeedModel;
-import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 
 /**
@@ -26,14 +19,18 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendImportManuallyActivity extends FriendImportActivityAbstract implements ImageSelectSupport.Listener {
+public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActivity implements ImageSelectSupport.Listener {
 	
 	private static final String TAG = "FriendImportManuallyActivity";
+	
+	private Bitmap m_bitmap;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_friend_import_manually, SlidingMenuSupport.FRIENDS_POSITION);
+		
+		m_bitmap = null;
 	}
 
 	
@@ -81,7 +78,11 @@ public class FriendImportManuallyActivity extends FriendImportActivityAbstract i
 		int thresholdIndex = thresholdField.getSelectedItemPosition();
 		FriendModel.Threshold threshold = FriendModel.thresholdValues[thresholdIndex];
 		
-		addFriend(firstName, lastName, email, phone, threshold);					
+		// add the friend to the server
+		FriendsImportSupport support = new FriendsImportSupport(this, null);
+		support.addFriendsStart(1);
+		support.addFriend(firstName, lastName, email, phone, threshold, m_bitmap);
+		support.addFriendsFinish();
 	}
 	
 	

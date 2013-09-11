@@ -2,6 +2,7 @@ package com.p2c.thelife;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,28 +15,75 @@ import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.FriendModel;
 
 /**
- * Superclass to add a friend.
+ * Support class to add friends to the server.
  * @author clarence
  *
  */
-public class FriendImportActivityAbstract extends SlidingMenuPollingFragmentActivity implements Server.ServerListener {
+public class FriendsImportSupport implements Server.ServerListener {
 	
-	private static final String TAG = "FriendImportActivityAbstract";
+	private static final String TAG = "FriendsImportSupport";
 
-	protected ProgressDialog m_progressDialog = null;
-	protected Bitmap m_bitmap = null;
-	protected int m_friendId = 0;
+	private Activity m_activity = null;
+	private AddFriendListener m_listener = null;
+	private ProgressDialog m_progressDialog = null;
+	private Bitmap m_bitmap = null;
+	private int m_friendId = 0;
+	
+	public interface AddFriendListener {
+		public void notifyAddFriendFinished();
+	}	
 
+	
+	public FriendsImportSupport(Activity activity, AddFriendListener listener) {
+		m_activity = activity;
+		m_listener = listener;
+	}
+	
+	
+	public void clearListener() {
+		m_listener = null;
+	}
 	
 	/**
-	 * Add a friend.
+	 * Start adding friends.
+	 * @param numberToAdd
 	 */
-	protected void addFriend(String firstName, String lastName, String email, String phone, FriendModel.Threshold threshold) {
-		
-		m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.adding_friend), true, true);		
+	protected void addFriendsStart(int numberToAdd) {
+		m_progressDialog = ProgressDialog.show(
+				m_activity, 
+				m_activity.getResources().getString(R.string.waiting), 
+				(numberToAdd > 1) ? m_activity.getResources().getString(R.string.adding_friends) : m_activity.getResources().getString(R.string.adding_friend), 
+				true, 
+				true);
+	}
+	
+	
+	/**
+	 * Add one friend.
+	 */
+	protected void addFriend(String firstName, String lastName, String email, String phone, FriendModel.Threshold threshold, Bitmap bitmap) {
 
-		Server server = new Server(this);
+		m_bitmap = bitmap;
+		Server server = new Server(m_activity);
 		server.createFriend(firstName, lastName, email, phone, threshold, this, "createFriend");						
+	}
+	
+	
+	/**
+	 * Stop adding friends.
+	 */
+	protected void addFriendsFinish() {
+		TheLifeConfiguration.getEventsDS().forceRefresh(null);
+		
+		if (m_progressDialog != null) {
+			m_progressDialog.dismiss();
+			m_progressDialog = null;
+		}
+		
+		// back to friends activity
+		Intent intent = new Intent("com.p2c.thelife.Friends");
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		m_activity.startActivity(intent);		
 	}
 	
 	
@@ -66,7 +114,7 @@ public class FriendImportActivityAbstract extends SlidingMenuPollingFragmentActi
 					// check to see if there is an image needing to be sent to the server
 					if (m_bitmap != null) {
 						BitmapCacheHandler.saveBitmapToCache("friends", friend.id, "image", m_bitmap);						
-						Server server = new Server(this);
+						Server server = new Server(m_activity);
 						server.updateImage("friends", friend.id, this, "updateImage");
 					} else {
 						createAddFriendEvent();
@@ -84,51 +132,36 @@ public class FriendImportActivityAbstract extends SlidingMenuPollingFragmentActi
 			// successful "createEvent"
 			try {
 				// add the new event to the data store
-				EventModel event = EventModel.fromJSON(getResources(), jsonObject, false);
+				EventModel event = EventModel.fromJSON(m_activity.getResources(), jsonObject, false);
 				TheLifeConfiguration.getEventsDS().add(event);
 				TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
 			} catch (Exception e) {
 				Log.e(TAG, "notifyServerResponseAvailable()", e);
 			}
-			TheLifeConfiguration.getEventsDS().forceRefresh(null);
-			
-			// finish adding the friend
+
 			finishImport();
 			return;
 		}
 		
-		Utilities.showErrorToast(this, getResources().getString(R.string.friend_import_error), Toast.LENGTH_LONG);
-		if (m_progressDialog != null) {
-			m_progressDialog.dismiss();
-			m_progressDialog = null;
-		}		
-
+		// show for any error
+		Utilities.showErrorToast(m_activity, m_activity.getResources().getString(R.string.friend_import_error), Toast.LENGTH_LONG);
+		finishImport();
 	}
 	
 	
 	private void createAddFriendEvent() {
 		DeedModel addFriendDeed = TheLifeConfiguration.getDeedsDS().findSpecial(DeedModel.SPECIAL_ADD_FRIEND);
 		if (addFriendDeed != null) {
-			Server server = new Server(this);
+			Server server = new Server(m_activity);
 			server.createEvent(addFriendDeed.id, m_friendId, false, null, this, "createEvent");
-		} else {
-			finishImport();
 		}
 	}
 	
 	
-	/**
-	 * Have just added a friend.
-	 */
 	private void finishImport() {
-		if (m_progressDialog != null) {
-			m_progressDialog.dismiss();
-			m_progressDialog = null;
+		if (m_listener != null) {
+			m_listener.notifyAddFriendFinished();
 		}
-		
-		Intent intent = new Intent("com.p2c.thelife.Friends");
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}	
+	}
 
 }

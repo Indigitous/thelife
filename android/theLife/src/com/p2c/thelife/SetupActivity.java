@@ -306,7 +306,7 @@ System.out.println("FACEBOOK LAST NAME: " + lastName);
 							// get the user's image in the background thread
 							@Override
 							protected Void doInBackground(String... params) {
-								String pictureURL = Utilities.makeFacebookPictureUrlString(externalToken);
+								String pictureURL = Utilities.makeOwnerFacebookPictureUrl(externalToken);
 								m_bitmap = Utilities.getExternalBitmap(pictureURL);
 								return null;
 							}
