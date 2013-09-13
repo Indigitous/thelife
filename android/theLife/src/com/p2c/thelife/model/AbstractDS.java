@@ -256,7 +256,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	protected void refresh(String refreshIndicator, boolean force, int numRetries, int max, String params, int newDataMode) {
 		
 		// make sure the user hasn't logged out
-		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+		if (m_token != null || TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 			
 			if (force) {
 				// force a refresh by erasing the timestamp indicating previous refresh time
@@ -474,7 +474,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 				m_connectionTimeout = false;
 				
 				// make sure the user hasn't logged out
-				if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+				if (m_token != null || TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 					
 					try {			
 						Log.d(TAG, i + " DS READFROMSERVER with " + urls[0]);	
@@ -499,7 +499,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 							addModels(jsonArray, true, data2);
 							
 							// make sure the user hasn't logged out							
-							if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
+							if (m_token != null || TheLifeConfiguration.getOwnerDS().isValidOwner()) {
 								
 								// write the new data models to disk								
 								boolean success = (m_newDataMode == MODE_REPLACE) ? replaceJSONCache(jsonString) : prependJSONCache(jsonString, m_data.size(), data2.size());
