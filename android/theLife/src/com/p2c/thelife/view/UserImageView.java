@@ -106,7 +106,7 @@ public class UserImageView extends View {
 			m_name = "Friendly Jacksonay";
 		}
 				
-		// TODO nonsquare user bitmaps are stretched to be square
+		// Note: nonsquare user bitmaps are stretched to be square
 		
 		canvas.drawBitmap(m_bitmap, null, m_bitmapRect, m_paint);
 		m_paint.setTextSize(m_nameTextSize);

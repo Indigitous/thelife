@@ -211,7 +211,6 @@ public class GCMReceiver extends BroadcastReceiver {
 		builder.setAutoCancel(true);		
 		
 		// destination activity when notification is selected
-		// TODO where should it go? RequestsActivity or EventsActivity?
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent("com.p2c.thelife.Requests"), 0);
 		builder.setContentIntent(pendingIntent);
 		

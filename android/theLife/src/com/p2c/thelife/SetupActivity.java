@@ -215,8 +215,6 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 						Dialog alert = GooglePlayServicesUtil.getErrorDialog(e2.getConnectionStatusCode(), SetupActivity.this, 0);
 						alert.show();
 					} else if (m_e instanceof UserRecoverableAuthException) {
-						// TODO: too much info in the exception?
-						// TODO: just retry?
 						String errorMessage = isRegister ? 
 							SetupActivity.this.getResources().getString(R.string.recoverable_register_error, m_e.getMessage()) :
 							SetupActivity.this.getResources().getString(R.string.recoverable_login_error, m_e.getMessage());
@@ -439,9 +437,7 @@ System.out.println("FACEBOOK LAST NAME: " + lastName);
 						// refresh data stores							
 						fullRefresh(false);
 						return;
-					}
-					
-					//TODO show errors correctly
+					}					
 				}
 			}
 			

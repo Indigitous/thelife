@@ -117,7 +117,6 @@ public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity impl
 					/* ContactsContract.CommonDataKinds.Email.ADDRESS API 11 */ "data1" :
 					ContactsContract.CommonDataKinds.Phone.NUMBER;
 				
-				// TODO do this in a background thread?
 				String email = null;
 				String mobile = null;
 				Cursor cursor = null;

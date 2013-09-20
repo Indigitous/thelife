@@ -90,7 +90,7 @@ public class RoundedImageView extends View {
 		}
 				
 		// draw the image bitmap
-		// TODO nonsquare bitmaps are stretched to be square
+		// Note: nonsquare bitmaps are stretched to be square
 		canvas.drawBitmap(m_bitmap, null, m_imageDestRect, m_paint);
 		
 		// round the bitmap corners

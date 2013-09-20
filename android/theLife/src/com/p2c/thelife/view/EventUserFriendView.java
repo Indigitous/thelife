@@ -118,7 +118,7 @@ public class EventUserFriendView extends View {
 		}
 				
 		// draw the user on the left side, friend on the right side
-		// TODO nonsquare user/friend bitmaps are stretched to be square
+		// Note: nonsquare user/friend bitmaps are stretched to be square
 		canvas.drawBitmap(m_userBitmap, null, m_userDestRect, m_paint);
 		canvas.drawBitmap(m_friendBitmap, null, m_friendDestRect, m_paint);
 		

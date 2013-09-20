@@ -76,7 +76,6 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity {
 			if (requestCode == REQUESTCODE_IMPORT_FROM_CONTACTS) {
 				// user has selected a contact
 				
-				// TODO do this in a background thread?
 				Cursor cursor = null;
 				try {
 					// ask for the contact information from the provider
@@ -116,36 +115,9 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity {
 							cursor.close();
 							cursor = null;							
 	
-							// try to get email
-							String email = null;
-//							cursor = getContentResolver().query(
-//									ContactsContract.Data.CONTENT_URI,
-//								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Email.ADDRESS, ContactsContract.CommonDataKinds.Email.TYPE  },
-//								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
-//								    new String[] { String.valueOf(contactId) },
-//								    null);
-//							if (cursor != null && cursor.moveToNext()) {								
-//								int eIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
-//								email = cursor.getString(eIndex);
-//							}
-//							cursor.close();
-//							cursor = null;							
-							
-							// try to get mobile phone number
+							// email and mobile aren't necessary
+							String email = null;							
 							String mobile = null;
-//							cursor = getContentResolver().query(
-//									ContactsContract.Data.CONTENT_URI,
-//								    new String[] { ContactsContract.Data._ID, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE },
-//								    ContactsContract.Data.CONTACT_ID + "=? AND " + ContactsContract.Data.MIMETYPE + "= '" + ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'",                    // Selection criteria
-//								    new String[] { String.valueOf(contactId) },
-//								    null);						
-//							if (cursor != null && cursor.moveToNext()) {
-//								// TODO: look for MOBILE type, else OTHER type 
-//								int mIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-//								mobile = cursor.getString(mIndex);
-//							}
-//							cursor.close();
-//							cursor = null;							
 							
 							// try to get photo
 							m_bitmap = null;

@@ -38,7 +38,6 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 	}
 	
 	
-	// TODO: see ApiDemos List14.java for other (maybe better?) ways for this
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
@@ -61,6 +60,7 @@ public class GroupAdapter extends ArrayAdapter<UserModel> implements AbstractDS.
 	
 		return userView;
 	}
+	
 	
 	@Override
 	public void notifyDSChanged(ArrayList<Integer> oldModelIds, ArrayList<Integer> newModelIds) {

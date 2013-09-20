@@ -57,9 +57,9 @@ public class DeedForFriendActivity extends SlidingMenuPollingFragmentActivity im
 		// Show the Deed model
 		if (m_deed != null) {
 			
-			// icon
+			// icon TODO deed image
 //			ImageView image = (ImageView)findViewById(R.id.deed_for_friend_image);
-//			image.setImageBitmap(m_deed.image);  // TODO deed image
+//			image.setImageBitmap(m_deed.image);
 			
 			// title			
 			TextView title = (TextView)findViewById(R.id.deed_for_friend_title);

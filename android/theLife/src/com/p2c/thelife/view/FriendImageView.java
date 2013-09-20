@@ -107,7 +107,7 @@ public class FriendImageView extends View {
 			m_threshold = FriendModel.getThresholdMediumString(getContext().getResources(), FriendModel.Threshold.Open);
 		}
 				
-		// TODO nonsquare friend bitmaps are stretched to be square
+		// Note: nonsquare friend bitmaps are stretched to be square
 		
 		canvas.drawBitmap(m_bitmap, null, m_bitmapRect, m_paint);
 		m_paint.setTextSize(m_nameTextSize);
