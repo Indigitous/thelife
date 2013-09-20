@@ -172,7 +172,7 @@ public class SettingsActivity extends SlidingMenuPollingFragmentActivity impleme
 		} else if (item.getItemId() == R.id.action_logout) {
 			
 			new AlertDialog.Builder(this)
-				.setMessage(getResources().getString(R.string.logout_prompt))
+				.setTitle(getResources().getString(R.string.logout_prompt))
 				.setNegativeButton(R.string.cancel, null)
 				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 					
