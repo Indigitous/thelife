@@ -33,6 +33,7 @@ public class ChangeThresholdDialog extends ServerAccessDialogAbstract {
 		// set the message and content of the alert
 		alertBuilder.setTitle(R.string.change_threshold_prompt);
 		
+		// set the thresholds to choose from
 		m_selection = friend.threshold.ordinal() - 1; // - 1 because the first, NewContact, is not in the list
 		alertBuilder.setSingleChoiceItems(R.array.thresholds_medium_change, m_selection, new DialogInterface.OnClickListener() {
 			
@@ -56,15 +57,6 @@ public class ChangeThresholdDialog extends ServerAccessDialogAbstract {
 		});		
 		
 		return alertBuilder.create();				
-	}
-		
-	
-	/**
-	 * Helper routine to get the threshold enum from the view.
-	 */
-	private FriendModel.Threshold getThreshold(DeedModel deed, View view) {
-		Spinner thresholdField = (Spinner)view.findViewById(R.id.change_threshold);
-		return FriendModel.thresholdValues[thresholdField.getSelectedItemPosition() + 1];  // add 1 because the first threshold, NewContact, is not shown
 	}
 
 }
