@@ -20,6 +20,8 @@ public class ChangeThresholdDialog extends ServerAccessDialogAbstract {
 	
 	private static final String TAG = "ChangeThresholdDialog";
 	
+	private int m_selection = 0;
+	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		
@@ -27,14 +29,19 @@ public class ChangeThresholdDialog extends ServerAccessDialogAbstract {
 		
 		final FriendModel friend = ((DeedsForFriendActivity)m_listener).getSelectedFriend();		
 		final DeedModel deed = ((DeedsForFriendActivity)m_listener).getSelectedDeed();
-				
-		LayoutInflater inflater = LayoutInflater.from(getActivity());
-		final View view = inflater.inflate(R.layout.dialog_change_threshold, null);
 		
 		// set the message and content of the alert
-		alertBuilder.setMessage(R.string.change_threshold_prompt);
-		alertBuilder.setView(view);
-
+		alertBuilder.setTitle(R.string.change_threshold_prompt);
+		
+		m_selection = friend.threshold.ordinal() - 1; // - 1 because the first, NewContact, is not in the list
+		alertBuilder.setSingleChoiceItems(R.array.thresholds_medium_change, m_selection, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				m_selection = which;
+			}
+		});
+		
 		// set the buttons of the alert
 		alertBuilder.setNegativeButton(R.string.cancel, null);
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -42,7 +49,7 @@ public class ChangeThresholdDialog extends ServerAccessDialogAbstract {
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("createEvent");
 
-				FriendModel.Threshold threshold = getThreshold(deed, view);				
+				FriendModel.Threshold threshold = FriendModel.thresholdValues[m_selection + 1]; // + 1 because the first, NewContact, is not in the list		
 				Server server = new Server(getActivity());
 				server.createEvent(deed.id, friend.id, true, threshold, (Server.ServerListener)m_listener, "createEvent");						
 			}
