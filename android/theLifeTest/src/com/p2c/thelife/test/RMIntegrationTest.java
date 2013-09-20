@@ -74,12 +74,14 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 	private static final String FRIEND1_PHONE2 = "1234567892";   	
 	private static final FriendModel.Threshold FRIEND1_THRESHOLD2 = FriendModel.Threshold.Trusting;	
 	private static final int	DEED_ID = 1; // Change Threshold deed/activity
-	private static final String GROUP1_NAME = "INTEGRATGROUP1";
+	private static final String GROUP1_NAME = "INTEGRATGROUP1@ballistiq.com";
 	private static final String GROUP1_DESCRIPTION = "This is a system testing group only";
 	
 	// authentication token for the owner and user2
 	private String m_ownerToken = null;
 	private String m_user2Token = null;
+	private String m_cleanupOwnerToken = null;
+	private String m_cleanupUser2Token = null;	
 
 	// test objects
 	private UserModel m_owner = null;
@@ -88,6 +90,7 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 	private EventModel m_event1 = null;
 	private GroupModel m_group1 = null;
 	private int		   m_rmRequest1_id = 0;
+	private int 	   m_cleanupGroupId = 0;	
 	
 	// data stores
 	private static FriendsDS m_ownerFriendsDS = null;
@@ -108,20 +111,69 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 	public void setUp() {
 		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "setUp()", e); }
 
+		cleanUp();
+
 		m_ownerToken = null;
 		m_user2Token = null;
 	}
-	
+
+
+	// make sure everything is cleaned up from previous run (sometimes tearDown() is not called)
+	private void cleanUp() {
+		Server server = null;
+		
+		m_cleanupUser2Token = null;
+		server = new Server(getContext());
+		server.login(USER2_EMAIL, USER2_PASSWORD, this, "cleanup_login1");
+		waitForServerResponse();
+		
+		if (m_cleanupUser2Token != null) {
+			server = new Server(getContext(), m_cleanupUser2Token);
+			server.deleteUser(this, "cleanup_deleteUser");
+			waitForServerResponse();
+		}
+		
+		m_cleanupOwnerToken = null;
+		server = new Server(getContext());
+		server.login(OWNER_EMAIL, OWNER_PASSWORD, this, "cleanup_login2");
+		waitForServerResponse();
+		
+		if (m_cleanupOwnerToken != null) {
+			
+			m_cleanupGroupId = 0;
+			server = new Server(getContext(), m_cleanupOwnerToken);			
+			server.queryGroups(GROUP1_NAME, this, "cleanup_queryGroups");
+			waitForServerResponse();			
+			
+			if (m_cleanupGroupId != 0) {
+				server = new Server(getContext(), m_cleanupOwnerToken);
+				server.deleteGroup(m_cleanupGroupId, this, "cleanup_deleteGroup1");
+				waitForServerResponse();
+			}
+			
+			server = new Server(getContext(), m_cleanupOwnerToken);
+			server.deleteUser(this, "cleanup_deleteUser");
+			waitForServerResponse();
+		}
+	}	
+
 	
 	@Override
 	public void tearDown() {
-		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "tearDown()", e); }
+		try { super.tearDown(); } catch (Exception e) { Log.e(TAG, "tearDown()", e); }
+		
+		if (m_ownerToken != null && m_group1 != null) {
+			Server server = null;			
+			server = new Server(getContext(), m_ownerToken);
+			server.deleteGroup(m_group1.id, this, "cleanup_deleteGroup1");
+			waitForServerResponse();
+		}
 
 		// delete test owner
 		if (m_ownerToken != null) {
 			Server server = null;
 			server = new Server(getContext(), m_ownerToken);
-			server.deleteUser(this, "deleteUser");
+			server.deleteUser(this, "cleanup_deleteUser");
 			waitForServerResponse();			
 		}
 
@@ -129,9 +181,9 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 		if (m_user2Token != null) {
 			Server server = null;
 			server = new Server(getContext(), m_user2Token);
-			server.deleteUser(this, "deleteUser");
+			server.deleteUser(this, "cleanup_deleteUser");
 			waitForServerResponse();			
-		}		
+		}				
 	}
 	
 	
@@ -305,6 +357,18 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 		m_ownerGroupsDS.forceRefresh("groups2");
 		waitForServerResponse();
 		
+		// delete user2
+		server = new Server(getContext(), m_user2Token);
+		server.deleteUser(this, "deleteUser");
+		waitForServerResponse();
+		m_user2Token = null;
+		
+		// delete owner
+		server = new Server(getContext(), m_ownerToken);
+		server.deleteUser(this, "deleteUser");
+		waitForServerResponse();
+		m_ownerToken = null;		
+		
 		Log.i(TAG, "Finished REQUEST MEMBERSHIP Integration test");
 	}
 	
@@ -419,7 +483,33 @@ public class RMIntegrationTest extends AndroidTestCase implements ServerListener
 				assertEquals(1, jsonObject.getInt("event_pledges_count"));
 				
 			}  else if (indicator.equals("deleteUser")) {
-				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204						
+				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
+				
+			}  else if (indicator.equals("cleanup_login1")) {
+				if (Utilities.isSuccessfulHttpCode(httpCode)) {
+					m_cleanupUser2Token = jsonObject.getString("authentication_token");
+					assertNotNull(m_cleanupUser2Token);
+				}	
+				
+			}  else if (indicator.equals("cleanup_login2")) {
+				if (Utilities.isSuccessfulHttpCode(httpCode)) {
+					m_cleanupOwnerToken = jsonObject.getString("authentication_token");
+					assertNotNull(m_cleanupOwnerToken);
+				}
+				
+			} else if (indicator.equals("cleanup_queryGroups")) {
+				assertServerSuccess(indicator, httpCode, errorString);
+
+				JSONArray jsonArray = jsonObject.getJSONArray("a");
+				if (jsonArray.length() > 0) {
+					GroupModel group = GroupModel.fromJSON(jsonArray.getJSONObject(0), false);
+					m_cleanupGroupId = group.id;
+				}				
+				
+			}  else if (indicator.startsWith("cleanup_")) {
+				if (!Utilities.isSuccessfulHttpCode(httpCode)) {
+					Log.e(TAG, indicator + " " + httpCode + ", " + errorString); // HTTP 204
+			}					
 								
 			} else {
 				assertTrue("Don't know server response indicator " + indicator, false);

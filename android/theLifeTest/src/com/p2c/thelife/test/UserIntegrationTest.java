@@ -32,7 +32,7 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 	private static final String TAG = "UserIntegrationTest";
 	
 	// Owner test values
-	private static final String OWNER_EMAIL = "itest----email5@ballistiq.com";
+	private static final String OWNER_EMAIL = "itemail5@ballistiq.com";
 	private static final String OWNER_PASSWORD = "123456";
 	private static final String OWNER_FIRST_NAME = "ITFIRST5";
 	private static final String OWNER_LAST_NAME = "ITLAST5";
@@ -40,8 +40,10 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 	private static final String OWNER_MOBILE = "555-5555";
 	private static final String CHANGE_SUFFIX = "-1";
 	
-	// authentication token for the owner and user2
+	// authentication token for the owner
 	private String m_ownerToken = null;
+	private String m_cleanupOwnerToken = null;
+	
 
 	// test objects
 	private UserModel m_owner = null;
@@ -55,22 +57,42 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 	@Override
 	public void setUp() {
 		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "setUp()", e); }
+		
+		cleanUp();
 
 		m_ownerToken = null;
 	}
 	
 	
+	// make sure everything is cleaned up from last run (sometimes tearDown() is not called)
+	private void cleanUp() {
+		Server server = null;
+		
+		m_cleanupOwnerToken = null;
+		server = new Server(getContext());
+		server.login(OWNER_EMAIL, OWNER_PASSWORD, this, "cleanup_login1");
+		waitForServerResponse();
+		server = null;
+		
+		if (m_cleanupOwnerToken != null) {
+			server = new Server(getContext(), m_cleanupOwnerToken);
+			server.deleteUser(this, "cleanup_deleteUser");
+			waitForServerResponse();
+		}
+	}
+	
+	
 	@Override
 	public void tearDown() {
-		try { super.setUp(); } catch (Exception e) { Log.e(TAG, "tearDown()", e); }
-
+		try { super.tearDown(); } catch (Exception e) { Log.e(TAG, "tearDown()", e); }
+		
 		// delete test user
+		// should only be necessary if something went wrong in the test
 		if (m_ownerToken != null) {
-			Server server = null;
-			server = new Server(getContext(), m_ownerToken);
-			server.deleteUser(this, "deleteUser");
+			Server server = new Server(getContext(), m_ownerToken);
+			server.deleteUser(this, "cleanup_deleteUser");
 			waitForServerResponse();			
-		}
+		}		
 	}
 	
 	/**
@@ -99,7 +121,7 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 		server.queryUserProfile(m_owner.id, this, "queryUserProfile1");
 		waitForServerResponse();
 		server = null;
-		
+				
 		// test updateUserProfile
 		server = new Server(getContext(), m_ownerToken);
 		server.updateUserProfile(m_owner.id, OWNER_FIRST_NAME + CHANGE_SUFFIX, OWNER_LAST_NAME + CHANGE_SUFFIX, OWNER_EMAIL + CHANGE_SUFFIX, OWNER_MOBILE, null, this, "updateUserProfile1");
@@ -118,7 +140,14 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 		server = new Server(getContext(), m_ownerToken);
 		server.updateImage("users", m_owner.id, this, "updateImage");
 		waitForServerResponse();
-		server = null;		
+		server = null;
+		
+		// test deleteUser
+		server = new Server(getContext(), m_ownerToken);
+		server.deleteUser(this, "deleteUser");
+		waitForServerResponse();
+		server = null;
+		m_ownerToken = null;
 		
 		Log.i(TAG, "Finished USER Integration test");				
 	}
@@ -180,8 +209,19 @@ public class UserIntegrationTest extends AndroidTestCase implements ServerListen
 				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
 				
 			}  else if (indicator.equals("deleteUser")) {
-				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204				
-								
+				assertServerSuccess(indicator, httpCode, errorString); // HTTP 204
+				
+			}  else if (indicator.equals("cleanup_login1")) {
+				if (Utilities.isSuccessfulHttpCode(httpCode)) {
+					m_cleanupOwnerToken = jsonObject.getString("authentication_token");
+					assertNotNull(m_cleanupOwnerToken);
+				}
+				
+			}  else if (indicator.equals("cleanup_deleteUser")) {
+				if (!Utilities.isSuccessfulHttpCode(httpCode)) {
+					Log.e(TAG, indicator + " " + httpCode + ", " + errorString); // HTTP 204
+				}
+				
 			} else {
 				assertTrue("Don't know server response indicator " + indicator, false);
 			}
