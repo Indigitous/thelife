@@ -136,9 +136,7 @@ public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity {
 							}
 							cursor.close();
 							cursor = null;							
-							
-							// TODO only add a friend once
-							
+													
 							// now create the friend on the server
 							Log.i(TAG, "Create a friend from contacts: " + firstName + ", " + lastName + ", " + email + ", " + mobile + ", " + ((m_bitmap != null) ? " with photo" : " without photo"));
 							FriendsImportSupport support = new FriendsImportSupport(this, null);
