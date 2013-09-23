@@ -31,7 +31,7 @@ public class ChangeThresholdDialog extends ServerAccessDialogAbstract {
 		final DeedModel deed = ((DeedsForFriendActivity)m_listener).getSelectedDeed();
 		
 		// set the message and content of the alert
-		alertBuilder.setMessage(R.string.change_threshold_prompt);
+		alertBuilder.setTitle(R.string.change_threshold_prompt); // Android bug: should be setMessage() but that won't display the singleChoiceItems
 		
 		// set the thresholds to choose from
 		m_selection = friend.threshold.ordinal() - 1; // - 1 because the first, NewContact, is not in the list
