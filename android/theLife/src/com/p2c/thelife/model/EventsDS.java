@@ -124,7 +124,7 @@ public class EventsDS extends AbstractDS<EventModel> {
 			// look for a pledge count event in the event stream -- it has a nonzero target event_id
 			if (json.optInt("target_event_id", 0) != 0) {
 				int event_id = json.optInt("target_event_id");
-				int pledge_count = json.optInt("pledge_count");
+				int pledge_count = json.optInt("pledges_count");
 				
 				// The pledge count object gives a new value for the pledge count.
 				// Find the referenced event and update its pledge count.
@@ -144,6 +144,14 @@ public class EventsDS extends AbstractDS<EventModel> {
 				EventModel model = createFromJSON(json, useServer);
 				list.add(model);
 			}
+		}
+	}
+	
+	public void updatePledgeCount(PledgeModel pledge)
+	{
+		EventModel event = findById(pledge.targetEvent_id);
+		if (event != null) {
+			event.pledgeCount = Math.max(event.pledgeCount, pledge.pledgeCount);
 		}
 	}
 	

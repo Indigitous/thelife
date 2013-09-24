@@ -16,6 +16,7 @@ import com.p2c.thelife.R;
 import com.p2c.thelife.Utilities;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.EventModel;
+import com.p2c.thelife.model.PledgeModel;
 import com.p2c.thelife.model.RequestModel;
 import com.p2c.thelife.model.UserModel;
 import com.testflightapp.lib.TestFlight;
@@ -54,7 +55,9 @@ public class GCMReceiver extends BroadcastReceiver {
 				if (appType.equals("request")) {
 					handleRequestMessage(context, res, extras);
 				} else if (appType.equals("event")) {
-					handleEventMessage(context, res, extras);					
+					handleEventMessage(context, res, extras);
+				} else if (appType.equals("pledge")) {
+					handlePledgeMessage(context, res, extras);						
 				} else {
 					Log.e(TAG, "Can't parse GCM message: " + appType);
 				}
@@ -180,6 +183,28 @@ public class GCMReceiver extends BroadcastReceiver {
 
 			// add the request to the data store and tell listeners
 			TheLifeConfiguration.getEventsDS().add(event);
+			TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
+			TheLifeConfiguration.getEventsDS().refresh("push"); // TODO more efficient way to make persistent?
+		}		
+	}
+	
+	
+	private void handlePledgeMessage(Context context, Resources res, Bundle extras) {
+		
+		// create the model object
+		PledgeModel pledge = PledgeModel.fromBundle(context.getResources(), extras);
+		Log.i(TAG, "Received pledge: " + pledge);
+		
+		// make sure the request is for this user
+		int ownerId = TheLifeConfiguration.getOwnerDS().getId();		
+		if (!pledge.isVisibleToUser(ownerId)) {
+			Log.e(TAG, "GCM message is not for the current user.");
+			
+		// make sure this event was not caused by this user (because then it wouldn't need a notification)
+		} else if (pledge.user_id != ownerId) {
+			
+			// change the events data store and tell listeners
+			TheLifeConfiguration.getEventsDS().updatePledgeCount(pledge);
 			TheLifeConfiguration.getEventsDS().notifyDSChangedListeners();
 			TheLifeConfiguration.getEventsDS().refresh("push"); // TODO more efficient way to make persistent?
 		}		
