@@ -35,6 +35,7 @@ public class ChangeThresholdDialog extends ServerAccessDialogAbstract {
 		
 		// set the thresholds to choose from
 		m_selection = friend.threshold.ordinal() - 1; // - 1 because the first, NewContact, is not in the list
+		m_selection = m_selection < 0 ? 0 : m_selection; 
 		alertBuilder.setSingleChoiceItems(R.array.thresholds_medium_change, m_selection, new DialogInterface.OnClickListener() {
 			
 			@Override
