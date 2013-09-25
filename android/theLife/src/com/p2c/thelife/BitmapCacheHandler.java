@@ -10,8 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import com.p2c.thelife.config.TheLifeConfiguration;
+import java.util.HashMap;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -19,6 +18,8 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.p2c.thelife.config.TheLifeConfiguration;
 
 /**
  * Caching for bitmaps.
@@ -39,6 +40,9 @@ public class BitmapCacheHandler extends Handler {
 	public static final int OP_GET_FRIEND_THUMBNAIL_FROM_SERVER = 4;
 	public static final int OP_GET_ACTIVITY_IMAGE_FROM_SERVER = 5;
 	public static final int OP_GET_ACTIVITY_THUMBNAIL_FROM_SERVER = 6;
+	
+	
+	private HashMap<String, Long> m_bitmapRequests = null;  // cache file name ==> timestamp of last request to server
 	
 	
 	/**
@@ -155,7 +159,7 @@ public class BitmapCacheHandler extends Handler {
 				if (what != OP_NULL) {
 					BitmapCacheHandler handler = TheLifeConfiguration.getBitmapCacheHandler();					
 					Message message = handler.obtainMessage(what, id, 0);
-					handler.sendMessage(message);
+					handler.sendMessage(message); // calls BitmapCacheHandler::handleMessage() in another thread
 				}
 			}
 				
@@ -223,9 +227,14 @@ public class BitmapCacheHandler extends Handler {
 	}
 	
 	
+	public BitmapCacheHandler() {
+		m_bitmapRequests = new HashMap<String, Long>(63);
+	}
+	
 	
 	/**
-	 * Runs in the Handler's thread, not on the UI thread.
+	 * Runs in the Handler's thread, not on the UI thread. 
+	 * Handlers process one message at a time in their own thread.
 	 * 		message.what = the operation to perform
 	 * 		message.arg1 = the model id
 	 */
@@ -259,16 +268,30 @@ public class BitmapCacheHandler extends Handler {
 		
 		// see if the cache file is already there
 		String cacheFileName = generateFullCacheFileName(dataType, id, imageType);
-		if (!new File(cacheFileName).exists()) {
+		if (new File(cacheFileName).exists()) {
+			// the cache file is there, so remove any outstanding request
+			m_bitmapRequests.remove(cacheFileName);
+		} else {			
+			// the cache file is missing
 			
-			// since the cache file is missing, get the image from the server and store it in a temporary file
-			String temporaryCacheFileName = generateFullCacheFileName(dataType, id, imageType) + "_";
-			Bitmap bitmap = BitmapCacheHandler.getBitmapAtURLSafe("image/" + dataType + "/" + String.valueOf(id), temporaryCacheFileName);
-			
-			if (bitmap != null) {
-				// tell the UI about the new image cache file
-				Message displayerMessage = TheLifeConfiguration.getBitmapNotifier().obtainMessage(message.what, message.arg1, 0, temporaryCacheFileName);
-				TheLifeConfiguration.getBitmapNotifier().sendMessage(displayerMessage);
+			// throttle: only ask the server again if there isn't a recent request
+			Long bitmapRequestTimeStamp = m_bitmapRequests.get(cacheFileName);
+			long currentTimeMillis = System.currentTimeMillis();
+			if (bitmapRequestTimeStamp == null || 
+				(currentTimeMillis - bitmapRequestTimeStamp > TheLifeConfiguration.REFRESH_BITMAPS_DELTA))
+			{
+				// remember this request
+				m_bitmapRequests.put(cacheFileName, currentTimeMillis);
+				
+				// get the image from the server and store it in a temporary file
+				String temporaryCacheFileName = generateFullCacheFileName(dataType, id, imageType) + "_";
+				Bitmap bitmap = BitmapCacheHandler.getBitmapAtURLSafe("image/" + dataType + "/" + String.valueOf(id), temporaryCacheFileName);
+				
+				if (bitmap != null) {
+					// tell the UI about the new image cache file
+					Message displayerMessage = TheLifeConfiguration.getBitmapNotifier().obtainMessage(message.what, message.arg1, 0, temporaryCacheFileName);
+					TheLifeConfiguration.getBitmapNotifier().sendMessage(displayerMessage); // received by BitmapNotifier::handleMessage()
+				}
 			}
 		}
 	}	

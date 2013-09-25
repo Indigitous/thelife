@@ -55,7 +55,7 @@ public class TheLifeApplication extends Application {
 		BitmapNotifierHandler notifierHandler = new BitmapNotifierHandler();
 		TheLifeConfiguration.setBitmapNotifier(notifierHandler);
 
-		// start the bitmap cache handler (which is for the background thread)
+		// start the bitmap cache handler (which is for a background thread)
 		BitmapCacheHandlerStarter starter = new BitmapCacheHandlerStarter("bitmapcachehandlerstarter");
 		starter.start();
 				

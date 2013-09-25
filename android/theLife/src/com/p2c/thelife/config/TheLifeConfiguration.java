@@ -43,7 +43,7 @@ public class TheLifeConfiguration {
 	public static final int EXPONENTIAL_BACKOFF_START = 1000; // in millis
 	public static final int EXPONENTIAL_BACKOFF_MAX = 16000;  // in millis
 	
-	// refresh deltas: time before a refresh
+	// refresh datastore deltas: time before a refresh from the server
 	// these are in milliseconds
 	public static final long REFRESH_DEEDS_DELTA = 60 * 60 * 1000; // 1 hour
 	public static final long REFRESH_CATEGORIES_DELTA = REFRESH_DEEDS_DELTA;
@@ -52,6 +52,11 @@ public class TheLifeConfiguration {
 	public static final long REFRESH_GROUPS_DELTA = 60 * 60 * 1000;
 	public static final long REFRESH_USERS_DELTA = 60 * 60 * 1000;
 	public static final long REFRESH_REQUESTS_DELTA = 5 * 60 * 1000;
+	
+	// time before asking the server for the bitmap again
+	// in milliseconds
+	public static final long REFRESH_BITMAPS_DELTA = 5 * 60 * 1000;
+	
 	
 	// URL of the server
 	// note: ends with a version and a forward slash
