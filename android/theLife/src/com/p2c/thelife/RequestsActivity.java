@@ -79,11 +79,14 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity
 	}
 	
 	/**
-	 * Activity in view, so start the data store refresh mechanism.
+	 * Activity in view.
 	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		// data may have changed (e.g. push notifications while sleeping), so redisplay
+		m_adapter.notifyDSChanged(null, null);		
 		
 		// set the data store listener
 		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_adapter);
@@ -100,7 +103,7 @@ public class RequestsActivity extends SlidingMenuPollingFragmentActivity
 	}		
 	
 	/**
-	 * Activity out of view, so stop the data store refresh mechanism.
+	 * Activity out of view.
 	 */
 	@Override
 	protected void onPause() {
