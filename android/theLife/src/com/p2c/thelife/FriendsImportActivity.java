@@ -23,7 +23,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendsImportActivity extends SlidingMenuPollingFragmentActivity {
+public class FriendsImportActivity extends SlidingMenuFragmentActivity {
 	
 	private static String TAG = "FriendsImportActivity";
 	

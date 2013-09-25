@@ -28,7 +28,7 @@ import com.p2c.thelife.push.GCMSupport;
  * @author clarence
  *
  */
-public class SettingsActivity extends SlidingMenuPollingFragmentActivity implements ServerListener, ImageSelectSupport.Listener {
+public class SettingsActivity extends SlidingMenuFragmentActivity implements ServerListener, ImageSelectSupport.Listener {
 	
 	private static final String TAG = "SettingsActivity";
 	

@@ -25,7 +25,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class EventsForFriendActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener, ServerListener {
+public class EventsForFriendActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener, ServerListener {
 	
 	private static final String TAG = "EventsForFriendActivity";
 	

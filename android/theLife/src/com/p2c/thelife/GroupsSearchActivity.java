@@ -20,7 +20,7 @@ import com.p2c.thelife.model.GroupModel;
 /*
  * Support querying for groups.
  */
-public class GroupsSearchActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, OnItemClickListener, GroupMembershipRequestDialog.Listener {
+public class GroupsSearchActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, OnItemClickListener, GroupMembershipRequestDialog.Listener {
 	
 	private static final String TAG = "GroupsSearchActivity";
 	

@@ -19,7 +19,7 @@ import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
 
-public class GroupInviteActivity extends SlidingMenuPollingFragmentActivity implements GroupInviteManuallyDialog.Listener, Server.ServerListener {
+public class GroupInviteActivity extends SlidingMenuFragmentActivity implements GroupInviteManuallyDialog.Listener, Server.ServerListener {
 
 	public static final String TAG = "GroupInviteActivity";
 	

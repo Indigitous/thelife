@@ -19,7 +19,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendImportManuallyActivity extends SlidingMenuPollingFragmentActivity implements ImageSelectSupport.Listener {
+public class FriendImportManuallyActivity extends SlidingMenuFragmentActivity implements ImageSelectSupport.Listener {
 	
 	private static final String TAG = "FriendImportManuallyActivity";
 	

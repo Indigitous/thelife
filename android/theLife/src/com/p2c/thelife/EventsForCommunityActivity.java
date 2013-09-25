@@ -22,7 +22,7 @@ import com.p2c.thelife.model.EventsDS;
  * @author clarence
  *
  */
-public class EventsForCommunityActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener, ServerListener {
+public class EventsForCommunityActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener, ServerListener {
 	
 	private static final String TAG = "EventsForCommunityActivity";
 	

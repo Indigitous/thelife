@@ -24,7 +24,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class DeedsForFriendActivity extends SlidingMenuPollingFragmentActivity implements DSRefreshedListener, Server.ServerListener, EventCreateDialog.Listener {
+public class DeedsForFriendActivity extends SlidingMenuFragmentActivity implements DSRefreshedListener, Server.ServerListener, EventCreateDialog.Listener {
 	
 	private static final String TAG = "DeedsForFriendActivity";
 	

@@ -13,7 +13,7 @@ import com.p2c.thelife.config.TheLifeConfiguration;
  * @author clarence
  *
  */
-public class SlidingMenuPollingActivity extends SherlockActivity {
+public class SlidingMenuActivity extends SherlockActivity {
 	
 	protected SlidingMenuSupport m_support = null;
 		

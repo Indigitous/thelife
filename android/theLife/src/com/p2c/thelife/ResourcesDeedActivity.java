@@ -17,7 +17,7 @@ import com.p2c.thelife.model.DeedModel;
  * @author clarence
  *
  */
-public class ResourcesDeedActivity extends SlidingMenuPollingFragmentActivity {
+public class ResourcesDeedActivity extends SlidingMenuFragmentActivity {
 	
 	private static final String TAG = "ResourcesDeedActivity"; 
 	

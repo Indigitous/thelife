@@ -29,7 +29,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class ResourcesActivity extends SlidingMenuPollingFragmentActivity implements DSRefreshedListener {
+public class ResourcesActivity extends SlidingMenuFragmentActivity implements DSRefreshedListener {
 	
 	private static final String TAG = "ResourcesActivity";
 	

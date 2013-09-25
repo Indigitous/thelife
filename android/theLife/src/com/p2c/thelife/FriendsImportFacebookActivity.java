@@ -41,7 +41,7 @@ import com.facebook.widget.PickerFragment;
  * @author clarence
  *
  */
-public class FriendsImportFacebookActivity extends SlidingMenuPollingFragmentActivity {
+public class FriendsImportFacebookActivity extends SlidingMenuFragmentActivity {
 	
 	FriendPickerFragment m_friendPickerFragment = null;
 

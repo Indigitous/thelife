@@ -30,7 +30,7 @@ import com.p2c.thelife.model.GroupModel;
  * @author clarence
  *
  */
-public class GroupsActivity extends SlidingMenuPollingFragmentActivity 
+public class GroupsActivity extends SlidingMenuFragmentActivity 
 	implements OnItemLongClickListener, OnItemClickListener, Server.ServerListener, GroupCreateDialog.Listener, DSRefreshedListener {
 	
 	private static final String TAG = "GroupsActivity"; 	

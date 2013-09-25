@@ -19,7 +19,7 @@ import com.p2c.thelife.model.UserModel;
  * @author clarence
  *
  */
-public class EventsForOwnerActivity extends SlidingMenuPollingActivity implements EventsDS.DSRefreshedListener {
+public class EventsForOwnerActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener {
 	
 	private static final String TAG = "EventsForOwnerActivity";
 	

@@ -13,7 +13,7 @@ import com.actionbarsherlock.view.MenuItem;
  * @author clarence
  *
  */
-public class HelpContainerActivity extends SlidingMenuPollingActivity {
+public class HelpContainerActivity extends SlidingMenuActivity {
 	
 	private static final String TAG = "HelpContainerActivity";
 	

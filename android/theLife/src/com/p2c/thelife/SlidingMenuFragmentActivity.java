@@ -14,7 +14,7 @@ import com.p2c.thelife.config.TheLifeConfiguration;
  * @author clarence
  *
  */
-public class SlidingMenuPollingFragmentActivity extends SherlockFragmentActivity {
+public class SlidingMenuFragmentActivity extends SherlockFragmentActivity {
 	
 	protected SlidingMenuSupport m_support = null;
 		

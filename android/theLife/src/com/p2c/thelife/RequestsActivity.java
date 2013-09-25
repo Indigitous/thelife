@@ -23,7 +23,7 @@ import com.p2c.thelife.model.RequestsDS;
  * Requests are received from Google Cloud Messaging (GCM).
  * A local time refreshes the displayed timestamps every minute.
  */
-public class RequestsActivity extends SlidingMenuPollingFragmentActivity 
+public class RequestsActivity extends SlidingMenuFragmentActivity 
 	implements Server.ServerListener, RequestsDS.DSChangedListener, ServerAccessDialogAbstract.Listener {
 	
 	private static final String TAG = "RequestsActivity";

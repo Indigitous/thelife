@@ -24,7 +24,7 @@ import com.p2c.thelife.model.UserModel;
  * @author clarence
  *
  */
-public class GroupActivity extends SlidingMenuPollingFragmentActivity implements Server.ServerListener, GroupDeleteUserDialog.Listener, OnItemLongClickListener {
+public class GroupActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, GroupDeleteUserDialog.Listener, OnItemLongClickListener {
 	
 	private static final String TAG = "GroupActivity";
 	

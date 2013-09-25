@@ -23,7 +23,7 @@ import com.p2c.thelife.model.FriendModel;
  * @author clarence
  *
  */
-public class FriendSettingsActivity extends SlidingMenuPollingFragmentActivity implements ServerListener, ImageSelectSupport.Listener {
+public class FriendSettingsActivity extends SlidingMenuFragmentActivity implements ServerListener, ImageSelectSupport.Listener {
 	
 	private static final String TAG = "FriendSettingsActivity";
 	
