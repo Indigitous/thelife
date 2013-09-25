@@ -7,7 +7,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.p2c.thelife.config.TheLifeConfiguration;
 
 /**
- * Superclass of all Activities that use the sliding menu and application-wide polling and Sherlock ActionBar.
+ * Superclass of all Activities that use the sliding menu and application-wide initialization and Sherlock ActionBar.
  * SlidingMenu is from https://github.com/jfeinstein10/SlidingMenu, Apache 2.0 license
  * SherlockActionBar is from http://actionbarsherlock.com/, Apache 2.0 license
  * @author clarence
@@ -38,8 +38,10 @@ public class SlidingMenuPollingActivity extends SherlockActivity {
 		}
 		
 		TheLifeConfiguration.getRequestsDS().addDSChangedListener(m_support);		
-//		TheLifeConfiguration.getRequestsPoller().start();
 		TheLifeConfiguration.getOwnerDS().addDSChangedListener(m_support);
+		
+		// defensive programming: in case of problems with GCM, refresh requests datastore
+		TheLifeConfiguration.getRequestsDS().refresh("application");
 	}
 	
 	
@@ -47,7 +49,6 @@ public class SlidingMenuPollingActivity extends SherlockActivity {
 	protected void onPause() {
 		super.onPause();
 		
-//		TheLifeConfiguration.getRequestsPoller().stop();
 		TheLifeConfiguration.getOwnerDS().removeDSChangedListener(m_support);
 		TheLifeConfiguration.getRequestsDS().removeDSChangedListener(m_support);		
 	}
