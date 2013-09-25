@@ -72,11 +72,14 @@ public class EventsForOwnerActivity extends SlidingMenuPollingActivity implement
 	
 	
 	/**
-	 * Activity in view, so start the data store refresh mechanism.
+	 * Activity in view.
 	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		// data may have changed (e.g. push notifications), so redisplay
+		m_adapter.notifyDSChanged(null, null);		
 		
 		// load the data store from the server in the background
 		TheLifeConfiguration.getEventsDS().addDSChangedListener(m_adapter);
@@ -90,17 +93,15 @@ public class EventsForOwnerActivity extends SlidingMenuPollingActivity implement
 	
 	/**
 	 * Called when the events data store refresh has completed.
-	 * Will put another events data store refresh onto the UI thread queue.
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
-		// keep polling the events in the background
 		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);						
 	}			
 	
 	
 	/**
-	 * Activity out of view, so stop the events data store refresh mechanism.
+	 * Activity out of view.
 	 */
 	@Override
 	protected void onPause() {

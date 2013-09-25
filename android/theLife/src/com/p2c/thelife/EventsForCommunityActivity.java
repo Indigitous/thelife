@@ -73,11 +73,14 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	
 	
 	/**
-	 * Activity in view, so start the data store refresh mechanism.
+	 * Activity in view.
 	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		// data may have changed (e.g. push notifications), so redisplay
+		m_adapter.notifyDSChanged(null, null);
 		
 		// load the data store from the server in the background
 		if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
@@ -105,7 +108,6 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 	
 	/**
 	 * Called when the data store refresh has completed.
-	 * Will put another data store refresh onto the UI thread queue.
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
@@ -117,17 +119,16 @@ public class EventsForCommunityActivity extends SlidingMenuPollingActivity imple
 		} else {
 			m_noEventsView.setVisibility(View.GONE);	
 		}
-	}			
+	}
 	
 	
 	/**
-	 * Activity out of view, so stop the data store refresh mechanism.
+	 * Activity out of view.
 	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
 		
-		// stop polling the events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 		TheLifeConfiguration.getBitmapNotifier().removeUserBitmapListener(m_adapter);				
