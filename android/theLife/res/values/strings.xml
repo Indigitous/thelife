@@ -201,7 +201,8 @@ Contains Facebook software made available under the Apache License, version 2.0;
     <string name="person_invited_by_email">The invitation email was sent.</string>
     <string name="person_invited_by_sms">The invitation SMS was sent.</string>
     <string name="person_invited">The invitation was sent.</string>
-    <string name="sms_invitation">%1$s invites you to join TheLife App beta test! You can download it from Google Play at http://p2c.sh.</string>
+<!-- <string name="sms_invitation">%1$s invites you to join TheLife App beta test! You can download it from Google Play at http://p2c.sh.</string> -->
+    <string name="sms_invitation">%1$s invites you to join TheLife App! You can download it from Google Play at http://play.google.com/store/apps/details?id=com.p2c.thelife.</string>
     <string name="setup_prompt">You are about to start an incredible faith adventure</string>
     <string name="friend_info_is_private">TheLife App will not make any contact with your friends; contact information is only stored for your reference.</string>
     <string name="title_events_for_owner">Events</string>
