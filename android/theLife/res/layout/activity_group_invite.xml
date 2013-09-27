@@ -42,19 +42,7 @@
         android:enabled="true"
         android:gravity="center"
         android:onClick="inviteByInternalContactSMS"
-        android:text="@string/invite_contact_by_sms" />    
-
-    <Button
-        android:id="@+id/button3"
-        android:background="@drawable/round_gray_shadow"        
-        android:layout_width="225dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:drawableLeft="@drawable/ic_launcher"
-        android:enabled="false"
-        android:onClick="inviteByFacebook"
-        android:text="@string/invite_by_facebook" />
+        android:text="@string/invite_contact_by_sms" />
 
     <Button
         android:id="@+id/button4"

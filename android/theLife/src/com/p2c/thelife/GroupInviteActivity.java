@@ -24,7 +24,8 @@ public class GroupInviteActivity extends SlidingMenuFragmentActivity implements 
 	public static final String TAG = "GroupInviteActivity";
 	
 	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL = 1;
-	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS_SMS = 2;		
+	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS_SMS = 2;
+	
 
 	
 	private GroupModel m_group = null;
@@ -85,11 +86,6 @@ public class GroupInviteActivity extends SlidingMenuFragmentActivity implements 
 	public GroupModel getSelectedGroup() {
 		return m_group;
 	}		
-	
-	
-	public void inviteByFacebook(View view) {
-		// not yet implemented
-	}
 	
 	
 	public void inviteByInternalContactEmail(View view) {
