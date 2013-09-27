@@ -24,23 +24,33 @@ public class GroupDeleteUserDialog extends ServerAccessDialogAbstract {
 		final GroupModel group = ((GroupActivity)m_listener).getSelectedGroup();
 		final UserModel user = ((GroupActivity)m_listener).getSelectedUser();
 		
-		// Make sure the current user is the group leader, and therefore allowed to delete the given user
-		if (group.leader_id == TheLifeConfiguration.getOwnerDS().getId()) {		
+		// Make sure the current user is the group leader, and therefore allowed to delete users from the group
+		if (group.leader_id == TheLifeConfiguration.getOwnerDS().getId()) {
+			
+			// don't let the group leader delete herself/himself
+			if (group.leader_id == user.id) {
+				
+				// set the message, content and buttons of the alert
+				String message = getResources().getString(R.string.cannot_delete_leader_from_group);
+				alertBuilder.setMessage(Html.fromHtml(message));
+				alertBuilder.setNegativeButton(R.string.cancel, null);
+			} else {
 		
-			// set the message, content and buttons of the alert
-			String message = getResources().getString(R.string.delete_user_from_group_prompt, user.getFullName(), group.name);
-			alertBuilder.setMessage(Html.fromHtml(message));
-			alertBuilder.setNegativeButton(R.string.cancel, null); 
-			alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface di, int which) {	
-					
-					// enable a progress bar
-					((Listener)m_listener).notifyAttemptingServerAccess("deleteUserFromGroup");
-	
-					Server server = new Server(getActivity());
-					server.deleteUserFromGroup(group.id, user.id, (Server.ServerListener)m_listener, "deleteUserFromGroup");						
-				}
-			});	
+				// set the message, content and buttons of the alert
+				String message = getResources().getString(R.string.delete_user_from_group_prompt, user.getFullName(), group.name);
+				alertBuilder.setMessage(Html.fromHtml(message));
+				alertBuilder.setNegativeButton(R.string.cancel, null); 
+				alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface di, int which) {	
+						
+						// enable a progress bar
+						((Listener)m_listener).notifyAttemptingServerAccess("deleteUserFromGroup");
+		
+						Server server = new Server(getActivity());
+						server.deleteUserFromGroup(group.id, user.id, (Server.ServerListener)m_listener, "deleteUserFromGroup");						
+					}
+				});
+			}
 		} else {
 			
 			// set the message, content and buttons of the alert

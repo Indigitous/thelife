@@ -168,7 +168,7 @@ public class GroupActivity extends SlidingMenuFragmentActivity implements Server
 	
 	@Override
 	public void notifyAttemptingServerAccess(String indicator) {
-		if (indicator.equals("deleteUser")) {
+		if (indicator.equals("deleteUserFromGroup")) {
 			m_progressDialog = ProgressDialog.show(this, getResources().getString(R.string.waiting), getResources().getString(R.string.deleting_user), true, true);
 		}
 	}
@@ -177,7 +177,7 @@ public class GroupActivity extends SlidingMenuFragmentActivity implements Server
 	@Override
 	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
 		
-		// deleteUser does not return the deleted id
+		// deleteUserFromGroup does not return the deleted id
 		
 		m_groupUsersDS.forceRefresh(null);		
 		
