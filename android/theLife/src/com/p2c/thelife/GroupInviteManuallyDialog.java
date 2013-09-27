@@ -5,8 +5,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,6 +47,7 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 				return false;
 			}
 		});
+
 		mobileText.setOnTouchListener(new View.OnTouchListener() {
 			
 			@Override
@@ -86,25 +88,35 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 			}
 		});
 		
-		// enable the dialog positive button when something has been entered
-		alertBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
-			@Override
-			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-				boolean shouldEnable = !emailText.getText().toString().trim().isEmpty() ||
-									   !mobileText.getText().toString().trim().isEmpty();
-				enableInvite(dialog, shouldEnable);
-				return false;
-			}
-		});
-		
 		// disable the dialog positive button when it is shown
-		AlertDialog dialog = alertBuilder.create();
+		final AlertDialog dialog = alertBuilder.create();
 		dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 			@Override
 			public void onShow(DialogInterface dialog) {
 				enableInvite(dialog, false);
 			}
 		});
+		
+		// only enable the dialog positive button when text has been entered
+		TextWatcher tw = new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,	int after) {				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				boolean shouldEnable = !emailText.getText().toString().trim().isEmpty() ||
+				   !mobileText.getText().toString().trim().isEmpty();
+				enableInvite(dialog, shouldEnable);				
+			}
+		};		
+		emailText.addTextChangedListener(tw);
+		mobileText.addTextChangedListener(tw);
+
 		return dialog;
 	}
 	
