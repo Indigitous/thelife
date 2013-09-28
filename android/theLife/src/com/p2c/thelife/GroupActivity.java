@@ -142,6 +142,7 @@ public class GroupActivity extends SlidingMenuFragmentActivity implements Server
 		m_user = (UserModel)arg1.getTag();
 		if (m_user != null) {
 			Intent intent = new Intent("com.p2c.thelife.EventsForUser");
+			intent.putExtra("group_id", m_group.id);			
 			JSONObject userJSON = m_user.toJSON();
 			if (userJSON != null) {
 				intent.putExtra("user_json", userJSON.toString());

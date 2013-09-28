@@ -40,8 +40,7 @@
 	        android:layout_width="154dp"
 	        android:layout_height="154dp"
 		    android:padding="1dp"
-		    android:background="#a7a7a7"	        
-	        android:onClick="editProfile" >         
+		    android:background="#a7a7a7" >	        
             
 	    	<ImageView
 		        android:id="@+id/activity_user_image"
@@ -51,31 +50,42 @@
 		        android:src="@drawable/generic_avatar_image"
 		        android:scaleType="centerCrop"
 		        android:padding="2dp"
-		        android:background="#FFFFFF"
-		        android:onClick="editProfile" />
+		        android:background="#FFFFFF" />
     	</LinearLayout>      
         
     	<LinearLayout
     		android:layout_width="match_parent"
-    		android:layout_height="match_parent"
+    		android:layout_height="72dp"    		
     		android:paddingLeft="12dp"
-    		android:orientation="vertical"
-	        android:onClick="editProfile" > 
+    		android:orientation="vertical" >
 		           	    
     	    <TextView 
 	        	android:id="@+id/activity_user_name"  
 	        	android:paddingTop="2dp"  	        
     	        android:text="Friendly Millertonson"
     			android:layout_width="match_parent"
-    			android:layout_height="72dp"
+	    		android:layout_height="wrap_content"    			
     			android:gravity="center_vertical"
 		        android:textAppearance="?android:attr/textAppearanceLarge"
 		        android:textColor="#FFFFFF"
 		        android:shadowColor="#000000"
 		        android:shadowDx="3.5"
 		        android:shadowDy="3.5"
-		        android:shadowRadius="3.0"
-				android:onClick="editProfile" />
+		        android:shadowRadius="3.0" />
+    	    
+    	    <TextView
+	        	android:id="@+id/activity_group_role"      	        
+    	        android:text="@string/group_member"
+    	        android:textSize="12sp"    	        
+    	        android:layout_gravity="left"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+   		        android:textAppearance="?android:attr/textAppearanceSmall"
+   		       	android:textColor="#FFFFFF"
+		        android:shadowColor="#000000"
+		        android:shadowDx="3.5"
+		        android:shadowDy="3.5"
+		        android:shadowRadius="3.0" />
     	    
     	</LinearLayout>
     </LinearLayout>        

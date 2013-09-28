@@ -15,11 +15,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.EventsDS;
+import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.UserModel;
 
 
 /**
- * Show the events for the user in the group.
+ * Show the events for the user (optionally in a group).
  * @author clarence
  *
  */
@@ -27,6 +28,7 @@ public class EventsForUserActivity extends SlidingMenuActivity implements Events
 	
 	private static final String TAG = "EventsForUserActivity";
 	
+	private int m_groupId = 0;
 	private String m_userJSONString = null;
 	private UserModel m_user = null;	
 	private ListView m_listView = null;
@@ -40,6 +42,10 @@ public class EventsForUserActivity extends SlidingMenuActivity implements Events
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_events_for_user, SlidingMenuSupport.NO_POSITION);
 					
+		// Get the group
+		m_groupId = getIntent().getIntExtra("group_id", 0);
+		GroupModel group = TheLifeConfiguration.getGroupsDS().findById(m_groupId); 
+		
 		// Get the user
 		m_userJSONString = getIntent().getStringExtra("user_json");
 		if (m_userJSONString != null) {
@@ -58,6 +64,11 @@ public class EventsForUserActivity extends SlidingMenuActivity implements Events
 			
 			TextView nameView = (TextView)findViewById(R.id.activity_user_name);
 			nameView.setText(m_user.getFullName());
+			
+			TextView groupRoleView = (TextView)findViewById(R.id.activity_group_role);
+			if (groupRoleView != null && group != null) {
+				groupRoleView.setText(group.leader_id == m_user.id ? R.string.group_leader : R.string.group_member);
+			}
 		}
 			
 		// attach the event list view
@@ -147,6 +158,7 @@ public class EventsForUserActivity extends SlidingMenuActivity implements Events
 			intent.putExtra("layout", R.layout.activity_events_for_user_help);
 			intent.putExtra("position", SlidingMenuSupport.GROUPS_POSITION);
 			intent.putExtra("home", "com.p2c.thelife.EventsForUser");
+			intent.putExtra("group_id", m_groupId);
 			intent.putExtra("user_json", m_userJSONString);			
 			startActivity(intent);
 		}

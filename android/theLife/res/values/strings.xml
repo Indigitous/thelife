@@ -236,5 +236,8 @@ Contains Facebook software made available under the Apache License, version 2.0;
     <string name="adding_friends">Adding friends"</string>
     <string name="facebook_account_error">Facebook account error</string>
     <string name="cannot_delete_leader_from_group">You cannot delete the group leader from the group.</string>
+    <string name="group_member">Group Member</string>
+    <string name="group_leader">Group Leader</string>
+    
 
 </resources>
