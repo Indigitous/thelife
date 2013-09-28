@@ -618,7 +618,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	/**
 	 * DSRefreshed listener
 	 */
-	protected DSRefreshedListener m_refreshedListener = null;
+	protected DSRefreshedListener m_refreshedListener = null; // Perhaps too cautious, but this is a simple variable (only one listener)
 	
 	public void addDSRefreshedListener(DSRefreshedListener theListener) {
 		m_refreshedListener = theListener;
