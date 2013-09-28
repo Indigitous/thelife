@@ -19,7 +19,7 @@ import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
 
 /**
- * Invite a person to join your group. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.
+ * Invite a person (via email or mobile SMS) to join your group. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.
  * @author clarence
  *
  */
@@ -76,7 +76,7 @@ public class GroupInviteManuallyDialog extends ServerAccessDialogAbstract {
 				boolean isEmailRequest = (email != null && !email.isEmpty());
 				Log.i(TAG, "Invite a person manually: " + (isEmailRequest ? "EMAIL " + email : "MOBILE " + mobile));
 				
-				// SMS invitations are sent by Android
+				// SMS invitations are sent by Android, email requests by the server
 				if (!isEmailRequest) {
 					SmsManager smsManager = SmsManager.getDefault();
 					String invitation = getResources().getString(R.string.sms_invitation, TheLifeConfiguration.getOwnerDS().getOwner().getFullName());

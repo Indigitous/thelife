@@ -17,6 +17,7 @@ import com.p2c.thelife.model.EventModel;
 import com.p2c.thelife.model.EventsDS;
 
 /**
+ * Show all the events related to the owner and the owner's group members.
  * This activity uses View.postDelayed to update the timestamps on each displayed event.
  * 		[View.postDelayed, local UI thread only, every minute] 
  * @author clarence

@@ -22,6 +22,7 @@ import com.p2c.thelife.model.EventsDS;
 import com.p2c.thelife.model.FriendModel;
 
 /**
+ * Show the events related to the given friend.
  * @author clarence
  *
  */
@@ -41,7 +42,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements Even
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_events_for_friend, SlidingMenuSupport.NO_POSITION);
 					
-		// Get the friend for this deed
+		// Get the friend
 		int friendId = getIntent().getIntExtra("friend_id", 0);
 		m_friend = TheLifeConfiguration.getFriendsDS().findById(friendId);
 		
@@ -170,7 +171,6 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements Even
 	 */
 	@Override
 	public void notifyDSRefreshed(String indicator) {
-		// keep polling the events in the background
 		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);						
 	}			
 	
@@ -182,7 +182,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements Even
 	protected void onPause() {
 		super.onPause();
 		
-		// stop polling the events in the background
+		// stop receiving events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 		
@@ -264,6 +264,7 @@ public class EventsForFriendActivity extends SlidingMenuActivity implements Even
 	@Override
 	public void notifyServerResponseAvailable(String indicator,	int httpCode, JSONObject jsonObject, String errorString) {
 		
+		// indicator == "pledgeToPray"
 		if (!Utilities.isSuccessfulHttpCode(httpCode)) {			
 			new AlertDialog.Builder(this)
 				.setMessage(getResources().getString(R.string.pledge_error_from_server))

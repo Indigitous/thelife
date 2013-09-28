@@ -66,7 +66,7 @@ public class GroupsSearchActivity extends SlidingMenuFragmentActivity implements
 	}			
 
 	/**
-	 * User has selected a group to join. 
+	 * User has selected a group they wish to join. 
 	 * @param view
 	 */
 	@Override
@@ -93,9 +93,7 @@ public class GroupsSearchActivity extends SlidingMenuFragmentActivity implements
 
 		if (m_progressDialog != null) {
 			m_progressDialog.dismiss();
-		}				
-		
+		}
 	}
-	
 
 }

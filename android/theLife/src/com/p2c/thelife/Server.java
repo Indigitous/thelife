@@ -44,7 +44,13 @@ import com.p2c.thelife.model.FriendModel;
  * 		httpclient-cache-4.2.5.jar
  * 		httpcore-4.2.4.jar
  * 		httpmime-4.2.5.jar
- * @author clarence
+ * 
+ * All server calls (except for login/register) require an authentication token,
+ * which authenticates and identifies the calling user (ie., the owner) to the server.
+ * 
+ * All server calls have 
+ * 	1) a listener parameter, so that the caller can receive a callback to receive the server response, and
+ *  2) an indicator string, which is passed back to the called in the callback.
  *
  */
 public class Server {
@@ -72,6 +78,10 @@ public class Server {
 	
 	
 	
+	/**
+	 * Usual constructor.
+	 * @param context
+	 */
 	public Server(Context context) {
 		m_context = context;
 	}
@@ -198,7 +208,8 @@ public class Server {
 	
 	
 	/**
-	 * Delete an existing user with the authentication token.
+	 * Delete the current user.
+	 * Used for testing support.
 	 */
 	public void deleteUser(ServerListener listener, String indicator) {
 		
@@ -247,7 +258,6 @@ public class Server {
 	 * Delete an existing friend for the current user.
 	 */
 	public void deleteFriend(int friendId, ServerListener listener, String indicator) {
-		
 		// API endpoint
 		// returns HTTP 404 on an unknown friend, HTTP 201 on a success
 		String urlString = Utilities.makeServerUrlString("friends/" + String.valueOf(friendId), m_token);
@@ -261,6 +271,16 @@ public class Server {
 	}	
 	
 	
+	/**
+	 * Update an existing friend's data.
+	 * @param friendId
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param mobile
+	 * @param listener
+	 * @param indicator
+	 */
 	public void updateFriend(int friendId, String firstName, String lastName, String email, String mobile, ServerListener listener, String indicator) {
 		// API endpoint
 		// returns HTTP 404 on an unknown friend, HTTP 204 on a success

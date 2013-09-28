@@ -45,7 +45,7 @@ public class FriendsImportSupport implements Server.ServerListener {
 	}
 	
 	/**
-	 * Start adding friends.
+	 * Start adding friends. Called before addFriend().
 	 * @param numberToAdd
 	 */
 	protected void addFriendsStart(int messageResourceId) {
@@ -70,7 +70,7 @@ public class FriendsImportSupport implements Server.ServerListener {
 	
 	
 	/**
-	 * Stop adding friends.
+	 * Stop adding friends. Called after one or more calls of addFriend().
 	 */
 	protected void addFriendsFinish() {
 		TheLifeConfiguration.getEventsDS().forceRefresh(null);

@@ -21,7 +21,6 @@ public class RequestFinishDialog extends ServerAccessDialogAbstract {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-		
 		final RequestModel request = ((RequestsActivity)m_listener).getSelectedRequest();
 			
 		// set the message, content and buttons of the alert

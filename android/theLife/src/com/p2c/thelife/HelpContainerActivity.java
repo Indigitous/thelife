@@ -22,8 +22,6 @@ public class HelpContainerActivity extends SlidingMenuActivity {
 	private int m_friendId = 0;
 	private int m_deedId = 0;
 	private String m_home = null;
-
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class HelpContainerActivity extends SlidingMenuActivity {
 			setTitle(title);
 		}
 		
-		// read the remaining values
+		// read the optional remaining values
 		m_userJSONString = getIntent().getStringExtra("user_json");
 		m_groupId = getIntent().getIntExtra("group_id", 0);
 		m_friendId = getIntent().getIntExtra("friend_id", 0);
@@ -69,7 +67,7 @@ public class HelpContainerActivity extends SlidingMenuActivity {
 			Intent intent = new Intent(m_home);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
 			
-			// add the parameters to the intent
+			// add the optional parameters to the intent
 			if (m_userJSONString != null) {
 				intent.putExtra("user_json", m_userJSONString);
 			}			

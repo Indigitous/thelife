@@ -37,7 +37,6 @@ public class ResourcesAdapter extends BaseExpandableListAdapter implements Abstr
 	
 	
 	public ResourcesAdapter(Context context, EnumSet<FriendModel.Threshold> thresholds) {
-		
 		m_context = context;
 		m_categories = new ArrayList<CategoryModel>();
 		m_thresholds = thresholds;

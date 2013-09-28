@@ -9,7 +9,7 @@ import android.text.Html;
 import com.p2c.thelife.model.FriendModel;
 
 /**
- * Delete an existing friend. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.
+ * Delete an friend. Uses a dialog fragment as per Android doc, using support library for Androids < 3.0.
  * @author clarence
  *
  */

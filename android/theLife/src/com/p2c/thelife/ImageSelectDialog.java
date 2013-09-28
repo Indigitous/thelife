@@ -11,7 +11,7 @@ import android.support.v4.app.DialogFragment;
 
 
 /**
- * Let the user select an image from the camera or gallery.
+ * Let the user select an image from the device (camera or gallery).
  * @author clarence
  *
  */

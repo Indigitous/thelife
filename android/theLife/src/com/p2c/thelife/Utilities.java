@@ -38,22 +38,43 @@ public class Utilities {
 	
 	private static final String TAG = "Utilities";
 	
+
+	/**
+	 * Template support.
+	 * @param resources
+	 * @param friend
+	 * @param templateString
+	 * @return
+	 */
 	public static String fillTemplateString(Resources resources, FriendModel friend, String templateString) {
 		return templateString.replace("$f", (friend == null || friend.getFirstNameOrLastName() == null) ? resources.getString(R.string.friend) : friend.getFirstNameOrLastName());
 	}
-	
+
+
+	/**
+	 * Template support.
+	 * @param resources
+	 * @param user
+	 * @param friend
+	 * @param templateString
+	 * @return
+	 */
 	public static String fillTemplateString(Resources resources, UserModel user, FriendModel friend, String templateString) {
 		String s = templateString.replace("$u", (user == null || user.firstName == null) ? resources.getString(R.string.user) : user.firstName);	
 		return s.replace("$f", (friend == null || friend.getFirstNameOrLastName() == null) ? resources.getString(R.string.friend) : friend.getFirstNameOrLastName());
 	}
 	
+	
+	/**
+	 * @param drawable
+	 * @return the bitmap object from a drawable
+	 */
 	public static Bitmap getBitmapFromDrawable(Drawable drawable) {
 		if (drawable instanceof BitmapDrawable) {
 			return ((BitmapDrawable)drawable).getBitmap();
 		} else {
 			throw new IllegalArgumentException();
 		}
-			
 	}
 	
 	
@@ -145,6 +166,9 @@ public class Utilities {
 	}
 	
 	
+	/**
+	 * Handles "null" string values from the server.
+	 */
 	public static String getOptionalField(String key, JSONObject jsonObject) {
 		String field = null;
 		
@@ -334,11 +358,13 @@ public class Utilities {
 		if (bitmap != null) {
 			int originalWidth = bitmap.getWidth();
 			int originalHeight = bitmap.getHeight();
-			if (originalWidth < originalHeight) {
+			
+			if (originalWidth < originalHeight) {	
 				// choose a square from the middle of the column
 				int sideLength = originalWidth;
 				int y = (originalHeight - sideLength) / 2;
 				bitmap = Bitmap.createBitmap(bitmap, 0, y, sideLength, sideLength);
+				
 			} else if (originalHeight < originalWidth){
 				// choose a square from the middle of the row
 				int sideLength = originalHeight;
@@ -369,6 +395,7 @@ public class Utilities {
 		return "https://graph.facebook.com/" + facebookId + "/picture" +
 				"?width=" + TheLifeConfiguration.IMAGE_WIDTH + "&height=" + TheLifeConfiguration.IMAGE_HEIGHT;		
 	}	
+	
 	
 	/**
 	 * @param facebookId

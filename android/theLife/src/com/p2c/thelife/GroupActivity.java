@@ -21,7 +21,7 @@ import com.p2c.thelife.model.UserModel;
 
 
 /**
- * Show the users in the specified group.
+ * Show the users in the given group.
  * @author clarence
  *
  */
@@ -166,6 +166,10 @@ public class GroupActivity extends SlidingMenuFragmentActivity implements Server
 	}
 
 
+	/**
+	 * Delete the user in the group.
+	 * @param view
+	 */
 	public void selectUser(View view) {
 		m_user = (UserModel)view.getTag();
 		

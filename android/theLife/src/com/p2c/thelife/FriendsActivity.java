@@ -23,7 +23,7 @@ import com.p2c.thelife.model.FriendModel;
 
 
 /**
- * Show the friends of the current user.
+ * Show the friends of the owner.
  * @author clarence
  *
  */

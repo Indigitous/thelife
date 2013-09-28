@@ -41,7 +41,7 @@ import com.testflightapp.lib.TestFlight;
 
 
 /**
- * Login or register a new user.
+ * Login an existing user or register a new user.
  * @author clarence
  *
  */
@@ -148,7 +148,6 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			private Exception m_e = null;
 			private String m_accountName;
 			private JSONObject m_account = null; // the user account info
-			
 
 			// background thread
 			@Override
@@ -251,9 +250,8 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 				
 			@Override
 			public void call(Session session, SessionState state, Exception exception) {
-System.out.println("FACEBOOK STATE IS " + state);
+				
 				if (session.isOpened()) {
-
 					// progress bar while waiting
 					m_progressDialog = ProgressDialog.show(
 						SetupActivity.this, 
@@ -293,12 +291,6 @@ System.out.println("FACEBOOK STATE IS " + state);
 						final String accountName3 = accountName2;
 						final String firstName = user.getFirstName();
 						final String lastName = user.getLastName();
-
-System.out.println("FACEBOOK ID: " + id);
-System.out.println("FACEBOOK TOKEN: " + externalToken);
-System.out.println("FACEBOOK EMAIL: " + accountName3);
-System.out.println("FACEBOOK FIRST NAME: " + firstName);
-System.out.println("FACEBOOK LAST NAME: " + lastName);
 
 						new AsyncTask<String, Void, Void>() {
 							// get the user's image in the background thread
@@ -404,7 +396,6 @@ System.out.println("FACEBOOK LAST NAME: " + lastName);
 	
 	@Override
 	public void notifyServerResponseAvailable(String indicator, int httpCode, JSONObject jsonObject, String errorString) {
-					
 		if (indicator.equals("register") || indicator.equals("registerWithToken") || indicator.equals("updateImage")) 
 		{
 			// register workflow continues with the superclass

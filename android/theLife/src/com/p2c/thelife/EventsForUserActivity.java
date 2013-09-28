@@ -20,7 +20,7 @@ import com.p2c.thelife.model.UserModel;
 
 
 /**
- * Show the events for the user (optionally in a group).
+ * Show the events for the user (optionally a user in a group).
  * @author clarence
  *
  */
@@ -132,7 +132,7 @@ public class EventsForUserActivity extends SlidingMenuActivity implements Events
 	protected void onPause() {
 		super.onPause();
 		
-		// stop polling the events in the background
+		// stop receiving events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 		

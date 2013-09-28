@@ -84,9 +84,7 @@ public class FriendsImportFacebookActivity extends SlidingMenuFragmentActivity {
                 finish();
             }
         });
-        // FACEBOOK CODE ADAPTATION END		
-        
-        System.out.println("FINISHING ON CREATE");
+        // FACEBOOK CODE ADAPTATION END        
 	}
 
 	
@@ -129,18 +127,13 @@ public class FriendsImportFacebookActivity extends SlidingMenuFragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
-System.out.println("IN ON START");
-		
+				
 		Session.openActiveSession(this, true, new Session.StatusCallback() {
 			
 			@Override
 			public void call(Session session, SessionState state, Exception exception) {
-System.out.println("RECEIVE FACEBOOK SESSION STATE " + state + "," + exception);
-				
 				if (session.isOpened()) {
 					// load the friends data
-System.out.println("LOADING FRIENDS DATA NOW");
 					m_friendPickerFragment.loadData(true);
 				}
 			}

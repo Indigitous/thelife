@@ -107,7 +107,7 @@ public class EventsForOwnerActivity extends SlidingMenuActivity implements Event
 	protected void onPause() {
 		super.onPause();
 		
-		// stop polling the events in the background
+		// stop receiving events in the background
 		TheLifeConfiguration.getEventsDS().removeDSRefreshedListener(this);
 		TheLifeConfiguration.getEventsDS().removeDSChangedListener(m_adapter);
 		

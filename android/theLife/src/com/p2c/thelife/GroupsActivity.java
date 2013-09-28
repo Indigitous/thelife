@@ -24,9 +24,10 @@ import com.p2c.thelife.model.GroupModel;
 /**
  * Show the owner's groups.
  * 
- * This class does not poll the server for changes in the user's groups, 
+ * This class does not poll the server for changes in the user's list of groups, 
  * because this data doesn't change unless the user initiates the add group/delete group.
  * So instead of polling, just refresh when an add/delete operation occurs.
+ * Another alternative would be to use GCM.
  * @author clarence
  *
  */

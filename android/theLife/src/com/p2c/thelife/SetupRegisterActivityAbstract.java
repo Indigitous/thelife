@@ -42,7 +42,7 @@ public class SetupRegisterActivityAbstract extends SetupActivityAbstract impleme
 				m_token = jsonObject.optString("authentication_token", "");	
 			
 				if (m_user != null && m_user.id != 0 && m_token != "" && m_user.email != "") {
-					
+					// successful registration
 					Utilities.showInfoToast(this, getResources().getString(R.string.registration_successful), Toast.LENGTH_SHORT); 
 					
 					// successful registration, so now update the user profile image if necessary
@@ -54,9 +54,8 @@ public class SetupRegisterActivityAbstract extends SetupActivityAbstract impleme
 				}					
 			
 			} else {
-				// failed register
-				Utilities.showInfoToast(this, getResources().getString(R.string.registration_failed), Toast.LENGTH_SHORT); 
-				
+				// failed registration
+				Utilities.showInfoToast(this, getResources().getString(R.string.registration_failed), Toast.LENGTH_SHORT);
 				closeProgressBar();
 			}
 				
@@ -88,7 +87,6 @@ public class SetupRegisterActivityAbstract extends SetupActivityAbstract impleme
 	
 	
 	private void finishRegistration(UserModel user, String token) {
-		
 		closeProgressBar();
 				
 		// store the user configuration result

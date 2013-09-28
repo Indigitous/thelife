@@ -40,7 +40,6 @@ public class ResourcesActivity extends SlidingMenuFragmentActivity implements DS
 	private TextView m_filterDescriptionView = null; 
     private String[] m_thresholdStrings = null;
 	
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

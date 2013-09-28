@@ -10,7 +10,7 @@ import com.p2c.thelife.model.EventModel;
 
 
 /**
- * Show all events related to the owner.
+ * Show all events related to the owner and his/her group members.
  * @author clarence
  *
  */

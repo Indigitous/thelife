@@ -121,6 +121,10 @@ public class RequestsActivity extends SlidingMenuFragmentActivity
 	}		
 	
 	
+	/**
+	 * Select the given request.
+	 * @param view
+	 */
 	public void selectRequest(View view) {
 		m_request = (RequestModel)view.getTag();
 

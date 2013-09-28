@@ -168,9 +168,6 @@ public class FriendsImportActivity extends SlidingMenuFragmentActivity {
 		}
 	}
 	
-
-
-	
 	
 	public void importFriendsByFacebook(View view) {
 		Intent intent = new Intent("com.p2c.thelife.FriendsImportFacebook");

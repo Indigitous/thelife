@@ -62,8 +62,8 @@ public class FriendsAdapter
 		notifyDataSetChanged();
 	}
 	
+	// get all the friends for the current user
 	private void query() {
-		// get all the friends for the current user
 		Collection<FriendModel> friends = TheLifeConfiguration.getFriendsDS().findAll();
 		for (FriendModel f:friends) {
 			add(f);

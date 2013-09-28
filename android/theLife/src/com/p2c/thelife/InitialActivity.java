@@ -12,7 +12,7 @@ import com.p2c.thelife.push.GCMSupport;
 
 
 /**
- * Starting Activity, handles whether or not the user has authenticated.
+ * The application's starting activity, which handles whether or not the user has authenticated.
  * This activity is necessary in part because of the way Android manages the back stack.
  * @author clarence
  *

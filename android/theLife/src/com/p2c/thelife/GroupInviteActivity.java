@@ -19,15 +19,18 @@ import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.GroupModel;
 import com.p2c.thelife.model.RequestModel;
 
+/**
+ * Invite a person to a group. Invites can only be initiated from the group leader.
+ * @author clarence
+ *
+ */
 public class GroupInviteActivity extends SlidingMenuFragmentActivity implements GroupInviteManuallyDialog.Listener, Server.ServerListener {
 
 	public static final String TAG = "GroupInviteActivity";
 	
 	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS_EMAIL = 1;
 	private static final int REQUESTCODE_IMPORT_FROM_CONTACTS_SMS = 2;
-	
 
-	
 	private GroupModel m_group = null;
 	private ProgressDialog m_progressDialog = null;
 	private boolean m_isEmailRequest = false;

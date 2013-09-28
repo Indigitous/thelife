@@ -14,8 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 /** 
- * Handle the image once the user has chosen.
- * The point of this class is to avoid code duplication.
+ * Handle the image after it has been chosen.
  * @author clarence
  *
  */

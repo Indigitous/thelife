@@ -68,8 +68,6 @@ public class GroupsAdapter extends ArrayAdapter<GroupModel> implements AbstractD
 		for (GroupModel g:Groups) {
 			add(g);
 		}		
-
 	}
-	
 
 }
