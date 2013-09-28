@@ -22,7 +22,7 @@ public class GroupModel extends AbstractModel {
 	public String   name;
 	public String   description;
 	public int      leader_id; // user_id in that group
-	public ArrayList<Integer> member_ids; // user_ids in the group, including the leader 
+	public ArrayList<Integer> member_ids; // all the user_ids in the group, including the leader 
 	
 	public GroupModel(int group_id, String name, String description, int leader_id, ArrayList<Integer> member_ids) {
 		

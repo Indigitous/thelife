@@ -24,6 +24,7 @@ import com.testflightapp.lib.TestFlight;
 
 /**
  * Listen for Google Cloud Messaging push notifications.
+ * GCM sends request, event and pledge messages.
  */
 public class GCMReceiver extends BroadcastReceiver {
 	

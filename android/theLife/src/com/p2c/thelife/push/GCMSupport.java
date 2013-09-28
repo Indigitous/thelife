@@ -16,6 +16,11 @@ import com.p2c.thelife.Utilities;
 import com.p2c.thelife.config.TheLifeConfiguration;
 import com.p2c.thelife.model.UserModel;
 
+/**
+ * Support routines for the Google Cloud Messaging service.
+ * @author clarence
+ *
+ */
 public class GCMSupport implements Server.ServerListener {
 	
 	private static final String TAG = "GCMSupport";

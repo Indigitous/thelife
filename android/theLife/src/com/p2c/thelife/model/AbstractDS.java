@@ -30,18 +30,20 @@ import com.p2c.thelife.config.TheLifeConfiguration;
 
 
 /**
- * Superclass for data stores of model records. 
+ * Superclass for data stores of AbstractModel records. 
  * Holds the information, provides access to the data, and refreshes the data from the server.
+ * Data is locally cached in a JSON file.
  * @author clarence
  *
  */
 public abstract class AbstractDS<T extends AbstractModel> {
 
-	private static final int NUM_RETRIES = 2;
+	private static final int NUM_RETRIES = 2; // default number of retries when accessing server
 	
 	
 	/**
 	 * Listener interface for DS data changed event.
+	 * This is only called when data has been received from the server.
 	 *
 	 */
 	public interface DSChangedListener {
@@ -83,7 +85,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 
 	
 	/**
-	 * Create a generic data store.
+	 * Create a generic data store storing the data into a cache file.
 	 * @param context
 	 * @param token							authentication token for testing and debugging
 	 * @param tag							for logging
@@ -200,13 +202,17 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	}
 	
 	
+	/**
+	 * Number of models in the data store.
+	 * @return
+	 */
 	public int count() {
 		return m_data.size();
 	}
 	
 	
 	/**
-	 * Force a refresh, reading in all the records.
+	 * Force a refresh from the server, reading in all the records.
 	 * @param refreshIndicator
 	 */
 	public void forceRefresh(String refreshIndicator) {
@@ -215,7 +221,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	
 	/**
-	 * Force a refresh, reading in up to the maximum number of most recent records.
+	 * Force a refresh from the server, reading in up to the maximum number of most recent records.
 	 * @param refreshIndicator
 	 * @param max
 	 */
@@ -226,6 +232,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/**
 	 * Refresh the model objects cache, reading in unlimited number of records.
+	 * The data store will not be refreshed if it has been refreshed recently.
 	 * @param refreshIndicator
 	 */
 	public void refresh(String refreshIndicator) {
@@ -235,6 +242,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	
 	/**
 	 * Refresh the model objects cache, reading in up to the maximum number of most recent records.
+	 * The data store will not be refreshed if it has been refreshed recently. 
 	 * @param refreshIndicator
 	 * @param max
 	 */
@@ -246,7 +254,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 	/**
 	 * Refresh the model objects cache, reading in up to the maximum number of most recent records according to the given parameter.
 	 * @param	refreshIndicator	passed back to the caller
-	 * @param 	force				whether or not to force a refresh
+	 * @param 	force				whether or not to force a refresh from the server (false means don't refresh if was refreshed recently)
 	 * @param 	numberRetries		number of times to try again if encountering a connection timeout 
 	 * @param	max					the maximum number of records to read; 0 means read all 
 	 * @param 	params				in URL encoded form, example: "&after=12345"
@@ -306,6 +314,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		}
 	}	
 
+
 	
 	/********************************** helper routines ********************************/
 	
@@ -337,6 +346,7 @@ public abstract class AbstractDS<T extends AbstractModel> {
 		return success;
 	}
 	
+
 	/**
 	 * Prepend the new JSON, in newDataJSONString, to the cache file.
 	 * @param newDataJSONString
@@ -482,7 +492,6 @@ public abstract class AbstractDS<T extends AbstractModel> {
 						modelsConnection = (HttpURLConnection)modelsEP.openConnection();
 						modelsConnection.setConnectTimeout(TheLifeConfiguration.HTTP_SERVER_CONNECTION_TIMEOUT);
 						modelsConnection.setReadTimeout(TheLifeConfiguration.HTTP_READ_TIMEOUT);
-						
 						Log.d(TAG, i + " DS HTTP RESPONSE CODE " + modelsConnection.getResponseCode());
 		
 						String jsonString = null;

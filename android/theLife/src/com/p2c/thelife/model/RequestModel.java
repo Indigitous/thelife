@@ -38,9 +38,9 @@ public class RequestModel extends AbstractModel {
 	public String groupName;        // the name of the group to join
 	public String type;				// either REQUEST_MEMBERSHIP or INVITE:
 									// 		REQUEST_MEMBERSHIP means the user_id requests to join group group_id
-									// 		INVITE means the user_id, who is the group leader of group_id, requests email/mobile to join
+									// 		INVITE means the user_id, who is the group leader of group_id, requests the person with email/mobile to join
 	public String email;			// for INVITE: this is the invited person's email
-	public String mobile;				// for INVITE: this is the invited person's SMS/mobile
+	public String mobile;			// for INVITE: this is the invited person's SMS/mobile
 	public String finalDescription; // description with template place holders replaced with real values
 	public long   timestamp; 		// in milliseconds, android.text.format.Time
 	public String status;			// either DELIVERED, ACCEPTED or REJECTED

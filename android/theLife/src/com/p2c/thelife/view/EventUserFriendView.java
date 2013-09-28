@@ -14,7 +14,7 @@ import com.p2c.thelife.Utilities;
 
 
 /**
- * Custom view to show user and friend bitmaps, with an activity/deed icon between.
+ * Custom view to show user and friend bitmaps, separated by an activity/deed icon.
  */
 public class EventUserFriendView extends View {
 	

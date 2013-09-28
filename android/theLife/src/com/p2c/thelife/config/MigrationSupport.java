@@ -6,6 +6,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+/**
+ * Determine whether or not the application version has been updated.
+ * @author clarence
+ *
+ */
 public class MigrationSupport {
 	
 	private static final String TAG = "MigrationSupport";

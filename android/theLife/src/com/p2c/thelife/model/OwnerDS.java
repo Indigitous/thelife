@@ -9,8 +9,8 @@ import com.p2c.thelife.config.TheLifeConfiguration;
 
 /**
  * Access the Owner/App User information.
- * Unlike other data stores, this does not communicate with the server 
- * but makes its data persistent with the Android SharedPreferences system.
+ * Unlike other data stores, this does not communicate with the server
+ * and it makes its data persistent with the Android SharedPreferences system.
  * @author clarence
  *
  */
