@@ -1,7 +1,11 @@
 package com.p2c.thelife;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,14 +19,16 @@ import com.p2c.thelife.model.UserModel;
 
 
 /**
- * Show the events for the owner.
+ * Show the events for the user in the group.
  * @author clarence
  *
  */
-public class EventsForOwnerActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener {
+public class EventsForUserActivity extends SlidingMenuActivity implements EventsDS.DSRefreshedListener {
 	
-	private static final String TAG = "EventsForOwnerActivity";
+	private static final String TAG = "EventsForUserActivity";
 	
+	private String m_userJSONString = null;
+	private UserModel m_user = null;	
 	private ListView m_listView = null;
 	private EventsForUserAdapter m_adapter = null;
 	private TextView m_noEventsView = null;	
@@ -32,27 +38,35 @@ public class EventsForOwnerActivity extends SlidingMenuActivity implements Event
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_events_for_owner, SlidingMenuSupport.NO_POSITION);
+		super.onCreate(savedInstanceState, R.layout.activity_events_for_user, SlidingMenuSupport.NO_POSITION);
 					
-		// Get the owner
-		UserModel owner = TheLifeConfiguration.getOwnerDS().getOwner();
+		// Get the user
+		m_userJSONString = getIntent().getStringExtra("user_json");
+		if (m_userJSONString != null) {
+			try {
+				JSONObject userJSON = new JSONObject(m_userJSONString);
+				m_user = UserModel.fromJSON(userJSON, false);
+			} catch (JSONException e) {
+				Log.e(TAG, "onCreate()", e);
+			}
+		}		
 		
-		// Show the owner
-		if (owner != null) {
-			ImageView imageView = (ImageView)findViewById(R.id.activity_owner_image);
-			imageView.setImageBitmap(UserModel.getImage(owner.id));
+		// Show the user
+		if (m_user != null) {
+			ImageView imageView = (ImageView)findViewById(R.id.activity_user_image);
+			imageView.setImageBitmap(UserModel.getImage(m_user.id));
 			
-			TextView nameView = (TextView)findViewById(R.id.activity_owner_name);
-			nameView.setText(owner.getFullName());
+			TextView nameView = (TextView)findViewById(R.id.activity_user_name);
+			nameView.setText(m_user.getFullName());
 		}
 			
 		// attach the event list view
-		m_listView = (ListView)findViewById(R.id.activity_owner_events);
-		m_adapter = new EventsForUserAdapter(this, android.R.layout.simple_list_item_1, TheLifeConfiguration.getOwnerDS().getId());
+		m_listView = (ListView)findViewById(R.id.activity_user_events);
+		m_adapter = new EventsForUserAdapter(this, android.R.layout.simple_list_item_1, (m_user != null) ? m_user.id : 0);
 		m_listView.setAdapter(m_adapter);
 		
 		// show a message if there are no events
-		m_noEventsView = (TextView)findViewById(R.id.events_for_owner_none);
+		m_noEventsView = (TextView)findViewById(R.id.events_for_user_none);
 		m_noEventsView.setVisibility(m_adapter.getCount() == 0 ? View.VISIBLE : View.GONE);
 		
 		// runnable to refresh the timestamps in the events list view
@@ -119,7 +133,7 @@ public class EventsForOwnerActivity extends SlidingMenuActivity implements Event
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getSupportMenuInflater().inflate(R.menu.events_for_owner, menu);
+		getSupportMenuInflater().inflate(R.menu.events_for_user, menu);
 		return true;
 	}
 	
@@ -130,26 +144,14 @@ public class EventsForOwnerActivity extends SlidingMenuActivity implements Event
 			m_support.slideOpen();
 		} else if (item.getItemId() == R.id.action_help) {
 			Intent intent = new Intent("com.p2c.thelife.HelpContainer");
-			intent.putExtra("layout", R.layout.activity_events_for_owner_help);
-			intent.putExtra("position", SlidingMenuSupport.SETTINGS_POSITION);
-			intent.putExtra("home", "com.p2c.thelife.EventsForOwner");
+			intent.putExtra("layout", R.layout.activity_events_for_user_help);
+			intent.putExtra("position", SlidingMenuSupport.GROUPS_POSITION);
+			intent.putExtra("home", "com.p2c.thelife.EventsForUser");
+			intent.putExtra("user_json", m_userJSONString);			
 			startActivity(intent);
 		}
 		
 		return true;
-	}
-	
-	
-	/**
-	 * Owner wants to edit their profile
-	 * @param view
-	 */
-	public void editProfile(View view) {
-		UserModel owner = TheLifeConfiguration.getOwnerDS().getOwner();
-		if (owner != null) {
-			Intent intent = new Intent("com.p2c.thelife.Settings");
-			startActivity(intent);
-		}		
 	}
 
 }

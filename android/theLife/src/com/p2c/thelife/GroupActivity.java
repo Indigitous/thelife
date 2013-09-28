@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import com.p2c.thelife.model.UserModel;
  * @author clarence
  *
  */
-public class GroupActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, GroupDeleteUserDialog.Listener, OnItemLongClickListener {
+public class GroupActivity extends SlidingMenuFragmentActivity implements Server.ServerListener, GroupDeleteUserDialog.Listener, OnItemClickListener, OnItemLongClickListener {
 	
 	private static final String TAG = "GroupActivity";
 	
@@ -51,13 +52,14 @@ public class GroupActivity extends SlidingMenuFragmentActivity implements Server
 			textView.setText(m_group.description);
 			
 			// data store of users in this group
-			m_groupUsersDS = new GroupUsersDS(this, null, m_group.id);			
-			
+			m_groupUsersDS = new GroupUsersDS(this, null, m_group.id);
+
 			// attach the users-in-group view
 			GridView usersView = (GridView)findViewById(R.id.activity_group_users);
 			m_adapter = new GroupAdapter(this, android.R.layout.simple_list_item_1, m_group, m_groupUsersDS);
 			usersView.setAdapter(m_adapter);
 			
+			usersView.setOnItemClickListener(this);
 			usersView.setOnItemLongClickListener(this);
 		}
 	}
@@ -132,7 +134,22 @@ public class GroupActivity extends SlidingMenuFragmentActivity implements Server
 		}
 		
 		return true;
-	}		
+	}
+	
+	
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		m_user = (UserModel)arg1.getTag();
+		if (m_user != null) {
+			Intent intent = new Intent("com.p2c.thelife.EventsForUser");
+			JSONObject userJSON = m_user.toJSON();
+			if (userJSON != null) {
+				intent.putExtra("user_json", userJSON.toString());
+			}
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
+			startActivity(intent);
+		}
+	}
 	
 	
 	/**

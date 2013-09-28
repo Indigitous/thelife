@@ -17,6 +17,7 @@ public class HelpContainerActivity extends SlidingMenuActivity {
 	
 	private static final String TAG = "HelpContainerActivity";
 	
+	private String m_userJSONString = null;
 	private int m_groupId = 0;
 	private int m_friendId = 0;
 	private int m_deedId = 0;
@@ -45,7 +46,8 @@ public class HelpContainerActivity extends SlidingMenuActivity {
 			setTitle(title);
 		}
 		
-		// read the remaining values 
+		// read the remaining values
+		m_userJSONString = getIntent().getStringExtra("user_json");
 		m_groupId = getIntent().getIntExtra("group_id", 0);
 		m_friendId = getIntent().getIntExtra("friend_id", 0);
 		m_deedId = getIntent().getIntExtra("deed_id", 0);
@@ -68,6 +70,9 @@ public class HelpContainerActivity extends SlidingMenuActivity {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
 			
 			// add the parameters to the intent
+			if (m_userJSONString != null) {
+				intent.putExtra("user_json", m_userJSONString);
+			}			
 			if (m_groupId != 0) {
 				intent.putExtra("group_id", m_groupId);
 			}

@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.p2c.thelife.BitmapCacheHandler;
 import com.p2c.thelife.Utilities;
@@ -84,7 +85,27 @@ public class UserModel extends AbstractModel {
 			Utilities.getOptionalField("mobile", json),
 			Utilities.getOptionalField("provider", json)
 		);
-	}	
+	}
+	
+	
+	public JSONObject toJSON() {
+		
+		JSONObject json = null;
+		try {
+			json = new JSONObject();
+			json.put("id", id);
+			json.put("first_name", firstName);
+			json.put("last_name", lastName);
+			json.put("email", email);
+			json.put("mobile", mobile);
+			json.put("provider", provider);
+		} catch (JSONException e) {
+			Log.e(TAG, "toJSON()", e);
+			json = null;
+		}
+		
+		return json;
+	}
 	
 	
 	/**

@@ -114,6 +114,7 @@
 	&lt;h4>Feedback?&lt;/h4>
 	&lt;p>Please give us your feedback online at our &lt;a href="https://getsatisfaction.com/powertochange/">GetSatisfaction&lt;/a> site.&lt;/p>
 	</string>
-	<string name="activity_events_for_owner_help">Events For Owner Help in here</string>		
+	<string name="activity_events_for_owner_help">Events For Owner Help in here</string>
+	<string name="activity_events_for_user_help">Events For User Help in here</string>		
 
 </resources>

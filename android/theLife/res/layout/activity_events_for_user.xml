@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#d0d4d9"    
-    tools:context=".EventsForOwnerActivity" >
+    tools:context=".EventsForUserActivity" >
     
     <ImageView
         android:layout_width="fill_parent"
@@ -44,7 +44,7 @@
 	        android:onClick="editProfile" >         
             
 	    	<ImageView
-		        android:id="@+id/activity_owner_image"
+		        android:id="@+id/activity_user_image"
 		        android:layout_width="152dp"
 		        android:layout_height="152dp"
 		        android:layout_gravity="center"
@@ -63,7 +63,7 @@
 	        android:onClick="editProfile" > 
 		           	    
     	    <TextView 
-	        	android:id="@+id/activity_owner_name"  
+	        	android:id="@+id/activity_user_name"  
 	        	android:paddingTop="2dp"  	        
     	        android:text="Friendly Millertonson"
     			android:layout_width="match_parent"
@@ -75,31 +75,14 @@
 		        android:shadowDx="3.5"
 		        android:shadowDy="3.5"
 		        android:shadowRadius="3.0"
-				android:onClick="editProfile" />    
-
-    	    <Button
-    	        android:layout_width="match_parent"
-    	        android:layout_height="wrap_content"
-    	        android:layout_marginTop="34dp"
-    	        android:layout_gravity="bottom"
-    	        android:background="@drawable/round_green_double_shadow"
-    	        android:gravity="center"
-    	        android:includeFontPadding="false"
-    	        android:onClick="editProfile"
-    	        android:padding="0dp"
-    	        android:shadowColor="#23282A"
-    	        android:shadowDx="0"
-    	        android:shadowDy="-2"
-    	        android:shadowRadius="3.0"
-    	        android:text="@string/activity_owner_edit_profile"
-    	        android:textColor="#FFFFFFFF" />
+				android:onClick="editProfile" />
     	    
     	</LinearLayout>
     </LinearLayout>        
 
     
     <TextView
-        android:id="@+id/events_for_owner_none"
+        android:id="@+id/events_for_user_none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -108,7 +91,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />       
 
    	<ListView
-        android:id="@+id/activity_owner_events"
+        android:id="@+id/activity_user_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="8dp"

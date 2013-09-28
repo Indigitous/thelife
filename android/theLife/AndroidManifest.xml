@@ -281,7 +281,7 @@
         </activity>
         <activity
             android:name="com.p2c.thelife.EventsForOwnerActivity"
-            android:label="@string/title_events_for_owner"
+            android:label="@string/title_events_for_user"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.p2c.thelife.EventsForOwner" />
@@ -289,6 +289,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.p2c.thelife.EventsForUserActivity"
+            android:label="@string/title_events_for_user"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.p2c.thelife.EventsForUser" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
         <activity
             android:name="com.facebook.LoginActivity"
             android:label="@string/app_name" />

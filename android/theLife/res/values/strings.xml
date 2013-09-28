@@ -205,9 +205,9 @@ Contains Facebook software made available under the Apache License, version 2.0;
     <string name="sms_invitation">%1$s invites you to join TheLife App! You can download it from Google Play at http://play.google.com/store/apps/details?id=com.p2c.thelife.</string>
     <string name="setup_prompt">You are about to start an incredible faith adventure</string>
     <string name="friend_info_is_private">TheLife App will not make any contact with your friends; contact information is only stored for your reference.</string>
-    <string name="title_events_for_owner">Events</string>
+    <string name="title_events_for_user">Events</string>
     <string name="activity_owner_edit_profile">Edit Profile</string>
-    <string name="no_owner_events">There are no events to show.</string>
+    <string name="no_user_events">There are no events to show.</string>
     <string name="upload_image">Upload image</string>
     <string name="rotate_ccw">Rotate left</string>
     <string name="rotate_cw">Rotate right</string>
