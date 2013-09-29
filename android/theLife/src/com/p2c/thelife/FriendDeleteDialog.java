@@ -27,7 +27,7 @@ public class FriendDeleteDialog extends ServerAccessDialogAbstract {
 		alertBuilder.setMessage(Html.fromHtml(message));
 		alertBuilder.setNegativeButton(R.string.cancel, null); 
 		alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface di, int which) {	
+			public void onClick(DialogInterface di, int which) {
 				
 				// enable a progress bar
 				((Listener)m_listener).notifyAttemptingServerAccess("deleteFriend");

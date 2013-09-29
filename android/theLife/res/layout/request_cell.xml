@@ -43,8 +43,8 @@
 	       android:layout_height="wrap_content"
 	       android:layout_weight="1"
 	       android:layout_marginTop="4dp"
-	       android:text="Andrew is talking to Patrick about the Gospel." />		       
-	       android:textSize="16sp"       
+	       android:text="Andrew is talking to Patrick about the Gospel."		       
+	       android:textSize="16sp" />      
     </LinearLayout>
 
 </LinearLayout>

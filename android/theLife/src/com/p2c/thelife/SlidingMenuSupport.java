@@ -2,8 +2,11 @@ package com.p2c.thelife;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -189,7 +192,7 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
 		showNotificationNumber();
 	}	
 	
-	
+	@SuppressLint("NewApi")
 	public void showNotificationNumber() {
         if (TheLifeConfiguration.getOwnerDS().isValidOwner()) {
     		int numNotifications = TheLifeConfiguration.getRequestsDS().count();
@@ -197,9 +200,15 @@ public class SlidingMenuSupport implements OwnerDS.DSChangedListener, RequestsDS
     		
 	        TextView textViewNum = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_number);
 	        textViewNum.setText(String.valueOf(TheLifeConfiguration.getRequestsDS().count()));
-	        textViewNum.setBackgroundDrawable(hasNewNotifications ? 
-	        								  	m_activity.getResources().getDrawable(R.drawable.round_red) : 
-	        								  	m_activity.getResources().getDrawable(R.drawable.round_black));
+	        Drawable textViewDrawable = hasNewNotifications ? 
+				  	m_activity.getResources().getDrawable(R.drawable.round_red) : 
+				  	m_activity.getResources().getDrawable(R.drawable.round_black);
+				  	
+			if (Build.VERSION.SDK_INT >= 16) {
+				textViewNum.setBackground(textViewDrawable);				
+			} else {		  	
+				textViewNum.setBackgroundDrawable(textViewDrawable);
+			}
 	        TextView textViewLabel = (TextView)m_appMenu.findViewById(R.id.app_menu_notification_label);
 	        textViewLabel.setText(numNotifications == 1 ? R.string.notification_singular : R.string.notification_plural);
         }	
