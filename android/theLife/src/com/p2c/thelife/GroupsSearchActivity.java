@@ -25,7 +25,7 @@ public class GroupsSearchActivity extends SlidingMenuFragmentActivity implements
 	private static final String TAG = "GroupsSearchActivity";
 	
 	private GroupModel m_group = null;
-	private ProgressDialog m_progressDialog = null;		
+	private ProgressDialog m_progressDialog = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

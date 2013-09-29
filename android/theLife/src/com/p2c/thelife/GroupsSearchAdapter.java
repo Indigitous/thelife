@@ -76,8 +76,9 @@ public class GroupsSearchAdapter extends ArrayAdapter<GroupModel> implements OnE
 	
 	@Override
 	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-
-		if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+		// some Android devices don't return the ACTION_SEARCH, so look for a return key instead
+		if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+			(actionId == 0 && event.getKeyCode() == 66 && event.getAction() == KeyEvent.ACTION_DOWN)) {
 			String queryString = (String)view.getText().toString();
 			query(queryString);
 		}
