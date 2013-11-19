@@ -68,8 +68,11 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         
-        // facebook requestCode=64206 resultCode=-1
- 		Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+		Session session = Session.getActiveSession();
+		if (session != null) {        
+			// facebook requestCode=64206 resultCode=-1
+			session.onActivityResult(this, requestCode, resultCode, data);
+		}
     }    
 
 	@Override
