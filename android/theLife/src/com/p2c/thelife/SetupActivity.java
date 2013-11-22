@@ -180,6 +180,7 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 					// TODO if login then update TheLife account with latest from Google
 										
 					// read the google account token, which will be verified by theLife server (no user permission needed)
+					// see http://android-developers.blogspot.ro/2013/01/verifying-back-end-calls-from-android.html
 					String token = null;
 					token = GoogleAuthUtil.getToken(SetupActivity.this, params[0], 
 								"audience:server:client_id:" + TheLifeConfiguration.GOOGLE_WEB_CLIENT_ID);
