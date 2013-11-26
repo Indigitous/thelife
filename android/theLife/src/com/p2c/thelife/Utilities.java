@@ -10,6 +10,7 @@ import java.net.URL;
 import org.apache.http.util.CharArrayBuffer;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -134,6 +135,18 @@ public class Utilities {
 	
 	public static void showInfoToast(Context context, String text, int duration) {
 		Toast.makeText(context, text, duration).show();
+	}
+	
+	
+	// Can be called from any thread
+	public static void showInfoToastSafe(final Activity activity, final String text, final int duration) {
+		activity.runOnUiThread(new Runnable() 
+		{
+			@Override
+			public void run() {
+				Toast.makeText(activity, text, duration).show();
+			}
+		});
 	}
 	
 	

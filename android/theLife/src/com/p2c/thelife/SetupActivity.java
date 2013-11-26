@@ -157,19 +157,27 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 			protected String doInBackground(String... params) {
 				
 				m_accountName = params[0];
+Utilities.showInfoToastSafe(SetupActivity.this, "Attempting to access Google Account for " + m_accountName, Toast.LENGTH_LONG);
 
 				// get the Google Account token: see description and code in android developer docs for class GoogleAuthUtil
 				try {				
 					if (isRegister) {
 						// read the Google user account info; this can result in a permission request to the user
+Utilities.showInfoToastSafe(SetupActivity.this, "Attempting to get Google OAuth Token", Toast.LENGTH_LONG);						
 						String userInfoToken = GoogleAuthUtil.getToken(SetupActivity.this, m_accountName,  
 								"oauth2:https://www.googleapis.com/auth/userinfo.profile");
+Utilities.showInfoToastSafe(SetupActivity.this, "Received Google OAuth Token " + (userInfoToken != null ? "NOT NULL" : "NULL") , Toast.LENGTH_LONG);						
+
 						m_account = Utilities.readJSONFromServer("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + userInfoToken);
+Utilities.showInfoToastSafe(SetupActivity.this, "Received Google OAuth User Account " + (m_account != null ? "NOT NULL" : "NULL") , Toast.LENGTH_LONG);
 						Log.i(TAG, "received user info" + m_account);
 						
 						// read the Google account image, if available
+						
+Utilities.showInfoToastSafe(SetupActivity.this, "Attempting to get Google OAuth User Account Picture ", Toast.LENGTH_LONG);						
 						String pictureURL = m_account.optString("picture");
-						if (pictureURL != null) {
+Utilities.showInfoToastSafe(SetupActivity.this, "Received Google OAuth User Account Picture " + (pictureURL != null ? "NOT NULL" : "NULL") , Toast.LENGTH_LONG);						
+						if (pictureURL != null && !pictureURL.isEmpty()) {
 							m_bitmap = Utilities.getExternalBitmap(pictureURL);
 							if (m_bitmap != null) {
 								Log.i(TAG, "successfully got Google account image");
@@ -182,8 +190,10 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 					// read the google account token, which will be verified by theLife server (no user permission needed)
 					// see http://android-developers.blogspot.ro/2013/01/verifying-back-end-calls-from-android.html
 					String token = null;
+Utilities.showInfoToastSafe(SetupActivity.this, "Attempting to get Google User Token ", Toast.LENGTH_LONG);
 					token = GoogleAuthUtil.getToken(SetupActivity.this, params[0], 
 								"audience:server:client_id:" + TheLifeConfiguration.GOOGLE_WEB_CLIENT_ID);
+Utilities.showInfoToastSafe(SetupActivity.this, "Received Google User Token " + (token != null ? "NOT NULL" : "NULL") , Toast.LENGTH_LONG);
 					Log.i(TAG, "successfully got Google account token for account " + params[0]);
 					
 					return token;
@@ -202,17 +212,22 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 					if (isRegister) {
 						String firstName = m_account.optString("given_name");
 						String lastName = m_account.optString("family_name");
+Utilities.showInfoToastSafe(SetupActivity.this, "Attempting to register with token", Toast.LENGTH_LONG);
 						registerWithToken(m_accountName, firstName, lastName, "google", externalToken);
 					} else {
+Utilities.showInfoToastSafe(SetupActivity.this, "Attempting to login with token", Toast.LENGTH_LONG);
 						loginWithToken(m_accountName, "google", externalToken);
 					}
+Utilities.showInfoToastSafe(SetupActivity.this, "Successfully completed accessing Google Account", Toast.LENGTH_LONG);
 				}
 				else {
 					m_progressDialog.dismiss();
+Utilities.showInfoToastSafe(SetupActivity.this, "Error when accessing Google User Account: " + m_e.toString(), Toast.LENGTH_LONG);
 					
 					// handle the exception
 					Log.e(TAG, "registerLoginViaGoogle", m_e);
 					if (m_e instanceof GooglePlayServicesAvailabilityException) {
+Utilities.showInfoToastSafe(SetupActivity.this, "Google Play Services Error when accessing Google User Account", Toast.LENGTH_LONG);
 						// GooglePlay is not there?
 						GooglePlayServicesAvailabilityException e2 = (GooglePlayServicesAvailabilityException)m_e;					
 						Dialog alert = GooglePlayServicesUtil.getErrorDialog(e2.getConnectionStatusCode(), SetupActivity.this, 0);
@@ -221,12 +236,15 @@ public class SetupActivity extends SetupRegisterActivityAbstract implements Serv
 						String errorMessage = isRegister ? 
 							SetupActivity.this.getResources().getString(R.string.recoverable_register_error, m_e.getMessage()) :
 							SetupActivity.this.getResources().getString(R.string.recoverable_login_error, m_e.getMessage());
+Utilities.showInfoToastSafe(SetupActivity.this, "UserRecoverableAuthException when accessing Google User Account", Toast.LENGTH_LONG);	
 						Utilities.showErrorToast(SetupActivity.this, errorMessage, Toast.LENGTH_SHORT);
 						// allow the user to try to recover
 						startActivityForResult(((UserRecoverableAuthException)m_e).getIntent(), 0);
 					} else if (m_e instanceof IOException) {
+Utilities.showInfoToastSafe(SetupActivity.this, "IOException when accessing Google User Account: " + m_e.getMessage(), Toast.LENGTH_LONG);						
 						Utilities.showConnectionErrorToast(SetupActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
 					} else if (m_e instanceof GoogleAuthException) {
+Utilities.showInfoToastSafe(SetupActivity.this, "GoogleAuthException when accessing Google User Account: " + m_e.getMessage(), Toast.LENGTH_LONG);
 						Utilities.showErrorToast(SetupActivity.this, m_e.getMessage(), Toast.LENGTH_SHORT);
 					}				
 				}

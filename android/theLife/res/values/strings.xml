@@ -216,7 +216,7 @@ Contains Facebook software made available under the Apache License, version 2.0;
     <string name="settings_update_photo_prompt">Update Your Photo</string>
     <string name="settings_update_photo_prompt_short">Set Photo</string>
     <string name="register">Create account</string>
-    <string name="gcm_error">Unable to access push notification service</string>
+    <string name="gcm_error">Unable to access push notification service. Please log out and log in again.</string>
     <string name="notification_invitation_delivered">Invite from %1$s</string>
     <string name="notification_request_delivered">Request from %1$s</string>
     <string name="notification_group">For group &lt;b>%1$s&lt;/b></string>

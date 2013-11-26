@@ -157,7 +157,7 @@ public class GCMSupport implements Server.ServerListener {
 						// exponential back off						
 						try { Thread.sleep(sleepTime); } catch (Exception e2) { }
 						sleepTime *= 2;
-						shouldRegister = sleepTime < TheLifeConfiguration.EXPONENTIAL_BACKOFF_MAX;
+						shouldRegister = sleepTime <= TheLifeConfiguration.EXPONENTIAL_BACKOFF_MAX;
 					} catch (Exception e) {
 						Log.e(TAG, "getNewRegistrationId()", e);
 						shouldRegister = false;
